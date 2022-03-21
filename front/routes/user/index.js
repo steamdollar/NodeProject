@@ -1,16 +1,25 @@
 //회원관리 미들웨어
 const express = require('express')
 const router = express.Router()
-const usercontroller = require('./user.controller')
 
-router.use('/join',usercontroller.join)
+router.use('/join',(req,res)=>{
+    res.render('./user/join')
+})
 
-router.use('/login', usercontroller.login)
+router.use('/login', (req,res)=>{
+    res.render('./user/login')
+})
 
-router.use('/update', usercontroller.update)
+router.use('/update', (req,res)=>{
+    res.render('./user/update')
+})
 
-router.use('/profile', usercontroller.profile)
+router.use('/profile', (req,res)=>{
+    res.render('./user/profile')
+})
 
-router.use('/welcome', usercontroller.welcome)
+router.use('/welcome', (req,res)=>{
+    res.render('./user/welcome')
+})
 
 module.exports = router
