@@ -4,7 +4,7 @@ const express = require('express')
 const app = express()
 const router = require('./routes')
 
-app.use('/', (req,res)=>{
+app.get('/', (req,res)=>{
     res.render('main')
 })
 app.use(router)
