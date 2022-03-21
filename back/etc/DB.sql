@@ -23,7 +23,8 @@ CREATE TABLE user (
     mobile VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
     userintro TEXT NULL,
-    level INT NOT NULL DEFAULT 1
+    level INT NOT NULL DEFAULT 1,
+    UNIQUE (nickname,email)
 );
 
 CREATE TABLE comment (
