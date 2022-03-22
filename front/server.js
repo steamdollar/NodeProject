@@ -6,11 +6,11 @@ const router = require('./routes')
 app.set('view engine','html')
 nunjucks.configure('views',{
   express:app,
+  watch:true
 })
 
 app.use(express.urlencoded({
     extended:true,
-    watch:true
 }))
 
 app.get('/', (req,res)=>{
