@@ -14,7 +14,7 @@ CREATE TABLE board (
 CREATE TABLE user (
     userid VARCHAR(30) NOT NULL PRIMARY KEY,
     userpw VARCHAR(50) NOT NULL,
-    userimg VARCHAR(40) NOT NULL,
+    userimg longblob NOT NULL,
     username VARCHAR(30) NOT NULL,
     nickname VARCHAR(30) NOT NULL,
     address VARCHAR(80) NOT NULL,
@@ -24,7 +24,8 @@ CREATE TABLE user (
     email VARCHAR(50) NOT NULL,
     userintro TEXT NULL,
     level INT NOT NULL DEFAULT 1,
-    UNIQUE (nickname,email)
+    UNIQUE (nickname),
+    UNIQUE (email)
 );
 
 CREATE TABLE comment (

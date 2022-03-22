@@ -2,6 +2,8 @@
 const express = require('express')
 const router = express.Router()
 
+let cookieShuttle = {}
+
 router.use('/join',(req,res)=>{
     res.render('./user/join')
 })
