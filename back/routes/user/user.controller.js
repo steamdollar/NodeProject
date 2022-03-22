@@ -55,6 +55,29 @@ exports.login = async (req,res)=>{
     }
 }
 
-exports.update = (req,res)=>{
-    res.render('/user/update')
+exports.update = async (req,res)=>{
+    
+    const {userid, userpw,userimg,nickname,address,phone,mobile} = req.body
+
+    const sql ="UPDATE user SET userpw=?, userimg=?, nickname=?, address=?, phone=?, mobile=? WHERE userid=?"
+    const param = [userpw,userimg,nickname,address,phone,mobile,userid]
+    try{
+        const [result] = await pool.execute(sql,param)
+        console.log(result)
+        const response = {
+            result,
+            errno:0
+        }
+        
+        res.json(response)
+
+    } catch (e) {
+        console.log(e.message)
+        const response = {
+            result:[],
+            errno:1
+        }
+        res.json(response)
+    }
+
 }

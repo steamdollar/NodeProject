@@ -10,30 +10,30 @@
 <body>
     <h1><a href="/">Team4</a></h1>
     <h2>프로필 보기</h2>
-    <h2> {{user.usernickname}}님, 환영합니다.</h2>
+    <h2> {{user.nickname}}님, 환영합니다.</h2>
     <div>
         <ul>
             <li>
-                <span>아이디 : {{user.userid}}</span>
+                <span id="userid">아이디 : </span>
             </li>
             <li>
-                <span>이름 : {{user.userpw}}</span>
+                <span id="username">이름 : {{user.userpw}}</span>
             </li>
             <li>
-                <span>프로필 사진 : img src= 어쩌구 식으로 가져오면 될듯</span>
+                <span id="userimg">프로필 사진 : img src= 어쩌구 식으로 가져오면 될듯</span>
             </li>
             <li>
-                <span>닉네임 : {{user.nickname}}</span>
+                <span id="nickname">닉네임 : {{user.nickname}}</span>
             </li>
             <li>
-                <span>주소 : {{user.address}} </span>
+                <span id="address">주소 : {{user.address}} </span>
             </li>
             <li>
-                <span>성별 : {{user.gender}} </span>
+                <span id="gender">성별 : {{user.gender}} </span>
             </li>
             {% if user.phone %}
             <li>
-                <span>전화번호 : phone</span>
+                <span id="">전화번호 : phone</span>
             </li>
             {% else %}
             <li>
@@ -63,4 +63,7 @@
     </div>
     <a href="/"></a>
 </body>
+<script>
+    
+</script>
 </html>
