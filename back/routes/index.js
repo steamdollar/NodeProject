@@ -1,27 +1,19 @@
 //라우터
 const express = require('express')
-const app = express()
 const router = express.Router()
-
-const userRouter = require('./user/user.controller')
-const boardRouter = require('./board/board.controller')
-const adminRouter = require('./admin/admin.controller')
-
+const userRouter = require('./user/index')
+const boardRouter = require('./board/index')
+const adminRouter = require('./admin/index')
 
 //user
-router.post('/api/user/join',userRouter.join)
-router.post('/api/user/login',userRouter.login)
-router.post('/api/user/update',userRouter.update)
+router.post('/api/user',userRouter)
+
 
 //board
-router.post('/api/board/write',boardRouter.write)
-router.post('/api/board/modify',boardRouter.modify)
-router.post('/api/board/QnA',boardRouter.QnA)
-router.post('/api/board/delete',boardRouter.delete)
-router.post('/api/board/notice',boardRouter.notice)
+router.post('/api/board',boardRouter)
+
 
 //admin
-router.post('/api/admin/usercontrol',adminRouter.userControl)
-router.post('/api/admin/boardcontrol',adminRouter.boardControl)
+router.post('/api/admin', adminRouter)
 
 module.exports = router
