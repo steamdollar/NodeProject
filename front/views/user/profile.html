@@ -4,45 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <h1><a href="/">logo</a></h1>
-    <h2>nickname님, 환영합니다.</h2>
-
-    <ul>
-        <li>
-            <span>아이디 : userid (수정 불가)</span>
-        </li>
-        <li>
-            <span>이름 : username</span>
-        </li>
-        <li>
-            <span>프로필 사진 : img src= 어쩌구 식으로 가져오면 될듯</span>
-        </li>
-        <li>
-            <span>닉네임 : nickname</span>
-        </li>
-        <li>
-            <span>주소 : address </span>
-        </li>
-        <li>
-            <span>성별 : gender // 못 바꾸게..?</span>
-        </li>
-        <li>
-            <span>Tel : phone(필수 아님)</span>
-        </li>
-        <li>
-            <span>핸드폰 : mobile</span>
-        </li>
-        <li>
-            <span>이메일 : email</span>
-        </li>
-        <li>
-            <span>자기소개 : userintro</span>
-        </li>
-    </ul>
-
+    <h1><a href="/">Team4</a></h1>
+    <h2>프로필 보기</h2>
+    <h2> {{user.usernickname}}님, 환영합니다.</h2>
+    <div>
+        <ul>
+            <li>
+                <span>아이디 : {{user.userid}}</span>
+            </li>
+            <li>
+                <span>이름 : {{user.userpw}}</span>
+            </li>
+            <li>
+                <span>프로필 사진 : img src= 어쩌구 식으로 가져오면 될듯</span>
+            </li>
+            <li>
+                <span>닉네임 : {{user.nickname}}</span>
+            </li>
+            <li>
+                <span>주소 : {{user.address}} </span>
+            </li>
+            <li>
+                <span>성별 : {{user.gender}} </span>
+            </li>
+            {% if user.phone %}
+            <li>
+                <span>전화번호 : phone</span>
+            </li>
+            {% else %}
+            <li>
+                <span>
+                    핸드폰번호 : 없음
+                </span>
+            </li>
+            {% endif %}
+            <li>
+                <span>핸드폰 : {{user.mobile}}</span>
+            </li>
+            <li>
+                <span>이메일 : {{user.email}}</span>
+            </li>
+            <li>
+                <span>자기소개 {{user.userintro}}: </span>
+            </li>
+        </ul>
+    </div>
+    <div class="button">
+        <button><a href="/board/list">게시판</a></button>
+        <button><a href="/user/update">수정</a></button>
+        <form method="post" action="/user/profile">
+            <input type="hidden" name="userid" value="{{user.userid}}">
+            <button class="delete" type="submit">탈퇴하기</button>
+        </form>
+    </div>
     <a href="/"></a>
 </body>
 </html>

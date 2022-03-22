@@ -9,5 +9,5 @@ exports.login = (req,res)=>{
 }
 
 exports.update = (req,res)=>{
-    res.send('회원 정보 업데이트 완료')
+    res.render('/user/update')
 }

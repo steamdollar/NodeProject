@@ -15,7 +15,10 @@ router.use('/update', (req,res)=>{
 })
 
 router.use('/profile', (req,res)=>{
-    res.render('./user/profile')
+    const {user} = req.session
+    res.render('./user/profile',{
+        user
+    })
 })
 
 router.use('/welcome', (req,res)=>{
