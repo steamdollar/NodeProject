@@ -1,19 +1,9 @@
 //회원관리 컨트롤러
-const express = require('express')
 const pool = require('../../db.js').pool
-const cookieParser = require('cookie-parser')
-const app = express()
-const cors = require('cors')
-
 const { createToken } = require('../../utils/jwt.js')
 
-app.use(express.json())
-app.use(express.urlencoded({express:true}))
-app.use(cookieParser())
-app.use(cors({
-    origin:true,
-    credentials:true
-}))
+// 지운 이유 교수님이 지우라고했슴.
+
 
 exports.join = async (req,res)=>{
     console.log(req.body) // req.body 
@@ -96,6 +86,56 @@ exports.login = async (req,res)=>{
     }
 }
 
-exports.update = (req,res)=>{
-    res.send('회원 정보 업데이트 완료')
+exports.profile = async (req,res)=>{
+    // const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = req.body
+    // console.log('hello')
+    console.log(req.user)
+    const {userid} = req.user
+    const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where userid=?'
+    const param = [userid]
+    console.log(param)
+    try {
+        const [result] = await pool.execute(sql,param)
+        response = {
+            result,
+            errno:0
+        }
+        
+        res.json(response)
+    } catch(e){
+        console.log(e.message)
+        response = {
+            errno:1
+        }
+        res.json(response)
+    }
+    
+}
+
+
+exports.update = async (req,res)=>{
+    
+    const {userid, userpw,userimg,nickname,address,phone,mobile} = req.body
+
+    const sql ="UPDATE user SET userpw=?, userimg=?, nickname=?, address=?, phone=?, mobile=? WHERE userid=?"
+    const param = [userpw,userimg,nickname,address,phone,mobile,userid]
+    try{
+        const [result] = await pool.execute(sql,param)
+        console.log(result)
+        const response = {
+            result,
+            errno:0
+        }
+        
+        res.json(response)
+
+    } catch (e) {
+        console.log(e.message)
+        const response = {
+            result:[],
+            errno:1
+        }
+        res.json(response)
+    }
+
 }
