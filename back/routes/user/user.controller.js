@@ -1,19 +1,9 @@
 //회원관리 컨트롤러
-const express = require('express')
 const pool = require('../../db.js').pool
-const cookieParser = require('cookie-parser')
-const app = express()
-const cors = require('cors')
-
 const { createToken } = require('../../utils/jwt.js')
 
-app.use(express.json())
-app.use(express.urlencoded({express:true}))
-app.use(cookieParser())
-app.use(cors({
-    origin:true,
-    credentials:true
-}))
+// 지운 이유 교수님이 지우라고했슴.
+
 
 exports.join = (req,res)=>{
     res.send('가입완료')
@@ -56,26 +46,29 @@ exports.login = async (req,res)=>{
 }
 
 exports.profile = async (req,res)=>{
-    const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = req.body
-    const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user'
-    const param = [userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro]
-    let response = {
-        errno:0
-    }
+    // const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = req.body
+    // console.log('hello')
+    console.log(req.user)
+    const {userid} = req.user
+    const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where userid=?'
+    const param = [userid]
+    console.log(param)
     try {
         const [result] = await pool.execute(sql,param)
         response = {
-            ...response,
-            result
+            result,
+            errno:0
         }
+        
+        res.json(response)
     } catch(e){
         console.log(e.message)
         response = {
             errno:1
         }
+        res.json(response)
     }
     
-    res.json(response)
 }
 
 

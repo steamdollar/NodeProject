@@ -10,26 +10,31 @@
 <body>
     <h1><a href="/">Team4</a></h1>
     <h2>프로필 보기</h2>
-    <h2> {{user.nickname}}님, 환영합니다.</h2>
-    <div>
+    <div id="profile">
+
+
+    </div>
+
+    <template id="profiles">
+        <h2> {nickname}님, 환영합니다.</h2>
         <ul>
             <li>
-                <span id="userid">아이디 : </span>
+                <span id="userid">아이디 : {userid}</span>
             </li>
             <li>
-                <span id="username">이름 : {{user.userpw}}</span>
+                <span id="username">이름 : {username}</span>
             </li>
             <li>
                 <span id="userimg">프로필 사진 : img src= 어쩌구 식으로 가져오면 될듯</span>
             </li>
             <li>
-                <span id="nickname">닉네임 : {{user.nickname}}</span>
+                <span id="nickname">닉네임 : {nickname}</span>
             </li>
             <li>
-                <span id="address">주소 : {{user.address}} </span>
+                <span id="address">주소 : {address} </span>
             </li>
             <li>
-                <span id="gender">성별 : {{user.gender}} </span>
+                <span id="gender">성별 : {gender} </span>
             </li>
             {% if user.phone %}
             <li>
@@ -43,16 +48,16 @@
             </li>
             {% endif %}
             <li>
-                <span id="mobile">핸드폰 : {{user.mobile}}</span>
+                <span id="mobile">핸드폰 : {mobile}</span>
             </li>
             <li>
-                <span id="email">이메일 : {{user.email}}</span>
+                <span id="email">이메일 : {email}</span>
             </li>
             <li>
-                <span id="userintro">자기소개 {{user.userintro}}: </span>
+                <span id="userintro">자기소개 {userintro}: </span>
             </li>
         </ul>
-    </div>
+    </template>
     <div class="button">
         <button><a href="/board/list">게시판</a></button>
         <button><a href="/user/update">수정</a></button>
@@ -64,27 +69,51 @@
     <a href="/"></a>
 </body>
 <script>
-    async function view(){
-        const userid = document.querySelector('#userid')
-        const username = document.querySelector('#username')
-        const userimg = document.querySelector('#userimg')
-        const nickname = document.querySelector('#nickname')
-        const address = document.querySelector('#address')
-        const gender = document.querySelector('#gender')
-        const phone = document.querySelector('#phone')
-        const mobile = document.querySelector('#mobile')
-        const email = document.querySelector('#email')
-        const userintro = document.querySelector('#userintro')
+    document.addEventListener('DOMContentLoaded', async() => {
+        let template = ''
+        const profile = document.querySelector('#profile')
+        const profiles = document.querySelector('#profiles').innerHTML
+        
+        // profiles.replace('{nickname}',)
+        // const userid = document.querySelector('#userid')
+        // const username = document.querySelector('#username')
+        // const userimg = document.querySelector('#userimg')
+        // const nickname = document.querySelector('#nickname')
+        // const address = document.querySelector('#address')
+        // const gender = document.querySelector('#gender')
+        // const phone = document.querySelector('#phone')
+        // const mobile = document.querySelector('#mobile')
+        // const email = document.querySelector('#email')
+        // const userintro = document.querySelector('#userintro')
 
-        const response = await axios.post('http://localhost:4001/api/user/profile',{
+        const option = {
             'Content-type':'application/json',
             withCredentials:true
-        })
+        }
+
+        const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
 
         if( response.data.errno ===0){
-            const [{userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro}] = response.data.result
-            console.log(response.data)
+            const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
+            
+            template = profiles.replace('{nickname}',nickname)
+                               .replace('{userid}',userid)
+                               .replace('{username}',username)
+                               .replace('{userimg}',userimg)
+                               .replace('{nickname}',nickname)
+                               .replace('{address}',address)
+                               .replace('{gender}',gender)
+                               .replace('{phone}',phone)
+                               .replace('{mobile}',mobile)
+                               .replace('{email}',email)
+                               .replace('{userintro}',userintro)
+
+            profile.innerHTML = template
+            
+            
         }
-    }
+    })
+
+        
 </script>
 </html>
