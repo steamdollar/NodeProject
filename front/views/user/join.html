@@ -1,1 +1,103 @@
-회원가입 페이지
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1><a href="/">logo</a></h1>
+    <form method = 'post' action="/" id="join_frm" enctype="multipart/form-data">
+        <ul>
+            <li>
+                <span class="join_label">아이디</span>
+                <span class="join_input">
+                    <input type="text" name="userid" id="userid" value="lsj1994">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">패스워드</span>
+                <span class="join_input">
+                    <input type="text" name="userpw" id="userpw" value="1234">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">프로필사진 (최대 5개)</span>
+                <span class="join_input">
+                    <input type="file" name="userimg1" id="userimg1">
+                    <input type="file" name="userimg2" id="userimg2">
+                    <input type="file" name="userimg3" id="userimg3">
+                    <input type="file" name="userimg4" id="userimg4">
+                    <input type="file" name="userimg5" id="userimg5">
+                </span>
+                <!-- 파일을 업로드해 submit 하면 서버에 저장하고 링크만 
+                DB에 저장하고 사진을 렌더링하고 싶을때 img src의 값을 주는식으로
+                구현할 예정?-->
+            </li>
+            <li>
+                <span class="join_label">이름</span>
+                <span class="join_input">
+                    <input type="text" name="username" id="username" value="qwerty">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">별명</span>
+                <span class="join_input">
+                    <input type="text" name="nickname" id="nickname" value="qwerty">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">주소</span>
+                <span class="join_input">
+                    <input type="text" name="address" id="address" value="Seoul">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">성별</span>
+                <span class="join_input">
+                    <input type="radio" name="gender" value="남자" id="gender1" checked> <label for="gender1">남자</label>
+                    <input type="radio" name="gender" value="여자" id="gender2" > <label for="gender2">여자</label>
+                </span>
+            </li>
+            <li>
+                <span class="join_label">전화번호</span>
+                <span class="join_input">
+                    <input type="text" name="phone" id="phone" value="00000000">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">핸드폰</span>
+                <span class="join_input">
+                    <input type="text" name="mobile" id="mobile" value="00000000">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">이메일</span>
+                <span class="join_input">
+                    <input type="text" name="email" id="email" value="00000000">
+                </span>
+            </li>
+            <li>
+                <span class="join_label">자기소개</span>
+                <span class="join_input">
+                    <input type="text" name="userintro" id="userintro" value="hahaha">
+                </span>
+            </li>
+            <li>
+                <span> 약관에 동의하십니까? </span>
+                <input type="checkbox" checked>
+            </li>
+            <!-- script에 조건문써서 체크 안되면 동의해주세요 알람 띄우게-->
+        </ul>
+        <input type="submit" id="btn" value="회원가입">
+    </form>
+
+    <!-- 카카오 이용하는거 어떻게 하는 건지 공부 필요-->
+
+    <!-- 사용해야 하는가 oauth2.0인지 그냥 ouath인지..
+    이건 회원가입이 필요없다는데 왜 회원 가입 페이지가 필요할까..
+    회원 가입 양식을 내 맘대로 정할수 있는건가?-->
+</body>
+</html>
