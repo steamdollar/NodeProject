@@ -16,6 +16,7 @@
                 <span class="join_input">
                     <input type="text" name="userid" id="userid" value="lsj1994">
                 </span>
+
             </li>
             <li>
                 <span class="join_label">패스워드</span>
@@ -24,13 +25,13 @@
                 </span>
             </li>
             <li>
-                <span class="join_label">프로필사진 (최대 5개)</span>
+                <span class="join_label">프로필사진 </span>
                 <span class="join_input">
-                    <input type="file" name="userimg1" id="userimg1">
-                    <input type="file" name="userimg2" id="userimg2">
+                    <input type="file" name="userimg" id="userimg">
+                    <!-- <input type="file" name="userimg2" id="userimg2">
                     <input type="file" name="userimg3" id="userimg3">
                     <input type="file" name="userimg4" id="userimg4">
-                    <input type="file" name="userimg5" id="userimg5">
+                    <input type="file" name="userimg5" id="userimg5"> -->
                 </span>
                 <!-- 파일을 업로드해 submit 하면 서버에 저장하고 링크만 
                 DB에 저장하고 사진을 렌더링하고 싶을때 img src의 값을 주는식으로
@@ -93,6 +94,67 @@
         </ul>
         <input type="submit" id="btn" value="회원가입">
     </form>
+    <script type="text/javascript">
+        // 1. submit 이벤트를 만들고 그이벤트를 막는 기능 
+        const frm = document.querySelector('#join_frm')
+        frm.addEventListener('submit',async (e)=>{
+            e.preventDefault()
+            const btn = document.querySelector('#btn')
+            btn.value='로딩중~~'
+            btn.disabled = true
+
+
+            const data = { 
+                userid:document.querySelector('#userid').value,
+                userpw:document.querySelector('#userpw').value,
+                userimg:document.querySelector('#userimg').value,
+                username:document.querySelector('#username').value,
+                nickname:document.querySelector('#nickname').value,
+                address:document.querySelector('#address').value,
+                gender:document.querySelector('input[name="gender"]:checked').value,
+                phone:document.querySelector('#phone').value,
+                mobile:document.querySelector('#mobile').value,
+                email:document.querySelector('#email').value,
+                userintro:document.querySelector('#userintro').value,
+            }
+
+            const option = { 
+                'Content-type':'application/json',
+                withCredentials:true,
+            }   
+            // // return ? promise 객체 
+            // // async / await 
+            const response = await axios.post('http://localhost:4000/api/user/join',data,option)
+            console.log(response.data)
+
+            
+            
+            // console.log(response.data.errno, response.data.errno===0)
+            if(response.data.errno === 0){ // 성공의 케이스 
+                // 성공
+                console.log('가입완료되었습니다.')
+                location.href='/user/welcome'
+            } else { //
+                // 실패
+                console.log(response.data)
+
+                if(response.data.errno === 1062){
+                    if(response.data.errormsg.includes('user.PRIMARY')){
+                        alert('중복 된 아이디 입니다. 다른 아이디를 입력해주세요.')
+                    }
+                    if(response.data.errormsg.includes('user.nickname')){
+                        alert('중복 된 닉네임 입니다. 다른 닉네임을 사용해주세요.')
+                    }
+                    if(response.data.errormsg.includes('user.email')){
+                        alert('이미 가입 된 이메일입니다.')
+                    }
+                }
+                
+                btn.value='회원가입'
+                btn.disabled = false
+            }
+        })
+    </script>
 
     <!-- 카카오 이용하는거 어떻게 하는 건지 공부 필요-->
 

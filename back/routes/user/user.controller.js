@@ -15,8 +15,49 @@ app.use(cors({
     credentials:true
 }))
 
-exports.join = (req,res)=>{
-    res.send('가입완료')
+exports.join = async (req,res)=>{
+    console.log(req.body) // req.body 
+    const {userid,userpw,userimg,username,nickname,address,gender,phone,mobile,email,userintro} = req.body
+    const sql = `INSERT INTO user(
+                    userid,
+                    userpw,
+                    userimg,
+                    username,
+                    nickname,
+                    address,
+                    gender,
+                    phone,
+                    mobile,
+                    email,
+                    userintro
+                ) values(
+                    ?,?,?,?,?,?,?,?,?,?,?
+                )`
+    const prepare = [userid,userpw,userimg,username,nickname,address,gender,phone,mobile,email,userintro]
+
+    try {
+        const [result] = await pool.execute(sql,prepare) // 1. SQL:string , 2. prepare:array
+        
+        const response = {
+            result:{
+                row:result.affectedRows,
+                id:result.insertId
+            },
+            errno:0,
+        }
+    
+        res.json(response) 
+    } catch (e){
+        console.log(e)
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno: e.errno
+        }
+        
+        res.json(response)  
+    }
+
 }
 
 exports.login = async (req,res)=>{
