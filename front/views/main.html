@@ -5,6 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded',()=>{
+            const webSocket = new WebSocket('ws://localhost:3000')
+
+            const form = document.querySelector('form')
+
+            webSocket.onopen = () => {
+                console.log('웹소켓 Connection 성공 ( Handshake )')
+            }
+
+            form.addEventListener('submit', (e)=>{
+                e.preventDefault()
+                const{ input } = e.target
+
+                let data = {
+                        type:'send_msg',
+                        userid:'{{userid}}',
+                        data:input.value
+                    }
+                
+                webSocket.send(JSON.stringify(data))
+                input.value = ''
+                // input.focus() << 이거 뭐임?
+            })
+
+            webSocket.onmessage = (event) => {
+                const chat = document.querySelector('#chat')
+                const liElement = document.createElement('li')
+                liElement.innerHTML = event.data
+                chat.appendChild(liElement)
+                // console.log(event.data)
+            }
+
+            webSocket.onclose = () => {
+                console.log('웹소켓 disconnection')
+            }
+        })
+    </script>
 </head>
 <body>
     <h1><a herf="/">logo</a></h1>
@@ -12,6 +51,16 @@
     <a href="/user/join">회원가입</a>
     <a href="/user/login">로그인</a>
     <a href ='#'>게시판 (로그인 한 사람만?)</a>
+
+    <h1>----------chat----------</h1>
+    <form action="/" method="get">
+        <input type="text" name="input" id="input">
+        <input type="submit" value="전송">
+    </form>
+    <ul id="chat">
+
+    </ul>
+
     
 </body>
 </html>
