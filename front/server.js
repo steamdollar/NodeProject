@@ -19,6 +19,7 @@ app.get('/', (req,res)=>{
     res.render('main', { userid:'userid' })
 })
 
+
 app.use(router)
 
 webSocket(app.listen(3000,()=>{
