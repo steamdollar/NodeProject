@@ -6,14 +6,14 @@ const boardRouter = require('./board/index')
 const adminRouter = require('./admin/index')
 
 //user
-router.post('/api/user',userRouter)
+router.use('/api/user',userRouter)
 
 
 //board
-router.post('/api/board',boardRouter)
+router.use('/api/board',boardRouter)
 
 
 //admin
-router.post('/api/admin', adminRouter)
+router.use('/api/admin', adminRouter)
 
 module.exports = router
