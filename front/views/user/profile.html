@@ -33,23 +33,23 @@
             </li>
             {% if user.phone %}
             <li>
-                <span id="">전화번호 : phone</span>
+                <span id="phone">전화번호 : phone</span>
             </li>
             {% else %}
             <li>
                 <span>
-                    핸드폰번호 : 없음
+                    전화번호 : 없음
                 </span>
             </li>
             {% endif %}
             <li>
-                <span>핸드폰 : {{user.mobile}}</span>
+                <span id="mobile">핸드폰 : {{user.mobile}}</span>
             </li>
             <li>
-                <span>이메일 : {{user.email}}</span>
+                <span id="email">이메일 : {{user.email}}</span>
             </li>
             <li>
-                <span>자기소개 {{user.userintro}}: </span>
+                <span id="userintro">자기소개 {{user.userintro}}: </span>
             </li>
         </ul>
     </div>
@@ -64,6 +64,27 @@
     <a href="/"></a>
 </body>
 <script>
-    
+    async function view(){
+        const userid = document.querySelector('#userid')
+        const username = document.querySelector('#username')
+        const userimg = document.querySelector('#userimg')
+        const nickname = document.querySelector('#nickname')
+        const address = document.querySelector('#address')
+        const gender = document.querySelector('#gender')
+        const phone = document.querySelector('#phone')
+        const mobile = document.querySelector('#mobile')
+        const email = document.querySelector('#email')
+        const userintro = document.querySelector('#userintro')
+
+        const response = await axios.post('http://localhost:4001/api/user/profile',{
+            'Content-type':'application/json',
+            withCredentials:true
+        })
+
+        if( response.data.errno ===0){
+            const [{userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro}] = response.data.result
+            console.log(response.data)
+        }
+    }
 </script>
 </html>
