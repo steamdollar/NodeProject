@@ -1,6 +1,8 @@
 //라우터
 const express = require('express')
 const router = express.Router()
+const app = express()
+
 const userRouter = require('./user/index')
 const boardRouter = require('./board/index')
 const adminRouter = require('./admin/index')
