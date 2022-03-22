@@ -1,30 +1,25 @@
-const webSocket = require('ws') // npm install ws
+const webSocket = require('ws')
 
 // socket.io 
 let sockets = []
 module.exports = (server) => {
     const wss = new webSocket.Server({ server })
-    // const wss = new webSocket.Server({ port:3006 })
-    
+    let userId = 'unknown'
     wss.on('connection',(ws, req)=>{
         ws.id = req.headers['sec-websocket-key']
-        console.log(ws.id)
-        // HwM3xwJM8735Rgr/bGGyiA==  << 접속마다 변함
-
         sockets.push(ws)
-        console.log(`address : ${req.connection.remoteAddress} connected`)
-        // ::1
+
+        let ecookie1 = req.headers.cookie.split('=')
+        let ecookie2 = ecookie1[1].split('.')
+        let ecookie3 = ecookie2[1]
+        const deUserid = JSON.parse(Buffer.from(ecookie3, 'base64').toString('utf-8'))
+
+        ws.send(`${deUserid.userid}님 환영합니다.`)
         
-        // code : 연결이 종료되는 이유를 가르키는 숫자
-        // 기본값은 1000
-        const userid = 'web7722'
-        ws.send(`${userid}님 환영합니다.`)
-        // reason : 왜종료되는지 사람이 읽을수 있도록 나타내는 문자열
-        // UTF-8 포멧 123바이트를 넘을수없다.
+        userid = deUserid.userid
 
         ws.on("message", (response) => {
             let obj = JSON.parse(response.toString('utf-8'))
-            console.log(obj) // { type: 'send_msg', userid: 'web7722', data: '1234' }
             let { type, data, userid } = obj
 
             switch (type) {
