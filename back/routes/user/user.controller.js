@@ -55,6 +55,30 @@ exports.login = async (req,res)=>{
     }
 }
 
+exports.profile = async (req,res)=>{
+    const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = req.body
+    const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user'
+    const param = [userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro]
+    let response = {
+        errno:0
+    }
+    try {
+        const [result] = await pool.execute(sql,param)
+        response = {
+            ...response,
+            result
+        }
+    } catch(e){
+        console.log(e.message)
+        response = {
+            errno:1
+        }
+    }
+    
+    res.json(response)
+}
+
+
 exports.update = async (req,res)=>{
     
     const {userid, userpw,userimg,nickname,address,phone,mobile} = req.body
