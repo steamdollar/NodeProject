@@ -5,22 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
-    <div>
-        <h1>공지사항</h1>
-    </div>
-    <form method="post" action="http://localhost:4000/api/board/write">
-        <input type="hidden" name="userid" value="{{userid}}">
-        <div>
-            <strong>제목</strong> <br>
-            <input type="text" name="title" placeholder="제목입력">
-        </div>
-        <div>
-            <strong>내용</strong> <br>
-            <textarea name="content" placeholder="내용입력"></textarea>
-        </div>
-        <input type="submit" value="글작성">
-    </form>
+    <h1><a href='/'>logo</a></h1>
+    <h2> 공지_리스트 </h2>
+    <table>
+        <tr>
+            <td>idx</td>
+            <td>title</td>
+            <td>content</td>
+            <td>작성일자</td>
+        </tr>
+
+        {% for item in notice_list %}
+        <tr>
+            <td>{{item.idx}}</td>
+            <td>{{item.title}}</td> 
+            <td>{{item.content}}</td> 
+            <td>{{item.date}}</td> 
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

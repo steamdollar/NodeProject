@@ -30,14 +30,12 @@ module.exports = (server) => {
                 break;
             }            
         })
-
+        
         ws.on('close', ()=>{
             console.log('cilent out')
             sockets = sockets.filter(v=>{
                 return ws.id !== v.id
             })
-            // 나간 c의 ws.id를 제거한 배열 재생성
-
             console.log(sockets.length)
         })
     })
