@@ -2,6 +2,9 @@
 const express = require('express')
 const router = express.Router()
 
+router.use('/login',(req,res)=>{
+    res.render('./admin/admin_login')
+})
 
 router.use('/board', (req,res)=>{
     res.render('./admin/admin_board')
