@@ -51,7 +51,7 @@
             </table>
         </div>
         <div>
-            <input type="submit" value="수정하기">
+            <input type="submit" id="btn" value="수정">
         </div>
     </form>
     <div>
@@ -61,6 +61,10 @@
         const frm = document.querySelector('#update_frm')
         frm.addEventListener('submit', async (e)=>{
             e.preventDefault()
+            const btn = document.querySelector('#btn')
+            btn.value='수정중~~'
+            btn.disabled= true
+
             const userid = document.querySelector('#userid')
             const userpw = document.querySelector('#userpw')
             const userimg = document.querySelector('#userimg')
@@ -87,15 +91,34 @@
                 'Content-type':'application/json',
                 withCredentials: true
             }
-            try {
-                const response = await axios.post('http://localhost:4000/api/user/update', data, option)
-                console.log(response.data)
-                if(response.data.errno !== 0) throw new Error('Error')
 
+            const response = await axios.post('http://localhost:4000/api/user/update', data, option)
+            console.log(response.data)
+            
+        
+            if(response.data.errno == 0){
+                //성공
                 alert('수정되었습니다.')
                 location.href='http://localhost:3000'
-            } catch (e){
-                alert(e.message)
+            
+            }else{
+                //실패
+                console.log(response.data)
+                if(response.data.errno === 1062){
+                    if(response.data.errormsg.includes('user.PRIMARY')){
+                        alert('중복 된 아이디 입니다. 다른 아이디를 입력해주세요.')
+                    }   
+                    if(response.data.errormsg.includes('user.nickname')){
+                        alert('중복 된 닉네임 입니다. 다른 닉네임을 사용해주세요.')
+                    }
+                    if(response.data.errormsg.includes('user.email')){
+                        alert('이미 가입 된 이메일입니다.')
+                    }
+                }
+
+                btn.value = '수정'
+                btn.disabled = false
+
             }
           
         })

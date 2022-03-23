@@ -17,6 +17,7 @@
     "express": "^4.17.3",
     "mysql2": "^2.3.3",
     "nunjucks": "^3.2.3",
+    "session": "^0.1.0",
     "supervisor": "^0.12.0"
   },
   "keywords": [],

@@ -6,6 +6,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const { Auth } = require('./middlewares/auth.js')
 
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true,}))
 app.use(cors({
