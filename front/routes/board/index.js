@@ -24,5 +24,9 @@ router.use('/QnA', (req,res)=>{
 })
 
 
+router.use('/QnA', (req,res)=>{
+    res.render('./board/notice')
+})
+
 
 module.exports = router
