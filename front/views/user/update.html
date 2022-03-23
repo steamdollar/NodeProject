@@ -17,7 +17,7 @@
                 <tbody class="tbody">
                     <tr>
                         <td> * 아이디 </td>
-                        <td> <input type="text" name="userid" value="{{user.userpw}}" id="userid"> </td>
+                        <td> <input type="text" name="userid" value="{{user.userid}}" id="userid"> </td>
                     </tr>
                     <tr>
                         <td> * 비밀번호 </td>
@@ -69,6 +69,7 @@
             const address = document.querySelector('#address')
             const phone = document.querySelector('#phone')
             const mobile = document.querySelector('#mobile')
+            
 
             const data = {
                 userid:userid.value,
@@ -78,7 +79,8 @@
                 address: address.value,
                 phone: phone.value,
                 mobile: mobile.value,
-                gender: gender.value
+                gender: gender.value,
+               
             }
 
             const option = {

@@ -53,7 +53,7 @@ exports.join = async (req,res)=>{
 exports.login = async (req,res)=>{
     const { userid, userpw } = req.body
 
-    const sql = 'SELECT userid, username, nickname, level from user where userid = ? and userpw = ?'
+    const sql = 'SELECT userid, userimg, username, nickname, address, gender, phone, mobile, email, level from user where userid = ? and userpw = ?'
     const param = [userid, userpw]
     
     try {
