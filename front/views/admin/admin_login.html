@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>관리자 로그인 페이지</h1>
+    <form method="post" action="http://localhost:4000/api/admin/login" id="admin_frm">
+    <tr>
+        <td><label>admin_id</label></td>
+        <td><input type="text" name="adminid" id="adminid"></td>
+    </tr>
+    <tr>
+        <td><label>admin_password</label></td>
+        <td><input type="text" name="adminpw" id="adminpw"></td>
+    </tr>
+    </table>
+    <input type="submit" value="로그인" id="admin_check">
+    </form>
+    
+    </body>
+    <script>
+        const frm = document.querySelector('#admin_frm')
+        frm.addEventListener('submit',async (e)=>{
+            e.preventDefault()
+            const btn = document.querySelector('#admin_check')
+            btn.value='로딩중~~'
+            btn.disabled = true
+            
+            const option = { 
+                'Content-type':'application/json',
+                withCredentials:true,
+            }  
+
+            const data = { 
+            adminid:document.querySelector('#adminid').value,
+            adminpw:document.querySelector('#adminpw').value,
+            
+            }
+
+            
+            const response = await axios.post('http://localhost:4000/api/admin/login', data, option)
+
+            console.log(response.data.result)
+
+            if(response.data.result==="success"){ // 성공의 케이스 
+                // 성공
+                console.log('관리자 로그인 완료')
+                alert('관리자 로그인 완료')
+                location.href='/admin/user'
+            } else { //
+                // 실패
+                alert('권한이 없습니다!! 꺼져!!')
+                location.href='http://localhost:3000/admin'
+            }
+                
+            btn.value='로그인'
+            btn.disabled = false
+            
+        })
+        
+    </script>
+
+    
+</html>

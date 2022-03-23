@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="http://localhost:4000/api/admin/search" method="post">
+    <!-- <form action="http://localhost:4000/api/admin/search" method="post">
         <input type="text" name="nickname" placeholder="찾는 회원 닉네임">
         <input type="submit" value="검색">
     </form>
@@ -47,9 +47,50 @@
                 <th>{userintro}</th>
                 <th>{level}</th>
             </tr>
-            <a href="/admin/user/update/{{idx}}">수정페이지로 이동</a>
+           
         </template>
+        <a href="/admin/user/update/{{idx}}">수정페이지로 이동</a>
+         -->
+
+        <h1>Ting Talk 회원 관리</h1>
+        <form method=post>
+        <table  border="1" >
+        <tr>
+        <td><a href="/insert">회원생성</a> <!-- 자료 입력으로 이동 ()--></td>
+        <td><a href="/search">회원찾기</a> <!-- 자료 입력으로 이동 ()--></td>
+        <td><input type="submit" value="로그아웃" /></td>
+        </tr>
+        </table>
         
+        
+        
+        
+        </form>
+        <table width="100%" border="1">
+        <caption><h2>회원 목록</h2></caption>
+        <tr>
+        <th>수정</th>
+        <th>삭제</th>
+        <th>회원ID</th>
+        <th>비밀번호</th>
+        <th>회원이름</th>
+        <th>회원이메일</th>
+        <th>휴대번호</th>
+        </tr>
+        <% data.forEach(function(item,index){ %>  <!-- 스크립트 언어-->
+        <tr>
+            <td><a href="/edit/<%=item.client_id %>">edit</a></td>
+        <td><a href="/delete/<%=item.client_id %>">delete</a></td> 
+        <td><%= item.client_id %></td>  <!-- 값 추출-->
+        <td><%= item.client_password %></td>
+        <td><%= item.client_name %></td>
+        <td><%= item.client_email %></td>
+        <td><%= item.client_phone %></td>
+        
+        
+        </tr>
+        <%}); %>
+        </table>
         
 </body>
 </html>

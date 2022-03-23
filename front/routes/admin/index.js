@@ -2,6 +2,9 @@
 const express = require('express')
 const router = express.Router()
 
+router.use('/login',(req,res)=>{
+    res.render('./admin/admin_login')
+})
 
 router.use('/board', (req,res)=>{
     res.render('./admin/admin_board')
@@ -23,6 +26,10 @@ router.use('/notice', (req,res)=>{
     res.render('./board/notice')
 })
 
+router.use('/userupdate', (req,res)=>{
+
+    res.render('./admin/admin_userupdate')
+})
 
 
 module.exports = router
