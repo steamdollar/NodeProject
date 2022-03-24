@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
 
         document.addEventListener('DOMContentLoaded',()=>{
@@ -42,6 +43,22 @@
             webSocket.onclose = () => {
                 console.log('웹소켓 disconnection')
             }
+            const logout2 = document.querySelector('#logout')
+            logout2.addEventListener('click', async (d)=>{
+                d.preventDefault()
+
+                const option = {
+                    'Content-type':'application/json',
+                    withCredentials:"true"
+                }
+
+                const response = await axios.post('http://localhost:4000/api/user/logout',null,option)
+                alert('로그아웃 되었습니다')
+                location.href='http://localhost:3000'
+
+        
+
+            })
         })
     </script>
 </head>
@@ -51,6 +68,7 @@
     <h2>{{userid}}님, 환영합니다!</h2>
     <a href ='#'>게시판 (로그인 한 사람만?)</a>
     <a href="/board/notice">공지사항</a>
+    <a href="" id="logout">로그아웃</a>
 
     <h1>----------chat----------</h1>
     <form action="/" method="get">
@@ -63,4 +81,5 @@
 
     
 </body>
+
 </html>

@@ -6,6 +6,9 @@ const router = require('./routes')
 const webSocket = require('./socket.js')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
+const { Auth } = require('./middlewares/auth')
+
+let cookieShuttle = {}
 
 app.set('view engine','html')
 nunjucks.configure('views',{
@@ -14,6 +17,7 @@ nunjucks.configure('views',{
 })
 
 app.use(cookieParser())
+
 app.use(express.urlencoded({
     extended:true,
 }))
@@ -31,7 +35,7 @@ app.get('/', (req,res)=>{
     })
   }
   else {
-    res.render('main2')
+        res.render('main2')
   }
 })
 
