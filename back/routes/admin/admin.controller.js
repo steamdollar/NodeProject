@@ -4,7 +4,7 @@ const pool = require('../../db.js').pool
 const { createToken } = require('../../utils/jwt.js')
 const { login } = require('../user/user.controller.js')
 
-exports.loginControl = (req,res)=>{
+exports.login = (req,res)=>{
     console.log(req.body)
     const {adminid, adminpw} = req.body
     const login_flag = (adminid === "admin" && adminpw === "admin")
@@ -26,24 +26,67 @@ exports.loginControl = (req,res)=>{
         res.json(response)
     }
 }
-exports.userControl = async (req,res)=>{
+
+exports.userList = async (req,res)=>{
+    //유저 리스트
+    const sql = 'SELECT * from user'
+    try {
+        const [result] = await pool.execute(sql)
+       
+        const response = {
+            result
+        }
+        res.json(response)
+
+    } catch(e){
+        console.log(e.message)
+        const response = {
+            error:"Not access"
+        }
+        res.json(response)
+    }
+
+
+}
+
+exports.userSearch = async (req,res)=>{
     //유저 검색
-    console.log(req.body)
+    const sql = `select * from user where nickname = ?`
     
-    res.send('회원 관리 완료')
+    const nickname = req.body
+    console.log(nickname)
+    const prepare = [nickname]
+    try {
+        const [result] = await pool.execute(sql,prepare)
+       
+        const response = {
+            result
+        }
+        res.json(response)
+
+    } catch(e){
+        console.log(e.message)
+        const response = {
+            error:"Not access"
+        }
+        res.json(response)
+    }
+    
 }
 
-exports.boardControl = (req,res)=>{
-    res.send('게시물 관리 완료')
+exports.userUpdate = (req,res)=>{
+    res.send('관리자 권한 회원 정보 강제 수정')
 }
 
-exports.search = (req,res)=>{
-    res.send('회원이 쓴 게시물 검색 완료')
+exports.userDelete = (req,res)=>{
+    res.send('관리자 권한 회원 강제퇴장')
 }
-exports.boardControl.hidden = (req,res)=>{
+
+exports.boardSearch = (req,res)=>{
+    res.send('게시물 검색')
+}
+
+exports.boardHidden = (req,res)=>{
     res.send('회원 게시물 내림')
 }
 
-exports.userControl.modify = (req,res)=>{
-    res.send('관리자 권한 회원 정보 강제 수정')
-}

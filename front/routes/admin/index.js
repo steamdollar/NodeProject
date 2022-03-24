@@ -3,15 +3,15 @@ const express = require('express')
 const router = express.Router()
 
 router.use('/login',(req,res)=>{
-    res.render('./admin/admin_login')
+    res.render('./admin/login')
 })
 
 router.use('/board', (req,res)=>{
-    res.render('./admin/admin_board')
+    res.render('./admin/board_list')
 })
 
 router.use('/user', (req,res)=>{
-    res.render('./admin/admin_user')
+    res.render('./admin/user_list')
 })
 
 router.use('/category', (req,res)=>{
@@ -28,7 +28,7 @@ router.use('/notice', (req,res)=>{
 
 router.use('/userupdate', (req,res)=>{
 
-    res.render('./admin/admin_userupdate')
+    res.render('./admin/user_update')
 })
 
 
