@@ -51,23 +51,24 @@ exports.userList = async (req,res)=>{
 
 exports.userSearch = async (req,res)=>{
     //유저 검색
-    const sql = `select * from user where nickname = ?`
-    
-    const nickname = req.body
-    console.log(nickname)
-    const prepare = [nickname]
+    const {nickname} = req.body
+    const sql = `select * from user where nickname LIKE "%${nickname}%"`
+
     try {
-        const [result] = await pool.execute(sql,prepare)
-       
+        const [result] = await pool.execute(sql)
+
         const response = {
-            result
+            result,
+            errno:"none"
         }
+        console.log(response.result)
         res.json(response)
 
     } catch(e){
         console.log(e.message)
         const response = {
-            error:"Not access"
+            errormsg: e.message,
+            errno: e.errno
         }
         res.json(response)
     }
