@@ -1,8 +1,58 @@
 //회원관리 미들웨어
 const express = require('express')
 const router = express.Router()
+const axios = require('axios')
+const qs = require('qs')
+const kakaoData = {
+    client_id:'3d8149cfd84df4adb0e342aacd571400',
+    client_secret:'IReMXzT3wQ4m9loLFT95vHSacZdyV3pK',
+    redirect_uri:'http://localhost:3000/user/oauth/kakao'
+}
+
 let update = {}
-let profile = {}
+
+
+
+router.use('/kakao/login',(req,res)=>{
+    const kakaoAuthorize = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoData.client_id}&redirect_uri=${kakaoData.redirect_uri}&response_type=code`
+    res.redirect(kakaoAuthorize)
+})
+
+router.use('/oauth/kakao', async (req,res)=>{
+    const code = req.query.code
+    const uri = 'https://kauth.kakao.com/oauth/token'
+    const body = qs.stringify({
+            grant_type:'authorization_code',
+            client_id:kakaoData.client_id,
+            client_secret:kakaoData.client_secret,
+            redirect_uri:kakaoData.redirect_uri,
+            code,
+        })
+    const headers = {'Content-type':'application/x-www-form-urlencoded'}
+    const response = await axios.post(uri,body,headers)
+   
+    console.log('잘왔누',response.data.access_token)
+    
+
+    try {   
+        const {access_token} = response.data
+        const url = 'https://kapi.kakao.com/v2/user/me'
+        const userinfo = await axios.get(url,{
+            headers:{
+                'Authorization': `Bearer ${access_token}`,
+            }
+        })
+        const nickname = userinfo.data.kakao_account.profile.nickname
+        const userimg = userinfo.data.kakao_account.profile.profile_image_url
+
+        const result = {nickname,userimg} 
+        console.log(result)
+        res.redirect('/')
+    } catch(e){
+       
+    }
+    
+})
 
 router.use('/join',(req,res)=>{
     res.render('./user/join')
@@ -56,5 +106,7 @@ router.use('/profile', (req,res)=>{
 router.use('/welcome', (req,res)=>{
     res.render('./user/welcome')
 })
+
+
 
 module.exports = router
