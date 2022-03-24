@@ -6,12 +6,9 @@ const router = require('./routes')
 const webSocket = require('./socket.js')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
-<<<<<<< HEAD
 const { Auth } = require('./middlewares/auth')
 
 let cookieShuttle = {}
-=======
->>>>>>> origin/gyuri
 
 app.set('view engine','html')
 nunjucks.configure('views',{
