@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async()=>{
+
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
+
+        const response = await axios.post('http://localhost:4000/api/admin/userlist',null, option)
+        const user = response.data.result
+        let user_list = document.querySelector('#user_list')
+        const user_temp = document.querySelector('#user_temp').innerHTML
+        let template = ''
+        let idx = 1
+        const promise = user.forEach(async e => {
+            const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro, level} = e
+            template += user_temp.replace('{idx}', idx)
+                                .replace('{nickname}',nickname)
+                                .replace('{userid}',userid)
+                                .replace('{username}',username)
+                                .replace('{userimg}',userimg)
+                                .replace('{nickname}',nickname)
+                                .replace('{address}',address)
+                                .replace('{gender}',gender)
+                                .replace('{phone}',phone)
+                                .replace('{mobile}',mobile)
+                                .replace('{email}',email)
+                                .replace('{userintro}',userintro)
+                                .replace('{level}', level)
+        idx++
+            
+        });
+        await promise;
+        console.log(template)
+        user_list.innerHTML = template
+        
+    })
+    </script>
+</head>
+<body>
+    
+    <h1>Ting Talk 회원 관리</h1>
+    <form method="post" action="http://localhost:4000/api/admin/usersearch">
+    <span>
+        찾을 회원 닉네임 :
+    </span>
+    <span>
+        <input type="text" name="nickname" id="nickname">
+    </span>
+    <span>
+        <input type="submit" name="user_search" id="user_search" value="검색">
+    </span>
+    
+    </form>
+    <h2>회원 목록</h2>
+    <table width="100%" border="1">
+    
+        <thead>
+            <tr>
+                <th>idx</th>
+                <th>수정</th>
+                <th>삭제</th>
+                <th>회원아이디</th>
+                <th>회원 프로필 사진</th>
+                <th>회원 성명</th>
+                <th>닉네임</th>
+                <th>주소</th>
+                <th>성별</th>
+                <th>집 전화번호</th>
+                <th>휴대전화번호</th>
+                <th>이메일</th>
+                <th>자기소개</th>
+                <th>유저등급</th>
+
+            </tr>
+        </thead>
+
+        <tbody id="user_list">
+
+        </tbody>
+    
+    </table>
+
+    <template id="user_temp">
+        <tr>
+            <th>{idx}</th>
+            <th><button>수정</button></th>
+            <th><button>삭제</button></th>
+            <th>{userid}</th>
+            <th>{userimg}</th>
+            <th>{username}</th>
+            <th>{nickname}</th>
+            <th>{address}</th>
+            <th>{gender}</th>
+            <th>{phone}</th>
+            <th>{mobile}</th>
+            <th>{email}</th>
+            <th>{userintro}</th>
+            <th>{level}</th>
+        </tr>
+    </template>
+</body>
+<script>
+    //회원 검색
+    const user_search = document.querySelector('#user_search')
+    user_search.addEventListener('submit', ()=>{
+        e.preventDefault()
+        user_search.value='로딩중~~'
+        user_search.disabled = true
+
+        const body = {
+            nickname:nickname.value
+        }
+
+        const option = {
+            'Content-type':'application/json',
+            withCredentials: true
+        }
+
+        try {
+            const response = await axios.post('http://localhost:4000/api/admin/usersearch', body, option)
+
+            console.log(response.data)
+        }
+        catch (e) {
+            alert(e.message)
+        }
+    })
+    
+</script>
+</html>

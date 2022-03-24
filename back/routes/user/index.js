@@ -7,6 +7,7 @@ router.post('/join',userController.join)
 router.post('/login',userController.login)
 router.post('/update',userController.update)
 router.post('/profile',userController.profile)
+router.post('/delete',userController.delete)
 
 
 
