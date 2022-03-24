@@ -35,23 +35,21 @@ CREATE TABLE comment (
     c_date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE notice (
-    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nickname VARCHAR(20) NOT NULL,
+create table notice(
+    idx INT AUTO_INCREMENT PRIMARY KEY,
+    writer VARCHAR(30) DEFAULT 'admin',
     title VARCHAR(40) NOT NULL,
-    content TEXT NULL,
-    date TIMESTAMP NOT NULL,
-    hit INT NOT NULL DEFAULT 0
+    content TEXT NOT NULL,
+    date VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE QnA (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(40) NOT NULL,
     content TEXT NOT NULL,
-    nickname VARCHAR(30) NOT NULL,
-    date TIMESTAMP NOT NULL,
+    userid VARCHAR(30) NOT NULL,
+    date VARCHAR(30) NOT NULL,
     hit INT NOT NULL DEFAULT 0
-
 );
 
 CREATE TABLE reply (
@@ -60,3 +58,12 @@ CREATE TABLE reply (
     r_nickname VARCHAR(30) NOT NULL,
     r_date TIMESTAMP NOT NULL
 );
+
+--CREATE TABLE notice (
+--    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--    nickname VARCHAR(20) NOT NULL,
+--    title VARCHAR(40) NOT NULL,
+--    content TEXT NULL,
+--    date TIMESTAMP NOT NULL,
+--    hit INT NOT NULL DEFAULT 0
+--);

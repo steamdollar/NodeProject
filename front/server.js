@@ -5,9 +5,13 @@ const nunjucks = require('nunjucks')
 const router = require('./routes')
 const webSocket = require('./socket.js')
 const cookieParser = require('cookie-parser')
+<<<<<<< HEAD
 
 
 let cookieShuttle = {}
+=======
+const axios = require('axios')
+>>>>>>> a1a325a699aeeb3d0491d262f2f97797f29d695f
 
 app.set('view engine','html')
 nunjucks.configure('views',{
