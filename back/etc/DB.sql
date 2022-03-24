@@ -51,6 +51,7 @@ CREATE TABLE QnA (
     content TEXT NOT NULL,
     userid VARCHAR(30) NOT NULL,
     date VARCHAR(30) NOT NULL,
+    category VARCHAR(20) DEFAULT 'qna',
     hit INT NOT NULL DEFAULT 0
 );
 

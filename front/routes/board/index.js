@@ -13,6 +13,10 @@ const option = {
 
 app.use(cookieParser)
 
+router.get('/', (req, res) => {
+    res.render('./board/board_main.html')
+})
+
 router.use('/list',(req,res)=>{
     res.render('./board/list')
 })
