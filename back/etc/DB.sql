@@ -29,10 +29,12 @@ CREATE TABLE user (
 );
 
 CREATE TABLE comment (
-    cidx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    comment TEXT NOT NULL,
-    c_nickname VARCHAR(30) NOT NULL,
-    c_date TIMESTAMP NOT NULL
+    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    mcategory VARCHAR(30),
+    midx INT NOT NULL,
+    content TEXT NOT NULL,
+    nickname VARCHAR(30) NOT NULL,
+    date VARCHAR(30) NOT NULL
 );
 
 create table notice(

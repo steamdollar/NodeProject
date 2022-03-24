@@ -97,11 +97,12 @@ router.use('/notice_view', async (req, res) => {
 
     const response = await axios.post('http://localhost:4000/api/board/notice_view', idx, option)
     const notice_view = response.data
-
     res.render('./board/notice/notice_view.html', {
         notice_view: notice_view.result
     })
 })
+
+
 
 
 module.exports = router
