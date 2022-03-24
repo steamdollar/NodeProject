@@ -39,7 +39,7 @@
                 withCredentials:true,
             }
 
-            const response = await axios.post('http://localhost:4000/api/board/notice_delete', data, option)
+            const response = await axios.post('http://localhost:4000/api/board/notice/delete', data, option)
             
             if(response.data.errno === 0 ) {
                 alert('글 삭제가 완료되었습니다.')

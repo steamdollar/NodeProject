@@ -14,7 +14,7 @@
     닉네임 : <span>{{ item.userid }}</span> <br />
     내용 : {{ item.content }}<br/>
     작성일자 : {{ item.date }}
-    <form method="post" action="http://localhost:4000/api/board/qna_delete" id="del_frm">
+    <form method="post" action="http://localhost:4000/api/board/QnA/delete" id="del_frm">
         <input type="hidden" name='idx' value="{{item.idx}}" id="idx"> 
         <input type="submit" value="글 삭제">
     </form>
@@ -38,7 +38,7 @@
                 withCredentials:true,
             }
 
-            const response = await axios.post('http://localhost:4000/api/board/qna_delete', data, option)
+            const response = await axios.post('http://localhost:4000/api/board/QnA/delete', data, option)
             
             if(response.data.errno === 0 ) {
                 alert('글 삭제가 완료되었습니다.')

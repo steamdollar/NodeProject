@@ -52,7 +52,7 @@ router.use('/QnA_write', (req,res)=>{
 
 // qna list
 router.use('/QnA', async (req,res) => {
-    const response = await axios.get('http://localhost:4000/api/board/qna_list',option)
+    const response = await axios.get('http://localhost:4000/api/board/QnA/list',option)
     const qna_list = response.data
     res.render('./board/QnA/QnA_list.html', {
         qna_list: qna_list.result
@@ -63,7 +63,7 @@ router.use('/QnA', async (req,res) => {
 router.use('/QnA_view', async (req, res) => {
     const idx = req.query
 
-    const response = await axios.post('http://localhost:4000/api/board/QnA_view', idx, option)
+    const response = await axios.post('http://localhost:4000/api/board/QnA/view', idx, option)
     const QnA_view = response.data
 
     res.render('./board/QnA/QnA_view.html', {
@@ -72,16 +72,15 @@ router.use('/QnA_view', async (req, res) => {
 })
 
 
-
 // 공지
 
 // 리스트
 router.use('/notice', async (req,res)=>{
-    const response = await axios.get('http://localhost:4000/api/board/notice_list', option)
+    const response = await axios.get('http://localhost:4000/api/board/notice/list', option)
     const notice_list = response.data
     // console.log( notice_list.result) // array [ 객체, 객체 ]
     
-    res.render('./board/notice/notice.html', {
+    res.render('./board/notice/notice_list.html', {
         notice_list: notice_list.result
     })
 })
@@ -95,14 +94,12 @@ router.use('/notice_write', (req,res)=>{
 router.use('/notice_view', async (req, res) => {
     const idx = req.query //json
 
-    const response = await axios.post('http://localhost:4000/api/board/notice_view', idx, option)
+    const response = await axios.post('http://localhost:4000/api/board/notice/view', idx, option)
     const notice_view = response.data
     res.render('./board/notice/notice_view.html', {
         notice_view: notice_view.result
     })
 })
-
-
 
 
 module.exports = router
