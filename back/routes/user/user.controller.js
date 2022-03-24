@@ -87,12 +87,6 @@ exports.login = async (req,res)=>{
 }
 
 exports.profile = async (req,res)=>{
-<<<<<<< HEAD
-=======
-    // const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = req.body
-    // console.log('hello')
-    // console.log(req.user)
->>>>>>> a1a325a699aeeb3d0491d262f2f97797f29d695f
     const {userid} = req.user
     
     const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where userid=?'
