@@ -6,7 +6,7 @@ const { createToken } = require('../../utils/jwt.js')
 
 
 exports.join = async (req,res)=>{
-    console.log(req.body) // req.body 
+    // console.log(req.body) // req.body 
     const {userid,userpw,userimg,username,nickname,address,gender,phone,mobile,email,userintro} = req.body
     const sql = `INSERT INTO user(
                     userid,
@@ -148,7 +148,6 @@ exports.delete = async (req,res)=>{
 
     try {
         const [result] = await pool.execute(sql,param)
-        console.log(result)
         response = {
             result,
             errno:0
@@ -165,4 +164,11 @@ exports.delete = async (req,res)=>{
         }
         res.json(response)
     }
+}
+
+exports.logout = (req,res) => {
+    
+    res.clearCookie('token')
+
+    res.json({})
 }

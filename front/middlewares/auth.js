@@ -9,7 +9,7 @@ exports.Auth = async (req, res, next) => {
         "Content-type":"application/json"
     }
 
-    const response = await axios.post('http://localhost:4001/api/auth', body, option)
+    const response = await axios.post('http://localhost:4000/api/auth', body, option)
 
     if (response.data === true) {
         next ()

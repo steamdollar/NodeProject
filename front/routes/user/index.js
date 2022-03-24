@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 const qs = require('qs')
+const { createToken } = require('../../../back/utils/jwt')
 const kakaoData = {
     client_id:'3d8149cfd84df4adb0e342aacd571400',
     client_secret:'IReMXzT3wQ4m9loLFT95vHSacZdyV3pK',
@@ -42,14 +43,35 @@ router.use('/oauth/kakao', async (req,res)=>{
                 'Authorization': `Bearer ${access_token}`,
             }
         })
-        const nickname = userinfo.data.kakao_account.profile.nickname
-        const userimg = userinfo.data.kakao_account.profile.profile_image_url
+        const { nickname, profile_image: img} = userinfo.data.properties
+        const result = { nickname, img}
+        const jwt_token = createToken(result)
 
-        const result = {nickname,userimg} 
-        console.log(result)
-        res.redirect('/')
+        res.cookie('kakaoToken', jwt_token,{
+            path:'/',
+            httpOnly:true,
+            domain:'localhost'
+        })
+
+        // console.log(req.cookies.kakaoToken)
+        const {kakaoToken} = req.cookies
+        console.log(kakaoToken)
+        if(kakaoToken !== undefined){
+            res.render('main')
+        }
+        else(
+            res.render('main2')
+        )
+        
+        
+
+        // const nickname = userinfo.data.kakao_account.profile.nickname
+        // const userimg = userinfo.data.kakao_account.profile.profile_image_url
+
+        // const result = {nickname,userimg} 
+        // console.log(result)
     } catch(e){
-       
+        console.log(e)
     }
     
 })
@@ -66,6 +88,7 @@ router.use('/update', (req,res)=>{
     
     const {token} = req.cookies
     
+
     if(token !== undefined) {
     const userid = token.split('.')
     const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
