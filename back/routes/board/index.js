@@ -6,6 +6,11 @@ const notice_listController = require('./board_notice/board.notice_list.controll
 const QnAController = require('./board_qna/board.QnA.controller')
 const writeController = require('./board.write.controller')
 const listController = require('./board.list.controller')
+const QnA_listContoller = require('./board_qna/board.QnA_list.controller.js')
+const QnA_viewController = require('./board_qna/Qna_view.controller.js')
+const NoticeViewController = require('./board_notice/board.notice_view.js')
+const notice_delete = require('./board_notice/notice_deleteController.js')
+const QnA_delete = require('./board_qna/QnA_deleteController')
 
 
 router.use('/write',writeController.write)
@@ -15,5 +20,10 @@ router.use('/delete',modifyController.delete)
 router.use('/notice',noticeController.notice)
 router.use('/list', listController.list)
 router.use('/notice_list', notice_listController.notice_list)
+router.use('/qna_list', QnA_listContoller.qna_list)
+router.use('/notice_view', NoticeViewController.notice_view)
+router.use('/Qna_view',QnA_viewController.QnA_view)
+router.use('/notice_delete', notice_delete.notice_del)
+router.use('/qna_delete',QnA_delete.QnA_del)
 
 module.exports = router

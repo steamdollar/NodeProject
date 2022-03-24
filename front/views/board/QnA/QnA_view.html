@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    {% for item in QnA_view %}
+    제목 : <span id="title">{{item.title}}</span><br/>
+    닉네임 : <span>{{ item.userid }}</span> <br />
+    내용 : {{ item.content }}<br/>
+    작성일자 : {{ item.date }}
+    <form method="post" action="http://localhost:4000/api/board/qna_delete" id="del_frm">
+        <input type="hidden" name='idx' value="{{item.idx}}" id="idx"> 
+        <input type="submit" value="글 삭제">
+    </form>
+    {% endfor %}
+    <br>
+    <a href="/board/qna">글 목록</a>
+
+    <script type="text/javascript">
+        const delForm = document.querySelector('#del_frm')
+
+        delForm.addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const idx = delForm.querySelector('#idx')
+            const data = {
+                idx:idx.value
+            }
+
+            const option = {
+                'Content-type':'application/json',
+                withCredentials:true,
+            }
+
+            const response = await axios.post('http://localhost:4000/api/board/qna_delete', data, option)
+            
+            if(response.data.errno === 0 ) {
+                alert('글 삭제가 완료되었습니다.')
+                location.href='/board/qna'
+            }
+            else {
+                alert('수행할 수 없는 명령입니다.')
+            }
+        })
+    </script>
+</body>
+</html>
