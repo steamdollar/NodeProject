@@ -32,11 +32,10 @@ module.exports = (server) => {
         })
         
         ws.on('close', ()=>{
-            console.log('cilent out')
             sockets = sockets.filter(v=>{
                 return ws.id !== v.id
             })
-            console.log(sockets.length)
+
         })
     })
 
