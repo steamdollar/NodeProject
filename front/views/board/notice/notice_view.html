@@ -17,6 +17,8 @@
         <input type="hidden" name='idx' value="{{item.idx}}" id="idx"> 
         <input type="submit" value="글 삭제">
     </form>
+
+    <a href='/board/notice_update?idx={{item.idx}}'>수정</a>
     {% endfor %}
 
     <br>

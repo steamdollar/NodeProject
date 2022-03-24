@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    {% for item in notice_update %}
+    <form method ='post' action="http://localhost:4000/api/board/QnA/update" id="update_frm">
+        <div>
+            <strong>제목</strong> <br>
+            <input type="text" name="title" placeholder="제목입력" id="title" value="{{item.title}}">
+        </div>
+        <div>
+            <strong>내용</strong> <br>
+            <input name="content" placeholder="내용입력" id="content" value="{{item.content}}" style="width:500px; height:500px"></input>
+            <!-- textarea 쓰면 글자가 안보인다..-->
+        </div>
+        <input type="hidden" id="idx" name="idx" value="{{item.idx}}">
+        <input type="submit" value="글수정">
+    </form>
+    {% endfor %}
+
+    <script type="text/javascript">
+        const update_frm = document.querySelector('#update_frm')
+        update_frm.addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const title = update_frm.querySelector('#title')
+            const content = update_frm.querySelector('#content')
+            const idx = update_frm.querySelector('#idx')
+            console.log(title, content, idx)
+            const data = {
+                title:title.value,
+                content:content.value,
+                idx: idx.value
+            }
+
+            const option = {
+                'Content-type':'applicaiton/json',
+                withCredentials:true
+            }
+
+            const response = await axios.post('http://localhost:4000/api/board/notice/update', data, option)
+
+            if (response.data.errno === 0 ) {
+                alert('공지사항 작성이 완료되었습니다.')
+                location.href='/board/notice'
+            }
+            else {
+                alert('공지사항 작성중 문제가 발생하였습니다.')
+            }
+        })
+    </script>
+</body>
+</html>

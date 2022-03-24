@@ -45,7 +45,7 @@
                 withCredentials:true
             }
 
-            const response = await axios.post('http://localhost:4000/api/board/notice/write', data, option)
+            const response = await axios.post('http://localhost:4000/api/board/notice', data, option)
 
             if(response.data.errno === 0) {
                 alert('공지사항 작성이 완료되었습니다.')

@@ -6,5 +6,6 @@ router.use('/write',qnaRouter.QnA_write)
 router.use('/list', qnaRouter.QnA_list)
 router.use('/view', qnaRouter.QnA_view)
 router.use('/delete', qnaRouter.QnA_del)
+router.use('/update', qnaRouter.QnA_update)
 
 module.exports = router

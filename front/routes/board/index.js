@@ -71,6 +71,16 @@ router.use('/QnA_view', async (req, res) => {
     })
 })
 
+router.use('/QnA_update', async (req, res) => {
+    const idx = req.query
+    const response = await axios.post('http://localhost:4000/api/board/notice/view', idx, option)
+
+    const QnA_update = response.data
+    res.render('./board/notice/Qna_update.html', {
+        QnA_update:QnA_update.result
+    })
+})
+
 
 // 공지
 
@@ -98,6 +108,17 @@ router.use('/notice_view', async (req, res) => {
     const notice_view = response.data
     res.render('./board/notice/notice_view.html', {
         notice_view: notice_view.result
+    })
+})
+
+// 공지 - 글 수정
+router.use('/notice_update', async (req, res) => {
+    const idx = req.query
+    
+    const response = await axios.post('http://localhost:4000/api/board/notice/view', idx, option)
+    const notice_update = response.data
+    res.render('./board/notice/notice_update.html', {
+        notice_update:notice_update.result
     })
 })
 

@@ -90,3 +90,27 @@ exports.notice_del = async (req,res)=>{
         res.json(response)  
     }
 }
+
+exports.notice_update = async(req, res) => {
+    const {title, content, idx} = req.body
+    const date = new Date()
+
+    const sql = `update notice set title=?, content=?, date=? where idx=?`
+    const param = [title, content, date, idx]
+    try {
+        const [result] = await pool.execute(sql,param)
+        const response = {
+            result,
+            errno:0
+        }
+        res.json(response) 
+    } 
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+        
+        res.json(response)  
+    }
+}
