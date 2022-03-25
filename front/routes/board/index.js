@@ -3,6 +3,9 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 const cookieParser = require('cookie-parser')
+const cate1Router = require('./cate1/index.js')
+const QnARouter = require('./QnA/QnA_index.js')
+const noticeRouter = require('./notice/index.js')
 
 const app = express()
 
@@ -33,98 +36,14 @@ router.use('/write', (req,res)=>{
     res.render('./board/write')
 })
 
+// cate1
+router.use('/cate1', cate1Router)
+
 // QnA
+router.use('/QnA', QnARouter)
 
-// qna 글쓰기
-router.use('/QnA_write', (req,res)=>{
-    const {token} = req.cookies
-    try {
-        if (token === undefined) {throw new Error('token이 존재하지 않습니다.')}
-        const [ header, payload, sign ] = token.split('.')    
-        const user = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
-        console.log(user) // { userid: 'sila', username: 'qwerty', nickname: 'qwerty', level: 1 }
-    
-        res.render('./board/QnA/QnA.html', {
-            user:user.userid
-        })
-    }
-    catch (e) {
-        console.log(e.message)
-        res.render('token.html')
-    }
-})
-
-// qna list
-router.use('/QnA', async (req,res) => {
-    const response = await axios.get('http://localhost:4000/api/board/QnA/list',option)
-    const qna_list = response.data
-    res.render('./board/QnA/QnA_list.html', {
-        qna_list: qna_list.result
-    })
-})
-
-//qna view
-router.use('/QnA_view', async (req, res) => {
-    const idx = req.query
-
-    const response = await axios.post('http://localhost:4000/api/board/QnA/view', idx, option)
-    const QnA_view = response.data
-
-    res.render('./board/QnA/QnA_view.html', {
-        QnA_view : QnA_view.result
-    })
-})
-
-router.use('/QnA_update', async (req, res) => {
-    const idx = req.query
-    const response = await axios.post('http://localhost:4000/api/board/notice/view', idx, option)
-
-    const QnA_update = response.data
-    res.render('./board/notice/Qna_update.html', {
-        QnA_update:QnA_update.result
-    })
-})
-
-
-// 공지
-
-// 리스트
-router.use('/notice', async (req,res)=>{
-    const response = await axios.get('http://localhost:4000/api/board/notice/list', option)
-    const notice_list = response.data
-    // console.log( notice_list.result) // array [ 객체, 객체 ]
-    
-    res.render('./board/notice/notice_list.html', {
-        notice_list: notice_list.result
-    })
-})
-
-// 공지 - 글쓰기
-router.use('/notice_write', (req,res)=>{
-    res.render('./board/notice/notice_write.html')
-})
-
-// 공지 - 글 보기
-router.use('/notice_view', async (req, res) => {
-    const idx = req.query //json
-
-    const response = await axios.post('http://localhost:4000/api/board/notice/view', idx, option)
-    const notice_view = response.data
-    res.render('./board/notice/notice_view.html', {
-        notice_view: notice_view.result
-    })
-})
-
-// 공지 - 글 수정
-router.use('/notice_update', async (req, res) => {
-    const idx = req.query
-    
-    const response = await axios.post('http://localhost:4000/api/board/notice/view', idx, option)
-    const notice_update = response.data
-    res.render('./board/notice/notice_update.html', {
-        notice_update:notice_update.result
-    })
-})
+// notice
+router.use('/notice', noticeRouter)
 
 
 module.exports = router

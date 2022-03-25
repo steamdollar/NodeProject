@@ -211,6 +211,30 @@ done
 
 mcategory, mindex, index(Primary key), nickname, content, date 정도의 field가 필요할 것 같다.
 
+
+CREATE TABLE cate1 (
+    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(30) NOT NULL,
+    title VARCHAR(40) NOT NULL,
+    content TEXT NULL,
+    nickname VARCHAR(30) NOT NULL,
+    userid VARCHAR(30) NOT NULL,
+    date VARCHAR(30) NOT NULL,
+    hit INT NOT NULL DEFAULT 0,
+    likes INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE comment (
+    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    mcategory VARCHAR(30) NOT NULL,
+    mindex INT NOT NULL,
+    content TEXT NULL,
+    nickname VARCHAR(30) NOT NULL,
+    userid VARCHAR(30) NOT NULL,
+    date VARCHAR(30) NOT NULL,
+)
+
+
 이렇게 저장한 댓글은 글 view 페이지에 갈 경우 글 내용과 함꼐 불러올 수 있다.
 
 그 후엔 댓글 쓰는대로 불러다가 주면 될 거다.

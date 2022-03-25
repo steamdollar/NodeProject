@@ -8,16 +8,15 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    {% for item in notice_update %}
-    <form method ='post' action="http://localhost:4000/api/board/notice/update" id="update_frm">
+    {% for item in cate1_update %}
+    <form method ='post' action="http://localhost:4000/api/board/cate1/update" id="update_frm">
         <div>
             <strong>제목</strong> <br>
             <input type="text" name="title" placeholder="제목입력" id="title" value="{{item.title}}">
         </div>
         <div>
             <strong>내용</strong> <br>
-            <textarea name="content" placeholder="내용입력" id="content" style="width:500px; height:500px">{{item.content}}</textarea>
-            <!-- textarea 쓰면 글자가 안보인다..-->
+            <textarea name="content" placeholder="내용입력" id="content"  style="width:500px; height:500px">{{item.content}}</textarea>
         </div>
         <input type="hidden" id="idx" name="idx" value="{{item.idx}}">
         <input type="submit" value="글수정">
@@ -44,14 +43,14 @@
                 withCredentials:true
             }
 
-            const response = await axios.post('http://localhost:4000/api/board/notice/update', data, option)
+            const response = await axios.post('http://localhost:4000/api/board/cate1/update', data, option)
 
             if (response.data.errno === 0 ) {
-                alert('공지사항 작성이 완료되었습니다.')
-                location.href='/board/notice'
+                alert('글 수정이 완료되었습니다.')
+                location.href='/board/cate1'
             }
             else {
-                alert('공지사항 작성중 문제가 발생하였습니다.')
+                alert('글 수정중 문제가 발생하였습니다.')
             }
         })
     </script>

@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    {% for item in notice_update %}
+    {% for item in QnA_update %}
     <form method ='post' action="http://localhost:4000/api/board/QnA/update" id="update_frm">
         <div>
             <strong>제목</strong> <br>
@@ -16,8 +16,7 @@
         </div>
         <div>
             <strong>내용</strong> <br>
-            <input name="content" placeholder="내용입력" id="content" value="{{item.content}}" style="width:500px; height:500px"></input>
-            <!-- textarea 쓰면 글자가 안보인다..-->
+            <textarea name="content" placeholder="내용입력" id="content"  style="width:500px; height:500px">{{item.content}}</textarea>
         </div>
         <input type="hidden" id="idx" name="idx" value="{{item.idx}}">
         <input type="submit" value="글수정">

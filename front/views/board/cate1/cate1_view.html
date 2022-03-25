@@ -7,23 +7,22 @@
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-    {% for item in notice_view %}
+    {% for item in cate1_view %}
+    카테고리 : <span id="category">{{item.category}}</span><br>
     제목 : <span id="title">{{item.title}}</span><br/>
-    작성자 : <span id="nickname">{{ item.writer }}</span> <br />
+    닉네임 : <span>{{ item.nickname }}</span> <br />
     내용 : {{ item.content }}<br/>
     작성일자 : {{ item.date }}
-    <form method="post" action="http://localhost:4000/api/board/notice/delete" id="del_frm">
+    <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
         <input type="hidden" name='idx' value="{{item.idx}}" id="idx"> 
         <input type="submit" value="글 삭제">
     </form>
-
-    <a href='/board/notice/update?idx={{item.idx}}'>수정</a>
+    <a href='/board/cate1/update?idx={{item.idx}}'>수정</a>
     {% endfor %}
-
     <br>
-    <a href="/board/notice">글 목록</a>
-    
+    <a href="/board/cate1">글 목록</a>
 
     <script type="text/javascript">
         const delForm = document.querySelector('#del_frm')
@@ -41,17 +40,16 @@
                 withCredentials:true,
             }
 
-            const response = await axios.post('http://localhost:4000/api/board/notice/delete', data, option)
+            const response = await axios.post('http://localhost:4000/api/board/cate1/delete', data, option)
             
             if(response.data.errno === 0 ) {
                 alert('글 삭제가 완료되었습니다.')
-                location.href='/board/notice'
+                location.href='/board/cate1'
             }
             else {
-
+                alert('수행할 수 없는 명령입니다.')
             }
         })
     </script>
-    
 </body>
 </html>

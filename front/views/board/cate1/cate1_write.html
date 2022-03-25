@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            let hiddenSpan = document.querySelector('#hidden')
+            let nickInput = document.querySelector('#nickname')
+
+            nickInput.disabled= true
+            hiddenSpan.disabled = true
+        })
+    </script>
+    <style>
+        #hidden {
+            display:none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>QnA 페이지</h1>
+    </div>
+    
+    <span id="hidden"> {{ userid }} </span>
+    
+    <form method="post" action="http://localhost:4000/api/board/write" id="write_frm">
+        <input type="text" name="nickname" id="nickname" value="{{nickname}}">
+        <div>
+            <strong>제목</strong> <br>
+            <input type="text" name="title" placeholder="제목입력" id="title">
+        </div>
+        <div>
+            <strong>category</strong> <br>
+            <input type="text" name="category" placeholder="카테고리 선택", id="category">
+        </div>
+        <div>
+            <strong>내용</strong> <br>
+            <textarea name="content" placeholder="내용입력" id="content"></textarea>
+        </div>
+        <input type="submit" value="글작성">
+    </form>
+
+    <script type="text/javascript">
+        const write_frm = document.querySelector('#write_frm')
+        write_frm.addEventListener('submit', async(e) => {
+            e.preventDefault()
+
+            const userid = document.querySelector('#hidden')
+            const nickname = document.querySelector('#nickname')
+            const category = document.querySelector('#category')
+            const title = document.querySelector('#title')
+            const content = document.querySelector('#content')
+            
+            const data = { 
+                userid : userid.innerHTML,
+                category: category.value,
+                nickname:nickname.value,
+                title : title.value,
+                content : content.value,
+            }
+            console.log(data)
+            const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+
+            const response = await axios.post('http://localhost:4000/api/board/cate1/write', data, option)
+
+            if(response.data.errno === 0) {
+                alert('글 작성이 완료되었습니다.')
+                location.href='/board/cate1'
+            }
+            else {
+                alert('글 작성중 문제가 발생하였습니다.')
+            }
+        })
+    </script>
+</body>
+</html>

@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1><a href='/'>logo</a></h1>
-    <h2> QnA_리스트 </h2>
+    <h2> cate1_리스트 </h2>
     <table>
         <tr>
             <td>idx</td>
@@ -18,11 +18,11 @@
             <td>hit</td>
         </tr>
 
-        {% for item in qna_list %}
+        {% for item in cate1_list %}
         <tr>
             <td>{{item.idx}}</td>
-            <td><a href="/board/QnA/view?idx={{item.idx}}">{{item.title}}</a></td> 
-            <td>{{item.userid}}</td> 
+            <td><a href="/board/cate1/view?idx={{item.idx}}">{{item.title}}</a></td> 
+            <td>{{item.nickname}}</td> 
             <td>{{item.date}}</td>
             <td>{{item.hit}}</td>
         </tr>
