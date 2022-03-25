@@ -24,7 +24,6 @@ app.use(express.urlencoded({
 
 app.get('/', (req,res)=>{
   const {token} = req.cookies
-  console.log(req.cookies)
   if(token !== undefined) {
     const userid = token.split('.')
     const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
@@ -33,8 +32,7 @@ app.get('/', (req,res)=>{
     res.render('main', {
       userid: cookieShuttle.userid
     })
-  }
-  else {
+  } else {
         res.render('main2')
   }
 })

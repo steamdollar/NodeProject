@@ -14,7 +14,7 @@ CREATE TABLE board (
 CREATE TABLE user (
     userid VARCHAR(30) NOT NULL PRIMARY KEY,
     userpw VARCHAR(50) NOT NULL,
-    userimg longblob NOT NULL,
+    userimg VARCHAR(200) NOT NULL,
     username VARCHAR(30) NOT NULL,
     nickname VARCHAR(30) NOT NULL,
     address VARCHAR(80) NOT NULL,

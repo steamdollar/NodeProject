@@ -2,12 +2,18 @@
 const pool = require('../../db.js').pool
 const { createToken } = require('../../utils/jwt.js')
 
+
 // 지운 이유 교수님이 지우라고했슴.
 
 
 exports.join = async (req,res)=>{
     // console.log(req.body) // req.body 
-    const {userid,userpw,userimg,username,nickname,address,gender,phone,mobile,email,userintro} = req.body
+    console.log('hello world')
+    const {userid,userpw,username,nickname,address,gender,phone,mobile,email,userintro} = req.body
+    console.log(userid,userpw,username,nickname,address,gender,phone,mobile,email,userintro)
+    const userimg = req.file.filename
+    console.log('넌 뭐냐',userimg)
+    
     const sql = `INSERT INTO user(
                     userid,
                     userpw,
@@ -172,6 +178,7 @@ exports.delete = async (req,res)=>{
 exports.logout = (req,res) => {
     
     res.clearCookie('token')
-
+    res.clearCookie('kakaoToken')
     res.json({})
 }
+
