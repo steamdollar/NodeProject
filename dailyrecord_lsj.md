@@ -267,8 +267,8 @@ cate1 의 idx 1인 게시물
 그거랑 연결되는 table을 하나더 만든다 (cate1_like)
 
 create table cate1_like(
-    m_idx int not null,
-    userid varchar(30) not null
+    m_idx int,
+    userid varchar(30)
 );
 
 <!-- 처음에 글을 쓰면 cate1, cate1_like에 각각 요청이 간다.
@@ -300,15 +300,75 @@ n번 게시물의 좋아요 수를 알고싶다.
 좋아요 table > idx가 n인 녀석을 카운트해서 그 숫자를 가져온다.
 > 이 구문 모르는데..
 
+'select count(m_idx) from cate1_like where m_idx=?'
+
+done
 
 - 1.3 좋아요 취소
 
-if 랑 likeflag를 만든다.
+1.2 까지 진행된 상태에서 sql 좀 비틀어줘야 함.
 
-눌렀는데 이미 DB에 있다 > 삭제
+sila가 좋아요를 눌렀을 떄,
 
-없다 > 추가
+누른 적이 없으면 (db에 정보가 없으면) 데이터셋을 추가해주고,
+
+이미 누른 적이 있다면 (db에 정보가 있다면) 해당 데이터 셋을 지운다.
+
+일단 이 구문을 만드는게 첫 번째
+
+구문을 만들면 like 미들웨어 sql을 수정하면 된다.
+
+누른 적이 없으면 추가, 없으면 수정 해주는 것밖에 못 찾겠다.
+
+m_idx = 0, userid=del 로 바꾼 후 바로 조건에 맞는 데이터셋을 삭제하는 방법으로 우회해보자.
+
+ㅅㅂ 이것도 안되네..
+
+그럼 userid=sila m_idx=10인 dataset의 idx(primary key e.g 1) 를 구한다.
+
+(idx, userid, m_idx) = (1, sila, 10)  
+
+이런 데이터 셋이 있다치면
+
+userid=sila, m_idx=10 인 데이터셋을 select * 로 가져온다.
+
+거기서 idx(PK) = 1 값을 찾았으면
 
 
 
+userid=del인 데이터 셋을 지우는 법으로 해보자. 
 
+drop table cate1_like;
+
+create table cate1_like(
+    idx = int primary key,
+    m_idx int,
+    userid varchar(30)
+);
+
+없으면 insert, 
+
+
+결과에 따라 게시글의 좋아요카운트는 ++ 이거나 --가 된다
+
+다 개지랄이고 그냥 좋아요, 좋아요 취소를 따로 만들자.
+
+좆같은 새끼들 프로그램 한 번 좆같이 해놨네
+
+좋아요를 누른다.
+
+> select로 로그인 하듯이 userid, m_idx를 찾는다.
+
+없으면 다음 sql 구문 (insert)가 실행된다.
+
+있으면 (length !=0) 이미 눌렀다고 뜬다.
+
+----
+
+좋아요 취소는 반대로 한다.
+
+찾아서 없으면 좋아요 누르지 않았다고 알람
+
+있으면 데이터셋을 제거한다.
+
+done

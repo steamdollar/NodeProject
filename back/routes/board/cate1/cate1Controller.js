@@ -133,13 +133,20 @@ exports.update = async(req, res) => {
 
 exports.like = async(req, res) => {
     const { idx, userid } = req.body
+    const sql1 = 'select * from cate1_like where m_idx=? and userid=?'
+    const sql2 = 'insert into cate1_like(m_idx, userid) values(?,?)'
+    const param1 = [idx, userid]
+    const param2 = [idx, userid]
 
-    const sql = 'insert into cate1_like(m_idx, userid) values(?,?)'
-    const param = [idx, userid]
     try {
-        const [result] = await pool.execute(sql, param)
+        const [result] = await pool.execute(sql1, param1)
+
+        if (result.length != 0) { throw new Error('좋아요는 한 번만 가능합니다') }
+        
+        const [result2] = await pool.execute(sql2, param2)
+
         const response = {
-            result,
+            result2,
             errno:0
         }
         res.json(response) 
@@ -147,7 +154,42 @@ exports.like = async(req, res) => {
     catch (e) {
         console.log(e.message)
         const response = {
-            errormsg: e.message
+            errormsg: e.message,
+            errno:1
+        }
+        
+        res.json(response) 
+    }
+}
+
+//
+
+exports.likeCancel = async (req, res) => {
+    const { idx, userid } = req.body
+    const sql1 = 'select * from cate1_like where m_idx=? and userid=?'
+    const sql2 = 'delete from cate1_like where m_idx=? and userid=?'
+    const param1 = [idx, userid]
+    const param2 = [idx, userid]
+
+    try {
+        const [result] = await pool.execute(sql1, param1)
+
+        if( result.length == 0 ) { throw new Error('좋아요를 누른 적이 없습니다') }
+
+        const [result2] = await pool.execute(sql2, param2)
+
+        const response = {
+            result2,
+            errno:0
+        }
+        res.json(response) 
+
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno:2
         }
         
         res.json(response) 
@@ -161,6 +203,7 @@ exports.likeCount = async(req, res) => {
 
     const sql = 'select count(m_idx) from cate1_like where m_idx=?'
     const param = [idx]
+
     try {
         const [result] = await pool.execute(sql, param)
         const response = {
