@@ -268,7 +268,7 @@ cate1 의 idx 1인 게시물
 
 create table cate1_like(
     m_idx int not null,
-    userid varchar(30) not null,
+    userid varchar(30) not null
 );
 
 <!-- 처음에 글을 쓰면 cate1, cate1_like에 각각 요청이 간다.
@@ -298,7 +298,7 @@ done
 n번 게시물의 좋아요 수를 알고싶다.
 
 좋아요 table > idx가 n인 녀석을 카운트해서 그 숫자를 가져온다.
-
+> 이 구문 모르는데..
 
 
 - 1.3 좋아요 취소

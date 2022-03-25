@@ -37,13 +37,16 @@ router.get('/write', (req, res) => {
 
 router.get('/view', async (req, res) => {
     const idx = req.query
-    const userid = 'sila'
+    const { token } = req.cookies
+    const [ header , payload, sign ] = token.split('.')
+    const user = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
+    
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_view = response.data
 
     res.render('./board/cate1/cate1_view.html', {
         cate1_view : cate1_view.result,
-        userid:userid
+        userid:user.userid
     })
 })
 

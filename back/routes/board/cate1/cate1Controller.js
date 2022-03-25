@@ -1,6 +1,6 @@
 const pool = require('../../../db.js').pool
 
-exports.cate1_write = async (req,res) => {
+exports.write = async (req,res) => {
     const {category, userid, nickname, title, content} = req.body
     const date = new Date()
     const sql = `insert into cate1
@@ -37,7 +37,7 @@ exports.cate1_write = async (req,res) => {
     }
 }
 
-exports.cate1_list = async (req,res)=>{
+exports.list = async (req,res)=>{
     const sql = `select * from cate1`
     // const param = ['admin']
     try {
@@ -56,7 +56,7 @@ exports.cate1_list = async (req,res)=>{
     }
 }
 
-exports.cate1_view = async (req,res) => {
+exports.view = async (req,res) => {
     const { idx } = req.body
     const sql = `select * from cate1 where idx=?`
     const param = [idx]
@@ -81,7 +81,7 @@ exports.cate1_view = async (req,res) => {
     }
 }
 
-exports.cate1_del = async (req,res)=>{
+exports.del = async (req,res)=>{
 
     const {idx} = req.body
 
@@ -105,7 +105,7 @@ exports.cate1_del = async (req,res)=>{
     }
 }
 
-exports.cate1_update = async(req, res) => {
+exports.update = async(req, res) => {
     const {title, content, idx} = req.body
     const date = new Date()
 
@@ -129,7 +129,9 @@ exports.cate1_update = async(req, res) => {
     }
 }
 
-exports.cate1_like = async(req, res) => {
+// like
+
+exports.like = async(req, res) => {
     const { idx, userid } = req.body
 
     const sql = 'insert into cate1_like(m_idx, userid) values(?,?)'
@@ -149,5 +151,30 @@ exports.cate1_like = async(req, res) => {
         }
         
         res.json(response) 
+    }
+}
+
+//
+
+exports.likeCount = async(req, res) => {
+    const { idx } = req.body
+
+    const sql = 'select count(m_idx) from cate1_like where m_idx=?'
+    const param = [idx]
+    try {
+        const [result] = await pool.execute(sql, param)
+        const response = {
+            result,
+            errno:0
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+
+        res.json(response)
     }
 }

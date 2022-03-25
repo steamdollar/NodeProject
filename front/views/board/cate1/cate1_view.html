@@ -10,7 +10,6 @@
 
 <body>
     {% for item in cate1_view %}
-    <span id="idx">{{item.idx}}</span><br>
     <span id="userid">{{userid}}</span><br>
 
     카테고리 : <span id="category">{{item.category}}</span><br>
@@ -24,12 +23,16 @@
     </form>
     <a href='/board/cate1/update?idx={{item.idx}}'>수정</a>
     {% endfor %}
+
     <br>
     <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
         <input type="submit" value="좋아요" id="thumb">
     </form>
+
     <br>
     <a href="/board/cate1">글 목록</a>
+
+    <span id="likecount"></span>
 
     <div>
         <ul id="commentApp">
@@ -69,6 +72,29 @@
     </template>
 
     <script type="text/javascript">
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
+
+        document.addEventListener('DOMContentLoaded', async() => {
+            const likeCount = document.querySelector('#likecount')
+            const idx = document.querySelector('#idx')
+
+            const data = {
+                idx:idx.value
+            }
+
+            const response = await axios.post('http://localhost:4000/api/board/cate1/likeCount', data, option)
+            let [likeNum] = Object.values(response.data.result[0])
+            likeCount.innerHTML =likeNum
+        })
+
+        // 좋아요 누르기
+        const idx = document.querySelector('#idx')
+        const userid = document.querySelector('#userid')
+
+
         const like = document.querySelector('#like')
 
         like.addEventListener('submit', async (e) => {
@@ -77,24 +103,20 @@
             const idx = document.querySelector('#idx')
             const userid = document.querySelector('#userid')
 
-            const option = {
-                'Content-type':'application/json',
-                withCredentials:true
-            }
-
             const data = {
                 userid:userid.innerHTML,
-                idx: idx.innerHTML
+                idx: idx.value
             }
-            console.log(data)
 
             const response = await axios.post('http://localhost:4000/api/board/cate1/like', data ,option)
+
+            const likeCount = document.querySelector('#likecount')
+            likeCount.innerHTML++
         })
-        //
-        //
-        //
 
         const delForm = document.querySelector('#del_frm')
+        
+        // 글 삭제
 
         delForm.addEventListener('submit', async (e) => {
             e.preventDefault()
@@ -104,10 +126,6 @@
                 idx:idx.value
             }
 
-            const option = {
-                'Content-type':'application/json',
-                withCredentials:true,
-            }
 
             const response = await axios.post('http://localhost:4000/api/board/cate1/delete', data, option)
             
@@ -120,6 +138,8 @@
             }
         })
 
+        //
+        //
 
         let state = {
             replay:[
