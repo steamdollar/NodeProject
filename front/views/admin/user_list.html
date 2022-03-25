@@ -60,6 +60,7 @@
         let search_beforeData = {}
         search_beforeData.userid = []
         search_beforeData.level = []
+        search_beforeData.nickname = []
         frm_search.addEventListener('submit', async (e)=>{
             
             const frm_search = document.querySelector('#frm_search')//폼
@@ -96,7 +97,7 @@
                                         .replaceAll('{userid}',userid)
                                         .replace('{username}',username)
                                         .replace('{userimg}',userimg)
-                                        .replace('{nickname}',nickname)
+                                        .replaceAll('{nickname}',nickname)
                                         .replace('{address}',address)
                                         .replace('{gender}',gender)
                                         .replace('{phone}',phone)
@@ -111,19 +112,19 @@
                     user_list.innerHTML = template
 
                     searchedUser.forEach(async e=>{
-                        const {userid, level} = e
+                        const {userid, nickname, level} = e
                         const user_level = document.querySelector(`#level_${userid}`);
                         const useridLevel1 = document.querySelector(`#level1_${userid}`);
                         const useridLevel2 = document.querySelector(`#level2_${userid}`);
                         const useridLevel3 = document.querySelector(`#level3_${userid}`);
-
                         console.log(user_level)
                         if (user_level.value == 1) useridLevel1.checked = true;
                         else if (user_level.value == 2) useridLevel2.checked = true;
                         else useridLevel3.checked = true;
 
-                        search_beforeData.userid.push(user_level.id)
+                        search_beforeData.userid.push(userid)
                         search_beforeData.level.push(user_level.value)
+                        search_beforeData.nickname.push(nickname)
                     })
 
                     await console.log('현재 검색 객체', search_beforeData)
@@ -144,11 +145,13 @@
         let beforeData = {}
         beforeData.userid = []
         beforeData.level = []
+        beforeData.nickname = []
         user.forEach(async(e)=>{
-            const {userid, level} = e
+            const {userid, nickname, level} = e
             const before_data = document.querySelector(`#level_${userid}`)
-            beforeData.userid.push(before_data.id)
+            beforeData.userid.push(userid)
             beforeData.level.push(before_data.value)
+            beforeData.nickname.push(nickname)
         
 
         })
@@ -160,40 +163,44 @@
             let currentData = {};
             currentData.level = [];
             currentData.userid = [];
+            currentData.nickname = [];
             console.log("유저의길이",user.length)
             console.log("검색유저의길이", search_userlist.length)
             const alltrElement = document.getElementsByTagName("tr").length-1 //검색된 or 전체 user수
             if(user.length == alltrElement){
                 user.forEach(async (e)=>{ //검색안했을 때 수정
-                const {userid} = e
+                const {userid, nickname} = e
 
                 const user_level = document.querySelector(`#level_${userid}`);
                 const useridLevel1 = document.querySelector(`#level1_${userid}`);
                 const useridLevel2 = document.querySelector(`#level2_${userid}`);
                 const useridLevel3 = document.querySelector(`#level3_${userid}`);
+                const nicknameElement = document.querySelector(`#nickname_${userid}`)
                 if (useridLevel1.checked === true) user_level.value = 1;
                 else if (useridLevel2.checked === true) user_level.value = 2;
                 else user_level.value = 3;
                 
                 currentData.level.push(user_level.value);
                 currentData.userid.push(userid);
-                
+                currentData.nickname.push(nicknameElement.value);
                 
                 })
 
             } else{
                 search_userlist.forEach(async (e)=>{ //검색 했을 때 수정
-                const {userid} = e
+                const {userid, nickname} = e
 
                 const user_level = document.querySelector(`#level_${userid}`);
                 const useridLevel1 = document.querySelector(`#level1_${userid}`);
                 const useridLevel2 = document.querySelector(`#level2_${userid}`);
                 const useridLevel3 = document.querySelector(`#level3_${userid}`);
+                const nicknameElement = document.querySelector(`#nickname_${userid}`)
                 if (useridLevel1.checked === true) user_level.value = 1;
                 else if (useridLevel2.checked === true) user_level.value = 2;
                 else user_level.value = 3;
                 currentData.level.push(user_level.value);
                 currentData.userid.push(userid);
+                currentData.nickname.push(nicknameElement.value);
 
                 })
             }
@@ -213,12 +220,13 @@
                 withCredentials: true
             }
             const response = await axios.post('http://localhost:4000/api/admin/userupdate', body, option)
-
+            console.log(response.data)
             if(response.data.result == "success"){
                 alert('관리자권한 강제 수정 완료')
 
-            } else{
-                alert('변경사항이 없음')
+            } else if(response.data.errno == 1062){
+                alert('중복된 아이디')
+                
             }
             update_btn.value = '수정'
             update_btn.disabled = false
@@ -279,7 +287,7 @@
             <th>{userid}</th>
             <th>{userimg}</th>
             <th>{username}</th>
-            <th><input type="text" id="{nickname}_{userid}" name="{nickname}_{userid}" value="{nickname}"></th>
+            <th><input type="text" id="nickname_{userid}" name="nickname_{userid}" value="{nickname}"></th>
             <th>{address}</th>
             <th>{gender}</th>
             <th>{phone}</th>
