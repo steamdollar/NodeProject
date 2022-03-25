@@ -224,6 +224,17 @@ CREATE TABLE cate1 (
     likes INT NOT NULL DEFAULT 0
 );
 
+create table hashtag_bridge (
+    cate1_idx int,
+    hashtag_idx int,
+
+);
+
+create table hashtag (
+    idx INT NOT NUll PRIMARY KEY,
+    hashtagName VARCHAR(30),
+)
+
 CREATE TABLE comment (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     mcategory VARCHAR(30) NOT NULL,
@@ -238,4 +249,66 @@ CREATE TABLE comment (
 이렇게 저장한 댓글은 글 view 페이지에 갈 경우 글 내용과 함꼐 불러올 수 있다.
 
 그 후엔 댓글 쓰는대로 불러다가 주면 될 거다.
+
+--------------------------------
+
+3/25 (1주차 금요일)
+
+1. 좋아요 기능
+
+- 1.1 기능 구현
+
+게시판별로 좋아요 테이블을 따로 만든다.
+
+cate1 이라고 한다.
+
+cate1 의 idx 1인 게시물
+
+그거랑 연결되는 table을 하나더 만든다 (cate1_like)
+
+create table cate1_like(
+    m_idx int not null,
+    userid varchar(30) not null,
+);
+
+<!-- 처음에 글을 쓰면 cate1, cate1_like에 각각 요청이 간다.
+
+cate1엔 글쓴이 날짜 등이 삽입 될거고
+
+cate1_like에는 게시물의 idx(자동 생성?) table이 채워진다.
+id table은 아직 빈칸. -->
+
+cate1엔 안간다. 지금 이걸 넣으면 안 됨.
+
+
+누군가 idx 1인 게시물에 좋아요를 누른다.
+
+이 때 라이크 테이블이 관여한다.
+
+게시물의 idx, userid 
+
+sila가 1번 게시물에 눌렀다. > 1 /sila
+
+이 데이터셋이 cate1_like에 추가된다.
+
+done
+
+- 1.2 좋아요 갯수 count
+
+n번 게시물의 좋아요 수를 알고싶다.
+
+좋아요 table > idx가 n인 녀석을 카운트해서 그 숫자를 가져온다.
+
+
+
+- 1.3 좋아요 취소
+
+if 랑 likeflag를 만든다.
+
+눌렀는데 이미 DB에 있다 > 삭제
+
+없다 > 추가
+
+
+
 

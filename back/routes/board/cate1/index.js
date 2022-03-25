@@ -9,5 +9,6 @@ router.use('/list',cate1Router.cate1_list)
 router.use('/view',cate1Router.cate1_view)
 router.use('/delete',cate1Router.cate1_del)
 router.use('/update',cate1Router.cate1_update)
+router.use('/like',cate1Router.cate1_like)
 
 module.exports = router
