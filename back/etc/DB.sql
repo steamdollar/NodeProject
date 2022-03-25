@@ -12,7 +12,8 @@ CREATE TABLE board (
 );
 
 CREATE TABLE user (
-    userid VARCHAR(30) NOT NULL PRIMARY KEY,
+    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(30) NOT NULL,
     userpw VARCHAR(50) NOT NULL,
     userimg longblob NOT NULL,
     username VARCHAR(30) NOT NULL,
@@ -24,8 +25,10 @@ CREATE TABLE user (
     email VARCHAR(50) NOT NULL,
     userintro TEXT NULL,
     level INT NOT NULL DEFAULT 1,
+    UNIQUE (userid),
     UNIQUE (nickname),
     UNIQUE (email)
+
 );
 
 CREATE TABLE comment (
