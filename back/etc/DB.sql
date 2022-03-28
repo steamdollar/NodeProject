@@ -1,12 +1,14 @@
 create database team4;
 use team4;
 
-CREATE TABLE board (
+CREATE TABLE cate1 (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(30) NOT NULL,
     title VARCHAR(40) NOT NULL,
     content TEXT NULL,
     nickname VARCHAR(30) NOT NULL,
-    date TIMESTAMP NOT NULL,
+    userid VARCHAR(30) NOT NULL,
+    date VARCHAR(30) NOT NULL,
     hit INT NOT NULL DEFAULT 0,
     likes INT NOT NULL DEFAULT 0
 );
