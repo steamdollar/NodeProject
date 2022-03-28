@@ -55,15 +55,13 @@
     <script type="text/javascript">
         const htForm = document.querySelector('#ht_frm')
         const htText = document.querySelector('#hashtag')
-        let tagNum = 0
+        
 
         htForm.addEventListener('keydown', (e) => {
             if (e.keyCode === 13) {
-                tagNum = tagNum++
-
                 const htDelete = document.createElement('span')
                 htDelete.innerHTML = 'X___'
-                htDelete.setAttribute('class', `tag${tagNum}, htDeleter`)
+                htDelete.setAttribute('class', `htDeleter`)
                 
                 const htElement = document.createElement('span')
                 htElement.setAttribute('class', `hashtags`)

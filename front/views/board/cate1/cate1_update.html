@@ -20,29 +20,88 @@
         </div>
         <input type="hidden" id="idx" name="idx" value="{{cate1_update.idx}}">
 
+        <div id="ht_frm">
+            <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
+            <div id="ht_wrap"></div>
         {% for item in cate1_hashtag %}
-        <input type="txt" value="{{item.hashtag_name}}">
+        <div>
+        <span class="htDeleter">X___</span>
+        <span class="hashtags">{{item.hashtag_name}}</span>
+        </div>
         {% endfor %}
+        </div>
         
         <input type="submit" value="글수정">
     </form>
-    
-
-    
-
+        
     <script type="text/javascript">
+
+        const htDeleteHandler = document.querySelectorAll('.htDeleter')
+            for(i = 0; i<htDeleteHandler.length; i++) {
+                htDeleteHandler[i].addEventListener('click', (e) => {
+                    e.target.parentNode.remove()
+                })
+            }
+
+        const htForm = document.querySelector('#ht_frm')
+        const htText = document.querySelector('#hashtag')
+        htForm.addEventListener('keydown', (e) => {
+            if (e.keyCode === 13) {
+                const htDelete = document.createElement('span')
+                htDelete.innerHTML = 'X___'
+                htDelete.setAttribute('class', `htDeleter`)
+                
+                const htElement = document.createElement('span')
+                htElement.setAttribute('class', `hashtags`)
+                htElement.innerHTML = `#${htText.value}`
+
+                const htDiv = document.createElement('div')
+                htDiv.append(htDelete)
+                htDiv.append(htElement)
+                
+                htForm.append(htDiv)
+                htText.value = ''
+
+                const htDeleteHandler = document.querySelectorAll('.htDeleter')
+                for(i = 0; i<htDeleteHandler.length; i++) {
+                    htDeleteHandler[i].addEventListener('click', (e) => {
+                        e.target.parentNode.remove()
+                    })
+                }
+            }
+        })
+        // enter를 이용해 해시 태그 추가, 삭제
+
+
+        
+        // 엔터 누르면 글 작성이 완료되어버리는 것 방지
+        
         const update_frm = document.querySelector('#update_frm')
+        update_frm.addEventListener('keydown', (e) => {
+            if(e.keyCode === 13) {
+                e.preventDefault()
+            }
+        })
+
         update_frm.addEventListener('submit', async (e) => {
             e.preventDefault()
 
             const title = update_frm.querySelector('#title')
             const content = update_frm.querySelector('#content')
             const idx = update_frm.querySelector('#idx')
-            console.log(title, content, idx)
+
+            const hashtagss = document.querySelectorAll('.hashtags')
+            let temphash = []
+
+            for (i=0; i<hashtagss.length; i++) {
+                temphash.push(hashtagss[i].innerHTML)
+            }
+
             const data = {
                 title:title.value,
                 content:content.value,
-                idx: idx.value
+                idx: idx.value,
+                temphash
             }
 
             const option = {

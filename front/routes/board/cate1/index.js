@@ -61,7 +61,7 @@ router.get('/update', async (req, res) => {
 
     const response2 = await axios.post('http://localhost:4000/api/board/cate1/hashtagLoad', idx, option)
     const cate1_hashtag = response2.data
-
+    console.log(cate1_hashtag)
     res.render('./board/cate1/cate1_update.html', {
         cate1_update:cate1_update.result[0],
         cate1_hashtag:cate1_hashtag.result_final

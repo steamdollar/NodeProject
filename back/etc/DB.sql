@@ -18,6 +18,16 @@ create table cate1_like(
     userid varchar(30)
 );
 
+create table cate1_bridge(
+    midx int not null,
+    hidx int not null
+);
+
+create table hashtag(
+    hidx int primary key auto_increment,
+    hashtag_name varchar(30) not null
+);
+
 CREATE TABLE user (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userid VARCHAR(30) NOT NULL,

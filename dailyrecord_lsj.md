@@ -341,7 +341,7 @@ userid=del인 데이터 셋을 지우는 법으로 해보자.
 drop table cate1_like;
 
 create table cate1_like(
-    idx = int primary key,
+    idx int primary key,
     m_idx int,
     userid varchar(30)
 );
@@ -504,3 +504,14 @@ select * from hashtag where hidx=?
 
 done
 
+---------------
+
+해시 태그 수정 존나 어렵다 시발
+
+2번 글의 해시태그를 수정하고 싶다.
+
+bridge에서 midx = 2 인 데이터 셋을 가져온다. (midx, hidx) = (2, 3), (2, 4)
+
+hashtag에서 hidx는 3, 4인 데이터 셋을 다 지운다.
+
+새로운 해시 태그를 삽입한다. 이건 그냥 해시태그 처음 넣을 떄 하는 것 처럼 하면 된다.

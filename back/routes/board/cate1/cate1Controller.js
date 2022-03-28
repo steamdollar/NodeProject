@@ -97,17 +97,31 @@ exports.view = async (req,res) => {
 }
 
 exports.del = async (req,res)=>{
-
     const {idx} = req.body
 
-    const sql = `delete from cate1 where idx=?`
+    const sql = `select * from cate1_bridge where midx = ?`
     const param = [idx]
+
     try {
         const [result] = await pool.execute(sql,param)
 
-        const sql2 = `select * from cate1_bridge where midx=?`
+        for (i = 0; i<result.length; i++) {
+            const sql2 = `delete from hashtag where hidx=?`
+            const param2 = [result[i].hidx]
+            const [result2] = await pool.execute(sql2, param2)
+            //console.log(result2)
+        }
+
+        const sql3 = 'delete from cate1_bridge where midx=?'
+        const [result3] = await pool.execute(sql3, param)
+        
+        const sql4 = 'delete from cate1 where idx=?'
+        const [result4] = await pool.execute(sql4,param)
+
         const response = {
             result,
+            result3,
+            result4,
             errno:0
         }
         res.json(response) 
@@ -123,13 +137,43 @@ exports.del = async (req,res)=>{
 }
 
 exports.update = async(req, res) => {
-    const {title, content, idx} = req.body
+    const {title, content, idx, temphash} = req.body
     const date = new Date()
+    // console.log(temphash) // [ '#qwe', '#asd' ]
 
     const sql = `update cate1 set title=?, content=?, date=? where idx=?`
     const param = [title, content, date, idx]
     try {
         const [result] = await pool.execute(sql,param)
+
+        const sql2 = 'select * from cate1_bridge where midx=?'
+        const param2 = [idx]
+        
+        const [result2] = await pool.execute(sql2, param2)
+
+        for (i=0; i<result2.length; i++) {
+            const sql3 = `delete from hashtag where hidx=?`
+            const param3 = [result2[i].hidx]
+            const [result3] = await pool.execute(sql3, param3)
+        }
+
+        const sql4 = `delete from cate1_bridge where midx=?`
+        const param4 = [idx]
+        const [result4] = await pool.execute(sql4, param4)
+        // 기존 해시태그 삭제
+
+        for (i = 0; i < temphash.length; i++) {
+            const sql5 = `insert into hashtag
+            (hashtag_name) values(?)` 
+            const param5 = [temphash[i]]
+            const [result5] = await pool.execute(sql5, param5)
+
+            const sql6 = 'insert into cate1_bridge(midx, hidx) values(?, ?)'
+            const param6 = [idx, result5.insertId]
+            const [result6] = await pool.execute(sql6, param6)
+        }
+
+
         const response = {
             result,
             errno:0
