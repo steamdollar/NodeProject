@@ -372,3 +372,112 @@ create table cate1_like(
 있으면 데이터셋을 제거한다.
 
 done
+
+하고보니까 그냥 select 해서 result.length가 0인 경우랑 아닌 경우로 하면 하나로 된다..
+
+3/26 (1주차 토요일)
+
+1. 댓글 기능
+
+2. 글에 사진 업로드
+
+3. 해시태그
+
+다 어려워보여..
+
+해시태그 먼저 해보자.
+
+- 3.1 내가 글을 쓸 때 해시태그를 넣고 submit 한다.
+
+이 떄 총 3개의 DB table이 관여한다.
+
+글의 정보를 저장하는 cate1,
+
+cate1의 idx, 해시태그의 번호를 저장하는 hash_bridge table
+
+create table cate1_bridge(
+    midx int not null,
+    hidx int not null
+);
+
+create table hashtag(
+    hidx int primary key auto_increment,
+    hashtag_name varchar(30) not null
+);
+
+
+
+해시태그 내용과 해시태그의 번호를 저장하는 해시태그 table
+
+sila 가 n번글을 쓸 때
+
+cate1 > 기타 등등과 idx가 자료로 들어간다.
+
+hashtag 테이블은 그 전까지 idx = 1 ~ (n-1) 인 글에 같은 해시태그가 있는지 확인한다.
+
+
+i) 예전에 이미 등록된 적이 없는 해시태그라면
+
+해시태그를 해시태그 table에 hashtag_idx와 함께 등록한다.
+
+브릿지에는 원글 idx, hashtag_idx를 등록한다.
+
+
+ii) 동일한 해시태그가 있다면 여기엔 데이터 셋을 추가하지 않는다.
+
+대신 해시태그 브릿지에 원글의 idx, 해시태그(이미 등록된 전적이 있는)의 번호를 저장한다.
+
+브릿지에는 원글의 idx, hashtag_idx를 저장한다.
+
+- 3.2 글보기
+
+글을 가져올 떄, cate1 table과 별개로 bridge, hashtag table과도 ix해야한다.
+
+우선 브릿지 table에서 해당하는 게시판 idx를 모두 select로 가져온다.
+
+그놈들의 해시 태그 번호를 가져다가 다시 hashtag table과 통신한다.
+
+그럼 hashtag table에선  해시태그 번호에 맞는 해시태그를 돌려준다.
+
+- 3.3 해시태그 수정
+
+브릿지에서 해당 데이터셋을 삭제한다.
+
+i) 이 글 이외에 이 해시태그를 쓰는 글이 없으면?
+
+이 정도는 걍 놔둬도 되지 않을까..
+
+굳이 하자면 브릿지에서 방금지운 해시태그 idx를 select해서 result.length == 0 이면
+
+hashtag table에서 그걸 지우면 되는데
+
+굳이 이걸 구현해야하나?
+
+-----------------------
+
+db의 어떤 table과 먼저 ix 할건지, 그리고 그 다음 table과 ix할때 전에 ix한 table의 어떤 값을 가져다 쓸 것인지..
+
+0. cate1, bridge, hashtag 3개의 table이 있다.
+
+1. 글을 써서 서밋 한다.
+
+2. 우선 cate1 table과 ix 한다. 여기서 글의 idx가 결정되므로..
+
+3. 그 글의 idx를 결과값의 일부로 가져온다. << 여까진 이미 된 상태
+어? 그럼 미들웨어 따로 만들 필요도 없네? 그냥 cate1Router.write에 추가하면 되는거 아님? cate1_hash 이거 필요 없는데?
+
+4. 그 다음 hashtag table과 ix한다.
+
+5. 여기서 hashtag_name들을 전달, 삽입해 준다.
+
+6. 그럼 auto_increment로 hashtag의 idx가 자동생성되면서 hashtag table dataset 생성이 끝
+
+7. 그 결과값을 돌려주면 그걸 다시 bridge에 주는데, 지금까지 얻은 정보를 추합하면 된다.
+
+cate1 에서 얻은 midx, hashtag table에서 얻은 hidx 를 bridge에 넣는다.
+
+Q. 이 과정에서 프론트가 개입을 하는지는 모르겠다.
+
+백에서 그냥 계속 왔다갔다가 가능한가?
+
+바꿔말하면 html 파일에서 await는 하나만 있으면 되는가?
