@@ -170,11 +170,71 @@ exports.userDelete = (req,res)=>{
     res.send('관리자 권한 회원 강제퇴장')
 }
 
+exports.boardList = async(req,res)=>{
+    const {board_db} = req.body
+    console.log(board_db)
+    const sql = `select * from ${board_db}`
+    console.log(sql)
+    try {
+        const [result] = await pool.execute(sql)
+
+        const response = {
+            result,
+            errno:"none"
+        }
+        console.log(response.result)
+        res.json(response)
+
+    } catch(e){
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno: e.errno
+        }
+        res.json(response)
+    }
+    
+
+}
+
 exports.boardSearch = (req,res)=>{
     res.send('게시물 검색')
 }
 
-exports.boardHidden = (req,res)=>{
-    res.send('회원 게시물 내림')
+exports.boardHidden = async(req,res)=>{
+    const {idx, hidden, category} = req.body
+    console.log(idx, hidden, category)
+    hidden_insert = []
+    for(let i= 0; i<idx.length; i++){
+        const hidden_query = `when ${idx[i]} THEN "${hidden[i]}" `
+        hidden_insert.push(hidden_query)
+    }
+    console.log(hidden_insert)
+    
+    
+    const sql = `UPDATE ${category[0]} set hidden= CASE idx
+                                        ${hidden_insert.toString().replaceAll(',','')}
+                                        ELSE hidden
+                                    END
+                                    where idx IN (${idx.toString()})`
+    console.log(sql)
+    try {
+        const [result] = await pool.execute(sql)
+
+        const response = {
+            result:"success"
+        }
+        res.json(response)
+
+    } catch(e){
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno: e.errno
+        }
+        res.json(response)
+    }
+    
+    
 }
 

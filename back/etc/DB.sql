@@ -10,7 +10,9 @@ CREATE TABLE cate1 (
     userid VARCHAR(30) NOT NULL,
     date VARCHAR(30) NOT NULL,
     hit INT NOT NULL DEFAULT 0,
-    likes INT NOT NULL DEFAULT 0
+    likes INT NOT NULL DEFAULT 0,
+    hidden VARCHAR(3) NOT NULL DEFAULT 'off',
+    FOREIGN KEY (`nickname`) REFERENCES `user` (`nickname`)
 );
 
 create table cate1_like(
