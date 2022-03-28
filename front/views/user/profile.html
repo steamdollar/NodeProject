@@ -61,14 +61,32 @@
     <div class="button">
         <button><a href="/board/list">게시판</a></button>
         <button><a href="/user/update">수정</a></button>
-        <form method="post" action="/user/profile">
+        <form method="post" action="/user/profile" id="delete_frm">
             <input type="hidden" name="userid" value="{{user.userid}}">
-            <button class="delete" type="submit">탈퇴하기</button>
+            <button class="delete" type="submit" id="btn">탈퇴하기</button>
         </form>
     </div>
     <a href="/"></a>
 </body>
 <script>
+    const frm = document.querySelector('#delete_frm')
+    frm.addEventListener('submit',async(e)=>{
+        e.preventDefault()
+     
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
+
+        const response = await axios.post('http://localhost:4000/api/user/delete',null,option)
+        
+        if(response.data.errno ===0){
+            alert('탈퇴되었습니다')
+            location.href='http://localhost:3000'
+        } else{
+            alert('탈퇴실패')
+        }
+    })
     document.addEventListener('DOMContentLoaded', async() => {
         let template = ''
         const profile = document.querySelector('#profile')
@@ -92,7 +110,7 @@
         }
 
         const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
-
+        console.log(response.data)
         if( response.data.errno ===0){
             const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
             

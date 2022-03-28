@@ -96,50 +96,53 @@
     </form>
     <script type="text/javascript">
         // 1. submit 이벤트를 만들고 그이벤트를 막는 기능 
+        
         const frm = document.querySelector('#join_frm')
         frm.addEventListener('submit',async (e)=>{
             e.preventDefault()
+            const {userid,userpw,username,nickname,address,gender,phone,mobile,email,userintro,userimg} = e.target
+
+            const formData = new FormData()
+            formData.append('userid',document.querySelector('#userid').value)
+            formData.append('userpw',document.querySelector('#userpw').value)
+            formData.append('userimg',userimg.files[0])
+            formData.append('username',document.querySelector('#username').value)
+            formData.append('nickname',document.querySelector('#nickname').value)
+            formData.append('address',document.querySelector('#address').value)
+            formData.append('gender',document.querySelector('input[name="gender"]:checked').value)
+            formData.append('phone',document.querySelector('#phone').value)
+            formData.append('mobile',document.querySelector('#mobile').value)
+            formData.append('email',document.querySelector('#email').value)
+            formData.append('userintro',document.querySelector('#userintro').value)
+
+            
             const btn = document.querySelector('#btn')
             btn.value='로딩중~~'
             btn.disabled = true
 
-
-            const data = { 
-                userid:document.querySelector('#userid').value,
-                userpw:document.querySelector('#userpw').value,
-                userimg:document.querySelector('#userimg').value,
-                username:document.querySelector('#username').value,
-                nickname:document.querySelector('#nickname').value,
-                address:document.querySelector('#address').value,
-                gender:document.querySelector('input[name="gender"]:checked').value,
-                phone:document.querySelector('#phone').value,
-                mobile:document.querySelector('#mobile').value,
-                email:document.querySelector('#email').value,
-                userintro:document.querySelector('#userintro').value,
-            }
-
+            
             const option = { 
                 'Content-type':'application/json',
                 withCredentials:true,
             }   
             // // return ? promise 객체 
             // // async / await 
-            const response = await axios.post('http://localhost:4000/api/user/join',data,option)
-            console.log(response.data)
-
+            const response = await axios.post('http://localhost:4000/api/user/join',formData,option)
+            
+            console.log(response)
             
             
             // console.log(response.data.errno, response.data.errno===0)
             if(response.data.errno === 0){ // 성공의 케이스 
                 // 성공
                 console.log('가입완료되었습니다.')
-                location.href='/user/welcome'
+                location.href=`/user/welcome?nickname=${nickname.value}&userid=${userid.value}&username=${username.value}&email=${email.value}&mobile=${mobile.value}`
             } else { //
                 // 실패
                 console.log(response.data)
 
                 if(response.data.errno === 1062){
-                    if(response.data.errormsg.includes('user.PRIMARY')){
+                    if(response.data.errormsg.includes('user.userid')){
                         alert('중복 된 아이디 입니다. 다른 아이디를 입력해주세요.')
                     }
                     if(response.data.errormsg.includes('user.nickname')){

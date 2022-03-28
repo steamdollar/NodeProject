@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>회원 수정</h1>
+    <table  border="1" >
+    <tr>
+    <td><a href="/list">회원목록</a> <!-- 자료 입력으로 이동 ()--></td>
+    <td><a href="/insert">회원생성</a> <!-- 자료 입력으로 이동 ()--></td>
+    </tr>
+    </table>
+    <form method="post">
+    <fieldset>
+    <table border=1>
+    <tr>
+        <td><label>회원ID</label></td>
+        <td><input type="text" name="client_id" value= "<% data.client_id %>"/></td>
+    </tr>
+    <tr>
+        <td><label>회원비밀번호</label></td>
+        <td><input type="text" name="client_password" value= "<% data.client_password %>"/></td>
+    </tr>
+    <tr>
+        <td><label>회원 이름</label></td>
+        <td><input type="text" name="client_name" value= "<% data.client_name %>"/></td>
+    </tr>
+    <tr>
+        <td><label>회원 Email</label></td>
+        <td><input type="text" name="client_email" value= "<% data.client_email %>"/></td>
+    </tr>
+    <tr>
+        <td><label>회원 phone</label></td>
+        <td><input type="text" name="client_phone" value= "<% data.client_phone %>"/></td>
+    </tr>
+    </table>
+    <input type="submit" value="수정" />
+    <table width="100%" border="1">
+    <tr>
+    <th>edit</th>
+    <th>delete</th>
+    <th>회원ID</th>
+    <th>회원비밀번호</th>
+    <th>회원 이름</th>
+    <th>회원 Email</th>
+    <th>회원 phone</th>
+
+    </tr>
+    <% data.forEach(function(item,index){ %>  <!-- 스크립트 언어-->
+    <tr>
+    <td><a href="/edit/<%=item.client_id %>">edit</a></td>
+    <td><a href="/delete/<%=item.client_id %>">delete</a></td>
+    <td><%= item.client_id %></td>  <!-- 값 추출-->
+    <td><%= item.client_password %></td>
+    <td><%= item.client_name %></td>
+    <td><%= item.client_email %></td>
+    <td><%= item.client_phone %></td>
+
+    </tr>
+    <%}); %>
+    </table>
+    </fieldset>
+    </form>
+
+</body>
+</html>

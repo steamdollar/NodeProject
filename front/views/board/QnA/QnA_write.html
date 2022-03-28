@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            let hiddenSpan = document.querySelector('#hidden')
+            let hiddenInput = document.querySelector('#userid')
+
+            hiddenInput.value = hiddenSpan.innerHTML
+            hiddenInput.disabled = true
+        })
+    </script>
+    <style>
+        #hidden{
+            display:none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>QnA 페이지</h1>
+    </div>
+    
+    <span id="hidden"> {{ user }} </span>
+    
+
+    <form method="post" action="http://localhost:4000/api/board/write" id="qna_frm">
+        <strong>userid: </strong><input type="text" name="nickname" id="userid">
+        <div>
+            <strong>제목</strong> <br>
+            <input type="text" name="title" placeholder="제목입력" id="title">
+        </div>
+        <div>
+            <strong>내용</strong> <br>
+            <textarea name="content" placeholder="내용입력" id="content"></textarea>
+        </div>
+        <input type="submit" value="글작성">
+    </form>
+
+    <script type="text/javascript">
+        const notice_frm = document.querySelector('#qna_frm')
+        notice_frm.addEventListener('submit', async(e) => {
+            e.preventDefault()
+
+            const userid = document.querySelector('#userid')
+            const title = document.querySelector('#title')
+            const content = document.querySelector('#content')
+            
+            const data = { 
+                userid : userid.value,
+                title : title.value,
+                content : content.value
+            }
+
+            const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+
+            const response = await axios.post('http://localhost:4000/api/board/QnA/write', data, option)
+
+            if(response.data.errno === 0) {
+                alert('QnA 작성이 완료되었습니다.')
+                location.href='/board/qna'
+            }
+            else {
+                alert('QnA 작성중 문제가 발생하였습니다.')
+            }
+        })
+    </script>
+</body>
+</html>
