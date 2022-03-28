@@ -41,12 +41,20 @@
         </div>
         <div>
             <strong>내용</strong> <br>
-            <textarea name="content" placeholder="내용입력" id="content" >#ht1 #ht2 #ht3 #ht4 #ht5</textarea>
+            <textarea name="content" placeholder="내용입력" id="content" > does not matter since they are going to start clearing</textarea>
         </div>
+        <br>
         <!-- <div id="ht_frm">
             <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요" value="ht1">
             <div id="ht_wrap"></div>
         </div> -->
+
+        <input type="text" name="hash1" id="hash1" value="hash1">
+        <input type="text" name="hash2" id="hash2" value="hash2">
+        <input type="text" name="hash3" id="hash3" value="hash3">
+        <input type="text" name="hash4" id="hash4" value="hash4">
+        <input type="text" name="hash5" id="hash5" value="hash5">
+
         <input type="submit" value="글작성">
     </form>
 
@@ -93,20 +101,42 @@
                 content : content.value,
                 // hashtag : hashtag.value
             }
+
+            const hash1 = document.querySelector('#hash1')
+            const hash2 = document.querySelector('#hash2')
+            const hash3 = document.querySelector('#hash3')
+            const hash4 = document.querySelector('#hash4')
+            const hash5 = document.querySelector('#hash5')
+
+            const data2 = {
+                hash1: hash1.value,
+                hash2: hash2.value,
+                hash3: hash3.value,
+                hash4: hash4.value,
+                hash5: hash5.value
+            }
+
             const option = {
                 'Content-type':'application/json',
                 withCredentials:true
             }
-            console.log(data)
+
+            // const response2 = await axios.post('http://localhost:4000/api/board/cate1/hashtag', data2, option)
+
+
             const response = await axios.post('http://localhost:4000/api/board/cate1/write', data, option)
 
-            if(response.data.errno === 0) {
+            if (response.data.errno === 0) {
                 alert('글 작성이 완료되었습니다.')
                 location.href='/board/cate1'
             }
             else {
                 alert('글 작성중 문제가 발생하였습니다.')
             }
+
+           
+
+
         })
     </script>
 </body>
