@@ -25,6 +25,7 @@ CREATE TABLE user (
     email VARCHAR(50) NOT NULL,
     userintro TEXT NULL,
     level INT NOT NULL DEFAULT 1,
+    available VARCHAR(3) NOT NULL DEFAULT 'on',
     UNIQUE (userid),
     UNIQUE (nickname),
     UNIQUE (email)

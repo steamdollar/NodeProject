@@ -82,48 +82,69 @@ exports.userUpdate = async (req,res)=>{
     console.log(body.beforeData.level)
     let modified_userid = []
     let modified_userlevel = []
+    let modified_nickname = []
+    let modified_available = []
     const before = body.beforeData
     const current = body.currentData
     const search_before = body.search_beforeData
     console.log("리스트 이전데이터" ,before.userid.length, "현재데이터",current.userid.length, "검색후수정전데이터",search_before.userid.length)
-    if(current.userid.length == before.userid.length){
+    if(current.userid.length == before.userid.length){ //유저리스트페이지에서(검색x)
         for(let i=0; i<current.userid.length; i++){
-            if(before.level[i]!== current.level[i]){
+            if(before.level[i]!== current.level[i] || before.nickname[i]!==current.nickname[i] || before.available[i]!==current.available[i]){
                 modified_userid.push(current.userid[i])
                 modified_userlevel.push(current.level[i])
+                modified_nickname.push(current.nickname[i])
+                modified_available.push(current.available[i])
     
             }
         }
         
     }
-    else if(search_before.userid.length == current.userid.length){
+    else if(search_before.userid.length == current.userid.length){ //유저검색페이지에서(검색o)
         for(let i=0; i<current.userid.length; i++){
-            if(search_before.level[i]!== current.level[i]){
+            if(search_before.level[i]!== current.level[i] || search_before.nickname[i]!==current.nickname[i] || search_before.available[i]==current.available[i]){
                 modified_userid.push(current.userid[i])
                 modified_userlevel.push(current.level[i])
-    
+                modified_nickname.push(current.nickname[i])
+                modified_available.push(current.available[i])
             }
         }
     }
-    console.log("변경사항", modified_userid, modified_userlevel)
+    console.log("변경사항", modified_userid, modified_userlevel, modified_nickname, modified_available)
 
 
 
 
-    let query = []
-    const INSERT_sql = []
-    for( let i=0; i<modified_userid.length; i++){
-        let querylist = `when "${modified_userid[i]}" THEN ${modified_userlevel[i]} `
-        query.push(querylist)
-        INSERT_sql.push(`"${modified_userid[i]}"`)
+    const level_querylist = []
+    const idlist = [] //정보 변경된 userid 값만 넣을 리스트
+    const nickname_querylist = []
+    const available_querylist = []
+    for( let i=0; i<modified_userid.length; i++){//변경사항만큼 for문돌린다
+        let level_query = `when "${modified_userid[i]}" THEN ${modified_userlevel[i]} `//레벨변경 쿼리
+        level_querylist.push(level_query)
+        idlist.push(`"${modified_userid[i]}"`)
+        let nickname_query = `when "${modified_userid[i]}" THEN "${modified_nickname[i]}" ` //닉네임변경 쿼리
+        nickname_querylist.push(nickname_query)
+        let available_query = `when "${modified_userid[i]}" THEN "${modified_available[i]}" ` //사용가능 변경 쿼리
+        available_querylist.push(available_query)
+
     }
-    const sql_insert = query.toString().replaceAll(',','')
-    
+    const sql_insert1 = level_querylist.toString().replaceAll(',','') //레벨변경쿼리 리스트를 string으로 변환
+    const sql_insert2 = nickname_querylist.toString().replaceAll(',','') //닉네임변경쿼리 리스트를 string으로 변환
+    const sql_insert3 = available_querylist.toString().replaceAll(',','')
     const sql = `UPDATE user set level = CASE userid
-                                        ${sql_insert}
+                                        ${sql_insert1}
                                         ELSE level
+                                    END,
+                                nickname = CASE userid
+                                        ${sql_insert2}
+                                        ELSE nickname
+                                    END,
+                                available = CASE userid
+                                        ${sql_insert3}
+                                        ELSE available
                                     END
-                                where userid IN (${INSERT_sql.toString()})`
+                                where userid IN (${idlist.toString()})`
     console.log(sql)
 
     try {
@@ -136,9 +157,10 @@ exports.userUpdate = async (req,res)=>{
         res.json(response)
 
     } catch(e){
-        console.log(e.message)
         const response = {
-            result:"error"
+            
+            errmsg:e.message,
+            errno: e.errno
         }
         res.json(response)
     }

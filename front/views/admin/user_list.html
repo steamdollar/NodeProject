@@ -21,7 +21,7 @@
         let template = ''
         let idx = 1
         const promise = user.forEach(async e => {
-            const {idx, userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro, level} = e
+            const {idx, userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro, level, available} = e
 
             template += user_temp.replace('{idx}', idx)
                                 .replaceAll('{nickname}',nickname)
@@ -36,6 +36,7 @@
                                 .replace('{email}',email)
                                 .replace('{userintro}',userintro)
                                 .replaceAll('{level}', level)
+                                .replaceAll('{available}', available)
             
         });
         await promise;
@@ -49,9 +50,17 @@
             const useridLevel1 = document.querySelector(`#level1_${userid}`);
             const useridLevel2 = document.querySelector(`#level2_${userid}`);
             const useridLevel3 = document.querySelector(`#level3_${userid}`);
+
             if (user_level.value == 1) useridLevel1.checked = true;
             else if (user_level.value == 2) useridLevel2.checked = true;
             else useridLevel3.checked = true;
+
+            const user_available= document.querySelector(`#${userid}_available`);
+            const available_on = document.querySelector(`#${userid}_available_on`);
+            const available_off = document.querySelector(`#${userid}_available_off`);
+
+            if (user_available.value == 'on') available_on.checked = true;
+            else available_off.checked = true;
         }) 
             
         //유저 검색
@@ -60,6 +69,8 @@
         let search_beforeData = {}
         search_beforeData.userid = []
         search_beforeData.level = []
+        search_beforeData.nickname = []
+        search_beforeData.available = []
         frm_search.addEventListener('submit', async (e)=>{
             
             const frm_search = document.querySelector('#frm_search')//폼
@@ -90,13 +101,13 @@
 
                     const promise2 = searchedUser.forEach(async e=>{
                         search_userlist.push(e)
-                        const {idx, userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro, level} = e
+                        const {idx, userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro, level, available} = e
                         template += user_temp.replace('{idx}', idx)
                                         .replaceAll('{nickname}',nickname)
                                         .replaceAll('{userid}',userid)
                                         .replace('{username}',username)
                                         .replace('{userimg}',userimg)
-                                        .replace('{nickname}',nickname)
+                                        .replaceAll('{nickname}',nickname)
                                         .replace('{address}',address)
                                         .replace('{gender}',gender)
                                         .replace('{phone}',phone)
@@ -104,6 +115,7 @@
                                         .replace('{email}',email)
                                         .replace('{userintro}',userintro)
                                         .replaceAll('{level}', level)
+                                        .replaceAll('{available}', available)
  
                     })
                     await promise2;
@@ -111,19 +123,27 @@
                     user_list.innerHTML = template
 
                     searchedUser.forEach(async e=>{
-                        const {userid, level} = e
+                        const {userid, nickname, level, available} = e
                         const user_level = document.querySelector(`#level_${userid}`);
                         const useridLevel1 = document.querySelector(`#level1_${userid}`);
                         const useridLevel2 = document.querySelector(`#level2_${userid}`);
                         const useridLevel3 = document.querySelector(`#level3_${userid}`);
-
                         console.log(user_level)
                         if (user_level.value == 1) useridLevel1.checked = true;
                         else if (user_level.value == 2) useridLevel2.checked = true;
                         else useridLevel3.checked = true;
 
-                        search_beforeData.userid.push(user_level.id)
-                        search_beforeData.level.push(user_level.value)
+                        const user_available= document.querySelector(`#${userid}_available`);
+                        const available_on = document.querySelector(`#${userid}_available_on`);
+                        const available_off = document.querySelector(`#${userid}_available_off`);
+
+                        if (user_available.value == 'on') available_on.checked = true;
+                        else available_off.checked = true;
+
+                        search_beforeData.userid.push(userid)
+                        search_beforeData.level.push(level)
+                        search_beforeData.nickname.push(nickname)
+                        search_beforeData.available.push(available)
                     })
 
                     await console.log('현재 검색 객체', search_beforeData)
@@ -144,11 +164,15 @@
         let beforeData = {}
         beforeData.userid = []
         beforeData.level = []
+        beforeData.nickname = []
+        beforeData.available = []
         user.forEach(async(e)=>{
-            const {userid, level} = e
+            const {userid, nickname, level, available} = e
             const before_data = document.querySelector(`#level_${userid}`)
-            beforeData.userid.push(before_data.id)
-            beforeData.level.push(before_data.value)
+            beforeData.userid.push(userid)
+            beforeData.level.push(level)
+            beforeData.nickname.push(nickname)
+            beforeData.available.push(available)
         
 
         })
@@ -160,25 +184,34 @@
             let currentData = {};
             currentData.level = [];
             currentData.userid = [];
+            currentData.nickname = [];
+            currentData.available = [];
             console.log("유저의길이",user.length)
             console.log("검색유저의길이", search_userlist.length)
             const alltrElement = document.getElementsByTagName("tr").length-1 //검색된 or 전체 user수
             if(user.length == alltrElement){
                 user.forEach(async (e)=>{ //검색안했을 때 수정
-                const {userid} = e
+                const {userid, available} = e
 
                 const user_level = document.querySelector(`#level_${userid}`);
                 const useridLevel1 = document.querySelector(`#level1_${userid}`);
                 const useridLevel2 = document.querySelector(`#level2_${userid}`);
                 const useridLevel3 = document.querySelector(`#level3_${userid}`);
+                const nicknameElement = document.querySelector(`#nickname_${userid}`)
                 if (useridLevel1.checked === true) user_level.value = 1;
                 else if (useridLevel2.checked === true) user_level.value = 2;
                 else user_level.value = 3;
                 
+                const user_available = document.querySelector(`#${userid}_available`);
+                const available_on= document.querySelector(`#${userid}_available_on`);
+                const available_off = document.querySelector(`#${userid}_available_off`);
+                if (available_on.checked === true) user_available.value = 'on';
+                else user_available.value = 'off';
+
                 currentData.level.push(user_level.value);
                 currentData.userid.push(userid);
-                
-                
+                currentData.nickname.push(nicknameElement.value);
+                currentData.available.push(user_available.value)
                 })
 
             } else{
@@ -189,11 +222,22 @@
                 const useridLevel1 = document.querySelector(`#level1_${userid}`);
                 const useridLevel2 = document.querySelector(`#level2_${userid}`);
                 const useridLevel3 = document.querySelector(`#level3_${userid}`);
+                const nicknameElement = document.querySelector(`#nickname_${userid}`)
+
                 if (useridLevel1.checked === true) user_level.value = 1;
                 else if (useridLevel2.checked === true) user_level.value = 2;
                 else user_level.value = 3;
+
+                const user_available = document.querySelector(`#${userid}_available`);
+                const available_on= document.querySelector(`#${userid}_available_on`);
+                const available_off = document.querySelector(`#${userid}_available_off`);
+                if (available_on.checked === true) user_available.value = 'on';
+                else user_available.value = 'off';
+
                 currentData.level.push(user_level.value);
                 currentData.userid.push(userid);
+                currentData.nickname.push(nicknameElement.value);
+                currentData.available.push(user_available.value)
 
                 })
             }
@@ -213,12 +257,13 @@
                 withCredentials: true
             }
             const response = await axios.post('http://localhost:4000/api/admin/userupdate', body, option)
-
+            console.log(response.data)
             if(response.data.result == "success"){
                 alert('관리자권한 강제 수정 완료')
 
-            } else{
-                alert('변경사항이 없음')
+            } else if(response.data.errno == 1062){
+                alert('중복된 아이디')
+                
             }
             update_btn.value = '수정'
             update_btn.disabled = false
@@ -279,7 +324,7 @@
             <th>{userid}</th>
             <th>{userimg}</th>
             <th>{username}</th>
-            <th><input type="text" id="{nickname}_{userid}" name="{nickname}_{userid}" value="{nickname}"></th>
+            <th><input type="text" id="nickname_{userid}" name="nickname_{userid}" value="{nickname}"></th>
             <th>{address}</th>
             <th>{gender}</th>
             <th>{phone}</th>
@@ -292,7 +337,11 @@
                 <input type="radio" name="level_{userid}" id="level2_{userid}" value=2><label for="level2_{userid}">2</label>
                 <input type="radio" name="level_{userid}" id="level3_{userid}" value=3><label for="level3_{userid}">3</label>
             </th>
-            <th>사용 허가</th>
+            <th>
+                <input type="hidden" name="available" id="{userid}_available" value="{available}">
+                <input type="radio" name="{userid}_available" id="{userid}_available_on" value="on"><label for="{userid}_available">On</label>
+                <input type="radio" name="{userid}_available" id="{userid}_available_off" value="off"><label for="{userid}_available">Off</label>
+            </th>
         </tr>
     </template>
 </body>
