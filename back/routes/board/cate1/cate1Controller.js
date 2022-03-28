@@ -9,6 +9,7 @@ exports.write = async (req,res) => {
     values(?,?,?,?,?,?)`
     const param = [category, title, content, userid, nickname, date]
 
+    const result_final = {}
     try {
         const [result] = await pool.execute(sql,param)
         // console.log(result.insertId)
@@ -24,22 +25,21 @@ exports.write = async (req,res) => {
         (hashtag_name) values(?)`
         const hashtags = [hash1, hash2, hash3, hash4, hash5] 
 
-        for( i = 0; i< 6; i++) {
-            let param3 = hashtags[i]
-            const [result3] = await pool.execute(sql, param3)
+        for( i = 0; i < 5; i++) {
+            const param3 = hashtags[i]
+            const [result3] = await pool.execute(sql3, param3)
         }
         
-        
-
-        const sql4 = 'insert into cate1_bridge(midx, hidx) values(?,?)'
-        for ( i=0; i <6; i++) {
-
-            const param4 = [result.insertId, ]
-
+        const sql4 = 'insert into cate1_bridge(midx) values(?)'
+        for ( i = 0; i < 5; i++) {
+            const param4 = [result.insertId]
+            const [result4] = await pool.execute(sql4, param4)
+            result_final = {...result4}
         }
+
         const response = {
             errno:0,
-            result
+            result_final
         }
         res.json(response)
         
