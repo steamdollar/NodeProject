@@ -20,23 +20,23 @@ exports.write = async (req,res) => {
         const [result2] = await pool.execute(sql2,param2)
         // 여기까지가 좋아요 기능
 
-        const sql3 = `insert into hashtag
-        (hashtag_name) values(?)`
-        const hashtags = [hash1, hash2, hash3, hash4, hash5] 
+        // const sql3 = `insert into hashtag
+        // (hashtag_name) values(?)`
+        // const hashtags = [hash1, hash2, hash3, hash4, hash5] 
 
-        for( i = 0; i< 6; i++) {
-            let param3 = hashtags[i]
-            const [result3] = await pool.execute(sql, param3)
-        }
+        // for( i = 0; i< 6; i++) {
+        //     let param3 = hashtags[i]
+        //     const [result3] = await pool.execute(sql, param3)
+        // }
         
         
 
-        const sql4 = 'insert into cate1_bridge(midx, hidx) values(?,?)'
-        for ( i=0; i <6; i++) {
+        // const sql4 = 'insert into cate1_bridge(midx, hidx) values(?,?)'
+        // for ( i=0; i <6; i++) {
 
-            const param4 = [result.insertId, ]
+        //     const param4 = [result.insertId, ]
 
-        }
+        // }
         const response = {
             errno:0,
             result
