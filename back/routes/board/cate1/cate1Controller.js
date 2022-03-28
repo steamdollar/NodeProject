@@ -30,12 +30,12 @@ exports.write = async (req,res) => {
             const [result3] = await pool.execute(sql3, param3)
         }
         
-        const sql4 = 'insert into cate1_bridge(midx) values(?)'
-        for ( i = 0; i < 5; i++) {
-            const param4 = [result.insertId]
-            const [result4] = await pool.execute(sql4, param4)
-            result_final = {...result4}
-        }
+        // const sql4 = 'insert into cate1_bridge(midx) values(?)'
+        // for ( i = 0; i < 5; i++) {
+        //     const param4 = [result.insertId]
+        //     const [result4] = await pool.execute(sql4, param4)
+        //     result_final = {...result4}
+        // }
 
         const response = {
             errno:0,
