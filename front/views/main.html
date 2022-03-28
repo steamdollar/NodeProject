@@ -55,9 +55,6 @@
                 const response = await axios.post('http://localhost:4000/api/user/logout',null,option)
                 alert('로그아웃 되었습니다')
                 location.href='http://localhost:3000'
-
-        
-
             })
         })
     </script>
@@ -66,7 +63,7 @@
     <h1><a herf="/">logo</a></h1>
 
     <h2>{{userid}}님, 환영합니다!</h2>
-    <a href ='#'>게시판 (로그인 한 사람만?)</a>
+    <a href ='/board'>게시판</a>
     <a href="/board/notice">공지사항</a>
     <a href="" id="logout">로그아웃</a>
     <a href="/user/auth/kakao/unlink">카카오 로그아웃</a>
@@ -81,7 +78,5 @@
 
     </ul>
 
-    
 </body>
-
 </html>

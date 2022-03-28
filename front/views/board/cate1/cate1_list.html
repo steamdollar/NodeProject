@@ -5,28 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 </head>
 <body>
     <h1><a href='/'>logo</a></h1>
-    <h2> 공지_리스트 </h2>
+    <h2> cate1_리스트 </h2>
     <table>
         <tr>
             <td>idx</td>
             <td>title</td>
-            <td>content</td>
+            <td>작성자</td>
             <td>작성일자</td>
+            <td>hit</td>
         </tr>
 
-        {% for item in notice_list %}
+        {% for item in cate1_list %}
         <tr>
             <td>{{item.idx}}</td>
-            <td><a href="/board/notice_view?idx={{item.idx}}">{{item.title}}</a></td>  
-            <td>{{item.content}}</td> 
-            <td>{{item.date}}</td> 
+            <td><a href="/board/cate1/view?idx={{item.idx}}">{{item.title}}</a></td> 
+            <td>{{item.nickname}}</td> 
+            <td>{{item.date}}</td>
+            <td>{{item.hit}}</td>
         </tr>
         {% endfor %}
     </table>
+
+    <a href="/board/cate1/write">글쓰기</a>
 </body>
 </html>

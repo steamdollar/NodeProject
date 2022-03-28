@@ -36,6 +36,7 @@ CREATE TABLE comment (
     mcategory VARCHAR(30),
     midx INT NOT NULL,
     content TEXT NOT NULL,
+    userid VARCHAR(30) NOT NULL,
     nickname VARCHAR(30) NOT NULL,
     date VARCHAR(30) NOT NULL
 );
@@ -54,6 +55,7 @@ CREATE TABLE QnA (
     content TEXT NOT NULL,
     userid VARCHAR(30) NOT NULL,
     date VARCHAR(30) NOT NULL,
+    category VARCHAR(20) DEFAULT 'qna',
     hit INT NOT NULL DEFAULT 0
 );
 
