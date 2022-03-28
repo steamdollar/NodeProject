@@ -341,7 +341,6 @@ userid=del인 데이터 셋을 지우는 법으로 해보자.
 drop table cate1_like;
 
 create table cate1_like(
-    idx = int primary key,
     m_idx int,
     userid varchar(30)
 );

@@ -13,6 +13,11 @@ CREATE TABLE cate1 (
     likes INT NOT NULL DEFAULT 0
 );
 
+create table cate1_like(
+    m_idx int,
+    userid varchar(30)
+);
+
 CREATE TABLE user (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userid VARCHAR(30) NOT NULL,
