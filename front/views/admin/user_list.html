@@ -72,7 +72,10 @@
         search_beforeData.nickname = []
         search_beforeData.available = []
         frm_search.addEventListener('submit', async (e)=>{
-            
+            search_beforeData.userid = []
+            search_beforeData.level = []
+            search_beforeData.nickname = []
+            search_beforeData.available = [] //비워주기
             const frm_search = document.querySelector('#frm_search')//폼
             const user_search = document.querySelector('#user_search')//서밋 버튼
       
@@ -167,6 +170,10 @@
         beforeData.nickname = []
         beforeData.available = []
         user.forEach(async(e)=>{
+            beforeData.userid = []
+            beforeData.level = []
+            beforeData.nickname = []
+            beforeData.available = []
             const {userid, nickname, level, available} = e
             const before_data = document.querySelector(`#level_${userid}`)
             beforeData.userid.push(userid)
@@ -190,6 +197,11 @@
             console.log("검색유저의길이", search_userlist.length)
             const alltrElement = document.getElementsByTagName("tr").length-1 //검색된 or 전체 user수
             if(user.length == alltrElement){
+                currentData.level = [];
+                currentData.userid = [];
+                currentData.nickname = [];
+                currentData.available = [];
+                
                 user.forEach(async (e)=>{ //검색안했을 때 수정
                 const {userid, available} = e
 
