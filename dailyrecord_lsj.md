@@ -405,8 +405,6 @@ create table hashtag(
     hashtag_name varchar(30) not null
 );
 
-
-
 해시태그 내용과 해시태그의 번호를 저장하는 해시태그 table
 
 sila 가 n번글을 쓸 때
@@ -480,4 +478,29 @@ Q. 이 과정에서 프론트가 개입을 하는지는 모르겠다.
 
 백에서 그냥 계속 왔다갔다가 가능한가?
 
-바꿔말하면 html 파일에서 await는 하나만 있으면 되는가?
+바꿔말하면 html 파일에서 await는 하나만 있으면 되는가?  ㅇㅇ 해보니까 되더라
+
+-----------------
+
+기본 기능 구현 완료
+
+해시 태그 갯수에 대한 함수를 일반화 해보자.
+
+done
+
+내가 글을 열때 해시태그를 불러오려면 어떻게 해야 하나?
+
+백엔드로 보내는 요청의 미들웨어를 하나 더 만들까?
+
+내가 36번글을 보고 싶다면 brdige로 가서 midx가 36번인 데이터셋을 전부 찾는다.
+
+select * from cate1_bridge where midx=?
+
+그 데이터셋의 hidx와 일치하는 hidx를 가진 데이터셋을 hashtag 테이블에서 가져온다.
+
+select * from hashtag where hidx=?
+
+그걸 html을 렌더링할 떄 함께 던져준다.
+
+done
+

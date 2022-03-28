@@ -1,13 +1,13 @@
 const pool = require('../../../db.js').pool
 
 exports.write = async (req,res) => {
-    const {category, userid, nickname, title, content, hash1, 
-    hash2, hash3, hash4, hash5} = req.body
+    const {category, userid, nickname, title, content, temphash} = req.body
     const date = new Date()
     const sql = `insert into cate1
     (category, title, content, userid, nickname, date) 
     values(?,?,?,?,?,?)`
     const param = [category, title, content, userid, nickname, date]
+    console.log(temphash)
 
     const result_final = {}
     try {
@@ -15,31 +15,28 @@ exports.write = async (req,res) => {
         // console.log(result.insertId)
         // 여까지가 글 작성 기본기능
         
-        const sql2 = `insert into cate1_like(m_idx, userid) values(?,?)`
-        const param2 = [ result.insertId, userid]
+        // const sql2 = `insert into cate1_like(m_idx, userid) values(?,?)`
+        // const param2 = [ result.insertId, userid ]
 
-        const [result2] = await pool.execute(sql2,param2)
+        // const [result2] = await pool.execute(sql2,param2)
         // 여기까지가 좋아요 기능
 
         const sql3 = `insert into hashtag
-        (hashtag_name) values(?)`
-        const hashtags = [hash1, hash2, hash3, hash4, hash5] 
-
-        for( i = 0; i < 5; i++) {
-            const param3 = hashtags[i]
-            const [result3] = await pool.execute(sql3, param3)
-        }
+        (hashtag_name) values(?)` 
         
-        // const sql4 = 'insert into cate1_bridge(midx) values(?)'
-        // for ( i = 0; i < 5; i++) {
-        //     const param4 = [result.insertId]
-        //     const [result4] = await pool.execute(sql4, param4)
-        //     result_final = {...result4}
-        // }
+
+        for (i = 0; i < temphash.length; i++) {
+            const param3 = [temphash[i]]
+            const [result3] = await pool.execute(sql3, param3)
+
+            const sql4 = 'insert into cate1_bridge(midx, hidx) values(?, ?)'
+            const param4 = [result.insertId, result3.insertId]
+            const [result4] = await pool.execute(sql4, param4)
+        }
 
         const response = {
             errno:0,
-            result_final
+            result
         }
         res.json(response)
         
@@ -107,6 +104,8 @@ exports.del = async (req,res)=>{
     const param = [idx]
     try {
         const [result] = await pool.execute(sql,param)
+
+        const sql2 = `select * from cate1_bridge where midx=?`
         const response = {
             result,
             errno:0
@@ -226,6 +225,44 @@ exports.likeCount = async(req, res) => {
         const [result] = await pool.execute(sql, param)
         const response = {
             result,
+            errno:0
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+
+        res.json(response)
+    }
+}
+
+// hashtag
+
+exports.hashtagLoad = async (req, res) => {
+    const {idx} = req.body
+    const sql = 'select * from cate1_bridge where midx=?'
+    const param = [idx]
+    const result_final = []
+    try {
+        const [result] = await pool.execute(sql, param)
+        //console.log(result) // [ { midx: 36, hidx: 1 }, { midx: 36, hidx: 2 } ]
+        // console.log(result[0].midx) // 36
+
+        for(i=0; i<result.length; i++) {
+            const sql2 = 'select * from hashtag where hidx=?'
+            const param2 = [result[i].hidx]
+            console.log(param2)
+            const [result2] = await pool.execute(sql2, param2)
+            result_final.push(result2[0])
+        }
+
+        console.log(result_final)
+
+        const response = {
+            result_final,
             errno:0
         }
         res.json(response)

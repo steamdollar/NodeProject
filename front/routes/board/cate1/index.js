@@ -44,9 +44,13 @@ router.get('/view', async (req, res) => {
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_view = response.data
 
+    const response2 = await axios.post('http://localhost:4000/api/board/cate1/hashtagLoad', idx, option)
+    const cate1_hashtag = response2.data
+    console.log(cate1_view.result[0])
     res.render('./board/cate1/cate1_view.html', {
-        cate1_view : cate1_view.result,
-        userid:user.userid
+        cate1_view: cate1_view.result[0],
+        userid:user.userid,
+        cate1_hashtag:cate1_hashtag.result_final
     })
 })
 
@@ -55,8 +59,12 @@ router.get('/update', async (req, res) => {
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_update = response.data
 
+    const response2 = await axios.post('http://localhost:4000/api/board/cate1/hashtagLoad', idx, option)
+    const cate1_hashtag = response2.data
+
     res.render('./board/cate1/cate1_update.html', {
-        cate1_update:cate1_update.result
+        cate1_update:cate1_update.result[0],
+        cate1_hashtag:cate1_hashtag.result_final
     })
 })
 
