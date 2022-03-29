@@ -14,6 +14,11 @@
         const notice = document.querySelector('#notice')
         const QnA = document.querySelector('#QnA')
         const request = document.querySelector('request')
+        const frm_search = document.querySelector('#frm_search')
+        const search_btn = document.querySelector('#search_btn')
+        const board_hidden = document.querySelector('#board_hidden')
+        const frm_hidden = document.querySelector('#frm_hidden')
+        const info = document.querySelector('#info')
         const option = {
             'Content-type':'application/json',
             withCredentials:true
@@ -21,6 +26,8 @@
         const body = {
 
         }
+        search_btn.disabled = true
+        board_hidden.disabled = true
 
         frm_category.addEventListener('submit',async (e)=>{
             e.preventDefault()
@@ -70,6 +77,7 @@
                                 .replaceAll('{hidden}', hidden)
 
             })
+           
 
             await console.log(template)
 
@@ -85,13 +93,71 @@
                 } else if(hiddenElement.value =='on'){
                     hiddenElement.checked = true
                 }
+            search_btn.disabled = false
+            board_hidden.disabled = false        
             
             })
-            const board_hidden = document.querySelector('#board_hidden')
-            const frm_hidden = document.querySelector('#frm_hidden')
+            // 게시판 검색
+
+
+            frm_search.addEventListener('submit', async (e)=>{
+                e.preventDefault()
+                search_btn.value = '로딩 중'
+                search_btn.disabled = true
+                let data = {
+                    info:info.value,
+                    category:body.board_db
+                }
+                console.log(data)
+                const response = await axios.post('http://localhost:4000/api/admin/boardsearch' , data, option)
+                const searched_board = response.data.result
+                template = ''
+                board_list.innerHTML = '' //빈 tbody
+
+                searched_board.forEach(async (v)=>{
+                    let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+                    template += board_temp.replaceAll('{idx}', idx)
+                                    .replace('{category}',category)
+                                    .replace('{title}',title)
+                                    .replace('{content}',content)
+                                    .replace('{userid}', userid)
+                                    .replace('{nickname}',nickname)
+                                    .replace('{date}',date)
+                                    .replace('{hit}',hit)
+                                    .replace('{likes}',likes)
+                                    .replaceAll('{hidden}', hidden)
+
+                    
+                })
+                if(template == ''){
+                    board_list.innerHTML = '찾으시는 키워드가 없습니다.'
+                } else{
+                    board_list.innerHTML = template
+                }
+                searched_board.forEach((v)=>{
+                    const {idx, hidden} = v
+                    let hiddenElement = document.querySelector(`#check_no${idx}`)
+                    hiddenElement.value = hidden
+                    console.log(hiddenElement)
+                    if(hiddenElement.value =='off'){
+                        hiddenElement.checked = false
+                    } else if(hiddenElement.value =='on'){
+                        hiddenElement.checked = true
+                    }
+                })
+                
+                
+
+                search_btn.value = '검색'
+                search_btn.disabled = false
+
+            })
+
+
             frm_hidden.addEventListener('submit', async (e)=>{ //글 내리기
                 e.preventDefault()
-                board_hidden.value='로딩중~~'
+                board_hidden.value='로딩 중'
                 board_hidden.disabled = true
                 let body = {}
                 body.idx = []
@@ -101,7 +167,7 @@
                     const {idx, nickname, hidden, category} = v
                     let hiddenElement = document.querySelector(`#check_no${idx}`)
 
-                    if(hiddenElement.checked === true){
+                    if(hiddenElement.checked == true){
                         hiddenElement.value = 'on'
                         console.log(hiddenElement.value)
                         body.idx.push(idx)
@@ -116,7 +182,6 @@
 
                 })
                 
-                await console.log(body)
 
                 const response = await axios.post('http://localhost:4000/api/admin/boardhidden', body, option)
 
@@ -154,9 +219,9 @@
                 </select>
                 <input type="submit" name="category" id="submit_category" value="선택">
             </form>
-            <form action="http://localhost:4000/api/admin/search" method="post">
-                <input type="text" name="nickname" placeholder="찾는 회원 닉네임">
-                <input type="submit" value="검색">
+            <form action="http://localhost:4000/api/admin/boardsearch" method="post" id="frm_search">
+                <input type="text" name="info" id="info" placeholder="찾는 키워드">
+                <input type="submit" value="검색" id="search_btn">
             </form>
             <form action="http://localhost:4000/api/admin/board/hidden" id="frm_hidden">
                 <input type="submit" value="글 내리기" id="board_hidden">

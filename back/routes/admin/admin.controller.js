@@ -197,8 +197,28 @@ exports.boardList = async(req,res)=>{
 
 }
 
-exports.boardSearch = (req,res)=>{
-    res.send('게시물 검색')
+exports.boardSearch = async(req,res)=>{
+    const {info, category} = req.body
+    console.log(info, category)
+    const sql = `SELECT DISTINCT * from ${category} WHERE title LIKE "%${info}%" OR userid LIKE "%${info}%" OR content LIKE "%${info}%" OR nickname LIKE "%${info}%"`
+    console.log(sql)
+    try {
+        const [result] = await pool.execute(sql)
+
+        const response = {
+            result,
+            errorno: "none"
+        }
+        res.json(response)
+
+    } catch(e){
+        const response = {
+            errormsg: e.message,
+            errno: e.errno
+        }
+        console.log(response)
+        res.json(response)
+    }
 }
 
 exports.boardHidden = async(req,res)=>{
