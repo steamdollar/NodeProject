@@ -4,7 +4,6 @@ const express = require('express')
 const router = express.Router()
 const cate1Router = require('./cate1Controller.js')
 
-
 router.use('/write',cate1Router.write)
 router.use('/list',cate1Router.list)
 router.use('/view',cate1Router.view)
@@ -18,6 +17,5 @@ router.use('/likeCount', cate1Router.likeCount)
 
 // hashtag
 
-
-
+router.use('/hashtagLoad', cate1Router.hashtagLoad)
 module.exports = router

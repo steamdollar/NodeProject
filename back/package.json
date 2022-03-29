@@ -25,5 +25,6 @@
     "supervisor": "^0.12.0"
   },
   "keywords": [],
+  "devDependencies": {},
   "description": ""
 }
