@@ -243,7 +243,7 @@ CREATE TABLE comment (
     nickname VARCHAR(30) NOT NULL,
     userid VARCHAR(30) NOT NULL,
     date VARCHAR(30) NOT NULL,
-)
+);
 
 
 이렇게 저장한 댓글은 글 view 페이지에 갈 경우 글 내용과 함꼐 불러올 수 있다.
@@ -521,4 +521,33 @@ done
 
 글 쓰기 할 때 사진 삽입하고 댓글 구현 2개 남았는데,
 
-글 쓸 때 사진 삽입을 먼저 해보자.
+댓글을 먼저 공부해서 해보자.
+
+CREATE TABLE comment (
+    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    mcategory VARCHAR(30) NOT NULL,
+    mindex INT NOT NULL,
+    content TEXT NOT NULL,
+    nickname VARCHAR(30) NOT NULL,
+    userid VARCHAR(30) NOT NULL,
+    date VARCHAR(30) NOT NULL,
+    updateflag VARCHAR(5) NOT NULL DEFAULT true,
+);
+
+댓글 생성 : mcategory, midx는 이미 정해져 있고,
+나머지 정보만 잘 넣어서 db에 추가한다.
+
+댓글 가져오기 : comment table에 접근해 mcategory, midx가 일치하는 데이터 셋을 전부 가져온다.
+
+수정/삭제도 동일한 방법으로 select한 후, 수정/삭제하면 됨.
+
+이건 안어려운데 html에 어떻게 구현 할지가 문제다..
+
+insert into comment (mcategory, midx, content, nickname, userid, date) 
+values('cate1', 4, 'asdfgh', 'qwerty', 'sila', '2022-03-29 11:06:20');
+
+insert into comment (mcategory, midx, content, nickname, userid, date) 
+values('cate1', 4, 'zxcvbn', 'qwerty', 'sila', '2022-03-29 11:20:40');
+
+자동생성되는 idx로 댓글의 순서를 구분할 수 있다.
+
