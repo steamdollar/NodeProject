@@ -9,7 +9,6 @@ exports.write = async (req,res) => {
     const param = [category, title, content, userid, nickname, date]
     console.log(temphash)
 
-    const result_final = {}
     try {
         const [result] = await pool.execute(sql,param)
         // console.log(result.insertId)

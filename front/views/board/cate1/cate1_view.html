@@ -48,6 +48,7 @@
         <ul id="commentApp">
         </ul>
     </div>
+    <!-- 댓글시스템 렌더링하는 div-->
 
     <template id="commentForm">
         <li class="comment-form">
@@ -60,6 +61,7 @@
             </form>
         </li>
     </template>
+    <!-- 댓글 작성 -->
 
     <template id="commentList">
         <li>
@@ -74,12 +76,14 @@
             </ul>
         </li>
     </template>
+    <!-- 댓글 목록 -->
 
     <template id="commentInput">
         <span>
             <input type="text" class="comment-update-input" value="">
         </span>
     </template>
+    <!--댓글 수정 -->
 
     <script type="text/javascript">
         const option = {
@@ -201,28 +205,38 @@
         const commentList = document.querySelector('#commentList')
         const commentInput = document.querySelector('#commentInput')
 
-        // 가장 아라 commentView() 함수가 있다. 그게 우선 실행된다.
+        // 가장 아래 commentView() 함수가 있다. 그게 우선 실행된다. = 원래 있는 댓글들을 보여준다.
         // 근데 그 안에 createForm() 이 있고, 그 안에 submitHandler가 있다.
         // 논리 구조 한 번 시발 복잡하네..
         
-        function commentView(){
-            commentApp.innerHTML = ''
+        function commentView() {
+            commentApp.innerHTML = '' // 댓글 zone 초기화
             createForm()
 
             state.replay.forEach(v => { // 각각의 댓글에 대해 실행
                 const clone = document.importNode(commentList.content, true)
+                // CommentList 템플릿의 내용물을 가져온다
                 const row = clone.querySelectorAll('.comment-row > li')
+                // 그 안에서 li element들을 죄다 선택
                 row[0].innerHTML = v.userid
+                // 첫 번째 list는 userid 입력
                 row[1].querySelector('input').value = v.idx
+                // 두 번째 li는 idx 입력
 
                 if ( v.updateFlag === true) {
                     const spanElement = document.createElement('span')
                     spanElement.innerHTML = v.content
+                    // span element를 만들어 댓글 내용을 넣는다.
                     const deleteBtn = row[1].querySelector('.comment-delete-btn')
+                    // 'X' 가 있는 span 선택 
                     spanElement.addEventListener('click',updateHandler)
+                    // 댓글을 클릭하면 수정 함수 실행 되게 addEventListener
                     deleteBtn.addEventListener('click',deleteHandler)
+                    // 'X' 클릭시 삭제 함수 실행
                     row[1].prepend(spanElement)
-                } else {
+                    // prepend는 append와 동일하지만 가장 앞에 요소가 추가됨
+                } 
+                else {
                     const clone = document.importNode(commentInput.content,true)
                     clone.querySelector('input').value = v.content
                     clone.querySelector('input').addEventListener('keypress',updateSubmitHandler)
@@ -248,13 +262,18 @@
 
         function submitHandler(e){
             e.preventDefault()
-            const { input } = e.target // form 에서 니가 싼 댓글 내용을 담은 input만 가져옴
-            const { replay:{ length } } = state // 그때까지 달려있던 댓글의 갯수
-            const counting = e.target.querySelector('h4 > span') // 빈 괄호 > createForm이 실행된 후엔 댓글의 갯수가 채워짐
+            const { input } = e.target 
+            // form 에서 니가 싼 댓글 내용을 담은 input만 가져옴
+            const { replay:{ length } } = state 
+            // 그때까지 달려있던 댓글의 갯수
+            const counting = e.target.querySelector('h4 > span') 
+            // 빈 괄호 > createForm이 실행된 후엔 댓글의 갯수가 채워짐
             
-            // 삼항연산자
-            const idx = length != 0 ? parseInt( state.replay[length-1].idx + 1 ) : 1 // length가 0 이면 1, 아니면 두 번째 항을 value로 가짐
-            // idx는 댓글이 몇 번째 댓글인지를 알려준다. 그래서 지금까지 단 댓글 수를 먼저 계산하는게 2번째, 없으면 1번째 댓이 되는 것.
+            const idx = length != 0 ? parseInt( state.replay[length-1].idx + 1 ) : 1 
+            // length가 0 이 아니면 두 번째 항, 0이면 세번째 항을 value로 가짐
+            // idx는 댓글이 몇 번째 댓글인지를 알려준다. 
+            // 그래서 지금까지 단 댓글 수를 먼저 계산하는게 2번째 항이고, 
+            // 없으면 세번째항의 value인 1을 가지는것.
             const result = {idx,userid:'web7722',content:input.value,date:'2022-03-18',updateFlag:true}
             // 대충 저 state.replay 처럼 포맷 만들어준다.
             state = {
