@@ -6,41 +6,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',async ()=>{
+        const frm_category = document.querySelector('#frm_category')
+        const cate1 = document.querySelector('#cate1')
+        const notice = document.querySelector('#notice')
+        const QnA = document.querySelector('#QnA')
+        const request = document.querySelector('request')
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
+        const body = {
+
+        }
+
+        frm_category.addEventListener('submit',async (e)=>{
+            e.preventDefault()
+            if(cate1.selected === true){
+                
+                body.board_db = cate1.value
+                
+            }
+            else if(notice.selected ===true){
+                
+                body.board_db = notice.value
+
+            
+            }
+            else if(QnA.selected ===true){
+                
+                
+                body.board_db = QnA.value
+
+            
+            }
+            else{
+
+                body.board_db = request.value
+                
+            } 
+            const response = await axios.post('http://localhost:4000/api/admin/boardlist', body, option)
+            const board = response.data.result
+            console.log(board)
+            const board_list = document.querySelector('#board_list') //빈 tbody
+            const board_temp = document.querySelector('#board_temp').innerHTML //템플릿
+            let template = ''
+
+            
+            const promise = board.forEach(async (v)=>{
+                let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+                template += board_temp.replaceAll('{idx}', idx)
+                                .replace('{category}',category)
+                                .replace('{title}',title)
+                                .replace('{content}',content)
+                                .replace('{userid}', userid)
+                                .replace('{nickname}',nickname)
+                                .replace('{date}',date)
+                                .replace('{hit}',hit)
+                                .replace('{likes}',likes)
+                                .replaceAll('{hidden}', hidden)
+
+            })
+
+            await console.log(template)
+
+            board_list.innerHTML = template
+
+            board.forEach((v)=>{
+                const {idx, hidden} = v
+                let hiddenElement = document.querySelector(`#check_no${idx}`)
+                hiddenElement.value = hidden
+                console.log(hiddenElement)
+                if(hiddenElement.value =='off'){
+                    hiddenElement.checked = false
+                } else if(hiddenElement.value =='on'){
+                    hiddenElement.checked = true
+                }
+            
+            })
+            const board_hidden = document.querySelector('#board_hidden')
+            const frm_hidden = document.querySelector('#frm_hidden')
+            frm_hidden.addEventListener('submit', async (e)=>{ //글 내리기
+                e.preventDefault()
+                board_hidden.value='로딩중~~'
+                board_hidden.disabled = true
+                let body = {}
+                body.idx = []
+                body.hidden = []
+                body.category = []
+                board.forEach(async(v)=>{
+                    const {idx, nickname, hidden, category} = v
+                    let hiddenElement = document.querySelector(`#check_no${idx}`)
+
+                    if(hiddenElement.checked === true){
+                        hiddenElement.value = 'on'
+                        console.log(hiddenElement.value)
+                        body.idx.push(idx)
+                        body.hidden.push('on')
+                        body.category.push(`${category}`)
+                    }else{
+                        hiddenElement.value = 'off'
+                        body.idx.push(idx)
+                        body.hidden.push('off')
+                        body.category.push(`${category}`)
+                    }
+
+                })
+                
+                await console.log(body)
+
+                const response = await axios.post('http://localhost:4000/api/admin/boardhidden', body, option)
+
+                if(response.data.result == "success"){
+                alert('글 내리기 완료. 관리자 페이지에서만 열람 가능합니다.')
+
+                } else{
+                    alert(response.data.errormsg)
+            
+                }
+                    
+                
+                board_hidden.value='글 내리기'
+                board_hidden.disabled = false
+            })
+
+        })
+
+    })
+</script>
 <body>
     <h1>회원 게시물 리스트</h1>
-    <form action="http://localhost:4000/api/admin/search" method="post">
-        <input type="text" name="nickname" placeholder="찾는 회원 닉네임">
-        <input type="submit" value="검색">
-    </form>
-    <div>
+    <table width="100%" border="1">
+
+
         <thead>
+            <h2>카테고리 선택</h2>
+            <form method="post" action="http://4000/api/admin/board/category" id="frm_category">
+                <select name="category" id="category" >
+                    <option value="" disabled>카테고리 선택</option>
+                    <option value="cate1" id="cate1" selected>cate1</option>
+                    <option value="notice" id="notice">notice</option>
+                    <option value="QnA" id="QnA">QnA</option>
+                    <option value="request" id="request">청원</option>
+                </select>
+                <input type="submit" name="category" id="submit_category" value="선택">
+            </form>
+            <form action="http://localhost:4000/api/admin/search" method="post">
+                <input type="text" name="nickname" placeholder="찾는 회원 닉네임">
+                <input type="submit" value="검색">
+            </form>
+            <form action="http://localhost:4000/api/admin/board/hidden" id="frm_hidden">
+                <input type="submit" value="글 내리기" id="board_hidden">
+            </form>
+            <br>
             <tr>
+
                 <th>번호</th>
+                <th>카테고리</th>
                 <th>제목</th>
-                <th>작성자</th>
+                <th>작성자 아이디</th>
+                <th>작성자 닉네임</th>
+                <th>내용</th>
                 <th>작성일</th>
                 <th>조회수</th>
+                <th>좋아요</th>
+                <th>글 숨기기</th>
             </tr>
+
         </thead>
-        <tbody>
+
+        <tbody id="board_list">
 
         </tbody>
+    </table>
+        <template id="board_column">
 
-        <template>
+        </template>
+        <template id="board_temp">
             <tr>
-                <td>{idx}</td>
-                <td>{title}</td>
-                <td>{nickname}</td>
-                <td>{date}</td>
-                <td>{hit}</td>
+
+                <th>{idx}</th>
+                <th>{category}</th>
+                <th>{title}</th>
+                <th>{userid}</th>
+                <th>{nickname}</th>
+                <th>{content}</th>
+                <th>{date}</th>
+                <th>{hit}</th>
+                <th>{likes}</th>
+                <th><input type="checkbox" id="check_no{idx}"value="off"></th>
+
             </tr>
 
         </template>
-        <form action="http://localhost:4000/api/admin/board/hidden">
-            <input type="submit" value="글 내리기">
-        </form>
 
-    </div>
+
+
 
 </body>
 </html>

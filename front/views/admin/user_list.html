@@ -21,14 +21,12 @@
         let template = ''
         let idx = 1
         const promise = user.forEach(async e => {
-            const {idx, userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro, level, available} = e
+            const {idx, userid,username,nickname,address,gender,phone,mobile,email,userintro, level, available} = e
 
             template += user_temp.replace('{idx}', idx)
                                 .replaceAll('{nickname}',nickname)
                                 .replaceAll('{userid}',userid)
                                 .replace('{username}',username)
-                                .replace('{userimg}',userimg)
-                                .replace('{nickname}',nickname)
                                 .replace('{address}',address)
                                 .replace('{gender}',gender)
                                 .replace('{phone}',phone)
@@ -65,7 +63,7 @@
             
         //유저 검색
 
-        const search_userlist = []
+        let search_userlist = []
         let search_beforeData = {}
         search_beforeData.userid = []
         search_beforeData.level = []
@@ -76,6 +74,7 @@
             search_beforeData.level = []
             search_beforeData.nickname = []
             search_beforeData.available = [] //비워주기
+            search_userlist = []
             const frm_search = document.querySelector('#frm_search')//폼
             const user_search = document.querySelector('#user_search')//서밋 버튼
       
@@ -109,8 +108,6 @@
                                         .replaceAll('{nickname}',nickname)
                                         .replaceAll('{userid}',userid)
                                         .replace('{username}',username)
-                                        .replace('{userimg}',userimg)
-                                        .replaceAll('{nickname}',nickname)
                                         .replace('{address}',address)
                                         .replace('{gender}',gender)
                                         .replace('{phone}',phone)
@@ -170,10 +167,7 @@
         beforeData.nickname = []
         beforeData.available = []
         user.forEach(async(e)=>{
-            beforeData.userid = []
-            beforeData.level = []
-            beforeData.nickname = []
-            beforeData.available = []
+
             const {userid, nickname, level, available} = e
             const before_data = document.querySelector(`#level_${userid}`)
             beforeData.userid.push(userid)
@@ -184,24 +178,25 @@
 
         })
         await console.log(beforeData)
+        let currentData = {};
+        currentData.userid = [];
+        currentData.nickname = [];
+        currentData.level = [];
+        currentData.available = [];
         frm_update.addEventListener('submit', async (e)=>{
+            currentData.userid = [];
+            currentData.nickname = [];
+            currentData.level = [];
+            currentData.available = [];
             e.preventDefault()
             update_btn.value='로딩중~~'
             update_btn.disabled = true
-            let currentData = {};
-            currentData.level = [];
-            currentData.userid = [];
-            currentData.nickname = [];
-            currentData.available = [];
+
             console.log("유저의길이",user.length)
             console.log("검색유저의길이", search_userlist.length)
             const alltrElement = document.getElementsByTagName("tr").length-1 //검색된 or 전체 user수
             if(user.length == alltrElement){
-                currentData.level = [];
-                currentData.userid = [];
-                currentData.nickname = [];
-                currentData.available = [];
-                
+              
                 user.forEach(async (e)=>{ //검색안했을 때 수정
                 const {userid, available} = e
 
@@ -227,7 +222,13 @@
                 })
 
             } else{
+                currentData.userid = [];
+                currentData.nickname = [];
+                currentData.level = [];
+                currentData.available = [];
+
                 search_userlist.forEach(async (e)=>{ //검색 했을 때 수정
+                    
                 const {userid} = e
 
                 const user_level = document.querySelector(`#level_${userid}`);
@@ -243,6 +244,7 @@
                 const user_available = document.querySelector(`#${userid}_available`);
                 const available_on= document.querySelector(`#${userid}_available_on`);
                 const available_off = document.querySelector(`#${userid}_available_off`);
+
                 if (available_on.checked === true) user_available.value = 'on';
                 else user_available.value = 'off';
 
@@ -296,10 +298,11 @@
         <input type="text" name="nickname" id="nickname">
     </span>
     <span>
-        <input type="submit" name="user_search" id="user_search" value="검색">
+        <input type="submit" name="user_search" id="user_search" value="검색"><a href="/admin/board">게시판 관리로 이동하기</a>
     </span>
     
     </form>
+
     <h2>회원 목록</h2>
     <table width="100%" border="1">
         <form id="forced_userupdate" action="http://localhost:4000/api/admin/userupdate" method="post">
@@ -309,7 +312,6 @@
             <tr>
                 <th>idx</th>
                 <th>회원아이디</th>
-                <th>회원 프로필 사진</th>
                 <th>회원 성명</th>
                 <th>닉네임</th>
                 <th>주소</th>
@@ -334,7 +336,6 @@
         <tr>
             <th>{idx}</th>
             <th>{userid}</th>
-            <th>{userimg}</th>
             <th>{username}</th>
             <th><input type="text" id="nickname_{userid}" name="nickname_{userid}" value="{nickname}"></th>
             <th>{address}</th>
