@@ -3,3 +3,4 @@ package-lock.json
 .env
 db.js
 dailyrecord_lsj.md
+public

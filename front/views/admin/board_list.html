@@ -19,6 +19,7 @@
         const board_hidden = document.querySelector('#board_hidden')
         const frm_hidden = document.querySelector('#frm_hidden')
         const info = document.querySelector('#info')
+        let search_list = []
         const option = {
             'Content-type':'application/json',
             withCredentials:true
@@ -30,6 +31,8 @@
         board_hidden.disabled = true
 
         frm_category.addEventListener('submit',async (e)=>{
+            search_list = []
+            console.log("비어야함",search_list)
             e.preventDefault()
             if(cate1.selected === true){
                 
@@ -61,8 +64,9 @@
             const board_temp = document.querySelector('#board_temp').innerHTML //템플릿
             let template = ''
 
-            
+            //카테고리만 선택했을 때 보드 랜더            
             const promise = board.forEach(async (v)=>{
+                search_list.push(v)
                 let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
 
                 template += board_temp.replaceAll('{idx}', idx)
@@ -83,7 +87,7 @@
 
             board_list.innerHTML = template
 
-            board.forEach((v)=>{
+            search_list.forEach(async(v)=>{
                 const {idx, hidden} = v
                 let hiddenElement = document.querySelector(`#check_no${idx}`)
                 hiddenElement.value = hidden
@@ -99,9 +103,10 @@
             })
             // 게시판 검색
 
-
+            
             frm_search.addEventListener('submit', async (e)=>{
                 e.preventDefault()
+                search_list = []
                 search_btn.value = '로딩 중'
                 search_btn.disabled = true
                 let data = {
@@ -115,6 +120,7 @@
                 board_list.innerHTML = '' //빈 tbody
 
                 searched_board.forEach(async (v)=>{
+                    search_list.push(v)
                     let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
 
                     template += board_temp.replaceAll('{idx}', idx)
@@ -135,7 +141,7 @@
                 } else{
                     board_list.innerHTML = template
                 }
-                searched_board.forEach((v)=>{
+                search_list.forEach((v)=>{
                     const {idx, hidden} = v
                     let hiddenElement = document.querySelector(`#check_no${idx}`)
                     hiddenElement.value = hidden
@@ -154,42 +160,48 @@
 
             })
 
-
+            let data = {}
+            data.idx = []
+            data.hidden = []
+            data.category = []
             frm_hidden.addEventListener('submit', async (e)=>{ //글 내리기
                 e.preventDefault()
+                data = {}
+                data.idx = []
+                data.hidden = []
+                data.category = []
                 board_hidden.value='로딩 중'
                 board_hidden.disabled = true
-                let body = {}
-                body.idx = []
-                body.hidden = []
-                body.category = []
-                board.forEach(async(v)=>{
+                console.log("게시판 리스트", search_list)
+
+                search_list.forEach(async(v)=>{
                     const {idx, nickname, hidden, category} = v
+                    console.log(idx,nickname,hidden,category)
                     let hiddenElement = document.querySelector(`#check_no${idx}`)
 
                     if(hiddenElement.checked == true){
                         hiddenElement.value = 'on'
                         console.log(hiddenElement.value)
-                        body.idx.push(idx)
-                        body.hidden.push('on')
-                        body.category.push(`${category}`)
+                        data.idx.push(idx)
+                        data.hidden.push('on')
+                        data.category.push(`${category}`)
                     }else{
                         hiddenElement.value = 'off'
-                        body.idx.push(idx)
-                        body.hidden.push('off')
-                        body.category.push(`${category}`)
+                        data.idx.push(idx)
+                        data.hidden.push('off')
+                        data.category.push(`${category}`)
                     }
 
                 })
-                
+                await console.log("길이가 몇이니",data)
 
-                const response = await axios.post('http://localhost:4000/api/admin/boardhidden', body, option)
+                const response = await axios.post('http://localhost:4000/api/admin/boardhidden', data, option)
 
                 if(response.data.result == "success"){
                 alert('글 내리기 완료. 관리자 페이지에서만 열람 가능합니다.')
 
                 } else{
-                    alert(response.data.errormsg)
+                    alert(response.errormsg)
             
                 }
                     

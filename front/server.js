@@ -7,7 +7,6 @@ const webSocket = require('./socket.js')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
 const { Auth } = require('./middlewares/auth')
-
 let cookieShuttle = {}
 
 app.set('view engine','html')
@@ -17,6 +16,7 @@ nunjucks.configure('views',{
 })
 
 app.use(cookieParser())
+
 
 app.use(express.urlencoded({
     extended:true,
