@@ -6,14 +6,10 @@ const { createToken } = require('../../utils/jwt.js')
 // 지운 이유 교수님이 지우라고했슴.
 
 
-exports.join = async (req,res)=>{
-    // console.log(req.body) // req.body 
-    console.log('hello world')
+exports.join = async (req,res)=>{    
     const {userid,userpw,username,nickname,address,gender,phone,mobile,email,userintro} = req.body
-    console.log(userid,userpw,username,nickname,address,gender,phone,mobile,email,userintro)
     const userimg = req.file.filename
-    console.log('넌 뭐냐',userimg)
-    
+
     const sql = `INSERT INTO user(
                     userid,
                     userpw,
@@ -93,9 +89,6 @@ exports.login = async (req,res)=>{
 }
 
 exports.profile = async (req,res)=>{
-    // const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = req.body
-    // console.log('hello')
-    // console.log(req.user)
     const {userid} = req.user
     
     const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where userid=?'
@@ -123,8 +116,8 @@ exports.profile = async (req,res)=>{
 
 exports.update = async (req,res)=>{
     
-    const {userid, userpw,userimg,nickname,address,phone,mobile} = req.body
-
+    const {userid, userpw,nickname,address,phone,mobile} = req.body
+    const userimg = req.file.filename
     const sql ="UPDATE user SET userpw=?, userimg=?, nickname=?, address=?, phone=?, mobile=? WHERE userid=?"
     const param = [userpw,userimg,nickname,address,phone,mobile,userid]
     try{
@@ -174,6 +167,42 @@ exports.delete = async (req,res)=>{
         res.json(response)
     }
 }
+
+exports.kakaoLogin = async (req,res)=>{
+    const {userid} = req.user
+
+    const sql = 'SELECT userid, userimg, username, nickname, address, gender, phone, mobile, email, level from user where userid = ?'
+    const param = [userid]
+
+    try{
+        const [result] = await pool.execute(sql,param)
+        if( result.length ===0) {throw Error ('id/pw를 확인해주세요')}
+
+        const jwt = createToken(result[0])
+
+        res.cookie('token', jwt, {
+            path:'/',
+            httpOnly:true,
+            domain:'localhost'
+        })
+
+        const response = {
+            result,
+            errno:0
+        }
+        res.json(response)
+
+    } catch(e){
+        console.log(e.message)
+        const response = {
+            result:[],
+            errormsg:e.message,
+            errno:e.errno
+        }
+        res.json(response)
+    }
+}
+
 
 exports.logout = (req,res) => {
     

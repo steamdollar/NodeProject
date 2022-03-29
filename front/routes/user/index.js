@@ -31,8 +31,6 @@ router.use('/oauth/kakao', async (req,res)=>{
         })
     const headers = {'Content-type':'application/x-www-form-urlencoded'}
     const response = await axios.post(uri,body,headers)
-   
-    console.log('잘왔누',response.data.access_token)
     
 
     try {   
@@ -43,26 +41,35 @@ router.use('/oauth/kakao', async (req,res)=>{
                 'Authorization': `Bearer ${access_token}`,
             }
         })
-        const { nickname:userid, profile_image: img} = userinfo.data.properties
-        const result = { userid, img,access_token }
-        console.log(result)
-        const jwt_token = createToken(result)
+        console.log('왓냐',userinfo)
+        const { nickname:userid, profile_image_url: userimg} = userinfo.data.kakao_account.profile
+        const email = userinfo.data.kakao_account.email
 
+        console.log('오호잇',userinfo.data)
+        
+        const result = { userid,userimg,email,access_token }
+        const jwt_token = createToken(result)
+        console.log('안녕',result)
         res.cookie('kakaoToken', jwt_token,{
             path:'/',
             httpOnly:true,
-            domain:'localhost'
+            domain:'localhost',
+            maxAge:1000
         })
 
         console.log(req.cookies.kakaoToken)
         const {kakaoToken} = req.cookies
         console.log(kakaoToken)
-        if(kakaoToken !== undefined){
-            res.render('main')
-        }
-        else(
+        if(kakaoToken !== undefined ){
+            res.render('user/join.html',{
+                userid:result.userid,
+                userimg:result.userimg,
+                email:result.email,
+            })
+        } else{
             res.render('main2')
-        )
+        }
+            
         
         
 
