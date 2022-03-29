@@ -14,14 +14,14 @@
             <li>
                 <span class="join_label">아이디</span>
                 <span class="join_input">
-                    <input type="text" name="userid" id="userid" value="lsj1994">
+                    <input type="text" name="userid" id="userid" value="{{userid}}">
                 </span>
 
             </li>
             <li>
                 <span class="join_label">패스워드</span>
                 <span class="join_input">
-                    <input type="text" name="userpw" id="userpw" value="1234">
+                    <input type="text" name="userpw" id="userpw" value="">
                 </span>
             </li>
             <li>
@@ -40,19 +40,19 @@
             <li>
                 <span class="join_label">이름</span>
                 <span class="join_input">
-                    <input type="text" name="username" id="username" value="qwerty">
+                    <input type="text" name="username" id="username" value="">
                 </span>
             </li>
             <li>
                 <span class="join_label">별명</span>
                 <span class="join_input">
-                    <input type="text" name="nickname" id="nickname" value="qwerty">
+                    <input type="text" name="nickname" id="nickname" value="">
                 </span>
             </li>
             <li>
                 <span class="join_label">주소</span>
                 <span class="join_input">
-                    <input type="text" name="address" id="address" value="Seoul">
+                    <input type="text" name="address" id="address" value="">
                 </span>
             </li>
             <li>
@@ -65,78 +65,138 @@
             <li>
                 <span class="join_label">전화번호</span>
                 <span class="join_input">
-                    <input type="text" name="phone" id="phone" value="00000000">
+                    <input type="text" name="phone" id="phone" value="">
                 </span>
             </li>
             <li>
                 <span class="join_label">핸드폰</span>
                 <span class="join_input">
-                    <input type="text" name="mobile" id="mobile" value="00000000">
+                    <input type="text" name="mobile" id="mobile" value="">
                 </span>
             </li>
             <li>
                 <span class="join_label">이메일</span>
                 <span class="join_input">
-                    <input type="text" name="email" id="email" value="00000000">
+                    <input type="text" name="email" id="email" value="{{email}}">
                 </span>
             </li>
             <li>
                 <span class="join_label">자기소개</span>
                 <span class="join_input">
-                    <input type="text" name="userintro" id="userintro" value="hahaha">
+                    <input type="text" name="userintro" id="userintro" value="">
                 </span>
             </li>
             <li>
+                <label for="agree_all" style="display:block;">
+                    <input type="checkbox" name="agree_all" id="agree_all">
+                    <span>모두 동의합니다</span>
+                </label>
+                  <label for="agree" style="display:block;" >
+                    <input type="checkbox" name="agree" value="1">
+                    <span>이용약관 동의<strong>(필수)</strong></span>
+                  </label>
+                  <label for="agree" style="display:block;">
+                    <input type="checkbox" name="agree" value="2">
+                    <span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
+                  </label>
+                  <label for="agree" style="display:block;">
+                    <input type="checkbox" name="agree" value="3">
+                    <span>개인정보 이용 동의<strong>(필수)</strong></span>
+                  </label>
+            </li>
+            <!-- <li>
                 <span> 약관에 동의하십니까? </span>
                 <input type="checkbox" checked>
-            </li>
+            </li> -->
             <!-- script에 조건문써서 체크 안되면 동의해주세요 알람 띄우게-->
         </ul>
         <input type="submit" id="btn" value="회원가입">
     </form>
     <script type="text/javascript">
         // 1. submit 이벤트를 만들고 그이벤트를 막는 기능 
+        
         const frm = document.querySelector('#join_frm')
+       
+        const agreeChkAll = document.querySelector('input[name=agree_all]')
+        
+        agreeChkAll.addEventListener('change', (d) => {
+        let agreeChk = document.querySelectorAll('input[name=agree]')
+
+        for(let i = 0; i < agreeChk.length; i++){
+            agreeChk[i].checked = d.target.checked;
+            }
+        });
+
+       
+    
         frm.addEventListener('submit',async (e)=>{
             e.preventDefault()
+            
+            const {userid,userpw,username,nickname,address,gender,phone,mobile,email,userintro,userimg} = e.target
+
+            const formData = new FormData()
+            formData.append('userid',document.querySelector('#userid').value)
+            formData.append('userpw',document.querySelector('#userpw').value)
+            formData.append('userimg',userimg.files[0])
+            formData.append('username',document.querySelector('#username').value)
+            formData.append('nickname',document.querySelector('#nickname').value)
+            formData.append('address',document.querySelector('#address').value)
+            formData.append('gender',document.querySelector('input[name="gender"]:checked').value)
+            formData.append('phone',document.querySelector('#phone').value)
+            formData.append('mobile',document.querySelector('#mobile').value)
+            formData.append('email',document.querySelector('#email').value)
+            formData.append('userintro',document.querySelector('#userintro').value)
+
+           
             const btn = document.querySelector('#btn')
             btn.value='로딩중~~'
             btn.disabled = true
 
-
-            const data = { 
-                userid:document.querySelector('#userid').value,
-                userpw:document.querySelector('#userpw').value,
-                userimg:document.querySelector('#userimg').value,
-                username:document.querySelector('#username').value,
-                nickname:document.querySelector('#nickname').value,
-                address:document.querySelector('#address').value,
-                gender:document.querySelector('input[name="gender"]:checked').value,
-                phone:document.querySelector('#phone').value,
-                mobile:document.querySelector('#mobile').value,
-                email:document.querySelector('#email').value,
-                userintro:document.querySelector('#userintro').value,
-            }
-
+            
             const option = { 
                 'Content-type':'application/json',
                 withCredentials:true,
             }   
             // // return ? promise 객체 
             // // async / await 
-            const response = await axios.post('http://localhost:4000/api/user/join',data,option)
-            console.log(response.data)
+            if(!agreeChkAll.checked){
+                alert('약관동의에 체크해주세요')
+                btn.value='회원가입'
+                btn.disabled = false
+            } else{
+                const response = await axios.post('http://localhost:4000/api/user/join',formData,option)
+                if(response.data.errno === 0){ // 성공의 케이스 
+                // 성공
+                console.log('가입완료되었습니다.')
+                location.href=`/user/welcome?nickname=${nickname.value}&userid=${userid.value}&username=${username.value}&email=${email.value}&mobile=${mobile.value}`
+            } else { //
+                // 실패
 
+                if(response.data.errno === 1062){
+                    if(response.data.errormsg.includes('user.userid')){
+                        alert('중복 된 아이디 입니다. 다른 아이디를 입력해주세요.')
+                    }
+                    if(response.data.errormsg.includes('user.nickname')){
+                        alert('중복 된 닉네임 입니다. 다른 닉네임을 사용해주세요.')
+                    }
+                    if(response.data.errormsg.includes('user.email')){
+                        alert('이미 가입 된 이메일입니다.')
+                    }
+                }
+                
+                btn.value='회원가입'
+                btn.disabled = false
+            }
+            }     
+            // console.log(response.data.errno, response.data.errno===0
             
-            
-            // console.log(response.data.errno, response.data.errno===0)
+
             if(response.data.errno === 0){ // 성공의 케이스 
                 // 성공
                 console.log('가입완료되었습니다.')
-                location.href='/user/welcome'
+                location.href=`/user/welcome?nickname=${nickname.value}&userid=${userid.value}&username=${username.value}&email=${email.value}&mobile=${mobile.value}`
             } else { //
                 // 실패
-                console.log(response.data)
 
                 if(response.data.errno === 1062){
                     if(response.data.errormsg.includes('user.userid')){

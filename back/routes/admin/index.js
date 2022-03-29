@@ -8,6 +8,7 @@ router.post('/usersearch',adminController.userSearch)
 router.post('/userupdate', adminController.userUpdate)
 router.post('/userdelete', adminController.userDelete)
 
+router.post('/boardlist',adminController.boardList)
 router.post('/boardsearch',adminController.boardSearch)
 router.post('/boardhidden', adminController.boardHidden)
 

@@ -31,8 +31,6 @@ router.use('/oauth/kakao', async (req,res)=>{
         })
     const headers = {'Content-type':'application/x-www-form-urlencoded'}
     const response = await axios.post(uri,body,headers)
-   
-    console.log('잘왔누',response.data.access_token)
     
 
     try {   
@@ -43,25 +41,35 @@ router.use('/oauth/kakao', async (req,res)=>{
                 'Authorization': `Bearer ${access_token}`,
             }
         })
-        const { nickname, profile_image: img} = userinfo.data.properties
-        const result = { nickname, img}
-        const jwt_token = createToken(result)
+        console.log('왓냐',userinfo)
+        const { nickname:userid, profile_image_url: userimg} = userinfo.data.kakao_account.profile
+        const email = userinfo.data.kakao_account.email
 
+        console.log('오호잇',userinfo.data)
+        
+        const result = { userid,userimg,email,access_token }
+        const jwt_token = createToken(result)
+        console.log('안녕',result)
         res.cookie('kakaoToken', jwt_token,{
             path:'/',
             httpOnly:true,
-            domain:'localhost'
+            domain:'localhost',
+            maxAge:1000
         })
 
-        // console.log(req.cookies.kakaoToken)
+        console.log(req.cookies.kakaoToken)
         const {kakaoToken} = req.cookies
         console.log(kakaoToken)
-        if(kakaoToken !== undefined){
-            res.render('main')
-        }
-        else(
+        if(kakaoToken !== undefined ){
+            res.render('user/join.html',{
+                userid:result.userid,
+                userimg:result.userimg,
+                email:result.email,
+            })
+        } else{
             res.render('main2')
-        )
+        }
+            
         
         
 
@@ -74,6 +82,29 @@ router.use('/oauth/kakao', async (req,res)=>{
         console.log(e)
     }
     
+})
+
+router.use('/auth/kakao/unlink',async (req,res)=>{
+    const {kakaoToken} = req.user
+    const url = "http://kapi.kakao.com/v1/user/unlink"
+    console.log('뜨니',kakaoToken)
+    let unlink
+    try{
+        unlink = await axios.get(url,null,{
+            headers:{
+               'Authorization': `Bearer ${kakaoToken}`
+            }
+        })
+    } catch(e) {
+        console.log(e)
+    }
+
+    const {id} = unlink.data
+    console.log('넌 뭐니',id)
+    if(kakaoToken == true){
+        res.clearCookie('kakaoToken')
+    }
+    res.redirect('/')
 })
 
 router.use('/join',(req,res)=>{
@@ -127,7 +158,14 @@ router.use('/profile', (req,res)=>{
 })
 
 router.use('/welcome', (req,res)=>{
-    res.render('./user/welcome')
+    const { userid, username, nickname, mobile, email } = req.query
+    res.render('./user/welcome', {
+        userid:userid,
+        username:username,
+        nickname:nickname,
+        mobile:mobile,
+        email:email
+    })
 })
 
 

@@ -8,24 +8,27 @@ module.exports = (server) => {
     wss.on('connection',(ws, req)=>{
         ws.id = req.headers['sec-websocket-key']
         sockets.push(ws)
-
         let ecookie1 = req.headers.cookie.split('=')
         let ecookie2 = ecookie1[1].split('.')
         let ecookie3 = ecookie2[1]
         const deUserid = JSON.parse(Buffer.from(ecookie3, 'base64').toString('utf-8'))
 
         ws.send(`${deUserid.userid}님 환영합니다.`)
-        
-        userid = deUserid.userid
-
+    
         ws.on("message", (response) => {
             let obj = JSON.parse(response.toString('utf-8'))
+            let ecookie1 = req.headers.cookie.split('=')
+            let ecookie2 = ecookie1[1].split('.')
+            let ecookie3 = ecookie2[1]
+            const deUserid = JSON.parse(Buffer.from(ecookie3, 'base64').toString('utf-8'))
+            const onUserid = deUserid.userid
             let { type, data, userid } = obj
-
+            obj.userid = onUserid
+            console.log(obj)
             switch (type) {
                 case 'send_msg':
                     sockets.forEach( v => {     
-                        v.send(`${userid} : ${data}`)
+                        v.send(`${obj.userid} : ${data}`)
                     })
                 break;
             }            
