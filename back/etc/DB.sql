@@ -76,6 +76,8 @@ CREATE TABLE reply (
     r_date TIMESTAMP NOT NULL
 );
 
+update cate1 set userid = replace(userid,' ', '');
+
 --CREATE TABLE notice (
 --    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 --    nickname VARCHAR(20) NOT NULL,

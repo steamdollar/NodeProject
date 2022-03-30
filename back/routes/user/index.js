@@ -9,7 +9,10 @@ router.post('/update',upload.single('userimg'),userController.update)
 router.post('/profile',userController.profile)
 router.post('/delete',userController.delete)
 router.post('/logout',userController.logout)
-router.post('/kakaoLogin',userController.kakaoLogin)
 
+router.get('/kakao/login',userController.kakaoAuth)
+router.get('/oauth/kakao',userController.oauthkakao)
+
+router.post('/userprofile',userController.userprofile)
 
 module.exports = router

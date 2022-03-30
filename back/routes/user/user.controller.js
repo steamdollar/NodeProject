@@ -1,9 +1,89 @@
 //회원관리 컨트롤러
 const pool = require('../../db.js').pool
+const axios = require('axios')
 const { createToken } = require('../../utils/jwt.js')
+const qs = require('qs')
+const kakaoData = {
+    client_id:'1cd72de87c79f154447f6a8b228bce76',
+    client_secret:'IReMXzT3wQ4m9loLFT95vHSacZdyV3pK',
+    redirect_uri:'http://localhost:4000/api/user/oauth/kakao'
+}
 
 
-// 지운 이유 교수님이 지우라고했슴.
+// kakao login W
+exports.kakaoAuth = (req,res)=>{
+    const kakaoAuthorize = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoData.client_id}&redirect_uri=${kakaoData.redirect_uri}&response_type=code`
+    res.redirect(kakaoAuthorize)
+}
+
+exports.oauthkakao = async (req,res) => {
+    const code = req.query.code
+    const uri = 'https://kauth.kakao.com/oauth/token'
+    const body = qs.stringify({
+            grant_type:'authorization_code',
+            client_id:kakaoData.client_id,
+            client_secret:kakaoData.client_secret,
+            redirect_uri:kakaoData.redirect_uri,
+            code,
+        })
+    const headers = {'Content-type':'application/x-www-form-urlencoded'}
+    const response = await axios.post(uri,body,headers)
+    
+
+    try {   
+        const {access_token} = response.data
+        const url = 'https://kapi.kakao.com/v2/user/me'
+        const userinfo = await axios.get(url,{
+            headers:{
+                'Authorization': `Bearer ${access_token}`,
+            }
+        })
+        console.log('왓냐',userinfo)
+        const { nickname, profile_image_url: userimg} = userinfo.data.kakao_account.profile
+        const userid = userinfo.data.kakao_account.email
+
+        console.log('오호잇',userinfo.data) //
+        // DB 
+        
+        const sql2 = 'SELECT * FROM user where userid=?'
+        const prepare2 = [userid]
+
+        const [sql_result2] = await pool.execute(sql2,prepare2)
+        if(sql_result2.length !== 0){
+            const result = { userid,userimg,nickname,access_token }
+            const jwt_token = createToken({...sql_result2[0]})
+            console.log('안녕',result)
+            res.cookie('token', jwt_token,{
+                path:'/',
+                httpOnly:true,
+        })
+
+        res.redirect('http://localhost:3000?islogin=true')
+        } else{
+            const sql = "INSERT INTO user(userid,nickname,userimg,userpw,username,address,gender,phone,mobile,email,userintro) values(?,?,?,'','','','','','','','')"
+            const prepare = [userid,nickname,userimg]
+
+            const [sql_result] = await pool.execute(sql,prepare)
+
+            const sql2 = 'SELECT * FROM user where userid=?'
+            const prepare2 = [userid]
+
+            const [sql_result2] = await pool.execute(sql2,prepare2)
+
+            const result = { userid,userimg,nickname,access_token }
+            const jwt_token = createToken({...sql_result2[0]})
+            console.log('안녕',result)
+            res.cookie('token', jwt_token,{
+                path:'/',
+                httpOnly:true,
+            })
+
+            res.redirect('http://localhost:3000?islogin=true')
+        }        
+    } catch(e){
+        console.log(e)
+    }
+}
 
 
 exports.join = async (req,res)=>{    
@@ -168,46 +248,35 @@ exports.delete = async (req,res)=>{
     }
 }
 
-exports.kakaoLogin = async (req,res)=>{
+exports.logout = (req,res) => {
+    
+    res.clearCookie('token')
+    res.json({})
+}
+
+exports.userprofile = async (req,res) => {
     const {userid} = req.user
-
-    const sql = 'SELECT userid, userimg, username, nickname, address, gender, phone, mobile, email, level from user where userid = ?'
+    console.log('ㅎㅇ',userid)
+    const sql = 'SELECT * from cate1 where userid=?'
     const param = [userid]
-
     try{
         const [result] = await pool.execute(sql,param)
-        if( result.length ===0) {throw Error ('id/pw를 확인해주세요')}
-
-        const jwt = createToken(result[0])
-
-        res.cookie('token', jwt, {
-            path:'/',
-            httpOnly:true,
-            domain:'localhost'
-        })
-
+        console.log(result)
         const response = {
             result,
             errno:0
         }
         res.json(response)
-
+    
     } catch(e){
         console.log(e.message)
-        const response = {
-            result:[],
-            errormsg:e.message,
-            errno:e.errno
+        response = {
+            
+            errno:1
         }
         res.json(response)
     }
-}
-
-
-exports.logout = (req,res) => {
     
-    res.clearCookie('token')
-    res.clearCookie('kakaoToken')
-    res.json({})
-}
 
+    
+}
