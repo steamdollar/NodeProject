@@ -38,7 +38,7 @@ app.get('/',(req,res)=>{
 
 
 })
-
+app.use(express.static('image'))
 
 app.use(router)
 
