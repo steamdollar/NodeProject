@@ -67,12 +67,14 @@ exports.view = async (req,res) => {
     const { idx } = req.body
     const sql = `select * from cate1 where idx=?`
     const param = [idx]
-
     const sql2 = `update cate1 set hit=hit+1 where idx=?`
+    const sql3 = `select * from`
 
     try {
-        const [result] = await pool.execute(sql,param)
         const [result2] = await pool.execute(sql2,param)
+        const [result] = await pool.execute(sql,param)
+        
+
         
         const response = {
             errno:0,
