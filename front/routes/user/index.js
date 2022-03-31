@@ -48,12 +48,15 @@ router.use('/welcome', (req,res)=>{
 })
 
 router.use('/user_board',(req,res)=>{
-
     res.render('./user/user_board')
 })
 
 router.use('/user_comment',(req,res)=>{
     res.render('./user/user_comment')
+})
+
+router.use('/user_hit',(req,res)=>{
+    res.render('/user/user_hit')
 })
 
 module.exports = router
