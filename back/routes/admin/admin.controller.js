@@ -18,7 +18,6 @@ exports.login = async(req,res)=>{
         if(result.length == 0 || result.length > 1){
             throw new Error('id/pw를 확인해주세요')
         }
-        console.log("1")
         const response = {
             output:"success"
         }
@@ -38,6 +37,15 @@ exports.login = async(req,res)=>{
 
     }
 
+
+}
+exports.logout = (req,res)=>{
+    const response = {
+        result:"clearcookie"
+    }
+    res.clearCookie('connect.sid')
+    res.json(response)
+    
 
 }
 
@@ -272,3 +280,25 @@ exports.boardHidden = async(req,res)=>{
     
 }
 
+
+exports.boardOrderby = async (req,res) =>{
+    const {orderby, category} = req.body
+    console.log(orderby, category)
+    const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by count(c.idx) DESC;`
+    try {
+        const [result] = await pool.execute(sql)
+
+        const response = {
+            result
+        }
+        res.json(response)
+
+    } catch(e){
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno: e.errno
+        }
+        res.json(response)
+    }
+}

@@ -76,6 +76,12 @@ CREATE TABLE reply (
     r_date TIMESTAMP NOT NULL
 );
 
+create table lol_user(
+	userid VARCHAR(30) NOT NULL,
+    lol_nickname varchar(30) NOT NULL,
+    UNIQUE(lol_nickname)
+);
+
 --CREATE TABLE notice (
 --    idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 --    nickname VARCHAR(20) NOT NULL,

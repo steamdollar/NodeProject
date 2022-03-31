@@ -19,6 +19,7 @@ router.use(session(sessionObj))
 
 
 router.post('/login', adminController.login)
+router.post('/logout', adminController.logout)
 router.post('/userlist', adminController.userList)
 router.post('/usersearch',adminController.userSearch)
 router.post('/userupdate', adminController.userUpdate)
@@ -27,6 +28,6 @@ router.post('/userdelete', adminController.userDelete)
 router.post('/boardlist',adminController.boardList)
 router.post('/boardsearch',adminController.boardSearch)
 router.post('/boardhidden', adminController.boardHidden)
-
+router.post('/boardorderby', adminController.boardOrderby)
 
 module.exports = router

@@ -19,6 +19,11 @@
         const board_hidden = document.querySelector('#board_hidden')
         const frm_hidden = document.querySelector('#frm_hidden')
         const info = document.querySelector('#info')
+        const frm_orderby = document.querySelector('#frm_orderby')
+        const orderby_btn = document.querySelector('#orderby_btn')
+        const likes = document.querySelector('#likes')
+        const hit = document.querySelector('#hit')
+        
         let search_list = []
         const option = {
             'Content-type':'application/json',
@@ -29,7 +34,8 @@
         }
         search_btn.disabled = true
         board_hidden.disabled = true
-
+        orderby_btn.disabled = true
+        //카테고리 선택
         frm_category.addEventListener('submit',async (e)=>{
             search_list = []
             console.log("비어야함",search_list)
@@ -59,11 +65,10 @@
             } 
             const response = await axios.post('http://localhost:4000/api/admin/boardlist', body, option)
             const board = response.data.result
-            console.log(board)
             const board_list = document.querySelector('#board_list') //빈 tbody
             const board_temp = document.querySelector('#board_temp').innerHTML //템플릿
             let template = ''
-
+            search_list = []
             //카테고리만 선택했을 때 보드 랜더            
             const promise = board.forEach(async (v)=>{
                 search_list.push(v)
@@ -98,8 +103,65 @@
                     hiddenElement.checked = true
                 }
             search_btn.disabled = false
-            board_hidden.disabled = false        
+            board_hidden.disabled = false
+            orderby_btn.disabled = false      
             
+            })
+            //정렬
+            //아직 조회수가 구현 안돼서 좋아요까지만 가능
+            let OrderData = {}
+            OrderData.category = body.board_db
+
+            frm_orderby.addEventListener('submit',async (e)=>{
+                e.preventDefault()
+                search_list = []
+                template = ''
+                board_list.innerHTML = '' //빈 tbody
+                if(likes.selected == true){
+                    OrderData.orderby = likes.value
+                }
+                else if(hit.selected == true){
+                    OrderData.orderby = hit.value
+                }
+                console.log(OrderData)
+                const response = await axios.post('http://localhost:4000/api/admin/boardorderby', OrderData, option)
+                const board_order= response.data.result
+                console.log("이건가?",board_order)
+                search_list = []
+                board_order.forEach(async(v)=>{
+                    search_list.push(v)
+                    let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+                    template += board_temp.replaceAll('{idx}', idx)
+                                    .replace('{category}',category)
+                                    .replace('{title}',title)
+                                    .replace('{content}',content)
+                                    .replace('{userid}', userid)
+                                    .replace('{nickname}',nickname)
+                                    .replace('{date}',date)
+                                    .replace('{hit}',hit)
+                                    .replaceAll('{likes}',likes)
+                                    .replaceAll('{hidden}', hidden)
+                
+                })
+                
+                await console.log("좋아요리스트",search_list)
+                console.log(template)
+                board_list.innerHTML = template
+
+                search_list.forEach(async(v)=>{
+                    const {idx, hidden} = v
+                    const hiddenElement = document.querySelector(`#check_no${idx}`)
+                    console.log("좋아요",idx, hidden)
+                    hiddenElement.value = hidden
+                    console.log(hiddenElement)
+                    if(hiddenElement.value =='off'){
+                        hiddenElement.checked = false
+                    } else if(hiddenElement.value =='on'){
+                        hiddenElement.checked = true
+                    }
+            })
+
             })
             // 게시판 검색
 
@@ -118,7 +180,7 @@
                 const searched_board = response.data.result
                 template = ''
                 board_list.innerHTML = '' //빈 tbody
-
+                search_list = []
                 searched_board.forEach(async (v)=>{
                     search_list.push(v)
                     let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
@@ -235,8 +297,16 @@
                 <input type="text" name="info" id="info" placeholder="찾는 키워드">
                 <input type="submit" value="검색" id="search_btn">
             </form>
-            <form action="http://localhost:4000/api/admin/board/hidden" id="frm_hidden">
+            <form action="http://localhost:4000/api/admin/boardhidden" method="post" id="frm_hidden">
                 <input type="submit" value="글 내리기" id="board_hidden">
+            </form>
+            <form action="http://localhost:4000/api/admin/boardorderby" method="post" id="frm_orderby">
+                <select name="orderby" id="orderby" >
+                    <option value="" disabled>정렬 방식 선택</option>
+                    <option value="likes" id="likes" selected>좋아요 높은 순</option>
+                    <option value="hit" id="hit">조회수 높은 순</option>
+                </select>
+                <input type="submit" value="선택" id="orderby_btn">
             </form>
             <br>
             <tr>

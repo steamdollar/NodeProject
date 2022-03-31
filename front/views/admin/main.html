@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <a href="/admin/user"><strong>Users</strong></a>
+    <a href="/admin/category"><strong>Categories</strong></a>
+    <a href="/admin/board"><strong>Board</strong></a>
+    <a href="/admin/stats"><strong>Stats</strong></a>
+    <button id="logout">Logout</button>
+    
+</body>
+<script>
+    const logout = document.querySelector('#logout')
+    logout.addEventListener(('click'), async(e)=>{
+        e.preventDefault()
+
+        const option = {
+                'Content-type':'application/json',
+                withCredentials:true,
+        }
+
+        const response = await axios.post('http://localhost:4000/api/admin/logout',null,option)
+        console.log(response.data)
+        if(response.data.result == 'clearcookie'){
+            alert('관리자 로그아웃')
+            location.href="/admin/login"
+        }
+    })
+</script>
+</html>
