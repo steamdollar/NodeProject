@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1><a href='/'>logo</a></h1>
-    <h2> cate1_리스트 </h2>
+    <h2> cate1_댓글 </h2>
     <div id = profile>
 
 
@@ -18,19 +18,21 @@
         <table>
             <tr>
                 <td>idx</td>
+                <td>cate</td>
                 <td>title</td>
+                <td>content</td>
                 <td>작성자</td>
-                <td>작성일자</td>
-                <td>hit</td>
+                <td>작성일</td>
             </tr>
 
             
             <tr>
                 <td id="idx">{idx}</td>
-                <td><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></td> 
-                <td id="nickname">{nickname}</td> 
+                <td id="cate">{cate}</td>
+                <td><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></td>
+                <td id="content">{content}</td> 
+                <td id="nickname">{nickname}</td>
                 <td id="date">{date}</td>
-                <td id="hit">{hit}</td>
             </tr>
            
         </table>
@@ -47,17 +49,17 @@
             withCredentials:true
         }
 
-        const response = await axios.post('http://localhost:4000/api/user/userprofile',null,option)
-        console.log(response.data)
+        const response = await axios.post('http://localhost:4000/api/user/usercmt',null,option)
         if(response.data.errno == 0){
            for(let i = 0; i< response.data.result.length; i++){
-            const {idx,title,nickname,date,hit} = response.data.result[i]
+            const {idx,mcategory,title,content,nickname,date} = response.data.result[i]
             template += profiles.replaceAll('{idx}',idx)
-                                .replace('{title}',title,)
+                                .replace('{cate}',mcategory)
+                                .replace('{title}',title)
+                                .replace('{content}',content)
                                 .replace('{nickname}',nickname)
                                 .replace('{date}',date)
-                                .replace('{hit}',hit)
-                                // .replace("{{idx}}",)
+                            
                                 
                                 
             profile.innerHTML = template

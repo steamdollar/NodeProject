@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1><a href='/'>logo</a></h1>
-    <h2> cate1_리스트 </h2>
+    <h2> cate1_좋아요 </h2>
     <div id = profile>
 
 
@@ -28,7 +28,7 @@
             <tr>
                 <td id="idx">{idx}</td>
                 <td><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></td> 
-                <td id="nickname">{nickname}</td> 
+                <td id="nickname">{nickname}</td>
                 <td id="date">{date}</td>
                 <td id="hit">{hit}</td>
             </tr>
@@ -47,8 +47,7 @@
             withCredentials:true
         }
 
-        const response = await axios.post('http://localhost:4000/api/user/userprofile',null,option)
-        console.log(response.data)
+        const response = await axios.post('http://localhost:4000/api/user/userlike',null,option)
         if(response.data.errno == 0){
            for(let i = 0; i< response.data.result.length; i++){
             const {idx,title,nickname,date,hit} = response.data.result[i]
@@ -57,7 +56,7 @@
                                 .replace('{nickname}',nickname)
                                 .replace('{date}',date)
                                 .replace('{hit}',hit)
-                                // .replace("{{idx}}",)
+                            
                                 
                                 
             profile.innerHTML = template

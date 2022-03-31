@@ -38,11 +38,9 @@ exports.oauthkakao = async (req,res) => {
                 'Authorization': `Bearer ${access_token}`,
             }
         })
-        console.log('왓냐',userinfo)
         const { nickname, profile_image_url: userimg} = userinfo.data.kakao_account.profile
         const userid = userinfo.data.kakao_account.email
 
-        console.log('오호잇',userinfo.data) //
         // DB 
         
         const sql2 = 'SELECT * FROM user where userid=?'
@@ -52,7 +50,6 @@ exports.oauthkakao = async (req,res) => {
         if(sql_result2.length !== 0){
             const result = { userid,userimg,nickname,access_token }
             const jwt_token = createToken({...sql_result2[0]})
-            console.log('안녕',result)
             res.cookie('token', jwt_token,{
                 path:'/',
                 httpOnly:true,
@@ -72,7 +69,6 @@ exports.oauthkakao = async (req,res) => {
 
             const result = { userid,userimg,nickname,access_token }
             const jwt_token = createToken({...sql_result2[0]})
-            console.log('안녕',result)
             res.cookie('token', jwt_token,{
                 path:'/',
                 httpOnly:true,
@@ -256,12 +252,10 @@ exports.logout = (req,res) => {
 
 exports.userprofile = async (req,res) => {
     const {userid} = req.user
-    console.log('ㅎㅇ',userid)
     const sql = 'SELECT * from cate1 where userid=?'
     const param = [userid]
     try{
         const [result] = await pool.execute(sql,param)
-        console.log(result)
         const response = {
             result,
             errno:0
@@ -275,8 +269,53 @@ exports.userprofile = async (req,res) => {
             errno:1
         }
         res.json(response)
-    }
-    
+    }  
+}
 
+exports.usercmt = async (req,res) => {
+    const {userid} = req.user
+    const sql = `
+    SELECT c.idx, c.mcategory, c.midx, c.content, c.userid, c.nickname, c.date, count(c.idx) likes, 
+    title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.userid=1111 group by c.idx order by count(c.idx) DESC;`
+    const param = [userid]
+    try{
+        const [result] = await pool.execute(sql,param)
+        console.log('댓글왓냐',result)
+        const response = {
+            result,
+            errno:0
+        }
+        res.json(response)
     
+    } catch(e){
+        console.log(e.message)
+        response = {
+            
+            errno:1
+        }
+        res.json(response)
+    }  
+}
+
+exports.userlike = async (req,res) => {
+    const {userid} = req.user
+    const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by count(c.idx) DESC;'
+    const param = [userid]
+    try{
+        const [result] = await pool.execute(sql,param)
+        console.log('안농',result)
+        const response = {
+            result,
+            errno:0
+        }
+        res.json(response)
+    
+    } catch(e){
+        console.log(e.message)
+        response = {
+            
+            errno:1
+        }
+        res.json(response)
+    }  
 }

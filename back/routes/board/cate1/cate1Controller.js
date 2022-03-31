@@ -45,12 +45,13 @@ exports.write = async (req,res) => {
 }
 
 exports.list = async (req,res)=>{
-    const sql = `select * from cate1`
+    const sql1 = `select * from cate1`
     // const param = ['admin']
     try {
-        const [result] = await pool.execute(sql)
+        const [result1] = await pool.execute(sql1)
+
         const response = {
-            result,
+            result1,
         }
         res.json(response) 
     } 
@@ -68,7 +69,6 @@ exports.view = async (req,res) => {
     const sql = `select * from cate1 where idx=?`
     const param = [idx]
     const sql2 = `update cate1 set hit=hit+1 where idx=?`
-    const sql3 = `select * from`
 
     try {
         const [result2] = await pool.execute(sql2,param)
@@ -94,7 +94,7 @@ exports.view = async (req,res) => {
 }
 
 exports.del = async (req,res)=>{
-    const {idx} = req.body
+    const {idx, category} = req.body
 
     const sql = `select * from cate1_bridge where midx = ?`
     const param = [idx]
@@ -117,6 +117,10 @@ exports.del = async (req,res)=>{
 
         const sql5 = 'delete from cate1_like where m_idx=?'
         const result5 = await pool.execute(sql5,param)
+
+        const sql6 = 'delete from image where category=? and midx=?'
+        const param6 = [category, idx]
+        const result6 = await pool.execute(sql6,param6)
 
         const response = {
             result,
@@ -298,7 +302,6 @@ exports.hashtagLoad = async (req, res) => {
         for(i=0; i<result.length; i++) {
             const sql2 = 'select * from hashtag where hidx=?'
             const param2 = [result[i].hidx]
-            console.log(param2)
             const [result2] = await pool.execute(sql2, param2)
             result_final.push(result2[0])
         }
@@ -337,7 +340,6 @@ exports.imgUp = async (req, res) => {
     const sql1 = `insert into image(midx, category, img1, img2, img3, img4, img5)
      values(?,?,?,?,?,?,?)`
     const param1 = [midx, category, ...images]
-    console.log(param1)
 
     try {
         const [result1] = await pool.execute(sql1, param1)
@@ -359,67 +361,51 @@ exports.imgUp = async (req, res) => {
     }
 }
 
-// [
-//     '16',
-//     'cate1',
-//     [
-//       {
-//         fieldname: 'img1',
-//         originalname: 'KakaoTalk_20181005_175105183.png',
-//         encoding: '7bit',
-//         mimetype: 'image/png',
-//         destination: 'public/uploads',
-//         filename: 'KakaoTalk_20181005_175105183_1648692219017.png',
-//         path: 'public/uploads/KakaoTalk_20181005_175105183_1648692219017.png',
-//         size: 482907
-//       }
-//     ],
-//     [
-//       {
-//         fieldname: 'img2',
-//         originalname: 'KakaoTalk_20190521_184055075.jpg',
-//         encoding: '7bit',
-//         mimetype: 'image/jpeg',
-//         destination: 'public/uploads',
-//         filename: 'KakaoTalk_20190521_184055075_1648692219032.jpg',
-//         path: 'public/uploads/KakaoTalk_20190521_184055075_1648692219032.jpg',
-//         size: 157825
-//       }
-//     ],
-//     [
-//       {
-//         fieldname: 'img3',
-//         originalname: 'KakaoTalk_20211002_223622035.jpg',
-//         encoding: '7bit',
-//         mimetype: 'image/jpeg',
-//         destination: 'public/uploads',
-//         filename: 'KakaoTalk_20211002_223622035_1648692219036.jpg',
-//         path: 'public/uploads/KakaoTalk_20211002_223622035_1648692219036.jpg',
-//         size: 1847083
-//       }
-//     ],
-//     [
-//       {
-//         fieldname: 'img4',
-//         originalname: '안준영2.jpg',
-//         encoding: '7bit',
-//         mimetype: 'image/jpeg',
-//         destination: 'public/uploads',
-//         filename: '안준영2_1648692219071.jpg',
-//         path: 'public/uploads/안준영2_1648692219071.jpg',
-//         size: 865814
-//       }
-//     ],
-//     [
-//       {
-//         fieldname: 'img5',
-//         originalname: '증명사진 수정.jpg',
-//         encoding: '7bit',
-//         mimetype: 'image/jpeg',
-//         destination: 'public/uploads',
-//         filename: '증명사진 수정_1648692219085.jpg',
-//         path: 'public/uploads/증명사진 수정_1648692219085.jpg',
-//         size: 61270
-//       }
-//     ]
-//   ]
+exports.imgLoad = async (req, res) => {
+    const {idx} = req.body
+
+    const sql1 = `select * from image where midx=?`
+    const param1 = [idx]
+
+    try {
+        const [result1] = await pool.execute(sql1, param1)
+
+        const response = {
+            result1,
+            errno:0,
+        }
+        res.json(response)
+
+    }
+    catch(e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+
+        res.json(response)
+    }
+} 
+
+// thumbnail
+
+exports.thumbnail = async (req, res) => {
+    const { category } = req.body
+    const sql1 = `select img1 from image where category=?`
+    const param1 = [category]
+    try {
+        const [result1] = await pool.execute(sql1, param1)
+        
+        const response = {
+            result1,
+        }
+        res.json(response) 
+    } 
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+        res.json(response)  
+    }
+}

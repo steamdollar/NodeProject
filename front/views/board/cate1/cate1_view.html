@@ -22,7 +22,8 @@
         <input type="submit" value="글 삭제">
     </form>
     <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
-    <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:100px; height:100px; margin-left:30px;" ></span>
+
+
     <br>
     hashtag : 
     {% for item in cate1_hashtag %}
@@ -38,6 +39,8 @@
         <input type="submit" value="좋아요 취소" id="thumbCancel">
     </form>
 
+    <span id="userimg"></span>
+    
 
     <br>
     <a href="/board/cate1">글 목록</a>
@@ -90,6 +93,7 @@
             withCredentials:true
         }
         const idx = document.querySelector('#idx')
+        const category = document.querySelector('#category')
         const userid = document.querySelector('#userid')
 
         document.addEventListener('DOMContentLoaded', async() => {
@@ -164,8 +168,10 @@
             e.preventDefault()
 
             const idx = delForm.querySelector('#idx')
+            
             const data = {
-                idx:idx.value
+                idx:idx.value,
+                category:category.innerHTML
             }
 
 
@@ -187,6 +193,38 @@
         state.comment=[]
         state.length=''
 
+        document.addEventListener('DOMContentLoaded', async () => {
+            const imgZone = document.querySelector('#userimg')
+            const icategory = "{{cate1_image.category}}"
+            const midx = "{{cate1_image.midx}}"
+            const img1 = "{{cate1_image.img1}}"
+            const img2 = "{{cate1_image.img2}}"
+            const img3 = "{{cate1_image.img3}}"
+            const img4 = "{{cate1_image.img4}}"
+            const img5 = "{{cate1_image.img5}}"
+
+            const tempImgArr = [img1, img2, img3, img4, img5]
+
+            const imgArr = []
+
+            for (let i =0; i<tempImgArr.length; i++) {
+                if(tempImgArr[i] !== 'N/A') {
+                    imgArr.push(tempImgArr[i])
+                }
+            }
+
+            for ( let i =0; i<imgArr.length; i++) {
+                const imgSpan = document.createElement('span')
+                const imgElement = document.createElement('img')
+                imgElement.setAttribute('src', `http://localhost:4000/uploads/${imgArr[i]}`)
+                imgSpan.append(imgElement)
+                imgZone.append(imgSpan)
+            }
+            
+ 
+        })
+        //
+        //
         document.addEventListener('DOMContentLoaded', async () => {
             const uri = location.pathname
             const [,,cate,] = location.pathname.split('/')

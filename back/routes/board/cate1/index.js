@@ -20,5 +20,7 @@ router.use('/hashtagLoad', cate1Router.hashtagLoad)
 // imgUpload
 router.use('/imageUpload', upload.fields([{name:'img1'},{name:'img2'},
 {name:'img3'},{name:'img4'},{name:'img5'}]), cate1Router.imgUp)
+router.use('/imgLoad', cate1Router.imgLoad)
+router.use('/thumbnail',cate1Router.thumbnail)
 
 module.exports = router

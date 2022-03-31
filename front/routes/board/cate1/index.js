@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     const cate1_list = response.data
 
     res.render('./board/cate1/cate1_list.html', {
-        cate1_list:cate1_list.result
+        cate1_list:cate1_list.result1
     })
 })
 
@@ -47,11 +47,16 @@ router.get('/view', async (req, res) => {
 
     const response2 = await axios.post('http://localhost:4000/api/board/cate1/hashtagLoad', idx, option)
     const cate1_hashtag = response2.data
-    
+
+    const response3 = await axios.post('http://localhost:4000/api/board/cate1/imgLoad', idx, option)
+    const cate1_image = response3.data.result1[0]
+
+
     res.render('./board/cate1/cate1_view.html', {
         cate1_view: cate1_view.result[0],
         userid:user.userid,
-        cate1_hashtag:cate1_hashtag.result_final
+        cate1_hashtag:cate1_hashtag.result_final,
+        cate1_image:cate1_image
     })
 })
 
