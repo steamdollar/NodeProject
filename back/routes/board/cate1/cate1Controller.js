@@ -1,24 +1,16 @@
 const pool = require('../../../db.js').pool
 
 exports.write = async (req,res) => {
-    const {category, userid, nickname, title, content, temphash} = req.body
+    const {category, userid, nickname, title, content, temphash, formData} = req.body
     const date = new Date()
+
     const sql = `insert into cate1
     (category, title, content, userid, nickname, date) 
     values(?,?,?,?,?,?)`
     const param = [category, title, content, userid, nickname, date]
-    console.log(temphash)
-
+    console.log(param)
     try {
         const [result] = await pool.execute(sql,param)
-        // console.log(result.insertId)
-        // 여까지가 글 작성 기본기능
-        
-        // const sql2 = `insert into cate1_like(m_idx, userid) values(?,?)`
-        // const param2 = [ result.insertId, userid ]
-
-        // const [result2] = await pool.execute(sql2,param2)
-        // 여기까지가 좋아요 기능
 
         const sql3 = `insert into hashtag
         (hashtag_name) values(?)` 
@@ -35,7 +27,8 @@ exports.write = async (req,res) => {
 
         const response = {
             errno:0,
-            result
+            result,
+            insertId:result.insertId
         }
         res.json(response)
         
@@ -116,6 +109,9 @@ exports.del = async (req,res)=>{
         
         const sql4 = 'delete from cate1 where idx=?'
         const [result4] = await pool.execute(sql4,param)
+
+        const sql5 = 'delete from cate1_like where m_idx=?'
+        const result5 = await pool.execute(sql5,param)
 
         const response = {
             result,
@@ -302,11 +298,40 @@ exports.hashtagLoad = async (req, res) => {
             result_final.push(result2[0])
         }
 
-        console.log(result_final)
-
         const response = {
             result_final,
             errno:0
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+
+        res.json(response)
+    }
+}
+
+// image
+
+exports.imgUp = async (req, res) => {
+    const { midx, category, img } = req.body
+    const img2 = req.file
+    console.log(img2)
+
+    const sql1 = 'insert into image(midx, category, img) values(?,?,?)'
+    const param1 = [midx, category, img]
+    console.log(param1)
+
+    try {
+        const [result1] = await pool.execute(sql1, param1)
+
+        const response = {
+            result,
+            errno:0,
+            insertId:result1.insertId
         }
         res.json(response)
     }

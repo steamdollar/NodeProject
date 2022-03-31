@@ -10,8 +10,10 @@ CREATE TABLE cate1 (
     userid VARCHAR(30) NOT NULL,
     date VARCHAR(30) NOT NULL,
     hit INT NOT NULL DEFAULT 0,
-    likes INT NOT NULL DEFAULT 0
+    file VARCHAR(100)
 );
+
+update cate1 set userid = replace(userid,' ', '');
 
 create table cate1_like(
     m_idx int,
