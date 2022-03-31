@@ -54,15 +54,7 @@ create table cate1_bridge(
     hidx int not null
 );
 
-create table image(
-    category VARCHAR(30) NOT NULL,
-    midx INT NOT NULL,
-    img1 VARCHAR(100) default 'N/A',
-    img2 VARCHAR(100) default 'N/A',
-    img3 VARCHAR(100) default 'N/A',
-    img4 VARCHAR(100) default 'N/A',
-    img5 VARCHAR(100) default 'N/A'
-);
+
 
 CREATE TABLE comment (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -95,6 +87,17 @@ CREATE TABLE QnA (
     category VARCHAR(20) DEFAULT 'qna',
     hit INT NOT NULL DEFAULT 0,
     FOREIGN key (`userid`) REFERENCES `user` (`userid`)
+);
+
+create table image(
+    category VARCHAR(30) NOT NULL,
+    midx INT NOT NULL,
+    img1 VARCHAR(100) default 'N/A',
+    img2 VARCHAR(100) default 'N/A',
+    img3 VARCHAR(100) default 'N/A',
+    img4 VARCHAR(100) default 'N/A',
+    img5 VARCHAR(100) default 'N/A'
+
 );
 
 

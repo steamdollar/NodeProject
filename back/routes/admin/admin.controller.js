@@ -284,21 +284,46 @@ exports.boardHidden = async(req,res)=>{
 exports.boardOrderby = async (req,res) =>{
     const {orderby, category} = req.body
     console.log(orderby, category)
-    const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by count(c.idx) DESC;`
-    try {
-        const [result] = await pool.execute(sql)
+    if(orderby == 'likes'){
+        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,
+        c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by count(c.idx) DESC;`
+        
+        try {
+            const [result] = await pool.execute(sql)
 
-        const response = {
-            result
-        }
-        res.json(response)
+            const response = {
+                result
+            }
+            res.json(response)
 
-    } catch(e){
-        console.log(e.message)
-        const response = {
-            errormsg: e.message,
-            errno: e.errno
+        } catch(e){
+            console.log(e.message)
+            const response = {
+                errormsg: e.message,
+                errno: e.errno
+            }
+            res.json(response)
         }
-        res.json(response)
+    } else if(orderby == 'hit'){
+        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,
+        c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by hit DESC;`
+        
+        try {
+            const [result] = await pool.execute(sql)
+
+            const response = {
+                result
+            }
+            res.json(response)
+
+        } catch(e){
+            console.log(e.message)
+            const response = {
+                errormsg: e.message,
+                errno: e.errno
+            }
+            res.json(response)
+        }
     }
+
 }
