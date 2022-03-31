@@ -5,6 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .thumb {
+            width:100px !important;
+            height: 100px !important;
+        }
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+        document.addEventListener('DOMContentLoaded', async() => {
+            
+            const uri = location.pathname
+            const category = uri.split('/')[2]
+            const data = {
+                category:category
+            }
+            
+            const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
+            // console.log(response.data.result1)
+            const tempThumb = response.data.result1 // [{}, {}, {}]
+            let thumbNail = []
+
+            for (let i = 0; i<tempThumb.length; i++) {
+                if(tempThumb[i].img1 !== 'N/A') {
+                    thumbNail.push(tempThumb[i].img1)
+                }
+                else {
+                    thumbNail.push('default.jpg')
+                }
+            }
+
+            for ( let i =0; i<thumbNail.length; i++) {
+                const imgZone = document.querySelector('#imgZone')
+                const imgSpan = document.createElement('span')
+                const imgElement = document.createElement('img')
+                imgElement.setAttribute('class','thumb')
+                imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i]}`)
+                imgSpan.append(imgElement)
+                imgZone.append(imgSpan)
+            }
+        })
+    </script>
 </head>
 <body>
     <h1><a href='/'>logo</a></h1>
@@ -27,8 +72,15 @@
             <td>{{item.hit}}</td>
         </tr>
         {% endfor %}
+        
+        <span id="imgZone"></span>
+
+
+        
     </table>
 
     <a href="/board/cate1/write">글쓰기</a>
+    
+    
 </body>
 </html>
