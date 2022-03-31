@@ -114,7 +114,6 @@
             
             }else{
                 //실패
-                console.log(response.data)
                 if(response.data.errno === 1062){
                     if(response.data.errormsg.includes('user.PRIMARY')){
                         alert('중복 된 아이디 입니다. 다른 아이디를 입력해주세요.')

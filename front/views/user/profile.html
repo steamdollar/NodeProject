@@ -59,7 +59,7 @@
         </ul>
     </template>
     <div class="button">
-        <button><a href="/board/list">게시판</a></button>
+        <button><a href="/board">게시판</a></button>
         <button><a href="/user/update">수정</a></button>
         <form method="post" action="/user/profile" id="delete_frm">
             <input type="hidden" name="userid" value="{{user.userid}}">
@@ -69,7 +69,13 @@
     <div id="profile_right">
         <div id="profile_history">
             <div class="history1">
-                <h5><a href=/user/user_board>작성한 글 보기</a></h5>
+                <h3><a href=/user/user_board>작성한 글 보기</a></h3>
+            </div>
+            <div id="profile_history2">
+                <h3><a href=/user/user_comment>작성한 댓글 보기</a></h3>
+            </div>
+            <div id="profile_history3">
+                <h3><a href=/user/user_hit></a>좋아요 한 글 보기</h3>
             </div>
         </div>
     </div>

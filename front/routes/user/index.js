@@ -22,9 +22,7 @@ router.use('/update', (req,res)=>{
     if(token !== undefined) {
     const userid = token.split('.')
     const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
-    console.log(deUserid)
     update = { ...deUserid }
-    console.log(update)
     
     res.render('./user/update',{
         user:update
@@ -52,6 +50,10 @@ router.use('/welcome', (req,res)=>{
 router.use('/user_board',(req,res)=>{
 
     res.render('./user/user_board')
+})
+
+router.use('/user_comment',(req,res)=>{
+    res.render('./user/user_comment')
 })
 
 module.exports = router
