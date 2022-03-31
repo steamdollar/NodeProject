@@ -56,6 +56,16 @@ create table cate1_bridge(
     FOREIGN key (`hidx`) REFERENCES `hashtag` (`hidx`)
 );
 
+create table image(
+    category VARCHAR(30) NOT NULL,
+    midx INT NOT NULL,
+    img1 VARCHAR(100) default 'N/A',
+    img2 VARCHAR(100) default 'N/A',
+    img3 VARCHAR(100) default 'N/A',
+    img4 VARCHAR(100) default 'N/A',
+    img5 VARCHAR(100) default 'N/A'
+);
+
 
 CREATE TABLE comment (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
