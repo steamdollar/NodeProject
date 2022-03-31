@@ -72,14 +72,17 @@ exports.duoSearch = async(req,res)=>{
             
         }
 
-        const res1 = await parsing(my_infolist[0].lol_nickname, my_rate_list)
+        // const res1 = await parsing(my_infolist[0].lol_nickname, my_rate_list)
+        for(e of my_infolist){
+            const sibal = await parsing(e.lol_nickname,my_rate_list)
+        }
 
         for(e of other_infolist){
             const sibal = await parsing(e.lol_nickname,other_rate_list)
         }
 
-        // console.log("내 정보",my_rate_list)
-        // console.log("타인의 정보", other_rate_list)
+        console.log("내 정보",my_rate_list)
+        console.log("타인의 정보", other_rate_list)
 
         // 티어 구현 로직.. 함수화
 
@@ -116,24 +119,86 @@ exports.duoSearch = async(req,res)=>{
         }
         logic(my_rate_list)
         logic(other_rate_list)
-        console.log(my_rate_list)
-        console.log(other_rate_list)
+        console.log("내 티어",my_rate_list)
+        console.log("다른 애들 티어",other_rate_list)
         let match = []
         //만약 내 레벨이 1,2이다. level 1,2,3인거 추출
-        if(my_rate_list[0].level == 1 || my_rate_list[0].level == 2){
-            other_rate_list.forEach((v)=>{
-                if(v.level ==1 || v.level ==2 || v.level ==3){
-                    match.push(v)
-                }
-            })
+        for(let i =0; i<my_rate_list.length; i++){
+            if(my_rate_list[i].level == 1 || my_rate_list[i].level == 2){
+                other_rate_list.forEach((v)=>{
+                    if(v.level ==1 || v.level ==2 || v.level ==3){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 3){
+                other_rate_list.forEach((v)=>{
+                    if(v.level ==1 || v.level ==2 || v.level ==3 || v.level==4){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 3){
+                other_rate_list.forEach((v)=>{
+                    if(v.level ==1 || v.level ==2 || v.level ==3 || v.level==4){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 4){
+                other_rate_list.forEach((v)=>{
+                    if(v.level ==3 || v.level ==4 || v.level ==5 || v.level==6 || v.level==7){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 5){
+                other_rate_list.forEach((v)=>{
+                    if(v.level ==4 || v.level ==5 || v.level==6 || v.level==7){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 6){
+                other_rate_list.forEach((v)=>{
+                    if(v.level ==4 || v.level ==5 || v.level==6 || v.level==7 || v.level==8){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 7){
+                other_rate_list.forEach((v)=>{
+                    if(v.level ==4 || v.level ==5 || v.level==6 || v.level==7 || v.level==8 || v.level==9){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 8){
+                other_rate_list.forEach((v)=>{
+                    if(v.level==6 || v.level==7 || v.level==8 || v.level==9 || v.level==10){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 9){
+                other_rate_list.forEach((v)=>{
+                    if(v.level==7 || v.level==8 || v.level==9 || v.level==10 || v.level==11){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 10){
+                other_rate_list.forEach((v)=>{
+                    if(v.level==8 || v.level==9 || v.level==10 || v.level==11){
+                        match.push(v)
+                    }
+                })
+            } else if(my_rate_list[i].level == 11){
+                other_rate_list.forEach((v)=>{
+                    if(v.level==9 || v.level==10 || v.level==11){
+                        match.push(v)
+                    }
+                })
+            }
         }
 
-        console.log(match)
+        console.log("나랑 뜰 애들", match)
 
 
         const response = {
-            result,
-            myuserid
+            my_info:my_rate_list,
+            match_info:match
         }
         res.json(response)
 
