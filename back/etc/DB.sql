@@ -51,11 +51,8 @@ create table hashtag(
 
 create table cate1_bridge(
     midx int not null,
-    hidx int not null,
-    FOREIGN key (`midx`) REFERENCES `cate1` (`idx`),
-    FOREIGN key (`hidx`) REFERENCES `hashtag` (`hidx`)
+    hidx int not null
 );
-
 
 
 
