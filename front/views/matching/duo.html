@@ -13,6 +13,7 @@
             const register_btn = document.querySelector('#register_btn') //닉네임 저장 버튼
             const duo_search = document.querySelector('#duo_search') //검색
             const vaild = /^[가-힣a-zA-Z0-9\s]+$/
+
             //한글, 영문, 띄어쓰기만
             const option = { 
             'Content-type':'application/json',
@@ -21,7 +22,7 @@
             frm_duo.addEventListener('submit',async (e)=>{
                 e.preventDefault()
                 console.log(vaild.test(lol_nickname.value))
-
+                
                 if(lol_nickname.value == "" || !vaild.test(lol_nickname.value)){
                     alert('제대로 된 닉네임을 입력해주세요.')
                 }else{
@@ -41,19 +42,37 @@
                     }
                     
                 }
+
                     
             })
+            let template = ''
+            let duo_list = document.querySelector('#duo_list') //템플릿 넣을 공간
+            const duo_temp = document.querySelector('#duo_temp').innerHTML // 템플릿내용
             duo_search.addEventListener('click', async (e)=>{
                 e.preventDefault()
+                template = ''
+                duo_list.innerHTML = ''
                 duo_search.value = "로딩 중"
                 duo_search.disabled = true
                 const response = await axios.post('http://localhost:4000/api/matching/duosearch', null, option)
 
-                const {myuserid} = response.data
-                const lol_userlist = response.data.result
-                // console.log(lol_userlist)
-                // const response2 = await axios.post('http://localhost:4000/api/matching/crolling'), 
-                
+                const {my_info, match_info} = response.data
+
+                console.log("나랑", my_info, "너희", match_info)
+                if(match_info==''){
+                    duo_list.innerHTML = " 듀오를 할 수 없는 티어입니다. "
+                }else{
+                    match_info.forEach((v)=>{
+                    const{usernickname, rate, winning_rate} = v
+                    template += duo_temp.replace('{usernickname}',usernickname)
+                                        .replace('{rate}', rate)
+                                        .replace('{winning_rate}', winning_rate)
+                })
+
+                duo_list.innerHTML = template
+                }
+                duo_search.value = '검색'
+                duo_search.disabled = false
 
             })
 
@@ -63,15 +82,39 @@
     </script>
 </head>
 <body>
-    <form method="post" id="frm_duo">
-        <h1>League of Legends</h1>
-        <strong>닉네임</strong>
-        <input type="text" placeholder="정확하게 입력해주세요." id="lol_nickname">
-        <input type="submit" value="닉네임 등록하기" id="register_btn">
-    </form>
+    <table width="50%" border=1> 
+        <thead>
+            <form method="post" id="frm_duo">
+                <h1>League of Legends</h1>
+                <strong>닉네임</strong>
+                <input type="text" placeholder="정확하게 입력해주세요." id="lol_nickname">
+                <input type="submit" value="닉네임 등록하기" id="register_btn">
+            </form>
+            <br>
+            <br>
+            <strong>이미 등록한 사용자는 찾기 버튼만 눌러주세요.</strong>
 
-    <button id="duo_search">듀오 찾기</button> 
+            <button id="duo_search">듀오 찾기</button> 
+            <h2>듀오 가능 유저 리스트</h2>
+            
+            <tr>
+                <th>유저 닉네임</th>
+                <th>티어</th>
+                <th>승률</th>
+            </tr>
+            
+        </thead>
+        <tbody id="duo_list">
 
-    
+        </tbody>
+    </table>
+    <template id="duo_temp">
+        <tr>
+            <th>{usernickname}</th>
+            <th>{rate}</th>
+            <th>{winning_rate}</th>
+        </tr>
+    </template>
+
 </body>
 </html>
