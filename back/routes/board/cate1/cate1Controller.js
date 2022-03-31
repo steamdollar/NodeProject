@@ -68,8 +68,11 @@ exports.view = async (req,res) => {
     const sql = `select * from cate1 where idx=?`
     const param = [idx]
 
+    const sql2 = `update cate1 set hit=hit+1 where idx=?`
+
     try {
         const [result] = await pool.execute(sql,param)
+        const [result2] = await pool.execute(sql2,param)
         
         const response = {
             errno:0,
@@ -317,19 +320,28 @@ exports.hashtagLoad = async (req, res) => {
 // image
 
 exports.imgUp = async (req, res) => {
-    const { midx, category, img } = req.body
-    const img2 = req.file
-    console.log(img2)
+    const { midx, category } = req.body
+    
+    let images = []
+    for(let i=1; i<=5; i++) {
+        try {
+            const [img] = req.files[`img`+i] 
+            images.push(img.filename)
+        }catch(e){
+            images.push('N/A')
+        }
+    }
 
-    const sql1 = 'insert into image(midx, category, img) values(?,?,?)'
-    const param1 = [midx, category, img]
+    const sql1 = `insert into image(midx, category, img1, img2, img3, img4, img5)
+     values(?,?,?,?,?,?,?)`
+    const param1 = [midx, category, ...images]
     console.log(param1)
 
     try {
         const [result1] = await pool.execute(sql1, param1)
 
         const response = {
-            result,
+            result1,
             errno:0,
             insertId:result1.insertId
         }
@@ -344,3 +356,68 @@ exports.imgUp = async (req, res) => {
         res.json(response)
     }
 }
+
+// [
+//     '16',
+//     'cate1',
+//     [
+//       {
+//         fieldname: 'img1',
+//         originalname: 'KakaoTalk_20181005_175105183.png',
+//         encoding: '7bit',
+//         mimetype: 'image/png',
+//         destination: 'public/uploads',
+//         filename: 'KakaoTalk_20181005_175105183_1648692219017.png',
+//         path: 'public/uploads/KakaoTalk_20181005_175105183_1648692219017.png',
+//         size: 482907
+//       }
+//     ],
+//     [
+//       {
+//         fieldname: 'img2',
+//         originalname: 'KakaoTalk_20190521_184055075.jpg',
+//         encoding: '7bit',
+//         mimetype: 'image/jpeg',
+//         destination: 'public/uploads',
+//         filename: 'KakaoTalk_20190521_184055075_1648692219032.jpg',
+//         path: 'public/uploads/KakaoTalk_20190521_184055075_1648692219032.jpg',
+//         size: 157825
+//       }
+//     ],
+//     [
+//       {
+//         fieldname: 'img3',
+//         originalname: 'KakaoTalk_20211002_223622035.jpg',
+//         encoding: '7bit',
+//         mimetype: 'image/jpeg',
+//         destination: 'public/uploads',
+//         filename: 'KakaoTalk_20211002_223622035_1648692219036.jpg',
+//         path: 'public/uploads/KakaoTalk_20211002_223622035_1648692219036.jpg',
+//         size: 1847083
+//       }
+//     ],
+//     [
+//       {
+//         fieldname: 'img4',
+//         originalname: '안준영2.jpg',
+//         encoding: '7bit',
+//         mimetype: 'image/jpeg',
+//         destination: 'public/uploads',
+//         filename: '안준영2_1648692219071.jpg',
+//         path: 'public/uploads/안준영2_1648692219071.jpg',
+//         size: 865814
+//       }
+//     ],
+//     [
+//       {
+//         fieldname: 'img5',
+//         originalname: '증명사진 수정.jpg',
+//         encoding: '7bit',
+//         mimetype: 'image/jpeg',
+//         destination: 'public/uploads',
+//         filename: '증명사진 수정_1648692219085.jpg',
+//         path: 'public/uploads/증명사진 수정_1648692219085.jpg',
+//         size: 61270
+//       }
+//     ]
+//   ]

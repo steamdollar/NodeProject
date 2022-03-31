@@ -46,7 +46,11 @@
         <div>
             <span >사진 업로드 </span>
             <span>
-                <input type="file" name="img" id="img">
+                <input type="file" name="img1" id="img1">
+                <input type="file" name="img2" id="img2">
+                <input type="file" name="img3" id="img3">
+                <input type="file" name="img4" id="img4">
+                <input type="file" name="img5" id="img5">
             </span>
         </div>
         <br>
@@ -111,7 +115,7 @@
             const category = document.querySelector('#category')
             const title = document.querySelector('#title')
             const content = document.querySelector('#content')
-            const img = document.querySelector('#img')
+            
             const hashtagss = document.querySelectorAll('.hashtags')
             let temphash = []
 
@@ -121,9 +125,12 @@
 
             const formData = new FormData()
             formData.append('category', document.querySelector('#category').value)
-            formData.append('img', img.files[0])
+            formData.append('img1', img1.files[0])
+            formData.append('img2', img2.files[0])
+            formData.append('img3', img3.files[0])
+            formData.append('img4', img4.files[0])
+            formData.append('img5', img5.files[0])
 
-            
             const data = { 
                 userid : userid.innerHTML,
                 category: category.value,
@@ -140,7 +147,7 @@
             formData.append('midx', response.data.insertId)
 
 
-            // const responseImgup = await axios.post('http://localhost:4000/api/board/cate1/imageUpload', formData, option)
+            const responseImgup = await axios.post('http://localhost:4000/api/board/cate1/imageUpload', formData, option)
             // console.log(responseImgup)
 
             if (response.data.errno === 0) {

@@ -572,5 +572,9 @@ db의 cate1 테이블엔 파일의 이름을 저장해두고
 create table image(
     category VARCHAR(30) NOT NULL,
     midx INT NOT NULL,
-    img VARCHAR(100) default 'N/A'
+    img1 VARCHAR(100) default 'N/A',
+    img2 VARCHAR(100) default 'N/A',
+    img3 VARCHAR(100) default 'N/A',
+    img4 VARCHAR(100) default 'N/A',
+    img5 VARCHAR(100) default 'N/A'
 );
