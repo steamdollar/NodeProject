@@ -39,7 +39,7 @@
 
             try {
                 const response = await axios.post('http://localhost:4000/api/user/login', body, option)
-
+                console.log(response)
                 if (response.data.errno !== 0 ) {throw new Error('id/pw를 확인해주세요')}
 
                 alert(`id: ${response.data.result[0].userid}, nick: ${response.data.result[0].nickname}`)

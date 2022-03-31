@@ -168,6 +168,7 @@
                 if(response.data.errno === 0){ // 성공의 케이스 
                 // 성공
                 console.log('가입완료되었습니다.')
+                console.log(response)
                 location.href=`/user/welcome?nickname=${nickname.value}&userid=${userid.value}&username=${username.value}&email=${email.value}&mobile=${mobile.value}`
             } else { //
                 // 실패
@@ -188,31 +189,6 @@
                 btn.disabled = false
             }
             }     
-            // console.log(response.data.errno, response.data.errno===0
-            
-
-            if(response.data.errno === 0){ // 성공의 케이스 
-                // 성공
-                console.log('가입완료되었습니다.')
-                location.href=`/user/welcome?nickname=${nickname.value}&userid=${userid.value}&username=${username.value}&email=${email.value}&mobile=${mobile.value}`
-            } else { //
-                // 실패
-
-                if(response.data.errno === 1062){
-                    if(response.data.errormsg.includes('user.userid')){
-                        alert('중복 된 아이디 입니다. 다른 아이디를 입력해주세요.')
-                    }
-                    if(response.data.errormsg.includes('user.nickname')){
-                        alert('중복 된 닉네임 입니다. 다른 닉네임을 사용해주세요.')
-                    }
-                    if(response.data.errormsg.includes('user.email')){
-                        alert('이미 가입 된 이메일입니다.')
-                    }
-                }
-                
-                btn.value='회원가입'
-                btn.disabled = false
-            }
         })
     </script>
 

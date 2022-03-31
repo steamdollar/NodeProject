@@ -66,7 +66,13 @@
             <button class="delete" type="submit" id="btn">탈퇴하기</button>
         </form>
     </div>
-    <a href="/"></a>
+    <div id="profile_right">
+        <div id="profile_history">
+            <div class="history1">
+                <h5><a href=/user/user_board>작성한 글 보기</a></h5>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     const frm = document.querySelector('#delete_frm')
@@ -92,18 +98,6 @@
         const profile = document.querySelector('#profile')
         const profiles = document.querySelector('#profiles').innerHTML
         
-        // profiles.replace('{nickname}',)
-        // const userid = document.querySelector('#userid')
-        // const username = document.querySelector('#username')
-        // const userimg = document.querySelector('#userimg')
-        // const nickname = document.querySelector('#nickname')
-        // const address = document.querySelector('#address')
-        // const gender = document.querySelector('#gender')
-        // const phone = document.querySelector('#phone')
-        // const mobile = document.querySelector('#mobile')
-        // const email = document.querySelector('#email')
-        // const userintro = document.querySelector('#userintro')
-
         const option = {
             'Content-type':'application/json',
             withCredentials:true

@@ -11,8 +11,9 @@ module.exports = (server) => {
         let ecookie1 = req.headers.cookie.split('=')
         let ecookie2 = ecookie1[1].split('.')
         let ecookie3 = ecookie2[1]
-        const deUserid = JSON.parse(Buffer.from(ecookie3, 'base64').toString('utf-8'))
-
+        const deUserid = JSON.parse(Buffer.from(ecookie3, "base64").toString("utf-8"))
+        console.log('-----------')
+        console.log(deUserid)
         ws.send(`${deUserid.userid}님 환영합니다.`)
     
         ws.on("message", (response) => {
@@ -20,7 +21,7 @@ module.exports = (server) => {
             let ecookie1 = req.headers.cookie.split('=')
             let ecookie2 = ecookie1[1].split('.')
             let ecookie3 = ecookie2[1]
-            const deUserid = JSON.parse(Buffer.from(ecookie3, 'base64').toString('utf-8'))
+            const deUserid = JSON.parse(Buffer.from(ecookie3, "base64").toString("utf-8"))
             const onUserid = deUserid.userid
             let { type, data, userid } = obj
             obj.userid = onUserid
