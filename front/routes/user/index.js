@@ -55,8 +55,8 @@ router.use('/user_comment',(req,res)=>{
     res.render('./user/user_comment')
 })
 
-router.use('/user_hit',(req,res)=>{
-    res.render('/user/user_hit')
+router.use('/user_like',(req,res)=>{
+    res.render('./user/user_like')
 })
 
 module.exports = router
