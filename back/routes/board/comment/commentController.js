@@ -30,12 +30,16 @@ exports.add = async (req, res) => {
     const sql1 = `insert into comment (mcategory, midx, content, userid, nickname, date)
     values(?,?,?,?,?,?)`
     const param1 = [cate, idx, content, userid, nickname, date]
-
+    
     try {
         const [result1] = await pool.execute(sql1, param1)
+        
+        const insertId = result1.insertId
         const response = {
-            result1
+            result1,
+            insertId:insertId
         }
+        
         res.json(response)
     }
     catch (e) {
@@ -63,6 +67,29 @@ exports.delete = async (req, res) => {
         console.log(e.message)
         const response = {
             errormsg: e.message
+        }
+        res.json(response)
+    }
+}
+
+exports.update = async (req, res) => {
+    const {idx, content} = req.body
+    console.log(idx, content)
+    const date = new Date()
+    const sql1 = 'update comment set content=?, date=? where idx=?'
+    const param1 = [content,date,idx]
+
+    try {
+        const [result1] = await pool.execute(sql1, param1)
+        const response = {
+            result1
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            reeormsg: e.message
         }
         res.json(response)
     }

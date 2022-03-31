@@ -11,14 +11,27 @@ CREATE TABLE cate1 (
     date VARCHAR(30) NOT NULL,
     hit INT NOT NULL DEFAULT 0,
     likes INT NOT NULL DEFAULT 0,
+    file VARCHAR(100),
     hidden VARCHAR(3) NOT NULL DEFAULT 'off',
     FOREIGN KEY (`nickname`) REFERENCES `user` (`nickname`)
 );
+
+update cate1 set userid = replace(userid,' ', '');
 
 create table cate1_like(
     m_idx int,
     userid varchar(30)
 );
+
+create table cate1_bridge(
+    midx int not null,
+    hidx int not null
+);
+create table hashtag(
+    hidx int primary key auto_increment,
+    hashtag_name varchar(30) not null
+);
+
 
 CREATE TABLE user (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -48,7 +61,8 @@ CREATE TABLE comment (
     content TEXT NOT NULL,
     userid VARCHAR(30) NOT NULL,
     nickname VARCHAR(30) NOT NULL,
-    date VARCHAR(30) NOT NULL
+    date VARCHAR(30) NOT NULL,
+    updateFlag varchar(5) default 'true'
 );
 
 create table notice(

@@ -182,9 +182,11 @@
 
         //
         //
+
         let state = {}
         state.comment=[]
         state.length=''
+
         document.addEventListener('DOMContentLoaded', async () => {
             const uri = location.pathname
             const [,,cate,] = location.pathname.split('/')
@@ -266,11 +268,9 @@
 
             async function submitHandler (e){
                 e.preventDefault()
-                const { input } = e.target 
-                // form 에서 니가 싼 댓글 내용을 담은 input만 가져옴
-                // const { comment:{ length } } = state.comment 
-                // 그때까지 달려있던 댓글의 갯수
-                const counting = e.target.querySelector('h4 > span') 
+                const { input } = e.target // 댓글 내용을 입력해주세요 하는 그 input
+
+                const counting = e.target.querySelector('h4 > span')
                 // 빈 괄호 > createForm이 실행된 후엔 댓글의 갯수가 채워짐
                 const length = state.length
                 const cidx = length != 0 ? parseInt(state.length + 1 ) : 1 
@@ -279,7 +279,7 @@
                 // 그래서 지금까지 단 댓글 수를 먼저 계산하는게 2번째 항이고, 
                 // 없으면 세번째항의 value인 1을 가지는것.
                 
-                const result = {idx,userid:'{{userid}}', content:input.value,date: new Date(), updateFlag:'true'}
+                const result = {idx,userid:'{{userid}}', content:input.value, date: new Date(), updateFlag:'true'}
                 // 대충 저 state.replay 처럼 포맷 만들어준다.
                 state = {
                     ...state,
@@ -289,6 +289,7 @@
                     ],
                     length:replyResponse.data.result1.length + 1
                 }
+                // state 변수를 업데이트 해준다. 방금 쓴 댓글을 추가하고, length 값을 1 더한다.
 
                 const nickname = document.querySelector('#nickname')
                 const content = input.value
@@ -303,15 +304,22 @@
                 }
                 
                 const replyAdd = await axios.post('http://localhost:4000/api/board/comment/add', data, option)
-                
-                // state 변수를 업데이트 해준다. 방금 쓴 댓글을 추가하고, length 값을 1 더한다.
+                console.log(replyAdd.data.insertId)
+                 
 
-
+                // row[1].querySelector('input').value = replyAdd.data.insertId.value // !!!!!!!!!!!!!!!!!!!!!!!!
                 input.value = '' // 댓글 등록하면 form은 다시 빈 칸이 된다.
                 counting.innerHTML = `(${state.length})` // 화면에 렌더링되는 댓글 수도 업데이트 해준다.
                 
 
                 commentView()
+
+                const comments = commentApp.querySelectorAll('li')
+                const newComment = comments[comments.length-2]
+                console.log(newComment)
+                const newCommentInput = newComment.querySelector('input')
+                newCommentInput.value = replyAdd.data.insertId
+                console.log(state)
             }
 
             //
@@ -320,8 +328,9 @@
                 const idx = parseInt( e.target.parentNode.querySelector('input').value )
                 const newReply = [...state.comment]
                 let index 
-                for(let i =0; i < newReply.length; i++){
-                    if(newReply[i].idx === idx){
+
+                for (let i =0; i < newReply.length; i++){
+                    if (newReply[i].idx === idx){
                         index = i
                     }
                 }
@@ -338,13 +347,22 @@
                 commentView()
             }
 
-            function updateSubmitHandler(e){
+            async function updateSubmitHandler(e){
                 
-                if(e.keyCode === 13){
+                if(e.keyCode === 13) {
                     
                     const idx = parseInt( e.target.parentNode.parentNode.querySelector('input[type=hidden]').value )
-                    const newReplay = [...state.replay]
+                    console.log(e.target.parentNode.querySelector('input').value)
+                    // 댓글 테이블의 pk인 idx 의미
+                    const content = e.target.parentNode.querySelector('input').value
+                    const data = { 
+                        idx:idx,
+                        content: content
+                    }
+                    const updateReply = await axios.post('http://localhost:4000/api/board/comment/update', data, option)
 
+                    const newReplay = [...state.replay]
+                    console.log(newReplay)
                     let index 
                     for(let i =0; i < newReplay.length; i++){
                         if(newReplay[i].idx === idx){

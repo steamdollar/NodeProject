@@ -29,7 +29,7 @@
     
     <span id="hidden"> {{ userid }} </span>
     
-    <form method="post" action="http://localhost:4000/api/board/cate1/write" id="write_frm">
+    <form method="post" action="http://localhost:4000/api/board/cate1/imageUpload" id="write_frm" enctype="multipart/form-data">
         <input type="text" name="nickname" id="nickname" value="{{nickname}}">
         <div>
             <strong>제목</strong> <br>
@@ -42,6 +42,12 @@
         <div>
             <strong>내용</strong> <br>
             <textarea name="content" placeholder="내용입력" id="content" > aaa</textarea>
+        </div>
+        <div>
+            <span >사진 업로드 </span>
+            <span>
+                <input type="file" name="img" id="img">
+            </span>
         </div>
         <br>
 
@@ -60,7 +66,7 @@
         htForm.addEventListener('keydown', (e) => {
             if (e.keyCode === 13) {
                 const htDelete = document.createElement('span')
-                htDelete.innerHTML = 'X___'
+                htDelete.innerHTML = 'X_'
                 htDelete.setAttribute('class', `htDeleter`)
                 
                 const htElement = document.createElement('span')
@@ -95,12 +101,17 @@
         write_frm.addEventListener('submit', async(e) => {
             e.preventDefault()
 
+            const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+
             const userid = document.querySelector('#hidden')
             const nickname = document.querySelector('#nickname')
             const category = document.querySelector('#category')
             const title = document.querySelector('#title')
             const content = document.querySelector('#content')
-
+            const img = document.querySelector('#img')
             const hashtagss = document.querySelectorAll('.hashtags')
             let temphash = []
 
@@ -108,8 +119,11 @@
                 temphash.push(hashtagss[i].innerHTML)
             }
 
-            console.log(temphash)
+            const formData = new FormData()
+            formData.append('category', document.querySelector('#category').value)
+            formData.append('img', img.files[0])
 
+            
             const data = { 
                 userid : userid.innerHTML,
                 category: category.value,
@@ -119,12 +133,15 @@
                 temphash
             }
 
-            const option = {
-                'Content-type':'application/json',
-                withCredentials:true
-            }
-
             const response = await axios.post('http://localhost:4000/api/board/cate1/write', data, option)
+
+            // console.log(response.data.insertId)
+
+            formData.append('midx', response.data.insertId)
+
+
+            // const responseImgup = await axios.post('http://localhost:4000/api/board/cate1/imageUpload', formData, option)
+            // console.log(responseImgup)
 
             if (response.data.errno === 0) {
                 alert('글 작성이 완료되었습니다.')
