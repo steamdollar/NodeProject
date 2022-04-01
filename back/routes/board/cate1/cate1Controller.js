@@ -45,8 +45,9 @@ exports.write = async (req,res) => {
 }
 
 exports.list = async (req,res)=>{
-    const sql1 = `select * from cate1`
-    // const param = ['admin']
+    const {category} = req.body
+    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from ${category} c left join cate1_like l on c.idx = l.m_idx group by c.idx;`
+    
     try {
         const [result1] = await pool.execute(sql1)
 

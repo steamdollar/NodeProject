@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        img {
+            height:100px !important; 
+            width: 100px !important;
+        }
+    </style>
 </head>
 <body>
     
@@ -19,6 +25,8 @@
             <textarea name="content" placeholder="내용입력" id="content">{{cate1_update.content}}</textarea>
         </div>
         <input type="hidden" id="idx" name="idx" value="{{cate1_update.idx}}">
+
+        <span id="imgZone"></span>
 
         <div id="ht_frm">
             <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
@@ -35,14 +43,69 @@
     </form>
         
     <script type="text/javascript">
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
+        // 이미지 수정은 어떻게 하지?
+        // 기본적으로 소스 주소를 바꿔줘야 한다.
+        document.addEventListener('DOMContentLoaded', async() => {
+            const idx = document.querySelector('#idx').value
+            const cate = location.href.split('/')[4]
+            const data = {idx:idx, cate:cate}
+            const response = await axios.post('http://localhost:4000/api/board/cate1/imgLoad', data, option)
+
+            const { img1, img2, img3, img4 ,img5 } = response.data.result1[0]
+            const tempImgArr = [img1, img2, img3, img4, img5]
+            const imgArr = []
+
+            for (let i =0; i<tempImgArr.length; i++) {
+                if(tempImgArr[i] !== 'N/A') {
+                    imgArr.push(tempImgArr[i])
+                }
+            }
+
+            for ( let i =0; i<imgArr.length; i++) {
+                
+                const imgZone = document.querySelector('#imgZone')
+                const imgSpan = document.createElement('span')
+                const imgElement = document.createElement('img')
+                imgElement.setAttribute('src', `http://localhost:4000/uploads/${imgArr[i]}`)
+                imgSpan.append(imgElement)
+                imgZone.append(imgSpan)
+                let updateFlag = false
+                imgElement.addEventListener('click', () => {
+                   
+                    
+                    if (updateFlag == false) {
+                        const newImg = document.createElement('input')
+                        imgSpan.append(newImg)
+                        newImg.setAttribute('type', 'file')
+                        newImg.setAttribute('name', `img${i+1}`)
+                        newImg.setAttribute('id', `img${i+1}`)
+                        console.log(updateFlag)
+                    }
+                    else {
+                        console.log('flase')
+                    }
+                    updateFlag = !updateFlag   
+                })
+                // img 각각에 updateHandler 함수를 붙여보는건 어떨까?
+                // 클릭하면 이미지 넣는게 뜨고 > 새 이미지를 넣으면
+                // 원 이미지를 지우고 새 이미지를 넣는 함수..
+            } 
+        })
+        
+        //
+        //
 
         const htDeleteHandler = document.querySelectorAll('.htDeleter')
             for(i = 0; i<htDeleteHandler.length; i++) {
                 htDeleteHandler[i].addEventListener('click', (e) => {
                     e.target.parentNode.remove()
                 })
-            }
-
+        }
+            // enter를 이용해 해시 태그 추가, 삭제
         const htForm = document.querySelector('#ht_frm')
         const htText = document.querySelector('#hashtag')
         htForm.addEventListener('keydown', (e) => {
@@ -70,8 +133,6 @@
                 }
             }
         })
-        // enter를 이용해 해시 태그 추가, 삭제
-
 
         
         // 엔터 누르면 글 작성이 완료되어버리는 것 방지
@@ -82,7 +143,8 @@
                 e.preventDefault()
             }
         })
-
+        
+        // submit 
         update_frm.addEventListener('submit', async (e) => {
             e.preventDefault()
 

@@ -24,9 +24,39 @@
             const data = {
                 category:category
             }
+
+            const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
+            const cate1_list = response1.data
+            let content_list = []
+            for (let i =0; i<response1.data.result1.length; i++) {
+                if(response1.data.result1[i].hidden='off') {
+                    content_list.push(response1.data.result1[i])
+                }
+            }
+
+            let template = ''
+            search_list = []
+            const board_temp = document.querySelector('#board_temp').innerHTML
+            const promise = content_list.forEach(async (v)=>{
+                search_list.push(v)
+                let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+                template += board_temp.replaceAll('{idx}', idx)
+                                .replace('{category}',category)
+                                .replace('{title}',title)
+                                .replace('{content}',content)
+                                .replace('{userid}', userid)
+                                .replace('{nickname}',nickname)
+                                .replace('{date}',date)
+                                .replace('{hit}',hit)
+                                .replace('{likes}',likes)
+            })
+
+            board_list.innerHTML = template
+            //
+            //
             
             const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
-            // console.log(response.data.result1)
             const tempThumb = response.data.result1 // [{}, {}, {}]
             let thumbNail = []
 
@@ -54,33 +84,48 @@
 <body>
     <h1><a href='/'>logo</a></h1>
     <h2> cate1_리스트 </h2>
-    <table>
-        <tr>
-            <td>idx</td>
-            <td>title</td>
-            <td>작성자</td>
-            <td>작성일자</td>
-            <td>hit</td>
-        </tr>
+    <table width="100%" border="1">
 
-        {% for item in cate1_list %}
-        <tr>
-            <td>{{item.idx}}</td>
-            <td><a href="/board/cate1/view?idx={{item.idx}}">{{item.title}}</a></td> 
-            <td>{{item.nickname}}</td> 
-            <td>{{item.date}}</td>
-            <td>{{item.hit}}</td>
-        </tr>
-        {% endfor %}
-        
-        <span id="imgZone"></span>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>카테고리</th>
+                <th>제목</th>
+                <th>작성자 아이디</th>
+                <th>작성자 닉네임</th>
+                <th>내용</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>좋아요</th>
+            </tr>
+        </thead>
 
+        <tbody id="board_list">
 
-        
+        </tbody>
+
     </table>
 
+        <template id="board_column">
+        </template>
+
+        <template id="board_temp">
+            <tr>
+
+                <th>{idx}</th>
+                <th>{category}</th>
+                <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
+                <th>{userid}</th>
+                <th>{nickname}</th>
+                <th>{content}</th>
+                <th>{date}</th>
+                <th>{hit}</th>
+                <th>{likes}</th>
+            </tr>
+        </template>
+
+
+    <span id="imgZone"></span>
     <a href="/board/cate1/write">글쓰기</a>
-    
-    
 </body>
 </html>

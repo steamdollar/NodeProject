@@ -9,12 +9,7 @@ const option = {
 }
 
 router.get('/', async (req, res) => {
-    const response = await axios.get('http://localhost:4000/api/board/cate1/list', option)
-    const cate1_list = response.data
-
-    res.render('./board/cate1/cate1_list.html', {
-        cate1_list:cate1_list.result1
-    })
+    res.render('./board/cate1/cate1_list.html')
 })
 
 router.get('/write', (req, res) => {
