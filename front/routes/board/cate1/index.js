@@ -31,7 +31,16 @@ router.get('/write', (req, res) => {
         }
 })
 
-router.get('/view', async (req, res) => {
+const check = async (req, res, next) => {
+    const idx = req.query
+    const response = await axios.post('http://localhost:4000/api/board/cate1/check', idx, option)
+    if (response.data.hidden === 'on') { res.render('./board/cate1/cate1_blind.html') }
+    else {
+        next()
+    }
+}
+
+router.get('/view', check, async (req, res) => {
     const idx = req.query
     const { token } = req.cookies
     const [ header , payload, sign ] = token.split('.')
