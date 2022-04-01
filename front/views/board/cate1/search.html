@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        .hidden {display:none;}
         .thumb {
             width:100px !important;
             height: 100px !important;
@@ -17,20 +18,33 @@
                 'Content-type':'application/json',
                 withCredentials:true
             }
-        document.addEventListener('DOMContentLoaded', async() => {
+        
+            document.addEventListener('DOMContentLoaded', async() => {
             
             const uri = location.pathname
             const category = uri.split('/')[2]
+            
+            
+            const searchOp = "{{option}}"
+            const searchKey = "{{keyword}}"
+
             const data = {
-                category:category
+                category:category,
+                searchOp:searchOp,
+                searchKey:searchKey
             }
 
-            const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
-            const cate1_list = response1.data
+            const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
+            const cate1_list = response1.data.result
+            console.log(cate1_list)
+
             let content_list = []
-            for (let i =0; i<response1.data.result1.length; i++) {
-                if(response1.data.result1[i].hidden='off') {
-                    content_list.push(response1.data.result1[i])
+
+            if(cate1_list !== undefined) {
+                for (let i =0; i<cate1_list.length; i++) {
+                    if(cate1_list[i].hidden =='off') {
+                        content_list.push(cate1_list[i])
+                    }
                 }
             }
 
@@ -82,6 +96,8 @@
     </script>
 </head>
 <body>
+    <span id="option" value="{{option}}" class="hidden"></span>
+    <span id="keyword" value="{{keyword}}" class="hidden"></span>
     <h1><a href='/'>logo</a></h1>
     <h2> cate1_리스트 </h2>
     <table width="100%" border="1">
@@ -124,39 +140,7 @@
             </tr>
         </template>
 
+        <span id="imgZone"></span>
 
-    <span id="imgZone"></span>
-
-    <a href="/board/cate1/write">글쓰기</a>
-
-    <br>
-    <br>
-
-    <h2>카테고리 선택</h2>
-
-        <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
-            <select name="option" id="category" >
-                <option value="" disabled>검색 옵션 선택</option>
-                <option value="nickname" id="nickname" selected>nickname</option>
-                <option value="hashtag" id="hashtag">해시태그</option>
-                <option value="title" id="title">제목</option>
-                <option value="content" id="content">내용</option>
-            </select>
-            <!-- <input type="hidden" id="option" name="option"> -->
-            <input type="text" name='keyword' placeholder="키워드를 입력하세요">
-            <input type="submit" name="search" id="search" value="선택">
-        </form>
-
-        <!-- <script type="text/javascript">
-            const frm_search = document.querySelector('#frm_search')
-            const hiddenOp = document.querySelector('#option')
-            frm_search.addEventListener('submit', async(e) => {
-                e.preventDefault()
-                hiddenOp.value = category.value
-                
-            })
-        </script> -->
 </body>
 </html>
-
-<!--해시태그, 닉네임, 글제목, 내용-->

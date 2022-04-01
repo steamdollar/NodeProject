@@ -31,7 +31,6 @@ CREATE TABLE cate1 (
     date VARCHAR(30) NOT NULL,
     hit INT NOT NULL DEFAULT 0,
     likes INT NOT NULL DEFAULT 0,
-    file VARCHAR(100),
     hidden VARCHAR(3) NOT NULL DEFAULT 'off',
     FOREIGN KEY (`nickname`) REFERENCES `user` (`nickname`)
 );

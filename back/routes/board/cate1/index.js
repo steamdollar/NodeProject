@@ -23,4 +23,7 @@ router.use('/imageUpload', upload.fields([{name:'img1'},{name:'img2'},
 router.use('/imgLoad', cate1Router.imgLoad)
 router.use('/thumbnail',cate1Router.thumbnail)
 
+// search
+router.use('/search', cate1Router.search)
+
 module.exports = router

@@ -31,9 +31,11 @@
         <div id="ht_frm">
             <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
             <div id="ht_wrap"></div>
+
         {% for item in cate1_hashtag %}
         <div>
         <span class="htDeleter">X___</span>
+        <span>#</span>
         <span class="hashtags">{{item.hashtag_name}}</span>
         </div>
         {% endfor %}
@@ -115,11 +117,15 @@
                 htDelete.setAttribute('class', `htDeleter`)
                 
                 const htElement = document.createElement('span')
+                const htElement2 = document.createElement('span')
                 htElement.setAttribute('class', `hashtags`)
-                htElement.innerHTML = `#${htText.value}`
+                htElement.innerHTML = `${htText.value}`
+                htElement2.innerHTML = '#'
 
                 const htDiv = document.createElement('div')
                 htDiv.append(htDelete)
+                htDiv.append(htElement2)
+
                 htDiv.append(htElement)
                 
                 htForm.append(htDiv)
