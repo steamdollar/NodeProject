@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
-const { pool } = require('../../../../back/db')
+// const { pool } = require('../../../../back/db')
 
 const option = {
     'Content-type':'application/json',
@@ -9,12 +9,7 @@ const option = {
 }
 
 router.get('/', async (req, res) => {
-    const response = await axios.get('http://localhost:4000/api/board/cate1/list', option)
-    const cate1_list = response.data
-
-    res.render('./board/cate1/cate1_list.html', {
-        cate1_list:cate1_list.result1
-    })
+    res.render('./board/cate1/cate1_list.html')
 })
 
 router.get('/write', (req, res) => {
@@ -71,6 +66,14 @@ router.get('/update', async (req, res) => {
     res.render('./board/cate1/cate1_update.html', {
         cate1_update:cate1_update.result[0],
         cate1_hashtag:cate1_hashtag.result_final
+    })
+})
+
+router.get('/search', async (req, res )=> {
+    const {option, keyword} = req.query
+    res.render('./board/cate1/search.html', {
+        option,
+        keyword
     })
 })
 

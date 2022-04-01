@@ -578,3 +578,6 @@ create table image(
     img4 VARCHAR(100) default 'N/A',
     img5 VARCHAR(100) default 'N/A'
 );
+
+글 수정 - 이미지 수정
+

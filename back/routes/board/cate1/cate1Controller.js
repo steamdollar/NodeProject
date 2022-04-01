@@ -45,8 +45,9 @@ exports.write = async (req,res) => {
 }
 
 exports.list = async (req,res)=>{
-    const sql1 = `select * from cate1`
-    // const param = ['admin']
+    const {category} = req.body
+    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from ${category} c left join cate1_like l on c.idx = l.m_idx group by c.idx;`
+    
     try {
         const [result1] = await pool.execute(sql1)
 
@@ -73,9 +74,7 @@ exports.view = async (req,res) => {
     try {
         const [result2] = await pool.execute(sql2,param)
         const [result] = await pool.execute(sql,param)
-        
-
-        
+    
         const response = {
             errno:0,
             result
@@ -407,5 +406,79 @@ exports.thumbnail = async (req, res) => {
             errormsg: e.message
         }
         res.json(response)  
+    }
+}
+
+// 검색
+
+exports.search = async (req, res) => {
+    const {searchKey,searchOp, category} = req.body
+    console.log(searchKey,searchOp, category)
+    if( searchOp !== 'hashtag') {
+        const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
+        from ${category} c left join ${category}_like l on c.idx = l.m_idx 
+        WHERE c.${searchOp} LIKE "%${searchKey}%" group by c.idx ;`
+
+        try {
+            const [result] = await pool.execute(sql)
+            console.log(result)
+            const response = {
+                result,
+                errorno: "none"
+            }
+            res.json(response)
+
+        } catch(e){
+            const response = {
+                errormsg: e.message,
+                errno: e.errno
+            }
+            console.log(response)
+            res.json(response)
+        }
+    }
+    else {
+        const sql1 = `select * from hashtag where hashtag_name=?`
+        const param1 = [searchKey]
+        const result1 = await pool.execute(sql1, param1)
+        
+        let midx = []
+        try {
+            for (let i=0; i<result1[0].length; i++) {
+                const sql2 = `select * from cate1_bridge where hidx=?`
+                const param2 = [result1[0][i].hidx]
+
+                const [result2] = await pool.execute(sql2, param2)
+                midx.push(result2[0])
+            }
+            console.log(midx)
+
+            const sql3 = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, 
+            c.date, c.hit, count(l.m_idx) likes, c.hidden 
+            from ${category} c left join ${category}_like l on c.idx = l.m_idx 
+            WHERE c.idx= ? group by c.idx ;`
+            let final = []
+            for(let i = 0; i<midx.length; i++) {
+                const param3 = [midx[i].midx]
+                const [result3] = await pool.execute(sql3, param3)
+                console.log(result3[0])
+                final.push(result3[0])
+            }
+            console.log(final)
+            const result = final
+            const response = {
+                result,
+                errorno: "none"
+            }
+            res.json(response)
+        }
+        catch (e) {
+            console.log(e.message)
+            const response = {
+                errormsg: e.message,
+                errno: e.errno
+            }
+            res.json(response)
+        }
     }
 }

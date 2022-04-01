@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style> img { height:100px; width:100px;}</style>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
@@ -27,7 +28,7 @@
     <br>
     hashtag : 
     {% for item in cate1_hashtag %}
-    <span>{{item.hashtag_name}}</span>
+    <span>#{{item.hashtag_name}}</span>
     {% endfor %}
 
     <br>
@@ -219,9 +220,7 @@
                 imgElement.setAttribute('src', `http://localhost:4000/uploads/${imgArr[i]}`)
                 imgSpan.append(imgElement)
                 imgZone.append(imgSpan)
-            }
-            
- 
+            } 
         })
         //
         //
