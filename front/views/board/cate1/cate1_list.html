@@ -29,7 +29,7 @@
             const cate1_list = response1.data
             let content_list = []
             for (let i =0; i<response1.data.result1.length; i++) {
-                if(response1.data.result1[i].hidden='off') {
+                if(response1.data.result1[i].hidden =='off') {
                     content_list.push(response1.data.result1[i])
                 }
             }

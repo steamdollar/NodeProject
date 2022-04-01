@@ -65,6 +65,35 @@ exports.list = async (req,res)=>{
     }
 }
 
+exports.check = async (req, res) => {
+    const {idx} = req.body
+    const sql1 = `select * from cate1 where idx = ?`
+    const param1 = [idx]
+
+    try {
+        const [result1] = await pool.execute(sql1, param1)
+        if(result1[0].hidden == 'on') {
+            const response = {
+                hidden:'on'
+            }
+            res.json(response)
+        }
+        else {
+            const response = {
+                hidden:'off'
+            }
+            res.json(response)
+        }
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+        res.json(response)  
+    }
+}
+
 exports.view = async (req,res) => {
     const { idx } = req.body
     const sql = `select * from cate1 where idx=?`
