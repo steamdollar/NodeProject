@@ -10,14 +10,58 @@
         const islogin = location.search.split('=')[1] === 'true' ? true : false
         if (islogin) location.href='http://localhost:3000'
     </script>
+    <link rel="stylesheet" href="http://localhost:3000/main2.css">
 </head>
 <body>
-    <h1><a herf="/">logo</a></h1>
+    <div id="wrap">
 
-    <a href="/user/join">회원가입</a>
-    <a href="/user/login">로그인</a>
-    <a href="http://localhost:4000/api/user/kakao/login">카카오 로그인</a>
-    
+
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.jpg"></a>
+                </div>
+                <div id="hamberger">
+                    <input type="checkbox" id="icon">
+                    <label for="icon">  <!--label은 인라인 스타일-->
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <div id="menu">
+                        <ul>
+                            <li><a href="#">menu1</a></li>
+                            <li><a href="#">menu1</a></li>
+                            <li><a href="#">menu1</a></li>
+                            <li><a href="#">menu1</a></li>
+                            <li><a href="#">menu1</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="access">
+                <a href="/user/join">회원가입</a>
+                <a href="/user/login">로그인</a>
+                <a href="http://localhost:4000/api/user/kakao/login">카카오 로그인</a>
+                
+            </div>
+
+        </header>
+
+
+        <content>
+
+        </content>
+
+
+        <footer>
+
+        </footer>
+
+
+    </div>
+
  
 </body>
 </html>

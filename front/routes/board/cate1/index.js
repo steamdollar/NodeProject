@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/write', (req, res) => {
-    const {token} = req.cookies
+    const {token} = req.cookies["token"]
         try {
             if (token === undefined) {throw new Error('token이 존재하지 않습니다.')}
             const [ header, payload, sign ] = token.split('.')    
