@@ -11,7 +11,23 @@ a{
 #wrap{
     width: 100%;
     height: 800px;
+    margin: 0 auto;
 }
+
+#Transparency{
+    width: 100%;
+    height: 100px;
+    background: #96fafa;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    display: none;
+}
+
+.trans{
+    display: block!important;
+}
+
 #header{
     width: 100%;
     height: 150px;
@@ -20,12 +36,15 @@ a{
 #banner{
     width: 100%;
     height: 200px;
-
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    z-index: 100;
 }
 
 #logo{
-    width: 280px;
-    height: 90px;
+    width: 160px;
+    height: 60px;
 
 }
 /* 여기서부터 햄버거 */
@@ -74,7 +93,7 @@ input[id="icon"] + label > span:nth-child(3) {
     height:100%;
     width:50%;
     right: -50%;
-    background:#333;
+    background: pink;
     box-sizing:border-box;
     top:0;
     z-index:1;
@@ -110,13 +129,13 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 }
 
 #logo_box{
-    margin-top: 30px;
-    margin-left: 20px;
+    margin-top: 25px;
+    margin-left: 80px;
 }
 
 #hamberger{
     margin-top: 55px;
-    margin-right: 50px;
+    margin-right: 100px;
 }
 
 #access {
@@ -125,3 +144,72 @@ input[id="icon"]:checked + label > span:nth-child(3) {
     background: black;
 }
 
+/* 메인 사진 */
+
+
+
+#main_pic{
+    width: 100%;
+    height: 500px;
+    /* background: pink; */
+    position: relative;
+    z-index: 3;
+    top: 110px;
+
+
+
+}
+
+#pic_box{
+    width: 900px;
+    height: 500px;
+    background-color: red;
+    display: flex;
+    margin-left: 350px;
+    overflow: hidden;
+}
+
+#main_pic > div > div{
+    width: 900px;
+    height: 500px;
+}
+
+#main_pic > div > div > img{
+    width: 900px;
+    height: 100%;
+}
+
+#main_txt{
+    position: absolute;
+    z-index: 5;
+    top: 150px;
+    left: 50px;
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    font-weight: 10;
+    font-size: 55px;
+} 
+.start{
+    display: inline-block;
+    margin-bottom: 7px;
+}
+
+.line{
+    display:block;
+    height:1px;
+    width:25%;
+    border-radius:30px;
+    background: black;
+    position:absolute;
+    top: 102px;
+    left: -50px;
+}
+.msg{
+    display: block;
+    margin-top: 80px;
+    
+}
+
+
+::-webkit-scrollbar { width: 5px;}
+::-webkit-scrollbar-track { background-color: rgb(214, 214, 214); }
+::-webkit-scrollbar-thumb { background: #0f42b1; border-radius: 10px;}
