@@ -31,16 +31,14 @@ CREATE TABLE cate1 (
     date VARCHAR(30) NOT NULL,
     hit INT NOT NULL DEFAULT 0,
     likes INT NOT NULL DEFAULT 0,
-    hidden VARCHAR(3) NOT NULL DEFAULT 'off',
-    FOREIGN KEY (`nickname`) REFERENCES `user` (`nickname`)
+    hidden VARCHAR(3) NOT NULL DEFAULT 'off'
 );
 
 update cate1 set userid = replace(userid,' ', '');
 
 create table cate1_like(
     m_idx int,
-    userid varchar(30),
-    FOREIGN key (`m_idx`) REFERENCES `cate1` (`idx`)
+    userid varchar(30)
 );
 
 create table hashtag(

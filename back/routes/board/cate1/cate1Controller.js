@@ -8,7 +8,7 @@ exports.write = async (req,res) => {
     (category, title, content, userid, nickname, date) 
     values(?,?,?,?,?,?)`
     const param = [category, title, content, userid, nickname, date]
-    console.log(param)
+    // console.log(param)
     try {
         const [result] = await pool.execute(sql,param)
 
@@ -47,12 +47,14 @@ exports.write = async (req,res) => {
 exports.list = async (req,res)=>{
     const {category} = req.body
     const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from ${category} c left join cate1_like l on c.idx = l.m_idx group by c.idx;`
-    
+    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden='off'`
     try {
         const [result1] = await pool.execute(sql1)
-
+        const [[{total_record}]] = await pool.execute(sql2)
         const response = {
             result1,
+            total_record,
+            errno:0
         }
         res.json(response) 
     } 
@@ -116,7 +118,6 @@ exports.view = async (req,res) => {
             errormsg: e.message,
             errno: 1
         }
-        
         res.json(response)  
     }
 }
@@ -204,6 +205,8 @@ exports.update = async(req, res) => {
             const param6 = [idx, result5.insertId]
             const [result6] = await pool.execute(sql6, param6)
         }
+
+
 
 
         const response = {
@@ -413,19 +416,71 @@ exports.imgLoad = async (req, res) => {
 
         res.json(response)
     }
-} 
+}
 
+exports.imgUpdate = async (req, res) => {
+    const { idx, category } = req.body
+    console.log(idx, category)
+
+    let images = []
+    for(let i=1; i<=5; i++) {
+        try {
+            const [img] = req.files[`img`+i] 
+            images.push(img.filename)
+        }
+        catch(e) {
+            images.push('N/A')
+        }
+    }
+    console.log(images)
+    try {
+        let final_result = []
+        for ( let i = 0; i < images.length; i++) {
+            const sql1 = `update image set img${i+1} = ? where midx=? and category=?`
+            // console.log(sql1)
+            const param1 = [images[i], idx, category] 
+
+            const [result1] = await pool.execute(sql1, param1)
+            final_result.push(result1)
+        }
+
+        const response = {
+            final_result,
+            errno:0,
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg : e.message
+        }
+        res.json(response)
+    }
+}
+
+// `update cate1 set title=?, content=?, date=? where idx=?`
 // thumbnail
 
 exports.thumbnail = async (req, res) => {
     const { category } = req.body
-    const sql1 = `select img1 from image where category=?`
+    const sql = `select * from ${category} where hidden = 'off'`
     const param1 = [category]
+
     try {
-        const [result1] = await pool.execute(sql1, param1)
-        
+        const [result] = await pool.execute(sql, param1)
+        // console.log(result[0].idx) // [{}, {}, {}]
+        let final_result = []
+
+        for ( let i = 0; i < result.length; i++ ) {
+            const sql1 = `select img1 from image where category=? and midx=?`
+            const param1 = [category, result[i].idx]
+            // console.log(result[i].idx)
+            const [result1] = await pool.execute(sql1, param1)
+            final_result.push(result1)
+        }
         const response = {
-            result1,
+            final_result
         }
         res.json(response) 
     } 
@@ -442,7 +497,7 @@ exports.thumbnail = async (req, res) => {
 
 exports.search = async (req, res) => {
     const {searchKey,searchOp, category} = req.body
-    console.log(searchKey,searchOp, category)
+
     if( searchOp !== 'hashtag') {
         const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
         from ${category} c left join ${category}_like l on c.idx = l.m_idx 
@@ -450,7 +505,6 @@ exports.search = async (req, res) => {
 
         try {
             const [result] = await pool.execute(sql)
-            console.log(result)
             const response = {
                 result,
                 errorno: "none"
@@ -462,7 +516,7 @@ exports.search = async (req, res) => {
                 errormsg: e.message,
                 errno: e.errno
             }
-            console.log(response)
+
             res.json(response)
         }
     }
@@ -480,8 +534,6 @@ exports.search = async (req, res) => {
                 const [result2] = await pool.execute(sql2, param2)
                 midx.push(result2[0])
             }
-            console.log(midx)
-
             const sql3 = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, 
             c.date, c.hit, count(l.m_idx) likes, c.hidden 
             from ${category} c left join ${category}_like l on c.idx = l.m_idx 
@@ -493,7 +545,7 @@ exports.search = async (req, res) => {
                 console.log(result3[0])
                 final.push(result3[0])
             }
-            console.log(final)
+
             const result = final
             const response = {
                 result,

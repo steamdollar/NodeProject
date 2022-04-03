@@ -64,7 +64,7 @@ router.get('/view', check, async (req, res) => {
     })
 })
 
-router.get('/update', async (req, res) => {
+router.get('/update', check, async (req, res) => {
     const idx = req.query
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_update = response.data
