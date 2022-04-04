@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/write', (req, res) => {
-    const {token} = req.cookies["token"]
+    const {token} = req.cookies
         try {
             if (token === undefined) {throw new Error('token이 존재하지 않습니다.')}
             const [ header, payload, sign ] = token.split('.')    
@@ -68,7 +68,6 @@ router.get('/view', check, async (req, res) => {
     })
 })
 
-<<<<<<< HEAD
 router.get('/userinfo',(req,res) => {
     const { userintro,nickname, email } = req.query
     res.render('./board/cate1/cate1.userinfo.html',{
@@ -79,9 +78,6 @@ router.get('/userinfo',(req,res) => {
 })
 
 router.get('/update', async (req, res) => {
-=======
-router.get('/update', check, async (req, res) => {
->>>>>>> be90b208668c4b41cf8946518b06a48033967248
     const idx = req.query
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_update = response.data
