@@ -419,8 +419,8 @@ exports.imgLoad = async (req, res) => {
 }
 
 exports.imgUpdate = async (req, res) => {
-    const { idx, category } = req.body
-    console.log(idx, category)
+    const { idx, category, originLength } = req.body
+    console.log(originLength) // 원래있던 사진 수
 
     let images = []
     for(let i=1; i<=5; i++) {
@@ -432,6 +432,7 @@ exports.imgUpdate = async (req, res) => {
             images.push('N/A')
         }
     }
+
     console.log(images)
     try {
         let final_result = []

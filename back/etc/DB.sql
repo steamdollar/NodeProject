@@ -102,3 +102,18 @@ create table lol_user(
     FOREIGN key (`userid`) REFERENCES `user` (`userid`)
 );
 
+INSERT INTO user(
+                    userid,
+                    userpw,
+                    userimg,
+                    username,
+                    nickname,
+                    address,
+                    gender,
+                    phone,
+                    mobile,
+                    email,
+                    userintro
+                ) values(
+                    '1111','1111', 'asdf.jpg', 'lee', 'lee', 'seoul','남자',00000000,00000000, 'loqwe@gmail.com',' hello'
+                )
