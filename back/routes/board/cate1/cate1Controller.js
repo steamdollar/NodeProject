@@ -122,6 +122,32 @@ exports.view = async (req,res) => {
     }
 }
 
+exports.viewuser = async (req,res) => {
+    console.log('asda',req.user)
+    const {nickname} = req.user
+    const sql = `select * from user where nickname=?`
+    const param = [nickname]
+    try{
+        const [result] = await pool.execute(sql,param)
+        console.log(result)
+        const response = {
+            result,
+            errno:0
+        }
+        res.json(response)
+        
+    } catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno: 1
+        }
+        
+        res.json(response)   
+    }
+}
+
+
 exports.del = async (req,res)=>{
     const {idx, category} = req.body
 

@@ -30,7 +30,8 @@ app.get('/',(req,res)=>{
       cookieShuttle = { ...deUserid }
 
     res.render('main', {
-      userid: cookieShuttle.userid
+      userid: cookieShuttle.userid,
+      nickname: cookieShuttle.nickname
     })
   } else {
         res.render('main2')
@@ -38,7 +39,8 @@ app.get('/',(req,res)=>{
 
 
 })
-
+app.use(express.static('image'))
+app.use(express.static('css'))
 
 app.use(router)
 

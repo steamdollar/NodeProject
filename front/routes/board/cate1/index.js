@@ -42,6 +42,8 @@ const check = async (req, res, next) => {
 
 router.get('/view', check, async (req, res) => {
     const idx = req.query
+    console.log('asd',req.query)
+    console.log(idx)
     const { token } = req.cookies
     const [ header , payload, sign ] = token.split('.')
     const user = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
@@ -56,9 +58,11 @@ router.get('/view', check, async (req, res) => {
     const cate1_image = response3.data.result1[0]
 
 
+
     res.render('./board/cate1/cate1_view.html', {
         cate1_view: cate1_view.result[0],
         userid:user.userid,
+        nickname:user.nickname,
         cate1_hashtag:cate1_hashtag.result_final,
         cate1_image:cate1_image
     })

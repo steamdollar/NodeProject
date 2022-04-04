@@ -14,5 +14,7 @@ router.get('/kakao/login',userController.kakaoAuth)
 router.get('/oauth/kakao',userController.oauthkakao)
 
 router.post('/userprofile',userController.userprofile)
+router.post('/usercmt',userController.usercmt)
+router.post('/userlike',userController.userlike)
 
 module.exports = router

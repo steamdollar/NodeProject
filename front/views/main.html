@@ -1,72 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript">
+{% include "./utils/header.html" %}
 
-        document.addEventListener('DOMContentLoaded',()=>{
-            const webSocket = new WebSocket('ws://localhost:3000')
-
-            const form = document.querySelector('form')
-
-            webSocket.onopen = () => {
-                console.log('웹소켓 Connection 성공 ( Handshake )')
-            }
-
-            form.addEventListener('submit', (e)=>{
-                e.preventDefault()
-                const{ input } = e.target
-
-                let data = {
-                        type:'send_msg',
-                        userid:'{{userid}}',
-                        data:input.value
-                    }
-                
-                webSocket.send(JSON.stringify(data))
-                input.value = ''
-                // input.focus() << 이거 뭐임?
-            })
-
-            webSocket.onmessage = (event) => {
-                const chat = document.querySelector('#chat')
-                const liElement = document.createElement('li')
-                liElement.innerHTML = event.data
-                chat.appendChild(liElement)
-                // console.log(event.data)
-            }
-
-            webSocket.onclose = () => {
-                console.log('웹소켓 disconnection')
-            }
-            const logout2 = document.querySelector('#logout')
-            logout2.addEventListener('click', async (d)=>{
-                d.preventDefault()
-
-                const option = {
-                    'Content-type':'application/json',
-                    withCredentials:"true"
-                }
-
-                const response = await axios.post('http://localhost:4000/api/user/logout',null,option)
-                alert('로그아웃 되었습니다')
-                location.href='http://localhost:3000'
-            })
-        })
-    </script>
-</head>
-<body>
-    <h1><a herf="/">logo</a></h1>
+<br>
+<br>
+<br>
 
     <h2>{{userid}}님, 환영합니다!</h2>
-    <a href ='/board'>게시판</a>
-    <a href="/board/notice">공지사항</a>
-    <a href="" id="logout">로그아웃</a>
-    
+    <div id="access">
+        <a href ='/board'>게시판</a>
+        <a href="/board/notice">공지사항</a>
+        <a href="/user/profile?nickname={{nickname}}">프로필</a>
+        <a href="" id="logout">로그아웃</a>
+    </div>
+
+{% include "./utils/banner.html" %}
 
     <h1>----------chat----------</h1>
     <form action="/" method="get">
@@ -78,4 +24,56 @@
     </ul>
 
 </body>
+<script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', async ()=>{
+        const webSocket = new WebSocket('ws://localhost:3000')
+
+        const form = document.querySelector('form')
+
+        webSocket.onopen = () => {
+            console.log('웹소켓 Connection 성공 ( Handshake )')
+        }
+
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault()
+            const{ input } = e.target
+
+            let data = {
+                    type:'send_msg',
+                    userid:'{{userid}}',
+                    data:input.value
+                }
+            
+            webSocket.send(JSON.stringify(data))
+            input.value = ''
+            // input.focus() << 이거 뭐임?
+        })
+
+        webSocket.onmessage = (event) => {
+            const chat = document.querySelector('#chat')
+            const liElement = document.createElement('li')
+            liElement.innerHTML = event.data
+            chat.appendChild(liElement)
+            // console.log(event.data)
+        }
+
+        webSocket.onclose = () => {
+            console.log('웹소켓 disconnection')
+        }
+        const logout2 = document.querySelector('#logout')
+        logout2.addEventListener('click', async (d)=>{
+            d.preventDefault()
+
+            const option = {
+                'Content-type':'application/json',
+                withCredentials:"true"
+            }
+
+            const response = await axios.post('http://localhost:4000/api/user/logout',null,option)
+            alert('로그아웃 되었습니다')
+            location.href='http://localhost:3000'
+        })
+    })
+</script>
 </html>
