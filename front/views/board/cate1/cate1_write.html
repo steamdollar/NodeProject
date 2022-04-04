@@ -74,12 +74,17 @@
                 htDelete.setAttribute('class', `htDeleter`)
                 
                 const htElement = document.createElement('span')
+                const htElement2 = document.createElement('sapn')
                 htElement.setAttribute('class', `hashtags`)
-                htElement.innerHTML = `#${htText.value}`
+                htElement2.setAttribute('class', `hashtagsform`)
+                htElement2.innerHTML='#'
+                htElement.innerHTML = `${htText.value}`
 
                 const htDiv = document.createElement('div')
                 htDiv.append(htDelete)
+                htDiv.append(htElement2)
                 htDiv.append(htElement)
+                
                 
                 htForm.append(htDiv)
                 htText.value = ''

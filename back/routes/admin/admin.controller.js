@@ -194,7 +194,7 @@ exports.userDelete = (req,res)=>{
 exports.boardList = async(req,res)=>{
     const {board_db} = req.body
     console.log(board_db)
-    const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from ${board_db} c left join ${board_db}_like l on c.idx = l.m_idx group by c.idx;`
+    const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from ${board_db} c left join ${board_db}_like l on c.idx = l.m_idx group by c.idx;`
     console.log(sql)
     try {
         const [result] = await pool.execute(sql)
@@ -222,7 +222,7 @@ exports.boardSearch = async(req,res)=>{
     const {info, category} = req.body
     console.log(info, category)
    
-    const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx WHERE c.title LIKE "%${info}%" OR c.userid LIKE "%${info}%" OR c.content LIKE "%${info}%" OR c.nickname LIKE "%${info}%" group by c.idx ;`
+    const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes,c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx WHERE c.title LIKE "%${info}%" OR c.userid LIKE "%${info}%" OR c.content LIKE "%${info}%" OR c.nickname LIKE "%${info}%" group by c.idx ;`
     console.log(sql)
     try {
         const [result] = await pool.execute(sql)
@@ -285,8 +285,8 @@ exports.boardOrderby = async (req,res) =>{
     const {orderby, category} = req.body
     console.log(orderby, category)
     if(orderby == 'likes'){
-        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,
-        c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by count(c.idx) DESC;`
+        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes,
+        c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by count(l.m_idx) DESC;`
         
         try {
             const [result] = await pool.execute(sql)
@@ -305,7 +305,7 @@ exports.boardOrderby = async (req,res) =>{
             res.json(response)
         }
     } else if(orderby == 'hit'){
-        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,
+        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes,
         c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by hit DESC;`
         
         try {
