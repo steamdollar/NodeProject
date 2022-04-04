@@ -1,4 +1,34 @@
-{% include "../utils/header.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        const islogin = location.search.split('=')[1] === 'true' ? true : false
+        if (islogin) location.href='http://localhost:3000'
+    </script>
+    <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="/user/profile.css">
+    
+    
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="Transparency" class="">
+
+        </div>
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+
+
     <h1><a href="/">Team4</a></h1>
     <h2>프로필 보기</h2>
     <div id="profile">
