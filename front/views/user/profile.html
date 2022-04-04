@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Document</title>
-    <style>
-
-    </style>
-</head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        const islogin = location.search.split('=')[1] === 'true' ? true : false
+        if (islogin) location.href='http://localhost:3000'
+    </script>
+    <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="/user/profile.css">
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+   
 <body>
+    <div id="wrap">
+        <div id="Transparency" class="">
+
+        </div>
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+
+
     <h1><a href="/">Team4</a></h1>
     <h2>프로필 보기</h2>
     <div id="profile">
@@ -53,7 +68,7 @@
                 <span id="email">이메일 : {email}</span>
             </li>
             <li>
-                <span id="userintro">자기소개 : {userintro} </span>
+                <span id="userintro">자기소개 {userintro}: </span>
             </li>
         </ul>
     </template>
@@ -108,17 +123,6 @@
                 withCredentials:true
             }
 
-
-    // document.addEventListener('DOMContentLoaded', async () => {
-    //     const uri = location.href
-    //     const uri2 = uri.split('/')[4]
-    //     const uri3 = uri2.split('?')[1]
-    //     const uri4 = uri3.split('=')[1]
-
-    //     const data = { nickname: uri4 }
-        
-    //     const response = await axios.post('http://', data, option)
-    // })
     
     document.addEventListener('DOMContentLoaded', async() => {
         let template = ''
@@ -144,10 +148,6 @@
         const uri2 = uri.split('/')[4]
         const uri3 = uri2.split('?')[1]
         const uri4 = uri3.split('=')[1]
-
-
-        console.log(usernickname)
-        console.log(writernickname)
         // if(uri4 == usernickname){
         //     //주찬 님이 지금껏 적으신 코드
         //     if( response.data.errno ===0){
@@ -188,12 +188,6 @@
         //     }
         // }
 
-        
-
-
-
-
-
         if( response.data.errno ===0){
             const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
             
@@ -209,12 +203,8 @@
                                .replace('{email}',email)
                                .replace('{userintro}',userintro)
 
-            profile.innerHTML = template
-            
-            
+            profile.innerHTML = template  
         }
     })
-
-        
 </script>
 </html>
