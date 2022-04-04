@@ -12,11 +12,16 @@
     </script>
     <link rel="stylesheet" href="/main2.css">
     <link rel="stylesheet" href="/user/profile.css">
+<<<<<<< HEAD
     
     
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
 </head>
+=======
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+   
+>>>>>>> d77dbf89944a826cf0eacb015909afda6848c635
 <body>
     <div id="wrap">
         <div id="Transparency" class="">
@@ -151,10 +156,6 @@
         const uri2 = uri.split('/')[4]
         const uri3 = uri2.split('?')[1]
         const uri4 = uri3.split('=')[1]
-
-
-        console.log(usernickname)
-        console.log(writernickname)
         // if(uri4 == usernickname){
         //     //주찬 님이 지금껏 적으신 코드
         //     if( response.data.errno ===0){
@@ -195,12 +196,6 @@
         //     }
         // }
 
-        
-
-
-
-
-
         if( response.data.errno ===0){
             const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
             
@@ -216,12 +211,8 @@
                                .replace('{email}',email)
                                .replace('{userintro}',userintro)
 
-            profile.innerHTML = template
-            
-            
+            profile.innerHTML = template  
         }
     })
-
-        
 </script>
 </html>

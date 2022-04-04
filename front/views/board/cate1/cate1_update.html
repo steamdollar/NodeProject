@@ -89,6 +89,8 @@
                 dummyInput.setAttribute('type', 'hidden')
                 dummyInput.setAttribute('name', `img${i+1}`)
                 dummyInput.setAttribute('id', `img${i+1}`)
+                dummyInput.setAttribute('class', `hidden`)
+                dummyInput.setAttribute('value', `http://localhost:4000/uploads/${imgArr[i]}`)
                 imgSpan.prepend(dummyInput)
                 
 
@@ -234,12 +236,34 @@
             //     }
             // }
 
+            // for ( i = 1; i<6; i++) {
+            //     if(`img${i}`.type !== 'file') {
+            //         formData.append(`img${i}`, 'N/B')
+            //         console.log(`img${i}`.type,'N/B')
+            //     }
+            //     else {
+            //         formData.append(`img${i}`, `img${i}`.files[0])
+            //     }
+            // }
+            const originImg = document.querySelectorAll('.hidden')
 
-            formData.append('img1', img1.files[0] || 'N/B')
+            formData.append('originLength', originImg.length)
+
+            // for ( i = 1; i <= originImg.length; i++) {
+            //     formData.append(`img${i}`, `origin${i}a`.src)
+            // }
+            
+            // for ( i = 5-originImg.length; i<=5; i++) {
+            //     formData.append(`$img${i}`, `img${i}`.files[0])
+            // }
+
+            // formData.append('img1', img1.files[0])
             formData.append('img2', img2.files[0])
             formData.append('img3', img3.files[0])
             formData.append('img4', img4.files[0])
             formData.append('img5', img5.files[0])
+
+            formData.append('img1', `http://localhost:4000/uploads/${imgArr[0]}`)
 
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
