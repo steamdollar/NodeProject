@@ -47,6 +47,14 @@
                         <td> * 핸드폰번호 </td>
                         <td> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
                     </tr>
+                    <tr>
+                        <td>* 이메일 </td>
+                        <td> <input type="text" name="email" value="{{user.email}}" id="email"> </td>
+                    </tr>
+                    <tr>
+                        <td>* 자기소개 </td>
+                        <td> <input type="text" name="userintro" value="{{user.userintro}}" id="userintro"> </td>
+                    </tr>
                 </tbody>       
             </table>
         </div>
@@ -65,7 +73,7 @@
             const btn = document.querySelector('#btn')
             btn.value='수정중~~'
             btn.disabled= true
-            const {userid,userpw,userimg,nickname,address,phone,mobile} = e.target
+            const {userid,userpw,userimg,nickname,address,phone,mobile,userintro,email} = e.target
             const formData = new FormData()
             formData.append('userid',document.querySelector('#userid').value)
             formData.append('userpw',document.querySelector('#userpw').value)
@@ -74,6 +82,8 @@
             formData.append('address',document.querySelector('#address').value)
             formData.append('phone',document.querySelector('#phone').value)
             formData.append('mobile',document.querySelector('#mobile').value)
+            formData.append('email',document.querySelector('#email').value)
+            formData.append('userintro',document.querySelector('#userintro').value)
            
             
             // const userid = document.querySelector('#userid')

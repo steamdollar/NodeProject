@@ -60,13 +60,16 @@
         // console.log('이거냐?',response.data.userimg)
 
         if( response.data.errno ===0){
-            const {username,userimg,nickname,gender,email,userintro} = response.data.result[0]
-            
+            const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
             template = profiles.replace('{nickname}',nickname)
+                               .replace('{userid}',userid)
                                .replace('{username}',username)
                                .replace('{userimg}',userimg)
                                .replace('{nickname}',nickname)
+                               .replace('{address}',address)
                                .replace('{gender}',gender)
+                               .replace('{phone}',phone)
+                               .replace('{mobile}',mobile)
                                .replace('{email}',email)
                                .replace('{userintro}',userintro)
 
@@ -76,6 +79,7 @@
         }
     })
 
+     
 
         // // if(uri4 == usernickname){
         // //     //주찬 님이 지금껏 적으신 코드

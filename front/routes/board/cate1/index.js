@@ -68,14 +68,6 @@ router.get('/view', check, async (req, res) => {
     })
 })
 
-router.get('/userinfo',(req,res) => {
-    const { userintro,nickname, email } = req.query
-    res.render('./board/cate1/cate1.userinfo.html',{
-        nickname:nickname,
-        userintro:userintro,
-        email:email
-    })
-})
 
 router.get('/update', async (req, res) => {
     const idx = req.query
