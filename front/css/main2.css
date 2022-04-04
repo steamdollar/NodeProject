@@ -11,7 +11,7 @@ a{
 }
 #wrap{
     width: 100%;
-    height: 800px;
+    height: 700px;
     margin: 0 auto;
 }
 
@@ -46,7 +46,6 @@ a{
 #logo{
     width: 160px;
     height: 60px;
-
 }
 /* 여기서부터 햄버거 */
 
@@ -77,7 +76,7 @@ input[id="icon"] + label > span {
 input[id="icon"] + label > span:nth-child(1) {
     top:0;
 }
- 
+
 input[id="icon"] + label > span:nth-child(2) {
     top:50%;
     transform:translateY(-50%);
@@ -91,14 +90,45 @@ input[id="icon"] + label > span:nth-child(3) {
 #menu {
     display: block;
     position:fixed;
+    top: 0;
     height:100%;
     width:50%;
     right: -50%;
-    background: pink;
+    background: #333333;
     box-sizing:border-box;
-    top:0;
     z-index:1;
 }
+
+#menu > ul{
+    /* margin-top: 110px; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /*수직 정렬*/
+    justify-content: space-evenly;
+    
+}
+
+#menu > ul > li{
+    text-align: center;
+}
+
+#menu > ul > li >a{
+    display: inline-block;
+    font-size: 60px;
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    color: #96fafa;
+
+}
+
+#menu > ul > li:hover > a {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    /* transition: all 0.2s ease-in-out; */
+}
+
+
+
 
 input[id="icon"]:checked + label + #menu{
     right: 0px !important;
@@ -107,15 +137,18 @@ input[id="icon"]:checked + label + #menu{
 input[id="icon"]:checked + label > span:nth-child(1) {
     top:50%;
     transform:translateY(-50%) rotate(45deg);
+    background: #96fafa;
 }
  
 input[id="icon"]:checked + label > span:nth-child(2) {
     display:none;
+    background: #96fafa;
 }
  
 input[id="icon"]:checked + label > span:nth-child(3) {
     bottom:50%;
     transform:translateY(50%) rotate(-45deg);
+    background: #96fafa;
 }
 
 
@@ -127,6 +160,7 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 #banner{
     display: flex;
     justify-content: space-between;
+    position:relative;
 }
 
 #logo_box{
@@ -135,14 +169,14 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 }
 
 #hamberger{
-    margin-top: 55px;
+    margin-top: 45px;
     margin-right: 100px;
 }
-
+/* 로그인 전 메뉴 */
 #access {
     width: 300px;
     height: 100px;
-    top: 50px;
+    top: 40px;
     position: absolute;
     right: 100px;
 }
@@ -151,37 +185,60 @@ input[id="icon"]:checked + label > span:nth-child(3) {
     color: black;
     margin: 0 10px 0px 10px;
 }
-/* 메인 사진 */
+
+
+/* 로그인 후 메뉴 */
+#access2 {
+    width: 400px;
+    height: 100px;
+    top: 40px;
+    position: absolute;
+    right: 100px;
+}
+
+#access2 > a{
+    color: black;
+    margin: 0 10px 0px 10px;
+}
 
 
 
 #main_pic{
-    width: 100%;
+    width: 1400px;
     height: 500px;
-    /* background: pink; */
-    position: relative;
     z-index: 3;
-    top: 110px;
+    top: -50px;
+    position:relative;
+    margin: 0 auto;
 
 
+}
+
+
+#slide_area{
+    width: 900px;
+    height: 500px;
+    background-color: red;
+    margin-left: 350px;
+    position: relative;
+    overflow: hidden;
+  
 
 }
 
 #pic_box{
-    width: 900px;
+    width: 400%;
     height: 500px;
-    background-color: red;
+    position: absolute;
     display: flex;
-    margin-left: 350px;
-    overflow: hidden;
 }
 
-#main_pic > div > div{
+#pic_box > div{
     width: 900px;
     height: 500px;
 }
 
-#main_pic > div > div > img{
+#pic_box > div > img{
     width: 900px;
     height: 100%;
 }
@@ -196,8 +253,7 @@ input[id="icon"]:checked + label > span:nth-child(3) {
     font-size: 70px;
 } 
 .start{
-    display: inline-block;
-    margin-bottom: 7px;
+    display: block;
 }
 
 .line{
@@ -207,14 +263,24 @@ input[id="icon"]:checked + label > span:nth-child(3) {
     border-radius:30px;
     background: black;
     position:absolute;
-    top: 128px;
+    top: 120px;
     left: -50px;
 }
 .msg{
     display: block;
-    margin-top: 80px;
     
 }
+.start, .msg {
+    background: linear-gradient(to right,#000000,#000000,#ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+
+
+
 
 
 ::-webkit-scrollbar { width: 5px;}

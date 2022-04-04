@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/common/footer.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
@@ -64,51 +66,50 @@
     </script>
 </head>
 <body>
-    <div id="wrap">
-        <div id="Transparency" class="">
-    
-        </div>
-        <header id="header">
-            <div id="banner">
-                <div id="logo_box">
-                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+<div id="wrap">
+    <div id="Transparency" class="">
+
+    </div>
+    <header id="header">
+        <div id="banner">
+            <div id="logo_box">
+                <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+            </div>
+
+            <div id="access2">
+                <a href ='/board'>Board</a>
+                <a href="/board/notice">Notice</a>
+                <a href="/user/profile?nickname={{nickname}}">Profile</a>
+                <a href="" id="logout">Logout</a>
+            </div>
+        
+            <div id="hamberger">
+                <input type="checkbox" id="icon">
+                <label for="icon">  <!--label은 인라인 스타일-->
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                <div id="menu">
+                    <ul>
+                        <li><a href="#">Introduce</a></li>
+                        <li><a href="#">Enjoy it!</a></li>
+                        <li><a href="#">Board</a></li>
+                        <li><a href="#">This month</a></li>
+                    </ul>
                 </div>
-    
-    
-                <div id="access2">
-                    <a href ='/board'>게시판</a>
-                    <a href="/board/notice">공지사항</a>
-                    <a href="/user/profile?nickname={{nickname}}">프로필</a>
-                    <a href="" id="logout">로그아웃</a>
-                </div>
+            </div>
+            </div>
+            <div id="main_pic">
+                <h3 id="main_txt">
+                    <span class="msg">ONLY FOR</span>
+                    <span class="msg">KYUNGIL STUDENTS</span>
+                    <span class="line"></span>
+                    <br>
+                    <span class="msg">ENJOY IT !</span>
             
-                <div id="hamberger">
-                    <input type="checkbox" id="icon">
-                    <label for="icon">  <!--label은 인라인 스타일-->
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label>
-                    <div id="menu">
-                        <ul>
-                            <li><a href="#">Introdue</a></li>
-                            <li><a href="#">Enjoy it!</a></li>
-                            <li><a href="#">Board</a></li>
-                            <li><a href="#">This month</a></li>
-                        </ul>
-                    </div>
-                </div>
-                </div>
-                <div id="main_pic">
-                    <h3 id="main_txt">
-                        <span class="start">ONLY FOR</span>
-                        <br>
-                        KYUNGIL STUDENTS
-                        <span class="line"></span>
-                        <br>
-                        <span class="msg">ENJOY IT !</span>
-                
-                    </h3>
+                <h3>
+                <div id="slide_area">
                     <div id="pic_box">
                         <div>
                             <img src="http://localhost:3000/blockchain.jpeg">
@@ -124,28 +125,58 @@
                         </div>
                     </div>
                 </div>
-                
-        </header>
-    
-    
-        <content>
+            </div>
+            
+    </header>
+
+
+    <content id="main_content">
+        <div id="container1">
+            <div id="card_news">
+                <div class="card">
+                    dksl아니 왜 안돼?
+                </div>
+                <div class="card">
+                    
+                </div>
+                <div class="card">
+                    
+                </div>
+                <div class="card">
+                    
+                </div>
+
+            </div>
+        </div>
+        <div id="container2">
+            <div id="hot_board">
+
+            </div>
+            <div id="event_board">
+
+            </div>
+        </div>
+        <div id="chat_box">
             <h1>----------chat----------</h1>
             <form action="/" method="get">
                 <input type="text" name="input" id="input">
                 <input type="submit" value="전송">
             </form>
             <ul id="chat">
-        
+            
             </ul>
-        </content>
+        </div>
     
-    
-        <footer>
-    
-        </footer>
-    
-    
-    </div>
+
+    </content>
+
+
+    <footer>
+
+    </footer>
+
+
+</div>
 </body>
 
 </html>
