@@ -42,6 +42,8 @@ const check = async (req, res, next) => {
 
 router.get('/view', check, async (req, res) => {
     const idx = req.query
+    console.log('asd',req.query)
+    console.log(idx)
     const { token } = req.cookies
     const [ header , payload, sign ] = token.split('.')
     const user = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
@@ -56,15 +58,30 @@ router.get('/view', check, async (req, res) => {
     const cate1_image = response3.data.result1[0]
 
 
+
     res.render('./board/cate1/cate1_view.html', {
         cate1_view: cate1_view.result[0],
         userid:user.userid,
+        nickname:user.nickname,
         cate1_hashtag:cate1_hashtag.result_final,
         cate1_image:cate1_image
     })
 })
 
+<<<<<<< HEAD
+router.get('/userinfo',(req,res) => {
+    const { userintro,nickname, email } = req.query
+    res.render('./board/cate1/cate1.userinfo.html',{
+        nickname:nickname,
+        userintro:userintro,
+        email:email
+    })
+})
+
 router.get('/update', async (req, res) => {
+=======
+router.get('/update', check, async (req, res) => {
+>>>>>>> be90b208668c4b41cf8946518b06a48033967248
     const idx = req.query
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_update = response.data
