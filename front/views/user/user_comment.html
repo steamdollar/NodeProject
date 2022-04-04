@@ -52,8 +52,8 @@
         const response = await axios.post('http://localhost:4000/api/user/usercmt',null,option)
         if(response.data.errno == 0){
            for(let i = 0; i< response.data.result.length; i++){
-            const {idx,mcategory,title,content,nickname,date} = response.data.result[i]
-            template += profiles.replaceAll('{idx}',idx)
+            const {midx,mcategory,title,content,nickname,date} = response.data.result[i]
+            template += profiles.replaceAll('{idx}',midx)
                                 .replace('{cate}',mcategory)
                                 .replace('{title}',title)
                                 .replace('{content}',content)

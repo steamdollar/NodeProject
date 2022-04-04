@@ -14,7 +14,7 @@
 
     카테고리 : <span id="category">{{cate1_view.category}}</span><br>
     제목 : <span id="title">{{cate1_view.title}}</span><br/>
-    닉네임 : <span id="nickname">{{ cate1_view.nickname }}</span> <br />
+    닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
     내용 : {{ cate1_view.content }}<br/>
     작성일자 : {{ cate1_view.date }}
     <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
@@ -107,6 +107,17 @@
             const response = await axios.post('http://localhost:4000/api/board/cate1/likeCount', data, option)
             let [likeNum] = Object.values(response.data.result[0])
             likeCount.innerHTML =likeNum
+
+            const response2 = await axios.post('http://localhost:4000/api/board/cate1/viewuser', null, option)
+            const Usernick = response2.data.result[0].nickname
+            let nickname = "{{cate1_view.nickname}}"
+            console.log(nickname)
+            if(nickname !== Usernick){
+              
+            } else{
+
+            }
+            
         })
 
         // 좋아요 누르기(done)
@@ -439,6 +450,8 @@
             }
 
             commentView()
+
+            
         })
     </script>
 </body>

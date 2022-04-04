@@ -42,14 +42,13 @@
             </li>
             {% else %}
             <li>
-                <span>
-                    전화번호 : 없음
-                </span>
+                <span id="phone">전화번호 : 없음</span>
             </li>
             {% endif %}
             <li>
                 <span id="mobile">핸드폰 : {mobile}</span>
             </li>
+
             <li>
                 <span id="email">이메일 : {email}</span>
             </li>
@@ -58,6 +57,7 @@
             </li>
         </ul>
     </template>
+    
     <div class="button">
         <button><a href="/board">게시판</a></button>
         <button><a href="/user/update">수정</a></button>
@@ -79,9 +79,8 @@
             </div>
         </div>
     </div>
-</body>
-<script>
-    const frm = document.querySelector('#delete_frm')
+    <script type="text/javascript">
+        const frm = document.querySelector('#delete_frm')
     frm.addEventListener('submit',async(e)=>{
         e.preventDefault()
      
@@ -99,6 +98,28 @@
             alert('탈퇴실패')
         }
     })
+    </script>
+
+</body>
+<script>
+
+    const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+
+
+    // document.addEventListener('DOMContentLoaded', async () => {
+    //     const uri = location.href
+    //     const uri2 = uri.split('/')[4]
+    //     const uri3 = uri2.split('?')[1]
+    //     const uri4 = uri3.split('=')[1]
+
+    //     const data = { nickname: uri4 }
+        
+    //     const response = await axios.post('http://', data, option)
+    // })
+    
     document.addEventListener('DOMContentLoaded', async() => {
         let template = ''
         const profile = document.querySelector('#profile')
@@ -111,6 +132,68 @@
 
         const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
         // console.log('이거냐?',response.data.userimg)
+
+        const {writernickname, usernickname} = response.data
+
+        // const uri = location.pathname
+        // const category = uri.split('/')[2]
+        // console.log(uri)
+        // console.log(category)
+
+        const uri = location.href
+        const uri2 = uri.split('/')[4]
+        const uri3 = uri2.split('?')[1]
+        const uri4 = uri3.split('=')[1]
+
+
+        console.log(usernickname)
+        console.log(writernickname)
+        // if(uri4 == usernickname){
+        //     //주찬 님이 지금껏 적으신 코드
+        //     if( response.data.errno ===0){
+        //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
+            
+        //     template = profiles.replace('{nickname}',nickname)
+        //                        .replace('{userid}',userid)
+        //                        .replace('{username}',username)
+        //                        .replace('{userimg}',userimg)
+        //                        .replace('{nickname}',nickname)
+        //                        .replace('{address}',address)
+        //                        .replace('{gender}',gender)
+        //                        .replace('{phone}',phone)
+        //                        .replace('{mobile}',mobile)
+        //                        .replace('{email}',email)
+        //                        .replace('{userintro}',userintro)
+
+        //     profile.innerHTML = template
+        // }
+        // } else {
+        //     //주찬님이 지금껏 적으신 코드에서 수정, 탈퇴..같은 기능과 민감 정보 제외한 html
+        //     if( response.data.errno ===0){
+        //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
+            
+        //     template = profiles.replace('{nickname}',nickname)
+        //                     //    .replace('{userid}',userid)
+        //                        .replace('{username}',username)
+        //                        .replace('{userimg}',userimg)
+        //                        .replace('{nickname}',nickname)
+        //                     //    .replace('{address}',address)
+        //                        .replace('{gender}',gender)
+        //                     //    .replace('{phone}',phone)
+        //                     //    .replace('{mobile}',mobile)
+        //                        .replace('{email}',email)
+        //                        .replace('{userintro}',userintro)
+
+        //     profile.innerHTML = template
+        //     }
+        // }
+
+        
+
+
+
+
+
         if( response.data.errno ===0){
             const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
             

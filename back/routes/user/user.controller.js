@@ -165,26 +165,57 @@ exports.login = async (req,res)=>{
 }
 
 exports.profile = async (req,res)=>{
-    const {userid} = req.user
-    
-    const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where userid=?'
-    const param = [userid]
-    try {
-        const [result] = await pool.execute(sql,param)
-       
-        response = {
-            result,
-            errno:0
-        }
-        res.json(response)
+    const usernickname = req.user.nickname
+    console.log(req.body.uri4)
+    const writernickname = req.body.uri4
 
-    } catch(e){
-        console.log(e.message)
-        response = {
-            
-            errno:1
+    console.log(usernickname,writernickname)
+    if(usernickname == writernickname || writernickname == undefined){
+        const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where nickname=?'
+        const param = [usernickname]
+
+        try {
+            const [result] = await pool.execute(sql,param)
+           
+            response = {
+                usernickname,
+                writernickname,
+                result,
+                errno:0
+            }
+            res.json(response)
+    
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
         }
-        res.json(response)
+    } else{
+        const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where nickname=?'
+        const param = [writernickname]
+
+        try {
+            const [result] = await pool.execute(sql,param)
+           
+            response = {
+                usernickname,
+                writernickname,
+                result,
+                errno:0
+            }
+            res.json(response)
+    
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
+        }
     }
     
 }
@@ -245,7 +276,6 @@ exports.delete = async (req,res)=>{
 }
 
 exports.logout = (req,res) => {
-    
     res.clearCookie('token')
     res.json({})
 }

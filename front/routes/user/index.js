@@ -33,7 +33,18 @@ router.use('/update', (req,res)=>{
 })
 
 router.use('/profile', (req,res)=>{
-    res.render('./user/profile')
+    const { nickname } = req.query
+    const {token} = req.cookies
+    const userid = token.split('.')
+    const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
+    console.log(deUserid.nickname)
+
+    if( deUserid.nickname == nickname) {
+        res.render('./user/profile')
+    }
+    else {
+        res.render('./user/userinfo')
+    }
 })
 
 router.use('/welcome', (req,res)=>{
