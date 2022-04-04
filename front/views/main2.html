@@ -1,14 +1,80 @@
-{% include "./utils/header.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        const islogin = location.search.split('=')[1] === 'true' ? true : false
+        if (islogin) location.href='http://localhost:3000'
+    </script>
+    <link rel="stylesheet" href="/main2.css">
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="Transparency" class="">
+
+        </div>
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+
 
                 <div id="access">
                     <a href="/user/join">Join</a>
                     <a href="/user/login">Login</a>
                     <a href="http://localhost:4000/api/user/kakao/login">KaKao Login</a>
-                    
                 </div>
-                {% include "./utils/banner.html" %}
             
-
+                <div id="hamberger">
+                    <input type="checkbox" id="icon">
+                    <label for="icon">  <!--label은 인라인 스타일-->
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <div id="menu">
+                        <ul>
+                            <li><a href="#">Introdue</a></li>
+                            <li><a href="#">Enjoy it!</a></li>
+                            <li><a href="#">Board</a></li>
+                            <li><a href="#">This month</a></li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+                <div id="main_pic">
+                    <h3 id="main_txt">
+                        <span class="start">ONLY FOR</span>
+                        <br>
+                        KYUNGIL STUDENTS
+                        <span class="line"></span>
+                        <br>
+                        <span class="msg">ENJOY IT !</span>
+                
+                    </h3>
+                    <div id="pic_box">
+                        <div>
+                            <img src="http://localhost:3000/blockchain.jpeg">
+                        </div>
+                        <div>
+                            <img src="http://localhost:3000/programming.jpg">
+                        </div>
+                        <div>
+                            <img src="http://localhost:3000/planning.jpg">
+                        </div>
+                        <div>
+                            <img src="http://localhost:3000/artworks.jpg">
+                        </div>
+                    </div>
+                </div>
+                
         </header>
 
 

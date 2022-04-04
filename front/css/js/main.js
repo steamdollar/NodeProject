@@ -16,4 +16,7 @@ function init(){
             trans_box.classList.remove('trans')
         }
     })
+
+    
+
 }

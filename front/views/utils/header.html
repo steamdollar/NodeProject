@@ -20,10 +20,6 @@
     <link rel="stylesheet" href="/board/cate1/update.css">
     <link rel="stylesheet" href="/board/cate1/view.css">
     <link rel="stylesheet" href="/board/cate1/write.css">
-
-
-
-    
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
 </head>
@@ -33,8 +29,30 @@
 
         </div>
         <header id="header">
-            <div id="banner">
                 <div id="logo_box">
                     <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
                 </div>
+    
+                <div id="hamberger">
+                    <input type="checkbox" id="icon">
+                    <label for="icon">  <!--label은 인라인 스타일-->
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <div id="menu">
+                        <ul>
+                            <li><a href="#">Introdue</a></li>
+                            <li><a href="#">Enjoy it!</a></li>
+                            <li><a href="#">Board</a></li>
+                            <li><a href="#">This month</a></li>
+                        </ul>
+                    </div>
+                </div>
+        </header>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
 
+</html>
