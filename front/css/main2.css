@@ -139,11 +139,17 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 }
 
 #access {
-    width: 100px;
+    width: 300px;
     height: 100px;
-    background: black;
+    top: 50px;
+    position: absolute;
+    right: 100px;
 }
 
+#access > a{
+    color: black;
+    margin: 0 10px 0px 10px;
+}
 /* 메인 사진 */
 
 
