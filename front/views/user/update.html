@@ -6,57 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
+    <script type="text/javascript">
+        const islogin = location.search.split('=')[1] === 'true' ? true : false
+        if (islogin) location.href='http://localhost:3000'
+    </script>
+    <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="/user/update.css">
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
 <body>
-    <h1>
-        회원 수정 페이지입니다
-    </h1>
-    <form method="post" id="update_frm" action="http://localhost:4000/api/user/update">
-        <div>
-            <table id="pf_table">
-                <tbody class="tbody">
-                    <tr>
-                        <td> * 아이디 </td>
-                        <td> <input type="text" name="userid" value="{{user.userid}}" id="userid"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 비밀번호 </td>
-                        <td> <input type="password" name="userpw" value="{{user.userpw}}" id="userpw"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 프로필 사진 </td>
-                        <td> <input type="file" name="userimg" value="{{user.userimg}}" id="userimg"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 닉네임 </td>
-                        <td> <input type="text" name="nickname" value="{{user.nickname}}" id="nickname"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 주소 </td>
-                        <td> <input type="text" name="address" value="{{user.address}}" id="address"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 성별 </td>
-                        <td> <input type="text" name="gender" value='남자' id="gender"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 전화번호 </td>
-                        <td> <input type="text" name="phone" value="{{user.phone}}" id="phone"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 핸드폰번호 </td>
-                        <td> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
-                    </tr>
-                </tbody>       
-            </table>
+    <div id="wrap">
+        <div id="Transparency" class=""></div>
+
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+            </div>
+        </header>
+
+        <h1>회원 정보 수정 페이지입니다.</h1>
+        <div id="update_frm_wrap">
+            
+            <form method="post" id="update_frm" action="http://localhost:4000/api/user/update">
+                <div>
+                    <table id="pf_table">
+                        <tbody class="tbody">
+                            <tr>
+                                <td> * 아이디 </td>
+                                <td> {{user.userid}} </td>
+                            </tr>
+                            <tr>
+                                <td> * 비밀번호 </td>
+                                <td> <input type="password" name="userpw" value="{{user.userpw}}" id="userpw"> </td>
+                            </tr>
+                            <tr>
+                                <td> * 프로필 사진 </td>
+                                <td> <input type="file" name="userimg" value="{{user.userimg}}" id="userimg"> </td>
+                            </tr>
+                            <tr>
+                                <td> * 닉네임 </td>
+                                <td> <input type="text" name="nickname" value="{{user.nickname}}" id="nickname"> </td>
+                            </tr>
+                            <tr>
+                                <td> * 주소 </td>
+                                <td> <input type="text" name="address" value="{{user.address}}" id="address"> </td>
+                            </tr>
+                            <tr>
+                                <td> * 성별 </td>
+                                <td> <input type="text" name="gender" value='남자' id="gender"> </td>
+                            </tr>
+                            <tr>
+                                <td> * 전화번호 </td>
+                                <td> <input type="text" name="phone" value="{{user.phone}}" id="phone"> </td>
+                            </tr>
+                            <tr>
+                                <td> * 핸드폰번호 </td>
+                                <td> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
+                            </tr>
+                        </tbody>       
+                    </table>
+                </div>
+                <div>
+                    <input type="submit" id="btn" value="수정">
+                </div>
+                <div>
+                    <button><a href="/user/profile?nickname={{user.nickname}}">프로필</a></button>
+                </div>
+            </form>
         </div>
-        <div>
-            <input type="submit" id="btn" value="수정">
-        </div>
-    </form>
-    <div>
-        <button><a href="/user/profile">프로필</a></button>
     </div>
+
     <script type="text/javascript">
         const frm = document.querySelector('#update_frm')
         frm.addEventListener('submit', async (e)=>{
@@ -74,29 +94,6 @@
             formData.append('address',document.querySelector('#address').value)
             formData.append('phone',document.querySelector('#phone').value)
             formData.append('mobile',document.querySelector('#mobile').value)
-           
-            
-            // const userid = document.querySelector('#userid')
-            // const userpw = document.querySelector('#userpw')
-            // const userimg = document.querySelector('#userimg')
-            // const nickname = document.querySelector('#nickname')
-            // const gender = document.querySelector('#gender')
-            // const address = document.querySelector('#address')
-            // const phone = document.querySelector('#phone')
-            // const mobile = document.querySelector('#mobile')
-            
-
-            // const data = {
-            //     userid:userid.value,
-            //     userpw: userpw.value,
-            //     userimg: userimg.value,
-            //     nickname: nickname.value,
-            //     address: address.value,
-            //     phone: phone.value,
-            //     mobile: mobile.value,
-            //     gender: gender.value,
-               
-            // }
 
             const option = {
                 'Content-type':'application/json',
@@ -104,8 +101,6 @@
             }
 
             const response = await axios.post('http://localhost:4000/api/user/update', formData, option)
-            
-            
         
             if(response.data.errno == 0){
                 //성공
@@ -125,12 +120,9 @@
                         alert('이미 가입 된 이메일입니다.')
                     }
                 }
-
                 btn.value = '수정'
                 btn.disabled = false
-
             }
-          
         })
     </script>
 </body>
