@@ -7,34 +7,67 @@ const { login } = require('../user/user.controller.js')
 
 exports.login = async(req,res)=>{
 
-    const {adminid, adminpw} = req.body;
-    const sql = `SELECT userid FROM user WHERE userid="${adminid}" AND userpw="${adminpw}" AND level=3`;
+    // const {adminid, adminpw} = req.body;
+    // const sql = `SELECT userid FROM user WHERE userid="${adminid}" AND userpw="${adminpw}" AND level=3`;
 
 
-    try{
+    // try{
 
-        const [result] = await pool.execute(sql);
-        console.log("이게답이다.", result,result.length)
-        if(result.length == 0 || result.length > 1){
-            throw new Error('id/pw를 확인해주세요')
-        }
-        const response = {
-            output:"success"
-        }
+    //     const [result] = await pool.execute(sql);
+    //     console.log("이게답이다.", result,result.length)
+    //     if(result.length == 0 || result.length > 1){
+    //         throw new Error('id/pw를 확인해주세요')
+    //     }
+    //     const response = {
+    //         output:"success"
+    //     }
        
-        req.session.user = result[0].userid
-        res.json(response)
-        console.log(req.session)
+    //     req.session.user = result[0].userid
+    //     res.json(response)
+    //     console.log(req.session)
 
-    }catch(e){
-        console.log(e)
+    // }catch(e){
+    //     console.log(e)
+
+    //     const response = {
+    //         e
+    //     }
+    //     req.session.destroy(()=>{req.session})
+    //     res.json(response)
+
+    // }
+    const { adminid, adminpw } = req.body
+
+    const sql = 'SELECT userid, userimg, username, nickname, address, gender, phone, mobile, email, level from user where userid = ? and userpw = ? and level=3'
+    const param = [adminid, adminpw]
+    
+    try {
+        const [result] = await pool.execute(sql, param)
+
+        if( result.length === 0 ) {throw Error ('id/pw를 확인해주세요')}
+
+        const jwt = createToken(result[0])
+
+        res.cookie('token', jwt, {
+            path:'/',
+            httpOnly:true,
+            domain:'localhost'
+        })
 
         const response = {
-            e
+            result,
+            errno:0
         }
-        req.session.destroy(()=>{req.session})
         res.json(response)
 
+    } catch (e) {
+        console.log(e.message)
+        const response = {
+            result:[],
+            errormsg:e.message,
+            errno:e.errno
+        }
+        res.json(response)
     }
 
 
@@ -43,7 +76,7 @@ exports.logout = (req,res)=>{
     const response = {
         result:"clearcookie"
     }
-    res.clearCookie('connect.sid')
+    res.clearCookie('token')
     res.json(response)
     
 
