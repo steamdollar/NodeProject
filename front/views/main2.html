@@ -1,23 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript">
-        const islogin = location.search.split('=')[1] === 'true' ? true : false
-        if (islogin) location.href='http://localhost:3000'
-    </script>
-</head>
-<body>
-    <h1><a herf="/">logo</a></h1>
+{% include "./utils/header.html" %}
 
-    <a href="/user/join">회원가입</a>
-    <a href="/user/login">로그인</a>
-    <a href="http://localhost:4000/api/user/kakao/login">카카오 로그인</a>
-    
+                <div id="access">
+                    <a href="/user/join">Join</a>
+                    <a href="/user/login">Login</a>
+                    <a href="http://localhost:4000/api/user/kakao/login">KaKao Login</a>
+                    
+                </div>
+                {% include "./utils/banner.html" %}
+            
+
+        </header>
+
+
+        <content>
+
+        </content>
+
+
+        <footer>
+
+        </footer>
+
+
+    </div>
+
  
 </body>
 </html>

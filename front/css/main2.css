@@ -1,0 +1,222 @@
+/* 공통 */
+*{
+    padding: 0;
+    margin: 0;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+#wrap{
+    width: 100%;
+    height: 800px;
+    margin: 0 auto;
+}
+
+#Transparency{
+    width: 100%;
+    height: 100px;
+    background: #96fafa;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    display: none;
+}
+
+.trans{
+    display: block!important;
+}
+
+#header{
+    width: 100%;
+    height: 150px;
+}
+
+#banner{
+    width: 100%;
+    height: 200px;
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+#logo{
+    width: 160px;
+    height: 60px;
+
+}
+/* 여기서부터 햄버거 */
+
+input[id="icon"] {
+    display: none;
+}
+ 
+input[id="icon"] + label {
+    display:block;
+    width: 30px;
+    height: 20px;
+    cursor:pointer;
+    position:relative;
+    z-index: 2;
+}
+ 
+input[id="icon"] + label > span {
+    display:block;
+    height:3px;
+    width:100%;
+    border-radius:30px;
+    background: black;
+    position:absolute;
+}
+
+ 
+ 
+input[id="icon"] + label > span:nth-child(1) {
+    top:0;
+}
+ 
+input[id="icon"] + label > span:nth-child(2) {
+    top:50%;
+    transform:translateY(-50%);
+}
+ 
+input[id="icon"] + label > span:nth-child(3) {
+    bottom:0;
+}
+
+
+#menu {
+    display: block;
+    position:fixed;
+    height:100%;
+    width:50%;
+    right: -50%;
+    background: pink;
+    box-sizing:border-box;
+    top:0;
+    z-index:1;
+}
+
+input[id="icon"]:checked + label + #menu{
+    right: 0px !important;
+}
+
+input[id="icon"]:checked + label > span:nth-child(1) {
+    top:50%;
+    transform:translateY(-50%) rotate(45deg);
+}
+ 
+input[id="icon"]:checked + label > span:nth-child(2) {
+    display:none;
+}
+ 
+input[id="icon"]:checked + label > span:nth-child(3) {
+    bottom:50%;
+    transform:translateY(50%) rotate(-45deg);
+}
+
+
+
+ 
+
+/* 헤더 정렬 */
+
+#banner{
+    display: flex;
+    justify-content: space-between;
+}
+
+#logo_box{
+    margin-top: 25px;
+    margin-left: 80px;
+}
+
+#hamberger{
+    margin-top: 55px;
+    margin-right: 100px;
+}
+
+#access {
+    width: 300px;
+    height: 100px;
+    top: 50px;
+    position: absolute;
+    right: 100px;
+}
+
+#access > a{
+    color: black;
+    margin: 0 10px 0px 10px;
+}
+/* 메인 사진 */
+
+
+
+#main_pic{
+    width: 100%;
+    height: 500px;
+    /* background: pink; */
+    position: relative;
+    z-index: 3;
+    top: 110px;
+
+
+
+}
+
+#pic_box{
+    width: 900px;
+    height: 500px;
+    background-color: red;
+    display: flex;
+    margin-left: 350px;
+    overflow: hidden;
+}
+
+#main_pic > div > div{
+    width: 900px;
+    height: 500px;
+}
+
+#main_pic > div > div > img{
+    width: 900px;
+    height: 100%;
+}
+
+#main_txt{
+    position: absolute;
+    z-index: 5;
+    top: 100px;
+    left: 50px;
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    font-weight: 10;
+    font-size: 70px;
+} 
+.start{
+    display: inline-block;
+    margin-bottom: 7px;
+}
+
+.line{
+    display:block;
+    height:1px;
+    width:20%;
+    border-radius:30px;
+    background: black;
+    position:absolute;
+    top: 128px;
+    left: -50px;
+}
+.msg{
+    display: block;
+    margin-top: 80px;
+    
+}
+
+
+::-webkit-scrollbar { width: 5px;}
+::-webkit-scrollbar-track { background-color: rgb(214, 214, 214); }
+::-webkit-scrollbar-thumb { background: #0f42b1; border-radius: 10px;}

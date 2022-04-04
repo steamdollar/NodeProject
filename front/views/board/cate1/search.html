@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden {display:none;}
+        .thumb {
+            width:100px !important;
+            height: 100px !important;
+        }
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+        
+            document.addEventListener('DOMContentLoaded', async() => {
+            
+            const uri = location.pathname
+            const category = uri.split('/')[2]
+            
+            
+            const searchOp = "{{option}}"
+            const searchKey = "{{keyword}}"
+
+            const data = {
+                category:category,
+                searchOp:searchOp,
+                searchKey:searchKey
+            }
+
+            const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
+            const cate1_list = response1.data.result
+            console.log(cate1_list)
+
+            let content_list = []
+
+            if(cate1_list !== undefined) {
+                for (let i =0; i<cate1_list.length; i++) {
+                    if(cate1_list[i].hidden =='off') {
+                        content_list.push(cate1_list[i])
+                    }
+                }
+            }
+
+            let template = ''
+            search_list = []
+            const board_temp = document.querySelector('#board_temp').innerHTML
+            const promise = content_list.forEach(async (v)=>{
+                search_list.push(v)
+                let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+                template += board_temp.replaceAll('{idx}', idx)
+                                .replace('{category}',category)
+                                .replace('{title}',title)
+                                .replace('{content}',content)
+                                .replace('{userid}', userid)
+                                .replace('{nickname}',nickname)
+                                .replace('{date}',date)
+                                .replace('{hit}',hit)
+                                .replace('{likes}',likes)
+            })
+
+            board_list.innerHTML = template
+            //
+            //
+            
+            const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
+            const tempThumb = response.data.result1 // [{}, {}, {}]
+            let thumbNail = []
+
+            for (let i = 0; i<tempThumb.length; i++) {
+                if(tempThumb[i].img1 !== 'N/A') {
+                    thumbNail.push(tempThumb[i].img1)
+                }
+                else {
+                    thumbNail.push('default.jpg')
+                }
+            }
+
+            for ( let i =0; i<thumbNail.length; i++) {
+                const imgZone = document.querySelector('#imgZone')
+                const imgSpan = document.createElement('span')
+                const imgElement = document.createElement('img')
+                imgElement.setAttribute('class','thumb')
+                imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i]}`)
+                imgSpan.append(imgElement)
+                imgZone.append(imgSpan)
+            }
+        })
+    </script>
+</head>
+<body>
+    <span id="option" value="{{option}}" class="hidden"></span>
+    <span id="keyword" value="{{keyword}}" class="hidden"></span>
+    <h1><a href='/'>logo</a></h1>
+    <h2> cate1_리스트 </h2>
+    <table width="100%" border="1">
+
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>카테고리</th>
+                <th>제목</th>
+                <th>작성자 아이디</th>
+                <th>작성자 닉네임</th>
+                <th>내용</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>좋아요</th>
+            </tr>
+        </thead>
+
+        <tbody id="board_list">
+
+        </tbody>
+
+    </table>
+
+        <template id="board_column">
+        </template>
+
+        <template id="board_temp">
+            <tr>
+
+                <th>{idx}</th>
+                <th>{category}</th>
+                <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
+                <th>{userid}</th>
+                <th>{nickname}</th>
+                <th>{content}</th>
+                <th>{date}</th>
+                <th>{hit}</th>
+                <th>{likes}</th>
+            </tr>
+        </template>
+
+        <span id="imgZone"></span>
+
+</body>
+</html>

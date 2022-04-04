@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style> img { height:100px; width:100px;}</style>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
@@ -14,7 +15,7 @@
 
     카테고리 : <span id="category">{{cate1_view.category}}</span><br>
     제목 : <span id="title">{{cate1_view.title}}</span><br/>
-    닉네임 : <span id="nickname">{{ cate1_view.nickname }}</span> <br />
+    닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
     내용 : {{ cate1_view.content }}<br/>
     작성일자 : {{ cate1_view.date }}
     <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
@@ -22,11 +23,12 @@
         <input type="submit" value="글 삭제">
     </form>
     <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
-    <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:100px; height:100px; margin-left:30px;" ></span>
+
+
     <br>
     hashtag : 
     {% for item in cate1_hashtag %}
-    <span>{{item.hashtag_name}}</span>
+    <span>#{{item.hashtag_name}}</span>
     {% endfor %}
 
     <br>
@@ -38,6 +40,8 @@
         <input type="submit" value="좋아요 취소" id="thumbCancel">
     </form>
 
+    <span id="userimg"></span>
+    
 
     <br>
     <a href="/board/cate1">글 목록</a>
@@ -90,6 +94,7 @@
             withCredentials:true
         }
         const idx = document.querySelector('#idx')
+        const category = document.querySelector('#category')
         const userid = document.querySelector('#userid')
 
         document.addEventListener('DOMContentLoaded', async() => {
@@ -103,6 +108,17 @@
             const response = await axios.post('http://localhost:4000/api/board/cate1/likeCount', data, option)
             let [likeNum] = Object.values(response.data.result[0])
             likeCount.innerHTML =likeNum
+
+            const response2 = await axios.post('http://localhost:4000/api/board/cate1/viewuser', null, option)
+            const Usernick = response2.data.result[0].nickname
+            let nickname = "{{cate1_view.nickname}}"
+            console.log(nickname)
+            if(nickname !== Usernick){
+              
+            } else{
+
+            }
+            
         })
 
         // 좋아요 누르기(done)
@@ -164,8 +180,10 @@
             e.preventDefault()
 
             const idx = delForm.querySelector('#idx')
+            
             const data = {
-                idx:idx.value
+                idx:idx.value,
+                category:category.innerHTML
             }
 
 
@@ -187,6 +205,36 @@
         state.comment=[]
         state.length=''
 
+        document.addEventListener('DOMContentLoaded', async () => {
+            const imgZone = document.querySelector('#userimg')
+            const icategory = "{{cate1_image.category}}"
+            const midx = "{{cate1_image.midx}}"
+            const img1 = "{{cate1_image.img1}}"
+            const img2 = "{{cate1_image.img2}}"
+            const img3 = "{{cate1_image.img3}}"
+            const img4 = "{{cate1_image.img4}}"
+            const img5 = "{{cate1_image.img5}}"
+
+            const tempImgArr = [img1, img2, img3, img4, img5]
+
+            const imgArr = []
+
+            for (let i =0; i<tempImgArr.length; i++) {
+                if(tempImgArr[i] !== 'N/A') {
+                    imgArr.push(tempImgArr[i])
+                }
+            }
+
+            for ( let i =0; i<imgArr.length; i++) {
+                const imgSpan = document.createElement('span')
+                const imgElement = document.createElement('img')
+                imgElement.setAttribute('src', `http://localhost:4000/uploads/${imgArr[i]}`)
+                imgSpan.append(imgElement)
+                imgZone.append(imgSpan)
+            } 
+        })
+        //
+        //
         document.addEventListener('DOMContentLoaded', async () => {
             const uri = location.pathname
             const [,,cate,] = location.pathname.split('/')
@@ -401,6 +449,8 @@
             }
 
             commentView()
+
+            
         })
     </script>
 </body>

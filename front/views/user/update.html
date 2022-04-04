@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
-<body>
+{% include "../utils/header.html" %}
     <h1>
         회원 수정 페이지입니다
     </h1>
@@ -114,7 +105,6 @@
             
             }else{
                 //실패
-                console.log(response.data)
                 if(response.data.errno === 1062){
                     if(response.data.errormsg.includes('user.PRIMARY')){
                         alert('중복 된 아이디 입니다. 다른 아이디를 입력해주세요.')

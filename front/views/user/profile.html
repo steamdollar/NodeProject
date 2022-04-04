@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <title>Document</title>
-    <style>
-
-    </style>
-</head>
-<body>
+{% include "../utils/header.html" %}
     <h1><a href="/">Team4</a></h1>
     <h2>프로필 보기</h2>
     <div id="profile">
@@ -42,14 +30,13 @@
             </li>
             {% else %}
             <li>
-                <span>
-                    전화번호 : 없음
-                </span>
+                <span id="phone">전화번호 : 없음</span>
             </li>
             {% endif %}
             <li>
                 <span id="mobile">핸드폰 : {mobile}</span>
             </li>
+
             <li>
                 <span id="email">이메일 : {email}</span>
             </li>
@@ -58,8 +45,9 @@
             </li>
         </ul>
     </template>
+    
     <div class="button">
-        <button><a href="/board/list">게시판</a></button>
+        <button><a href="/board">게시판</a></button>
         <button><a href="/user/update">수정</a></button>
         <form method="post" action="/user/profile" id="delete_frm">
             <input type="hidden" name="userid" value="{{user.userid}}">
@@ -69,13 +57,18 @@
     <div id="profile_right">
         <div id="profile_history">
             <div class="history1">
-                <h5><a href=/user/user_board>작성한 글 보기</a></h5>
+                <h3><a href=/user/user_board>작성한 글 보기</a></h3>
+            </div>
+            <div id="profile_history2">
+                <h3><a href=/user/user_comment>작성한 댓글 보기</a></h3>
+            </div>
+            <div id="profile_history3">
+                <h3><a href=/user/user_like>좋아요 한 글 보기</a></h3>
             </div>
         </div>
     </div>
-</body>
-<script>
-    const frm = document.querySelector('#delete_frm')
+    <script type="text/javascript">
+        const frm = document.querySelector('#delete_frm')
     frm.addEventListener('submit',async(e)=>{
         e.preventDefault()
      
@@ -93,6 +86,28 @@
             alert('탈퇴실패')
         }
     })
+    </script>
+
+</body>
+<script>
+
+    const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+
+
+    // document.addEventListener('DOMContentLoaded', async () => {
+    //     const uri = location.href
+    //     const uri2 = uri.split('/')[4]
+    //     const uri3 = uri2.split('?')[1]
+    //     const uri4 = uri3.split('=')[1]
+
+    //     const data = { nickname: uri4 }
+        
+    //     const response = await axios.post('http://', data, option)
+    // })
+    
     document.addEventListener('DOMContentLoaded', async() => {
         let template = ''
         const profile = document.querySelector('#profile')
@@ -105,6 +120,68 @@
 
         const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
         // console.log('이거냐?',response.data.userimg)
+
+        const {writernickname, usernickname} = response.data
+
+        // const uri = location.pathname
+        // const category = uri.split('/')[2]
+        // console.log(uri)
+        // console.log(category)
+
+        const uri = location.href
+        const uri2 = uri.split('/')[4]
+        const uri3 = uri2.split('?')[1]
+        const uri4 = uri3.split('=')[1]
+
+
+        console.log(usernickname)
+        console.log(writernickname)
+        // if(uri4 == usernickname){
+        //     //주찬 님이 지금껏 적으신 코드
+        //     if( response.data.errno ===0){
+        //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
+            
+        //     template = profiles.replace('{nickname}',nickname)
+        //                        .replace('{userid}',userid)
+        //                        .replace('{username}',username)
+        //                        .replace('{userimg}',userimg)
+        //                        .replace('{nickname}',nickname)
+        //                        .replace('{address}',address)
+        //                        .replace('{gender}',gender)
+        //                        .replace('{phone}',phone)
+        //                        .replace('{mobile}',mobile)
+        //                        .replace('{email}',email)
+        //                        .replace('{userintro}',userintro)
+
+        //     profile.innerHTML = template
+        // }
+        // } else {
+        //     //주찬님이 지금껏 적으신 코드에서 수정, 탈퇴..같은 기능과 민감 정보 제외한 html
+        //     if( response.data.errno ===0){
+        //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
+            
+        //     template = profiles.replace('{nickname}',nickname)
+        //                     //    .replace('{userid}',userid)
+        //                        .replace('{username}',username)
+        //                        .replace('{userimg}',userimg)
+        //                        .replace('{nickname}',nickname)
+        //                     //    .replace('{address}',address)
+        //                        .replace('{gender}',gender)
+        //                     //    .replace('{phone}',phone)
+        //                     //    .replace('{mobile}',mobile)
+        //                        .replace('{email}',email)
+        //                        .replace('{userintro}',userintro)
+
+        //     profile.innerHTML = template
+        //     }
+        // }
+
+        
+
+
+
+
+
         if( response.data.errno ===0){
             const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
             

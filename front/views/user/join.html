@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
-<body>
-    <h1><a href="/">logo</a></h1>
+{% include "../utils/header.html" %}
     <form method = 'post' action="/" id="join_frm" enctype="multipart/form-data">
         <ul>
             <li>
@@ -168,7 +158,6 @@
                 if(response.data.errno === 0){ // 성공의 케이스 
                 // 성공
                 console.log('가입완료되었습니다.')
-                console.log(response)
                 location.href=`/user/welcome?nickname=${nickname.value}&userid=${userid.value}&username=${username.value}&email=${email.value}&mobile=${mobile.value}`
             } else { //
                 // 실패

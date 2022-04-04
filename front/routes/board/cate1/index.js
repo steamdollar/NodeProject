@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
-const { pool } = require('../../../../back/db')
+// const { pool } = require('../../../../back/db')
 
 const option = {
     'Content-type':'application/json',
@@ -9,12 +9,7 @@ const option = {
 }
 
 router.get('/', async (req, res) => {
-    const response = await axios.get('http://localhost:4000/api/board/cate1/list', option)
-    const cate1_list = response.data
-
-    res.render('./board/cate1/cate1_list.html', {
-        cate1_list:cate1_list.result
-    })
+    res.render('./board/cate1/cate1_list.html')
 })
 
 router.get('/write', (req, res) => {
@@ -36,8 +31,19 @@ router.get('/write', (req, res) => {
         }
 })
 
-router.get('/view', async (req, res) => {
+const check = async (req, res, next) => {
     const idx = req.query
+    const response = await axios.post('http://localhost:4000/api/board/cate1/check', idx, option)
+    if (response.data.hidden === 'on') { res.render('./board/cate1/cate1_blind.html') }
+    else {
+        next()
+    }
+}
+
+router.get('/view', check, async (req, res) => {
+    const idx = req.query
+    console.log('asd',req.query)
+    console.log(idx)
     const { token } = req.cookies
     const [ header , payload, sign ] = token.split('.')
     const user = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
@@ -47,15 +53,22 @@ router.get('/view', async (req, res) => {
 
     const response2 = await axios.post('http://localhost:4000/api/board/cate1/hashtagLoad', idx, option)
     const cate1_hashtag = response2.data
-    
+
+    const response3 = await axios.post('http://localhost:4000/api/board/cate1/imgLoad', idx, option)
+    const cate1_image = response3.data.result1[0]
+
+
+
     res.render('./board/cate1/cate1_view.html', {
         cate1_view: cate1_view.result[0],
         userid:user.userid,
-        cate1_hashtag:cate1_hashtag.result_final
+        nickname:user.nickname,
+        cate1_hashtag:cate1_hashtag.result_final,
+        cate1_image:cate1_image
     })
 })
 
-router.get('/update', async (req, res) => {
+router.get('/update', check, async (req, res) => {
     const idx = req.query
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_update = response.data
@@ -66,6 +79,14 @@ router.get('/update', async (req, res) => {
     res.render('./board/cate1/cate1_update.html', {
         cate1_update:cate1_update.result[0],
         cate1_hashtag:cate1_hashtag.result_final
+    })
+})
+
+router.get('/search', async (req, res )=> {
+    const {option, keyword} = req.query
+    res.render('./board/cate1/search.html', {
+        option,
+        keyword
     })
 })
 

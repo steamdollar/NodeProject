@@ -22,9 +22,7 @@ router.use('/update', (req,res)=>{
     if(token !== undefined) {
     const userid = token.split('.')
     const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
-    console.log(deUserid)
     update = { ...deUserid }
-    console.log(update)
     
     res.render('./user/update',{
         user:update
@@ -35,7 +33,18 @@ router.use('/update', (req,res)=>{
 })
 
 router.use('/profile', (req,res)=>{
-    res.render('./user/profile')
+    const { nickname } = req.query
+    const {token} = req.cookies
+    const userid = token.split('.')
+    const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
+    console.log(deUserid.nickname)
+
+    if( deUserid.nickname == nickname) {
+        res.render('./user/profile')
+    }
+    else {
+        res.render('./user/userinfo')
+    }
 })
 
 router.use('/welcome', (req,res)=>{
@@ -50,8 +59,15 @@ router.use('/welcome', (req,res)=>{
 })
 
 router.use('/user_board',(req,res)=>{
-
     res.render('./user/user_board')
+})
+
+router.use('/user_comment',(req,res)=>{
+    res.render('./user/user_comment')
+})
+
+router.use('/user_like',(req,res)=>{
+    res.render('./user/user_like')
 })
 
 module.exports = router

@@ -7,34 +7,67 @@ const { login } = require('../user/user.controller.js')
 
 exports.login = async(req,res)=>{
 
-    const {adminid, adminpw} = req.body;
-    const sql = `SELECT userid FROM user WHERE userid="${adminid}" AND userpw="${adminpw}" AND level=3`;
+    // const {adminid, adminpw} = req.body;
+    // const sql = `SELECT userid FROM user WHERE userid="${adminid}" AND userpw="${adminpw}" AND level=3`;
 
 
-    try{
+    // try{
 
-        const [result] = await pool.execute(sql);
-        console.log("이게답이다.", result,result.length)
-        if(result.length == 0 || result.length > 1){
-            throw new Error('id/pw를 확인해주세요')
-        }
-        const response = {
-            output:"success"
-        }
+    //     const [result] = await pool.execute(sql);
+    //     console.log("이게답이다.", result,result.length)
+    //     if(result.length == 0 || result.length > 1){
+    //         throw new Error('id/pw를 확인해주세요')
+    //     }
+    //     const response = {
+    //         output:"success"
+    //     }
        
-        req.session.user = result[0].userid
-        res.json(response)
-        console.log(req.session)
+    //     req.session.user = result[0].userid
+    //     res.json(response)
+    //     console.log(req.session)
 
-    }catch(e){
-        console.log(e)
+    // }catch(e){
+    //     console.log(e)
+
+    //     const response = {
+    //         e
+    //     }
+    //     req.session.destroy(()=>{req.session})
+    //     res.json(response)
+
+    // }
+    const { adminid, adminpw } = req.body
+
+    const sql = 'SELECT userid, userimg, username, nickname, address, gender, phone, mobile, email, level from user where userid = ? and userpw = ? and level=3'
+    const param = [adminid, adminpw]
+    
+    try {
+        const [result] = await pool.execute(sql, param)
+
+        if( result.length === 0 ) {throw Error ('id/pw를 확인해주세요')}
+
+        const jwt = createToken(result[0])
+
+        res.cookie('token', jwt, {
+            path:'/',
+            httpOnly:true,
+            domain:'localhost'
+        })
 
         const response = {
-            e
+            result,
+            errno:0
         }
-        req.session.destroy(()=>{req.session})
         res.json(response)
 
+    } catch (e) {
+        console.log(e.message)
+        const response = {
+            result:[],
+            errormsg:e.message,
+            errno:e.errno
+        }
+        res.json(response)
     }
 
 
@@ -43,7 +76,7 @@ exports.logout = (req,res)=>{
     const response = {
         result:"clearcookie"
     }
-    res.clearCookie('connect.sid')
+    res.clearCookie('token')
     res.json(response)
     
 
@@ -194,7 +227,7 @@ exports.userDelete = (req,res)=>{
 exports.boardList = async(req,res)=>{
     const {board_db} = req.body
     console.log(board_db)
-    const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from ${board_db} c left join ${board_db}_like l on c.idx = l.m_idx group by c.idx;`
+    const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from ${board_db} c left join ${board_db}_like l on c.idx = l.m_idx group by c.idx;`
     console.log(sql)
     try {
         const [result] = await pool.execute(sql)
@@ -222,7 +255,7 @@ exports.boardSearch = async(req,res)=>{
     const {info, category} = req.body
     console.log(info, category)
    
-    const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx WHERE c.title LIKE "%${info}%" OR c.userid LIKE "%${info}%" OR c.content LIKE "%${info}%" OR c.nickname LIKE "%${info}%" group by c.idx ;`
+    const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes,c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx WHERE c.title LIKE "%${info}%" OR c.userid LIKE "%${info}%" OR c.content LIKE "%${info}%" OR c.nickname LIKE "%${info}%" group by c.idx ;`
     console.log(sql)
     try {
         const [result] = await pool.execute(sql)
@@ -285,8 +318,8 @@ exports.boardOrderby = async (req,res) =>{
     const {orderby, category} = req.body
     console.log(orderby, category)
     if(orderby == 'likes'){
-        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,
-        c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by count(c.idx) DESC;`
+        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes,
+        c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by count(l.m_idx) DESC;`
         
         try {
             const [result] = await pool.execute(sql)
@@ -305,7 +338,7 @@ exports.boardOrderby = async (req,res) =>{
             res.json(response)
         }
     } else if(orderby == 'hit'){
-        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes,
+        const sql = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes,
         c.hidden from ${category} c left join ${category}_like l on c.idx = l.m_idx group by c.idx order by hit DESC;`
         
         try {
