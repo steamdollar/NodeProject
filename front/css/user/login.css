@@ -1,0 +1,16 @@
+#login {
+    width:100%;
+    height:800px;
+    margin:0 auto;
+}
+
+#login_header{
+    display:flex;
+    justify-content: center;
+}
+
+a {
+    width:100%;
+    height:200%;
+    margin: 0 auto;
+}
