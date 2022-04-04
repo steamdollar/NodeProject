@@ -14,9 +14,9 @@ exports.Auth = (req,res,next) => {
         req.user = {
             ...user
         }
-        console.log(user)
+        // console.log(user)
     } catch (e) {
-        console.log(e.message)
+     //    console.log(e.message)
     }
     next()
 }

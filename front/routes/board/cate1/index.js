@@ -68,6 +68,7 @@ router.get('/view', check, async (req, res) => {
     })
 })
 
+<<<<<<< HEAD
 router.get('/userinfo',(req,res) => {
     const { userintro,nickname, email } = req.query
     res.render('./board/cate1/cate1.userinfo.html',{
@@ -78,6 +79,9 @@ router.get('/userinfo',(req,res) => {
 })
 
 router.get('/update', async (req, res) => {
+=======
+router.get('/update', check, async (req, res) => {
+>>>>>>> be90b208668c4b41cf8946518b06a48033967248
     const idx = req.query
     const response = await axios.post('http://localhost:4000/api/board/cate1/view', idx, option)
     const cate1_update = response.data

@@ -10,23 +10,38 @@
             width:100px !important;
             height: 100px !important;
         }
+
+        #paging > ul > li:nth-child(1) {
+            display:none;
+        }
+        #imgZone {
+            width: 1000px !important;
+            overflow:hidden;
+        }
+        #imgZone > span {
+            position: relative;
+        }
+
+        .cloak {
+            display:none;
+        }
+
     </style>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
+        let test = {}
         const option = {
                 'Content-type':'application/json',
                 withCredentials:true
             }
         document.addEventListener('DOMContentLoaded', async() => {
-            
-            const uri = location.pathname
-            const category = uri.split('/')[2]
-            const data = {
-                category:category
-            }
+            const category = location.pathname.split('/')[2]
+            const data = { category:category }
 
             const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
+            test = { ...response1.data }
             const cate1_list = response1.data
+
             let content_list = []
             for (let i =0; i<response1.data.result1.length; i++) {
                 if(response1.data.result1[i].hidden =='off') {
@@ -55,14 +70,14 @@
             board_list.innerHTML = template
             //
             //
-            
-            const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
-            const tempThumb = response.data.result1 // [{}, {}, {}]
+            // 썸네일
+            const response2 = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
+            const tempThumb = response2.data.final_result // [{}, {}, {}]
             let thumbNail = []
 
             for (let i = 0; i<tempThumb.length; i++) {
-                if(tempThumb[i].img1 !== 'N/A') {
-                    thumbNail.push(tempThumb[i].img1)
+                if(tempThumb[i][0].img1 !== 'N/A') {
+                    thumbNail.push(tempThumb[i][0].img1)
                 }
                 else {
                     thumbNail.push('default.jpg')
@@ -75,10 +90,107 @@
                 const imgElement = document.createElement('img')
                 imgElement.setAttribute('class','thumb')
                 imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i]}`)
+                
                 imgSpan.append(imgElement)
                 imgZone.append(imgSpan)
+                if( thumbNail[i] === 'default.jpg' ) {
+                    imgSpan.setAttribute('class', 'cloak')
+                }
             }
+            //
+            //
+            // 페이징
+
+            // 페이징에 관련된 수치 설정
+            
+
+            const trElement = document.querySelector('#board_temp').innerHTML
+            
+
+            const { total_record } = response1.data
+            const view_article = 10 // 한 페이지에 있는 블럭 수
+            const block_article = 10 // 한 블럭에 보일 갯수
+
+            const total_page = Math.ceil(total_record/view_article)
+            const total_block = Math.ceil(total_page/block_article)
+            let page = 4
+            const current_block = Math.ceil(page/block_article)
+            const block = ((current_block-1) * block_article)
+
+            let end_block = block + block_article
+            if(end_block > total_page) {end_block = total_page}
+
+            // 페이징 만들기
+            const paging = document.querySelector('#paging > ul')
+            
+            for  ( let i = 0; i<=end_block; i++) {
+                const liElement = document.createElement('li')
+                const aElement = document.createElement('a')
+
+                aElement.setAttribute('onClick', `pagemove(${i})`)
+                aElement.innerHTML = `[${i}]`
+                liElement.appendChild(aElement)
+                paging.appendChild(liElement)
+            }
+
+            const Nodes = response1.data.result1.slice((page - 1) * view_article, page * view_article)
+            const board_row = document.querySelector('#board_temp')
+            const tbody = document.querySelector('#board_list')
+            
+            Nodes.forEach( v => {
+                const clone = document.importNode(board_row.content,true)
+                const th = clone.querySelectorAll('th')
+                const aElement = document.createElement('a')
+                aElement.href=`/board/cate1/view/?idx=${v.idx}`
+                aElement.innerHTML = v.subject
+
+                th[0].innerHTML = v.idx
+                th[1].innerHTML = v.category
+                th[2].innerHTML = v.title
+                th[3].innerHTML = v.userid
+                th[4].innerHTML = v.nickname
+                th[5].innerHTML = v.content
+                th[6].innerHTML = v.date
+                th[7].innerHTML = v.hit
+                th[8].innerHTML = v.likes
+
+                tbody.appendChild(clone)
+            })
+            pagemove(1)
         })
+
+        function pagemove(num) {
+                const trElement = document.querySelector('#board_temp').innerHTML
+                const view_article = 10
+                const raw = test.result1
+                let refine = []
+
+                for(i = 0; i <raw.length; i++) {
+                    if( raw[i].hidden !== 'on') {
+                        refine.push(raw[i])
+                    }
+                }
+
+                const Nodes = refine.slice((num-1) * view_article, num * view_article)
+
+                let template = ''
+                Nodes.forEach( v=> {
+                    template += trElement.replaceAll('{idx}', v.idx)
+                                .replace('{category}',v.category)
+                                .replace('{title}',v.title)
+                                .replace('{content}',v.content)
+                                .replace('{userid}', v.userid)
+                                .replace('{nickname}',v.nickname)
+                                .replace('{date}',v.date)
+                                .replace('{hit}',v.hit)
+                                .replace('{likes}',v.likes)
+                })
+
+                const tbody = document.querySelector('#board_list')
+                tbody.innerHTML = template
+        }
+
+        
     </script>
 </head>
 <body>
@@ -105,6 +217,11 @@
         </tbody>
 
     </table>
+    <div id="paging">
+        <ul>
+            
+        </ul>
+    </div>
 
         <template id="board_column">
         </template>
@@ -125,14 +242,14 @@
         </template>
 
 
-    <span id="imgZone"></span>
+    <div id="imgZone"></div>
 
     <a href="/board/cate1/write">글쓰기</a>
 
     <br>
     <br>
 
-    <h2>카테고리 선택</h2>
+    <h2>검색</h2>
 
         <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
             <select name="option" id="category" >
