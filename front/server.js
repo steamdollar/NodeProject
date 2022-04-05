@@ -44,10 +44,6 @@ app.use(express.static('css'))
 
 app.use(router)
 
-app.get('/zxc', (req, res) => {
-  res.render('utils/header.html')
-})
-
 webSocket(app.listen(3000,()=>{
   console.log(`team4 프론트 서버시작!!!, 포트번호 : 3000`)
 }))
