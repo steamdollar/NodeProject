@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5d690f53370747fe1ba19cdfe9287f34b23a05f9
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +18,7 @@
     <link rel="stylesheet" href="/user/update.css">
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
 <body>
+
     <div id="wrap">
         <div id="Transparency" class=""></div>
 
@@ -75,58 +79,7 @@
                     <button><a href="/user/profile?nickname={{user.nickname}}">프로필</a></button>
                 </div>
             </form>
-=======
-{% include "../utils/header.html" %}
-    <h1>
-        회원 수정 페이지입니다
-    </h1>
-    <form method="post" id="update_frm" action="http://localhost:4000/api/user/update">
-        <div>
-            <table id="pf_table">
-                <tbody class="tbody">
-                    <tr>
-                        <td> * 아이디 </td>
-                        <td> <input type="text" name="userid" value="{{user.userid}}" id="userid"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 비밀번호 </td>
-                        <td> <input type="password" name="userpw" value="{{user.userpw}}" id="userpw"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 프로필 사진 </td>
-                        <td> <input type="file" name="userimg" value="{{user.userimg}}" id="userimg"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 닉네임 </td>
-                        <td> <input type="text" name="nickname" value="{{user.nickname}}" id="nickname"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 주소 </td>
-                        <td> <input type="text" name="address" value="{{user.address}}" id="address"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 성별 </td>
-                        <td> <input type="text" name="gender" value='남자' id="gender"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 전화번호 </td>
-                        <td> <input type="text" name="phone" value="{{user.phone}}" id="phone"> </td>
-                    </tr>
-                    <tr>
-                        <td> * 핸드폰번호 </td>
-                        <td> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
-                    </tr>
-                    <tr>
-                        <td>* 이메일 </td>
-                        <td> <input type="text" name="email" value="{{user.email}}" id="email"> </td>
-                    </tr>
-                    <tr>
-                        <td>* 자기소개 </td>
-                        <td> <input type="text" name="userintro" value="{{user.userintro}}" id="userintro"> </td>
-                    </tr>
-                </tbody>       
-            </table>
->>>>>>> 2883263a74a12f2a45bf7a352596521af5e86017
+
         </div>
     </div>
 
@@ -147,8 +100,7 @@
             formData.append('address',document.querySelector('#address').value)
             formData.append('phone',document.querySelector('#phone').value)
             formData.append('mobile',document.querySelector('#mobile').value)
-<<<<<<< HEAD
-=======
+
             formData.append('email',document.querySelector('#email').value)
             formData.append('userintro',document.querySelector('#userintro').value)
            
@@ -174,7 +126,6 @@
             //     gender: gender.value,
                
             // }
->>>>>>> 2883263a74a12f2a45bf7a352596521af5e86017
 
             const option = {
                 'Content-type':'application/json',

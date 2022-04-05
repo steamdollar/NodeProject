@@ -91,12 +91,9 @@
                 'Content-type':'application/json',
                 withCredentials:true
             }
-
-    
-        document.addEventListener('DOMContentLoaded', async() => {
-            let template = ''
-            const profile = document.querySelector('#profile')
-            const profiles = document.querySelector('#profiles').innerHTML
+        let template = ''
+        const profile = document.querySelector('#profile')
+        const profiles = document.querySelector('#profiles').innerHTML
 
             const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
 
@@ -139,6 +136,6 @@
                 }
             })
         })
-    })
+        
 </script>
 </html>
