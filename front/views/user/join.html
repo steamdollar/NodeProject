@@ -28,9 +28,11 @@
                             <input type="text" name="userpw" id="userpw" value="">
                         </span>
                     </li>
-                    <li>
+                    <li class = join_image>
                         <h3>프로필사진</h3>
                         <span>
+                            <input class="upload-name" value="이미지파일" placeholder="이미지파일">
+                            <label for="userimg">파일찾기</label>
                             <input type="file" name="userimg" id="userimg">
                             <!-- <input type="file" name="userimg2" id="userimg2">
                             <input type="file" name="userimg3" id="userimg3">
@@ -119,8 +121,10 @@
                         <input type="checkbox" checked>
                     </li> -->
                     <!-- script에 조건문써서 체크 안되면 동의해주세요 알람 띄우게-->
+                    <li>
+                        <input type="submit" id="btn" value="회원가입">
+                    </li>
                 </ul>
-                <input type="submit" id="btn" value="회원가입">
             </form>
         </div>
     </div>
