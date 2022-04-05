@@ -1,4 +1,6 @@
 {% include "../utils/header.html" %}
+{% block content %}
+
     <h2>회원 가입이 완료 되었습니다!</h2>
     <div id ="welcome">
 
@@ -27,5 +29,4 @@
     <button><a href="/user/login">로그인</a></button>
     <!-- 회원 가입 submit시 제출한 데이터의 값을 그대로 get/쿼리스트링으로
     넘겨줘서 표현할 예정-->
-</body>
-</html>
+{% endblock %}

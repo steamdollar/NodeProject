@@ -160,7 +160,8 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 #banner{
     display: flex;
     justify-content: space-between;
-    position:relative;
+    position:fixed;
+    top: 0;
 }
 
 #logo_box{
@@ -207,7 +208,7 @@ input[id="icon"]:checked + label > span:nth-child(3) {
     width: 1400px;
     height: 500px;
     z-index: 3;
-    top: -50px;
+    top: 150px;
     position:relative;
     margin: 0 auto;
 
