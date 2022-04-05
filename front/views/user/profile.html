@@ -95,46 +95,47 @@
         const profile = document.querySelector('#profile')
         const profiles = document.querySelector('#profiles').innerHTML
 
-        const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
+            const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
 
-        const {writernickname, usernickname} = response.data
+            const {writernickname, usernickname} = response.data
 
-        const uri = location.href
-        const uri2 = uri.split('/')[4]
-        const uri3 = uri2.split('?')[1]
-        const uri4 = uri3.split('=')[1]
+            const uri = location.href
+            const uri2 = uri.split('/')[4]
+            const uri3 = uri2.split('?')[1]
+            const uri4 = uri3.split('=')[1]
 
-        if( response.data.errno ===0){
-            const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
-            
-            template = profiles.replace('{nickname}',nickname)
-                               .replace('{userid}',userid)
-                               .replace('{username}',username)
-                               .replace('{userimg}',userimg)
-                               .replace('{nickname}',nickname)
-                               .replace('{address}',address)
-                               .replace('{gender}',gender)
-                               .replace('{phone}',phone)
-                               .replace('{mobile}',mobile)
-                               .replace('{email}',email)
-                               .replace('{userintro}',userintro)
+            if( response.data.errno ===0){
+                const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
+                
+                template = profiles.replace('{nickname}',nickname)
+                                .replace('{userid}',userid)
+                                .replace('{username}',username)
+                                .replace('{userimg}',userimg)
+                                .replace('{nickname}',nickname)
+                                .replace('{address}',address)
+                                .replace('{gender}',gender)
+                                .replace('{phone}',phone)
+                                .replace('{mobile}',mobile)
+                                .replace('{email}',email)
+                                .replace('{userintro}',userintro)
 
-            profile.innerHTML = template  
-        }
-
-        const frm = document.querySelector('#delete_frm')
-        frm.addEventListener('submit',async(e)=>{
-            e.preventDefault()
-
-            const response = await axios.post('http://localhost:4000/api/user/delete',null,option)
-            
-            if(response.data.errno ===0){
-                alert('탈퇴되었습니다')
-                location.href='http://localhost:3000'
-            } else{
-                alert('탈퇴실패')
+                profile.innerHTML = template  
             }
+
+            const frm = document.querySelector('#delete_frm')
+            frm.addEventListener('submit',async(e)=>{
+                e.preventDefault()
+
+                const response = await axios.post('http://localhost:4000/api/user/delete',null,option)
+                
+                if(response.data.errno ===0){
+                    alert('탈퇴되었습니다')
+                    location.href='http://localhost:3000'
+                } else{
+                    alert('탈퇴실패')
+                }
+            })
         })
-    })
+        
 </script>
 </html>
