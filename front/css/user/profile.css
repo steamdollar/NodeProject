@@ -8,6 +8,11 @@ a {
     color: black;
 }
 
+#wrap {
+    height: 100% !important;
+    width: 100% !important;
+}
+
 /*  */
 
 #content_wrap {
@@ -18,7 +23,7 @@ a {
     box-shadow: 2px 2px 2px 1px rgba(0,0,0,0.2);
     border-radius: 10px;
     margin: 0 auto;
-    top: 350px !important;
+    top: 250px !important;
 }
 
 #profile_wrap {
