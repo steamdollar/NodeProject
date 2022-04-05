@@ -6,6 +6,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<<<<<<< HEAD
+=======
+    <script type="text/javascript">
+        const islogin = location.search.split('=')[1] === 'true' ? true : false
+        if (islogin) location.href='http://localhost:3000'
+    </script>
+    <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="/user/profile.css">
+    
+    
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="Transparency" class="">
+
+        </div>
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+
+
+    <h1><a href="/">Team4</a></h1>
+    <h2>프로필 보기</h2>
+    <div id="profile">
+
+
+    </div>
+    <template id="profiles">
+        <h2> {nickname}님, 환영합니다.</h2>
+        <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:100px; height:100px; margin-left:30px;" ></span>
+        <ul>
+            <li>
+                <span id="userid">아이디 : {userid}</span>
+            </li>
+            <li>
+                <span id="username">이름 : {username}</span>
+            </li>
+            <li>
+                <span id="nickname">닉네임 : {nickname}</span>
+            </li>
+            <li>
+                <span id="address">주소 : {address} </span>
+            </li>
+            <li>
+                <span id="gender">성별 : {gender} </span>
+            </li>
+            {% if user.phone %}
+            <li>
+                <span id="phone">전화번호 : phone</span>
+            </li>
+            {% else %}
+            <li>
+                <span id="phone">전화번호 : 없음</span>
+            </li>
+            {% endif %}
+            <li>
+                <span id="mobile">핸드폰 : {mobile}</span>
+            </li>
+
+            <li>
+                <span id="email">이메일 : {email}</span>
+            </li>
+            <li>
+                <span id="userintro">자기소개 {userintro}: </span>
+            </li>
+        </ul>
+    </template>
+    
+    <div class="button">
+        <button><a href="/board">게시판</a></button>
+        <button><a href="/user/update">수정</a></button>
+        <form method="post" action="/user/profile" id="delete_frm">
+            <input type="hidden" name="userid" value="{{user.userid}}">
+            <button class="delete" type="submit" id="btn">탈퇴하기</button>
+        </form>
+    </div>
+    <div id="profile_right">
+        <div id="profile_history">
+            <div class="history1">
+                <h3><a href=/user/user_board>작성한 글 보기</a></h3>
+            </div>
+            <div id="profile_history2">
+                <h3><a href=/user/user_comment>작성한 댓글 보기</a></h3>
+            </div>
+            <div id="profile_history3">
+                <h3><a href=/user/user_like>좋아요 한 글 보기</a></h3>
+            </div>
+        </div>
+    </div>
+>>>>>>> 2883263a74a12f2a45bf7a352596521af5e86017
     <script type="text/javascript">
         const islogin = location.search.split('=')[1] === 'true' ? true : false
         if (islogin) location.href='http://localhost:3000'
@@ -91,6 +185,12 @@
                 'Content-type':'application/json',
                 withCredentials:true
             }
+<<<<<<< HEAD
+=======
+
+    
+    document.addEventListener('DOMContentLoaded', async() => {
+>>>>>>> 2883263a74a12f2a45bf7a352596521af5e86017
         let template = ''
         const profile = document.querySelector('#profile')
         const profiles = document.querySelector('#profiles').innerHTML
