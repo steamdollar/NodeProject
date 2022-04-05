@@ -98,3 +98,24 @@
     margin-top: 50px;
 }
 
+#chat_space {
+    position: relative;
+}
+
+#frm_chat {
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+#chat {
+    position:relative;
+}
+
+.me {
+    text-align: right;
+}
+
+.you {
+    text-align: left;
+}

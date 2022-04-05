@@ -40,16 +40,18 @@
 
             webSocket.onmessage = (event) => {
                 const chat = document.querySelector('#chat')
-                const liElement = document.createElement('li')
-                liElement.innerHTML = event.data
-                chat.appendChild(liElement)
+                const spanElement = document.createElement('span')
+                const divElement = document.createElement('div')
+                spanElement.innerHTML = event.data
+                divElement.appendChild(spanElement)
+                chat.appendChild(divElement)
 
-                const author = liElement.innerHTML.split(':')[0]
+                const author = spanElement.innerHTML.split(':')[0]
                 if ( author == "{{userid}}") {
-                liElement.setAttribute('class', 'me' )
+                divElement.setAttribute('class', 'me' )
                 }
                 else {
-                    liElement.setAttribute('class', 'you')
+                    divElement.setAttribute('class', 'you')
                 }
             }
 
