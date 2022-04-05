@@ -14,6 +14,60 @@
     <link rel="stylesheet" href="/user/update.css">
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
 <body>
+<<<<<<< HEAD
+    <h1>
+        회원 수정 페이지입니다
+    </h1>
+    <form method="post" id="update_frm" action="http://localhost:4000/api/user/update">
+        <div>
+            <table id="pf_table">
+                <tbody class="tbody">
+                    <tr>
+                        <td> * 아이디 </td>
+                        <td> <input type="text" name="userid" value="{{user.userid}}" id="userid"> </td>
+                    </tr>
+                    <tr>
+                        <td> * 비밀번호 </td>
+                        <td> <input type="password" name="userpw" value="{{user.userpw}}" id="userpw"> </td>
+                    </tr>
+                    <tr>
+                        <td> * 프로필 사진 </td>
+                        <td> <input type="file" name="userimg" value="{{user.userimg}}" id="userimg"> </td>
+                    </tr>
+                    <tr>
+                        <td> * 닉네임 </td>
+                        <td> <input type="text" name="nickname" value="{{user.nickname}}" id="nickname"> </td>
+                    </tr>
+                    <tr>
+                        <td> * 주소 </td>
+                        <td> <input type="text" name="address" value="{{user.address}}" id="address"> </td>
+                    </tr>
+                    <tr>
+                        <td> * 성별 </td>
+                        <td> <input type="text" name="gender" value='남자' id="gender"> </td>
+                    </tr>
+                    <tr>
+                        <td> * 전화번호 </td>
+                        <td> <input type="text" name="phone" value="{{user.phone}}" id="phone"> </td>
+                    </tr>
+                    <tr>
+                        <td> * 핸드폰번호 </td>
+                        <td> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
+                    </tr>
+                    <tr>
+                        <td>* 이메일 </td>
+                        <td> <input type="text" name="email" value="{{user.email}}" id="email"> </td>
+                    </tr>
+                    <tr>
+                        <td>* 자기소개 </td>
+                        <td> <input type="text" name="userintro" value="{{user.userintro}}" id="userintro"> </td>
+                    </tr>
+                </tbody>       
+            </table>
+        </div>
+        <div>
+            <input type="submit" id="btn" value="수정">
+=======
     <div id="wrap">
         <div id="Transparency" class=""></div>
 
@@ -74,6 +128,7 @@
                     <button><a href="/user/profile?nickname={{user.nickname}}">프로필</a></button>
                 </div>
             </form>
+>>>>>>> 338e70db8811f55adb9982c2c7b2505764561f69
         </div>
     </div>
 
@@ -85,7 +140,7 @@
             const btn = document.querySelector('#btn')
             btn.value='수정중~~'
             btn.disabled= true
-            const {userid,userpw,userimg,nickname,address,phone,mobile} = e.target
+            const {userid,userpw,userimg,nickname,address,phone,mobile,userintro,email} = e.target
             const formData = new FormData()
             formData.append('userid',document.querySelector('#userid').value)
             formData.append('userpw',document.querySelector('#userpw').value)
@@ -94,6 +149,34 @@
             formData.append('address',document.querySelector('#address').value)
             formData.append('phone',document.querySelector('#phone').value)
             formData.append('mobile',document.querySelector('#mobile').value)
+<<<<<<< HEAD
+            formData.append('email',document.querySelector('#email').value)
+            formData.append('userintro',document.querySelector('#userintro').value)
+           
+            
+            // const userid = document.querySelector('#userid')
+            // const userpw = document.querySelector('#userpw')
+            // const userimg = document.querySelector('#userimg')
+            // const nickname = document.querySelector('#nickname')
+            // const gender = document.querySelector('#gender')
+            // const address = document.querySelector('#address')
+            // const phone = document.querySelector('#phone')
+            // const mobile = document.querySelector('#mobile')
+            
+
+            // const data = {
+            //     userid:userid.value,
+            //     userpw: userpw.value,
+            //     userimg: userimg.value,
+            //     nickname: nickname.value,
+            //     address: address.value,
+            //     phone: phone.value,
+            //     mobile: mobile.value,
+            //     gender: gender.value,
+               
+            // }
+=======
+>>>>>>> 338e70db8811f55adb9982c2c7b2505764561f69
 
             const option = {
                 'Content-type':'application/json',

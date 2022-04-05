@@ -196,10 +196,10 @@ exports.profile = async (req,res)=>{
     } else{
         const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where nickname=?'
         const param = [writernickname]
-
+        console.log(param)
         try {
             const [result] = await pool.execute(sql,param)
-           
+            console.log('왜',result)
             response = {
                 usernickname,
                 writernickname,
@@ -223,10 +223,10 @@ exports.profile = async (req,res)=>{
 
 exports.update = async (req,res)=>{
     
-    const {userid, userpw,nickname,address,phone,mobile} = req.body
+    const {userid,userpw,nickname,address,phone,mobile,userintro,email} = req.body
     const userimg = req.file.filename
-    const sql ="UPDATE user SET userpw=?, userimg=?, nickname=?, address=?, phone=?, mobile=? WHERE userid=?"
-    const param = [userpw,userimg,nickname,address,phone,mobile,userid]
+    const sql ="UPDATE user SET userpw=?, userimg=?, nickname=?, address=?, phone=?, mobile=?, userintro=?, email=? WHERE userid=?"
+    const param = [userpw,userimg,nickname,address,phone,mobile,userid,userintro,email]
     try{
         const [result] = await pool.execute(sql,param)
         

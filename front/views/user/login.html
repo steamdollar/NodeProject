@@ -6,20 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/user/login.css">
 </head>
 <body>
-    <h1><a href="/">logo</a></h1>
-    <form method="post" action="http://localhost:4001/api/user/login" id="login_frm">
-        <ul>
-            <li>
-                <input type="text" name="userid" id="userid" placeholder="id 입력" value="sila">
-            </li>
-            <li>
-                <input type="text" name="userpw" id="userpw" placeholder="pw 입력" value="1234">
-            </li>
-        </ul>
-        <input type="submit" value="로그인">
-    </form>
+    <div id="login">
+        <div id="login_header">
+            <h1><a href="/"><img src="http://localhost:3000/logo.png" class="login_logo2"></a></h1>
+        </div>
+        <div id="login_form">
+            <form method="post" action="http://localhost:4001/api/user/login" id="login_frm">
+                <ul>
+                    <li>
+                        <input type="text" name="userid" id="userid" placeholder="아이디를 입력해주세요.">
+                    </li>
+                    <li>
+                        <input type="text" name="userpw" id="userpw" placeholder="패스워드를 입력해주세요.">
+                    </li>
+                    <li><input type="submit" value="로그인" class="login_btn" id="login_login"></li>
+                    <li><a href="#"><img src="http://localhost:3000/kakao_login_medium_wide.png"/></a></li>
+                </ul>
+                <!-- <a href="http://localhost:4000/api/user/kakao/login" id="login_kakao">카카오 로그인</a> -->
+            </form>
+        </div>
+        <div id="login_join">
+            
+            <a href="/user/join">회원가입</a>
+        </div>
+    </div>
     <!-- 카카오 로그인인데 이걸 어찌 하는지 모르겠음..
     html이 필요한가? 아니면 카카오에서 주는 페이지로 보내주면 되나?-->
     <script type="text/javascript">
