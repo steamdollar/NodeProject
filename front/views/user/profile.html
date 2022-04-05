@@ -7,54 +7,54 @@
 
             <div id='profile_wrap'>
                 <div id="profile"> </div>
-            </div>
+            
 
-            <div id="button_wrap">
-
-                <div id="profile_right">
-                    <div id="profile_history">
-                        <span class="history">
-                            <span><a href=/user/user_board>작성한 글 보기</a></span>
-                        </span>
-                        <span class="history">
-                            <span><a href=/user/user_comment>작성한 댓글 보기</a></span>
-                        </span>
-                        <span class="history">
-                            <span><a href=/user/user_like>좋아요 한 글 보기</a></span>
-                        </span>
+                <div id="button_wrap">
+                    <div id="profile_right">
+                        <div id="profile_history">
+                            <span class="history">
+                                <span><a href=/user/user_board>작성한 글 보기</a></span>
+                            </span>
+                            <span class="history">
+                                <span><a href=/user/user_comment>작성한 댓글 보기</a></span>
+                            </span>
+                            <span class="history">
+                                <span><a href=/user/user_like>좋아요 한 글 보기</a></span>
+                            </span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="button">
-                    <form method="post" action="/user/profile" id="delete_frm">
-                        <input type="hidden" name="userid" value="{{user.userid}}">
-                        <button class="delete buttons" type="submit" id="btn">탈퇴하기</button>
-                    </form>
-                    <button class="modify buttons"><a href="/user/update">수정</a></button>
+                    <div class="button">
+                        <form method="post" action="/user/profile" id="delete_frm">
+                            <input type="hidden" name="userid" value="{{user.userid}}">
+                            <button class="delete buttons" type="submit" id="btn">탈퇴하기</button>
+                        </form>
+                        <button class="modify buttons"><a href="/user/update">수정</a></button>
+                    </div>
+
                 </div>
 
             </div>
 
+            <template id="profiles">
+                <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:130px; height:130px; " ></span>
+                <ul>
+                    <li>
+                        <span id="userid" class="info">아이디</span> <span class="col">:</span> <span>{userid}</span>
+                    </li>
+                    <li>
+                        <span id="nickname" class="info">닉네임</span> <span class="col">:</span> <span>{nickname}</span>
+                    </li> 
+                    <li>
+                        <span id="mobile" class="info">핸드폰</span> <span class="col">:</span> <span>{mobile}</span>
+                    </li>
+                    <li>
+                        <span id="userintro" class="info">한줄소개</span> <span class="col">:</span> <span>{userintro} </span>
+                    </li>
+                </ul>
+            </template>
         </div>
-
-        <template id="profiles">
-            <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:130px; height:130px; " ></span>
-            <ul>
-                <li>
-                    <span id="userid" class="info">아이디</span> <span class="col">:</span> <span>{userid}</span>
-                </li>
-                <li>
-                    <span id="nickname" class="info">닉네임</span> <span class="col">:</span> <span>{nickname}</span>
-                </li> 
-                <li>
-                    <span id="mobile" class="info">핸드폰</span> <span class="col">:</span> <span>{mobile}</span>
-                </li>
-                <li>
-                    <span id="userintro" class="info">한줄소개</span> <span class="col">:</span> <span>{userintro} </span>
-                </li>
-            </ul>
-        </template>
-    </div>
+    
 <script>
     document.addEventListener('DOMContentLoaded', async() => {
         const option = {
