@@ -6,35 +6,36 @@
         <div id="content_wrap">
 
             <div id='profile_wrap'>
-                <div id="profile"> </div>
-            
-
-                <div id="button_wrap">
-                    <div id="profile_right">
-                        <div id="profile_history">
-                            <span class="history">
-                                <span><a href=/user/user_board>작성한 글 보기</a></span>
-                            </span>
-                            <span class="history">
-                                <span><a href=/user/user_comment>작성한 댓글 보기</a></span>
-                            </span>
-                            <span class="history">
-                                <span><a href=/user/user_like>좋아요 한 글 보기</a></span>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="button">
-                        <form method="post" action="/user/profile" id="delete_frm">
-                            <input type="hidden" name="userid" value="{{user.userid}}">
-                            <button class="delete buttons" type="submit" id="btn">탈퇴하기</button>
-                        </form>
-                        <button class="modify buttons"><a href="/user/update">수정</a></button>
-                    </div>
+                <div id="profile"> 
 
                 </div>
-
             </div>
+
+            <div id="button_wrap">
+                <div id="profile_right">
+                    <div id="profile_history">
+                        <span class="history">
+                            <span><a href=/user/user_board>작성한 글 보기</a></span>
+                        </span>
+                        <span class="history">
+                            <span><a href=/user/user_comment>작성한 댓글 보기</a></span>
+                        </span>
+                        <span class="history">
+                            <span><a href=/user/user_like>좋아요 한 글 보기</a></span>                            
+                        </span>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <form method="post" action="/user/profile" id="delete_frm">
+                        <input type="hidden" name="userid" value="{{user.userid}}">
+                        <button class="delete buttons" type="submit" id="btn">탈퇴하기</button>
+                    </form>
+                    <button class="modify buttons" id="white_btn"><a href="/user/update">수정</a></button>
+                </div>
+            </div>
+        </div>
+            
 
             <template id="profiles">
                 <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:130px; height:130px; " ></span>
@@ -53,8 +54,6 @@
                     </li>
                 </ul>
             </template>
-        </div>
-    
 <script>
     document.addEventListener('DOMContentLoaded', async() => {
         const option = {

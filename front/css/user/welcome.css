@@ -1,6 +1,6 @@
 
 #welcome_wrap {
-    margin: 100px auto;
+    margin: 150px auto;
     position: relative;
     width: 700px;
     height: 800px;
@@ -74,12 +74,13 @@
     border-top: 2px solid #eee;
 }
 
-
 .wel_ftr {
     text-align: center;
+    color:#ccc;
 }
 
 #wel_copy {
-    font-size: 10px;
-    font: 12px;
+    font-size: 12px;
+    font: 10px;
+    top: -10px;
 }
