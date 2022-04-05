@@ -11,7 +11,7 @@ a {
 /*  */
 
 #content_wrap {
-    margin: auto auto;
+    margin: 100px auto;
     width: 502px;
     height: 320px;
     border: 1px solid rgb(145, 111, 111);
