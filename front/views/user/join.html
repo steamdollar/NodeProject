@@ -1,107 +1,129 @@
-{% include "../utils/header.html" %}
-    <form method = 'post' action="/" id="join_frm" enctype="multipart/form-data">
-        <ul>
-            <li>
-                <span class="join_label">아이디</span>
-                <span class="join_input">
-                    <input type="text" name="userid" id="userid" value="{{userid}}">
-                </span>
-
-            </li>
-            <li>
-                <span class="join_label">패스워드</span>
-                <span class="join_input">
-                    <input type="text" name="userpw" id="userpw" value="">
-                </span>
-            </li>
-            <li>
-                <span class="join_label">프로필사진 </span>
-                <span class="join_input">
-                    <input type="file" name="userimg" id="userimg">
-                    <!-- <input type="file" name="userimg2" id="userimg2">
-                    <input type="file" name="userimg3" id="userimg3">
-                    <input type="file" name="userimg4" id="userimg4">
-                    <input type="file" name="userimg5" id="userimg5"> -->
-                </span>
-                <!-- 파일을 업로드해 submit 하면 서버에 저장하고 링크만 
-                DB에 저장하고 사진을 렌더링하고 싶을때 img src의 값을 주는식으로
-                구현할 예정?-->
-            </li>
-            <li>
-                <span class="join_label">이름</span>
-                <span class="join_input">
-                    <input type="text" name="username" id="username" value="">
-                </span>
-            </li>
-            <li>
-                <span class="join_label">별명</span>
-                <span class="join_input">
-                    <input type="text" name="nickname" id="nickname" value="">
-                </span>
-            </li>
-            <li>
-                <span class="join_label">주소</span>
-                <span class="join_input">
-                    <input type="text" name="address" id="address" value="">
-                </span>
-            </li>
-            <li>
-                <span class="join_label">성별</span>
-                <span class="join_input">
-                    <input type="radio" name="gender" value="남자" id="gender1" checked> <label for="gender1">남자</label>
-                    <input type="radio" name="gender" value="여자" id="gender2" > <label for="gender2">여자</label>
-                </span>
-            </li>
-            <li>
-                <span class="join_label">전화번호</span>
-                <span class="join_input">
-                    <input type="text" name="phone" id="phone" value="">
-                </span>
-            </li>
-            <li>
-                <span class="join_label">핸드폰</span>
-                <span class="join_input">
-                    <input type="text" name="mobile" id="mobile" value="">
-                </span>
-            </li>
-            <li>
-                <span class="join_label">이메일</span>
-                <span class="join_input">
-                    <input type="text" name="email" id="email" value="{{email}}">
-                </span>
-            </li>
-            <li>
-                <span class="join_label">자기소개</span>
-                <span class="join_input">
-                    <input type="text" name="userintro" id="userintro" value="">
-                </span>
-            </li>
-            <li>
-                <label for="agree_all" style="display:block;">
-                    <input type="checkbox" name="agree_all" id="agree_all">
-                    <span>모두 동의합니다</span>
-                </label>
-                  <label for="agree" style="display:block;" >
-                    <input type="checkbox" name="agree" value="1">
-                    <span>이용약관 동의<strong>(필수)</strong></span>
-                  </label>
-                  <label for="agree" style="display:block;">
-                    <input type="checkbox" name="agree" value="2">
-                    <span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
-                  </label>
-                  <label for="agree" style="display:block;">
-                    <input type="checkbox" name="agree" value="3">
-                    <span>개인정보 이용 동의<strong>(필수)</strong></span>
-                  </label>
-            </li>
-            <!-- <li>
-                <span> 약관에 동의하십니까? </span>
-                <input type="checkbox" checked>
-            </li> -->
-            <!-- script에 조건문써서 체크 안되면 동의해주세요 알람 띄우게-->
-        </ul>
-        <input type="submit" id="btn" value="회원가입">
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/user/join.css">
+</head>
+<body>
+    <div id="join">
+        <div id="join_header">
+            <h1><a href="/"><img src="http://localhost:3000/logo.png" class="join_logo2"></a></h1>
+        </div>
+        <div id="join_form">
+            <form method = 'post' action="/" id="join_frm" enctype="multipart/form-data">
+                <ul>
+                    <li>
+                        <h3>아이디</h3>
+                        <span>
+                            <input type="text" name="userid" id="userid" value="{{userid}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>패스워드</h3>
+                        <span>
+                            <input type="text" name="userpw" id="userpw" value="">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>프로필사진</h3>
+                        <span>
+                            <input type="file" name="userimg" id="userimg">
+                            <!-- <input type="file" name="userimg2" id="userimg2">
+                            <input type="file" name="userimg3" id="userimg3">
+                            <input type="file" name="userimg4" id="userimg4">
+                            <input type="file" name="userimg5" id="userimg5"> -->
+                        </span>
+                        <!-- 파일을 업로드해 submit 하면 서버에 저장하고 링크만 
+                        DB에 저장하고 사진을 렌더링하고 싶을때 img src의 값을 주는식으로
+                        구현할 예정?-->
+                    </li>
+                    <li>
+                        <h3>이름</h3>
+                        <span>
+                            <input type="text" name="username" id="username" value="">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>별명</h3>
+                        <span>
+                            <input type="text" name="nickname" id="nickname" value="">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>주소</h3>
+                        <span>
+                            <input type="text" name="address" id="address" value="">
+                        </span>
+                    </li>
+                    <li id="qwe">
+                        <h3 id="gen">성별</h3>
+                        <span class ="join_gender">
+                            <span>
+                                <input type="radio" name="gender" value="남자" id="gender1" checked> <label for="gender1">남자</label>
+                            </span>
+                            <span>
+                                <input type="radio" name="gender" value="여자" id="gender2" > <label for="gender2">여자</label>
+                            </span>
+                        </span>
+                    </li>
+                    <li>
+                        <h3>전화번호</h3>
+                        <span>
+                            <input type="text" name="phone" id="phone" value="">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>핸드폰</h3>
+                        <span>
+                            <input type="text" name="mobile" id="mobile" value="">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>이메일</h3>
+                        <span>
+                            <input type="text" name="email" id="email" value="{{email}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>한줄소개</h3>
+                        <span>
+                            <input type="text" name="userintro" id="userintro" value="">
+                        </span>
+                    </li>
+                    <li>
+                        <div id="join_check">
+                            <label for="agree_all" style="display:block;">
+                                <input type="checkbox" name="agree_all" id="agree_all">
+                                <span>모두 동의합니다</span>
+                            </label>
+                            <label for="agree" style="display:block;" >
+                                <input type="checkbox" name="agree" value="1">
+                                <span>이용약관 동의<strong>(필수)</strong></span>
+                            </label>
+                            <label for="agree" style="display:block;">
+                                <input type="checkbox" name="agree" value="2">
+                                <span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
+                            </label>
+                            <label for="agree" style="display:block;">
+                                <input type="checkbox" name="agree" value="3">
+                                <span>개인정보 이용 동의<strong>(필수)</strong></span>
+                            </label>
+                        </div>
+                    </li>
+                    <!-- <li>
+                        <span> 약관에 동의하십니까? </span>
+                        <input type="checkbox" checked>
+                    </li> -->
+                    <!-- script에 조건문써서 체크 안되면 동의해주세요 알람 띄우게-->
+                </ul>
+                <input type="submit" id="btn" value="회원가입">
+            </form>
+        </div>
+    </div>
     <script type="text/javascript">
         // 1. submit 이벤트를 만들고 그이벤트를 막는 기능 
         

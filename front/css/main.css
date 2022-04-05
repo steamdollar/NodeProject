@@ -1,0 +1,45 @@
+#wrap{
+    width: 100%;
+    height: 1200px!important; 
+}
+
+#main_content{
+    width: 1400px;
+    position: relative;
+    height: 600px;
+    background: purple;
+    top: 550px;
+    display: flex;
+    margin: 0 auto;
+
+}
+
+#container1 {
+    width: 50%;
+    height: 100%;
+    background-color: aliceblue;
+}
+
+#container2{
+    width: 25%;
+    height: 100%;
+    background: red;
+}
+
+#hot_board{
+    width: 100%;
+    height: 50%;
+    background: pink;
+}
+#event_board{
+    width: 100%;
+    height: 50%;
+    background: orange;
+}
+
+#chat_box{
+    width: 25%;
+    height: 100%;
+}
+
+

@@ -1,208 +1,141 @@
-{% include "../utils/header.html" %}
-    <h1><a href="/">Team4</a></h1>
-    <h2>프로필 보기</h2>
-    <div id="profile">
-
-
-    </div>
-    <template id="profiles">
-        <h2> {nickname}님, 환영합니다.</h2>
-        <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:100px; height:100px; margin-left:30px;" ></span>
-        <ul>
-            <li>
-                <span id="userid">아이디 : {userid}</span>
-            </li>
-            <li>
-                <span id="username">이름 : {username}</span>
-            </li>
-            <li>
-                <span id="nickname">닉네임 : {nickname}</span>
-            </li>
-            <li>
-                <span id="address">주소 : {address} </span>
-            </li>
-            <li>
-                <span id="gender">성별 : {gender} </span>
-            </li>
-            {% if user.phone %}
-            <li>
-                <span id="phone">전화번호 : phone</span>
-            </li>
-            {% else %}
-            <li>
-                <span id="phone">전화번호 : 없음</span>
-            </li>
-            {% endif %}
-            <li>
-                <span id="mobile">핸드폰 : {mobile}</span>
-            </li>
-
-            <li>
-                <span id="email">이메일 : {email}</span>
-            </li>
-            <li>
-                <span id="userintro">자기소개 {userintro}: </span>
-            </li>
-        </ul>
-    </template>
-    
-    <div class="button">
-        <button><a href="/board">게시판</a></button>
-        <button><a href="/user/update">수정</a></button>
-        <form method="post" action="/user/profile" id="delete_frm">
-            <input type="hidden" name="userid" value="{{user.userid}}">
-            <button class="delete" type="submit" id="btn">탈퇴하기</button>
-        </form>
-    </div>
-    <div id="profile_right">
-        <div id="profile_history">
-            <div class="history1">
-                <h3><a href=/user/user_board>작성한 글 보기</a></h3>
-            </div>
-            <div id="profile_history2">
-                <h3><a href=/user/user_comment>작성한 댓글 보기</a></h3>
-            </div>
-            <div id="profile_history3">
-                <h3><a href=/user/user_like>좋아요 한 글 보기</a></h3>
-            </div>
-        </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-        const frm = document.querySelector('#delete_frm')
-    frm.addEventListener('submit',async(e)=>{
-        e.preventDefault()
-     
-        const option = {
-            'Content-type':'application/json',
-            withCredentials:true
-        }
-
-        const response = await axios.post('http://localhost:4000/api/user/delete',null,option)
-        
-        if(response.data.errno ===0){
-            alert('탈퇴되었습니다')
-            location.href='http://localhost:3000'
-        } else{
-            alert('탈퇴실패')
-        }
-    })
+        const islogin = location.search.split('=')[1] === 'true' ? true : false
+        if (islogin) location.href='http://localhost:3000'
     </script>
+    <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="/user/profile.css">
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+   
+<body>
+    <div id="wrap">
+        <div id="Transparency" class=""></div>
+
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+            </div>
+        </header>
+
+        <div id="content_wrap">
+
+            <div id='profile_wrap'>
+                <div id="profile"> </div>
+            </div>
+
+            <div id="button_wrap">
+
+                <div id="profile_right">
+                    <div id="profile_history">
+                        <span class="history">
+                            <span><a href=/user/user_board>작성한 글 보기</a></span>
+                        </span>
+                        <span class="history">
+                            <span><a href=/user/user_comment>작성한 댓글 보기</a></span>
+                        </span>
+                        <span class="history">
+                            <span><a href=/user/user_like>좋아요 한 글 보기</a></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="button">
+
+                    <form method="post" action="/user/profile" id="delete_frm">
+                        <input type="hidden" name="userid" value="{{user.userid}}">
+                        <button class="delete buttons" type="submit" id="btn">탈퇴하기</button>
+                    </form>
+                    <button class="modify buttons"><a href="/user/update">수정</a></button>
+                    <button class="board buttons"><a href="/board">게시판</a></button>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+        <template id="profiles">
+            <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:130px; height:130px; " ></span>
+            <ul>
+                <li>
+                    <span id="userid" class="info">아이디</span> <span class="col">:</span> <span>{userid}</span>
+                </li>
+                <li>
+                    <span id="nickname" class="info">닉네임</span> <span class="col">:</span> <span>{nickname}</span>
+                </li> 
+                <li>
+                    <span id="mobile" class="info">핸드폰</span> <span class="col">:</span> <span>{mobile}</span>
+                </li>
+                <li>
+                    <span id="userintro" class="info">한줄소개</span> <span class="col">:</span> <span>{userintro} </span>
+                </li>
+            </ul>
+        </template>
+    </div>
+
 
 </body>
 <script>
 
-    const option = {
+    document.addEventListener('DOMContentLoaded', async() => {
+        const option = {
                 'Content-type':'application/json',
                 withCredentials:true
             }
-
-
-    // document.addEventListener('DOMContentLoaded', async () => {
-    //     const uri = location.href
-    //     const uri2 = uri.split('/')[4]
-    //     const uri3 = uri2.split('?')[1]
-    //     const uri4 = uri3.split('=')[1]
-
-    //     const data = { nickname: uri4 }
-        
-    //     const response = await axios.post('http://', data, option)
-    // })
-    
-    document.addEventListener('DOMContentLoaded', async() => {
         let template = ''
         const profile = document.querySelector('#profile')
         const profiles = document.querySelector('#profiles').innerHTML
-        
-        const option = {
-            'Content-type':'application/json',
-            withCredentials:true
-        }
 
-        const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
-        // console.log('이거냐?',response.data.userimg)
+            const response = await axios.post('http://localhost:4000/api/user/profile',null,option)
 
-        const {writernickname, usernickname} = response.data
+            const {writernickname, usernickname} = response.data
 
-        // const uri = location.pathname
-        // const category = uri.split('/')[2]
-        // console.log(uri)
-        // console.log(category)
+            const uri = location.href
+            const uri2 = uri.split('/')[4]
+            const uri3 = uri2.split('?')[1]
+            const uri4 = uri3.split('=')[1]
 
-        const uri = location.href
-        const uri2 = uri.split('/')[4]
-        const uri3 = uri2.split('?')[1]
-        const uri4 = uri3.split('=')[1]
+            if( response.data.errno ===0){
+                const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
+                
+                template = profiles.replace('{nickname}',nickname)
+                                .replace('{userid}',userid)
+                                .replace('{username}',username)
+                                .replace('{userimg}',userimg)
+                                .replace('{nickname}',nickname)
+                                .replace('{address}',address)
+                                .replace('{gender}',gender)
+                                .replace('{phone}',phone)
+                                .replace('{mobile}',mobile)
+                                .replace('{email}',email)
+                                .replace('{userintro}',userintro)
 
+                profile.innerHTML = template  
+            }
 
-        console.log(usernickname)
-        console.log(writernickname)
-        // if(uri4 == usernickname){
-        //     //주찬 님이 지금껏 적으신 코드
-        //     if( response.data.errno ===0){
-        //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
-            
-        //     template = profiles.replace('{nickname}',nickname)
-        //                        .replace('{userid}',userid)
-        //                        .replace('{username}',username)
-        //                        .replace('{userimg}',userimg)
-        //                        .replace('{nickname}',nickname)
-        //                        .replace('{address}',address)
-        //                        .replace('{gender}',gender)
-        //                        .replace('{phone}',phone)
-        //                        .replace('{mobile}',mobile)
-        //                        .replace('{email}',email)
-        //                        .replace('{userintro}',userintro)
+            const frm = document.querySelector('#delete_frm')
+            frm.addEventListener('submit',async(e)=>{
+                e.preventDefault()
 
-        //     profile.innerHTML = template
-        // }
-        // } else {
-        //     //주찬님이 지금껏 적으신 코드에서 수정, 탈퇴..같은 기능과 민감 정보 제외한 html
-        //     if( response.data.errno ===0){
-        //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
-            
-        //     template = profiles.replace('{nickname}',nickname)
-        //                     //    .replace('{userid}',userid)
-        //                        .replace('{username}',username)
-        //                        .replace('{userimg}',userimg)
-        //                        .replace('{nickname}',nickname)
-        //                     //    .replace('{address}',address)
-        //                        .replace('{gender}',gender)
-        //                     //    .replace('{phone}',phone)
-        //                     //    .replace('{mobile}',mobile)
-        //                        .replace('{email}',email)
-        //                        .replace('{userintro}',userintro)
-
-        //     profile.innerHTML = template
-        //     }
-        // }
-
-        
-
-
-
-
-
-        if( response.data.errno ===0){
-            const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
-            
-            template = profiles.replace('{nickname}',nickname)
-                               .replace('{userid}',userid)
-                               .replace('{username}',username)
-                               .replace('{userimg}',userimg)
-                               .replace('{nickname}',nickname)
-                               .replace('{address}',address)
-                               .replace('{gender}',gender)
-                               .replace('{phone}',phone)
-                               .replace('{mobile}',mobile)
-                               .replace('{email}',email)
-                               .replace('{userintro}',userintro)
-
-            profile.innerHTML = template
-            
-            
-        }
-    })
-
+                const response = await axios.post('http://localhost:4000/api/user/delete',null,option)
+                
+                if(response.data.errno ===0){
+                    alert('탈퇴되었습니다')
+                    location.href='http://localhost:3000'
+                } else{
+                    alert('탈퇴실패')
+                }
+            })
+        })
         
 </script>
 </html>
