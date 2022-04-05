@@ -1,11 +1,66 @@
 {% extends 'utils/header.html' %}
 
 {% block content %}
-        <h1>회원 정보 수정 페이지입니다.</h1>
-        <div id="update_frm_wrap">
-            
+    <div id="update_wrap">
+        <div>
+            <h1>회원 정보 수정 페이지</h1>
+        </div>
+        <div id="update_form">
             <form method="post" id="update_frm" action="http://localhost:4000/api/user/update">
-                <div>
+                <ul>
+                    <li>
+                        <h3>아이디</h3>
+                        <span>
+                            {{user.userid}}
+                        </span>
+                    </li>
+                    <li>
+                        <h3>비밀번호</h3>
+                        <span>
+                            <input type="password" name="userpw" id="userpw" value="{{user.userpw}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>프로필사진</h3>
+                        <span>
+                            <input class="upload-name" value="이미지" placeholder="이미지">
+                            <label for="userimg">파일찾기</label>
+                            <input type="file" name="userimg" id="userimg">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>닉네임</h3>
+                        <span>
+                            <input type="text" name="nickname" id="nickname" value="{{user.nickname}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>주소</h3>
+                        <span>
+                            <input type="text" name="address" id="address" value="{{user.adress}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>성별</h3>
+                        <span>
+                            <input type="text" name="gender" id="gender" value="{{user.gender}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>전화번호</h3>
+                        <span>
+                            <input type="text" name="phone" id="phone" value="{{user.phone}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>핸드폰번호</h3>
+                        <span>
+                            <input type="text" name="mobile" id="mobile" value="{{user.mobile}}">
+                        </span>
+                    </li>
+
+                </ul>
+                <!-- <div id="updte_table">
                     <table id="pf_table">
                         <tbody class="tbody">
                             <tr>
@@ -42,7 +97,7 @@
                             </tr>
                         </tbody>       
                     </table>
-                </div>
+                </div> -->
                 <div>
                     <input type="submit" id="btn" value="수정">
                 </div>
