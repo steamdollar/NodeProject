@@ -6,7 +6,6 @@ function init(){
     let trans_box = document.querySelector('#Transparency')
 
     window.addEventListener('scroll', function(){
-        console.log(window.scrollY)
         let currentscroll = window.scrollY
 
         if (currentscroll>20){
@@ -25,15 +24,12 @@ function init(){
     const images = document.querySelector('#pic_box')
 
     function plusposition() {
-        console.log('plus호출')
         imgPos = imgPos + 1
-        console.log('이미지 번호 = ' + imgPos)
         position -= imgWidth
         images.style.transform = `translateX(${position}px)`
     }
 
     function minusposition() {
-        console.log('minus호출')
         imgPos = imgPos - 3
         position += imgWidth * 3
         images.style.transform = `translateX(${position}px)`
