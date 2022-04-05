@@ -5,28 +5,281 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .thumb {
+            width:100px !important;
+            height: 100px !important;
+        }
+
+        #paging > ul > li:nth-child(1) {
+            display:none;
+        }
+        #imgZone {
+            width: 1000px !important;
+            overflow:hidden;
+        }
+        #imgZone > span {
+            position: relative;
+        }
+
+        .cloak {
+            display:none;
+        }
+
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        let test = {}
+        const option = {
+                'Content-type':'application/json',
+                withCredentials:true
+            }
+        document.addEventListener('DOMContentLoaded', async() => {
+            const data = {
+                category:"QnA",
+            }
+            const response = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
+            const qna_list = response.data.result1
+
+            const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
+            test = { ...response1.data }
+            const cate1_list = response1.data
+
+            let content_list = []
+            for (let i =0; i<response1.data.result1.length; i++) {
+                if(response1.data.result1[i].hidden =='off') {
+                    content_list.push(response1.data.result1[i])
+                }
+            }
+
+            let template = ''
+            search_list = []
+            const board_temp = document.querySelector('#board_temp').innerHTML
+            const promise = content_list.forEach(async (v)=>{
+                search_list.push(v)
+                let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+                template += board_temp.replaceAll('{idx}', idx)
+                                .replace('{category}',category)
+                                .replace('{title}',title)
+                                .replace('{content}',content)
+                                .replace('{userid}', userid)
+                                .replace('{nickname}',nickname)
+                                .replace('{date}',date)
+                                .replace('{hit}',hit)
+                                .replace('{likes}',likes)
+            })
+
+            board_list.innerHTML = template
+            //
+            //
+            // 썸네일
+            const data2 = {
+                category:"QnA"
+            }
+            const response2 = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data2, option) 
+            const tempThumb = response2.data.final_result // [{}, {}, {}]
+            let thumbNail = []
+
+            for (let i = 0; i<tempThumb.length; i++) {
+                if(tempThumb[i][0].img1 !== 'N/A') {
+                    thumbNail.push(tempThumb[i][0].img1)
+                }
+                else {
+                    thumbNail.push('default.jpg')
+                }
+            }
+
+            for ( let i =0; i<thumbNail.length; i++) {
+                const imgZone = document.querySelector('#imgZone')
+                const imgSpan = document.createElement('span')
+                const imgElement = document.createElement('img')
+                imgElement.setAttribute('class','thumb')
+                imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i]}`)
+                
+                imgSpan.append(imgElement)
+                imgZone.append(imgSpan)
+                if( thumbNail[i] === 'default.jpg' ) {
+                    imgSpan.setAttribute('class', 'cloak')
+                }
+            }
+            //
+            //
+            // 페이징
+
+            // 페이징에 관련된 수치 설정
+            
+
+            const trElement = document.querySelector('#board_temp').innerHTML
+            
+
+            const { total_record } = response1.data
+            const view_article = 10 // 한 페이지에 있는 블럭 수
+            const block_article = 10 // 한 블럭에 보일 갯수
+
+            const total_page = Math.ceil(total_record/view_article)
+            const total_block = Math.ceil(total_page/block_article)
+            let page = 4
+            const current_block = Math.ceil(page/block_article)
+            const block = ((current_block-1) * block_article)
+
+            let end_block = block + block_article
+            if(end_block > total_page) {end_block = total_page}
+
+            // 페이징 만들기
+            const paging = document.querySelector('#paging > ul')
+            
+            for  ( let i = 0; i<=end_block; i++) {
+                const liElement = document.createElement('li')
+                const aElement = document.createElement('a')
+
+                aElement.setAttribute('onClick', `pagemove(${i})`)
+                aElement.innerHTML = `[${i}]`
+                liElement.appendChild(aElement)
+                paging.appendChild(liElement)
+            }
+
+            const Nodes = response1.data.result1.slice((page - 1) * view_article, page * view_article)
+            const board_row = document.querySelector('#board_temp')
+            const tbody = document.querySelector('#board_list')
+            
+            Nodes.forEach( v => {
+                const clone = document.importNode(board_row.content,true)
+                const th = clone.querySelectorAll('th')
+                const aElement = document.createElement('a')
+                aElement.href=`/board/cate1/view/?idx=${v.idx}`
+                aElement.innerHTML = v.subject
+
+                th[0].innerHTML = v.idx
+                th[1].innerHTML = v.category
+                th[2].innerHTML = v.title
+                th[3].innerHTML = v.userid
+                th[4].innerHTML = v.nickname
+                th[5].innerHTML = v.content
+                th[6].innerHTML = v.date
+                th[7].innerHTML = v.hit
+                th[8].innerHTML = v.likes
+
+                tbody.appendChild(clone)
+            })
+            pagemove(1)
+        })
+
+        function pagemove(num) {
+                const trElement = document.querySelector('#board_temp').innerHTML
+                const view_article = 10
+                const raw = test.result1
+                let refine = []
+
+                for(i = 0; i <raw.length; i++) {
+                    if( raw[i].hidden !== 'on') {
+                        refine.push(raw[i])
+                    }
+                }
+
+                const Nodes = refine.slice((num-1) * view_article, num * view_article)
+
+                let template = ''
+                Nodes.forEach( v=> {
+                    template += trElement.replaceAll('{idx}', v.idx)
+                                .replace('{category}',v.category)
+                                .replace('{title}',v.title)
+                                .replace('{content}',v.content)
+                                .replace('{userid}', v.userid)
+                                .replace('{nickname}',v.nickname)
+                                .replace('{date}',v.date)
+                                .replace('{hit}',v.hit)
+                                .replace('{likes}',v.likes)
+                })
+
+                const tbody = document.querySelector('#board_list')
+                tbody.innerHTML = template
+        }
+
+        
+    </script>
 </head>
 <body>
-    <h1><a href='/'>logo</a></h1>
+    <a href="/"><img src="http://localhost:3000/logo.png" width="200px" height="200px"></a>
     <h2> QnA_리스트 </h2>
-    <table>
-        <tr>
-            <td>idx</td>
-            <td>title</td>
-            <td>작성자</td>
-            <td>작성일자</td>
-            <td>hit</td>
-        </tr>
+    <table width="100%" border="1">
 
-        {% for item in qna_list %}
-        <tr>
-            <td>{{item.idx}}</td>
-            <td><a href="/board/QnA/view?idx={{item.idx}}">{{item.title}}</a></td> 
-            <td>{{item.userid}}</td> 
-            <td>{{item.date}}</td>
-            <td>{{item.hit}}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>카테고리</th>
+                <th>제목</th>
+                <th>작성자 아이디</th>
+                <th>작성자 닉네임</th>
+                <th>내용</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>좋아요</th>
+            </tr>
+        </thead>
+
+        <tbody id="board_list">
+
+        </tbody>
+
     </table>
+    <div id="paging">
+        <ul>
+            
+        </ul>
+    </div>
+
+        <template id="board_column">
+        </template>
+
+        <template id="board_temp">
+            <tr>
+
+                <th>{idx}</th>
+                <th>{category}</th>
+                <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
+                <th>{userid}</th>
+                <th>{nickname}</th>
+                <th>{content}</th>
+                <th>{date}</th>
+                <th>{hit}</th>
+                <th>{likes}</th>
+            </tr>
+        </template>
+
+
+    <div id="imgZone"></div>
+
+    <a href="/board/cate1/write">글쓰기</a>
+
+    <br>
+    <br>
+
+    <h2>검색</h2>
+
+        <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
+            <select name="option" id="category" >
+                <option value="" disabled>검색 옵션 선택</option>
+                <option value="nickname" id="nickname" selected>nickname</option>
+                <option value="hashtag" id="hashtag">해시태그</option>
+                <option value="title" id="title">제목</option>
+                <option value="content" id="content">내용</option>
+            </select>
+            <!-- <input type="hidden" id="option" name="option"> -->
+            <input type="text" name='keyword' placeholder="키워드를 입력하세요">
+            <input type="submit" name="search" id="search" value="선택">
+        </form>
+
+        <!-- <script type="text/javascript">
+            const frm_search = document.querySelector('#frm_search')
+            const hiddenOp = document.querySelector('#option')
+            frm_search.addEventListener('submit', async(e) => {
+                e.preventDefault()
+                hiddenOp.value = category.value
+                
+            })
+        </script> -->
 </body>
 </html>
+
+<!--해시태그, 닉네임, 글제목, 내용-->

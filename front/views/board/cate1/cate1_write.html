@@ -37,7 +37,13 @@
         </div>
         <div>
             <strong>category</strong> <br>
-            <input type="text" name="category" placeholder="카테고리 선택", id="category" value="cate1">
+            <!-- <input type="text" name="category" placeholder="카테고리 선택", id="category" value="cate1"> -->
+            <select name="category" id="category" >
+                <option value="" disabled> 카테고리 선택</option>
+                <option value="cate1" selected>자유 게시판</option>
+                <option value="code_question">코드 자문 게시판</option>
+                <option value="QnA">Q&A 게시판</option>
+            </select>
         </div>
         <div>
             <strong>내용</strong> <br>
@@ -157,7 +163,7 @@
 
             if (response.data.errno === 0) {
                 alert('글 작성이 완료되었습니다.')
-                location.href='/board/cate1'
+                location.href=`/board/${category.value}`
             }
             else {
                 alert('글 작성중 문제가 발생하였습니다.')

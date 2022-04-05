@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const path = require('path')
 const cate1Router = require('./cate1/index.js')
-const QnARouter = require('./QnA/QnA_index.js')
+const QnARouter = require('./QnA/index.js')
 const noticeRouter = require('./notice/index.js')
 
 const app = express()
@@ -40,6 +40,8 @@ router.use('/QnA', QnARouter)
 
 // notice
 router.use('/notice', noticeRouter)
+
+// router.use('/question', questionRouter)
 
 
 module.exports = router

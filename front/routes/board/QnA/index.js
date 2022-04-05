@@ -30,11 +30,8 @@ router.get('/write', (req,res)=>{
 
 // qna list
 router.get('/', async (req,res) => {
-    const response = await axios.get('http://localhost:4000/api/board/QnA/list',option)
-    const qna_list = response.data
-    res.render('./board/QnA/QnA_list.html', {
-        qna_list: qna_list.result
-    })
+ 
+    res.render('./board/QnA/QnA_list.html')
 })
 
 //qna view
