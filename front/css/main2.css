@@ -3,6 +3,7 @@
     padding: 0;
     margin: 0;
 }
+
 ul,li{
     list-style: none;
 }
@@ -11,8 +12,9 @@ a{
 }
 #wrap{
     width: 100%;
-    height: 700px;
+    height: 1000px;
     margin: 0 auto;
+    position: relative;
 }
 
 #Transparency{
@@ -31,7 +33,8 @@ a{
 
 #header{
     width: 100%;
-    height: 150px;
+    height : auto;
+
 }
 
 #banner{
@@ -179,12 +182,13 @@ input[id="icon"]:checked + label > span:nth-child(3) {
     height: 100px;
     top: 40px;
     position: absolute;
-    right: 100px;
+    right: 150px;
 }
 
 #access > a{
     color: black;
-    margin: 0 10px 0px 10px;
+    margin: 0 13px 0px 13px;
+    font-size: 20px;
 }
 
 
@@ -194,19 +198,20 @@ input[id="icon"]:checked + label > span:nth-child(3) {
     height: 100px;
     top: 40px;
     position: absolute;
-    right: 100px;
+    right: 120px;
 }
 
 #access2 > a{
     color: black;
     margin: 0 10px 0px 10px;
+    font-size: 20px;
 }
 
 
 
 #main_pic{
-    width: 1600px;
-    height: 500px;
+    width: 1800px;
+    height: 600px;
     z-index: 3;
     top: 150px;
     position:relative;
@@ -217,10 +222,10 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 
 
 #slide_area{
-    width: 950px;
-    height: 500px;
+    width: 1200px;
+    height: 600px;
     background-color: red;
-    margin-left: 350px;
+    margin-left: 500px;
     position: relative;
     overflow: hidden;
   
@@ -229,29 +234,29 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 
 #pic_box{
     width: 400%;
-    height: 500px;
+    height: 600px;
     position: absolute;
     display: flex;
 }
 
 #pic_box > div{
-    width: 950px;
-    height: 500px;
+    width: 1200px;
+    height: 600px;
 }
 
 #pic_box > div > img{
-    width: 950px;
+    width: 1200px;
     height: 100%;
 }
 
 #main_txt{
     position: absolute;
     z-index: 5;
-    top: 100px;
-    left: 50px;
+    top: 110px;
+    left: 80px;
     font-family: 'FF Signa Serif Stencil', 'Book';
     font-weight: 10;
-    font-size: 70px;
+    font-size: 90px;
 } 
 .start{
     display: block;
@@ -260,12 +265,12 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 .line{
     display:block;
     height:1px;
-    width:20%;
+    width:30%;
     border-radius:30px;
     background: black;
     position:absolute;
-    top: 120px;
-    left: -50px;
+    top: 155px;
+    left: -150px;
 }
 .msg{
     display: block;

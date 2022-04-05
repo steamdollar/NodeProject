@@ -1,3 +1,4 @@
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,7 @@
         if (islogin) location.href='http://localhost:3000'
     </script>
     <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="common/footer.css">
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
 </head>
@@ -29,7 +31,7 @@
                 <div id="access">
                     <a href="/user/join">Join</a>
                     <a href="/user/login">Login</a>
-                    <a href="http://localhost:4000/api/user/kakao/login">KaKao Login</a>
+                    <a href="http://localhost:4000/api/user/kakao/login">Kakao Login</a>
                 </div>
             
                 <div id="hamberger">
@@ -77,11 +79,14 @@
                     </div>
                     
                 </div>
-            </div>   
+            </div> 
         </header>
+        
+        {% include "./utils/footer.html" %}
 
     </div>
 
  
 </body>
 </html>
+{% endblock %}
