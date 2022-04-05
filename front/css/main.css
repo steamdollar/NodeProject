@@ -1,16 +1,18 @@
 #wrap{
     width: 100%;
+    height: 2000px!important;
     position: relative;
 }
 
 #main_content{
     width: 1600px;
     position: relative;
-    height: 800px;
-    background: purple;
+    height: 1000px;
+    /* background: purple; */
     top: 0;
     display: flex;
     margin: 0 auto;
+    margin-top: 200px;
 
 }
 
@@ -18,7 +20,7 @@
 #container1 {
     width: 50%;
     height: 100%;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
 }
 .card > h1{
     display: block;
@@ -36,7 +38,8 @@
 
 #card_box > li{
     width: 45%;
-    height: 50%;
+    height: 250px;
+    margin-bottom: 50px;
 }
 #card_box > li > a > img{
     width: 100%;
@@ -62,36 +65,36 @@
 #container2{
     width: 25%;
     height: 100%;
-    background: red;
+    /* background: red; */
 }
 
 /* 인기게시물 */
 #hot_board{
     width: 100%;
     height: 33.3%;
-    background: pink;
+    /* background: pink; */
 }
 /* 이벤트 게시물 */
 #event_board{
     width: 100%;
     height: 33.3%;
-    background: orange;
+    /* background: orange; */
 }
 /* 이달의 학우 */
 #this_month_student{
     width: 100%;
     height: 33.3%;
-    background: yellow;
+    /* background: yellow; */
 }
 
 #chat_box{
     width: 25%;
-    height: 100%;
+    /* height: 100%; /크기조정해도됨 */
+    background: red;
 }
 
 #chat_box > h1{
     text-align: center;
     margin-top: 50px;
 }
-
 
