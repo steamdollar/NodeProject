@@ -49,8 +49,8 @@
 } */
 
 #join_frm > ul > li > span > input {
-    width:300px;
-    height:40px;
+    width:400px;
+    height:60px;
     border:none;
     outline: none;
     border-radius: 5px;
@@ -58,7 +58,12 @@
 }
 
 #qwe {
-    width: 300px;
+    width: 400px;
+}
+
+.join_gender {
+    display:inline-block;
+    margin-top:10px;
 }
 
 .join_gender > span {
@@ -75,11 +80,12 @@
 }
 
 #join_frm > ul > .join_image {
-    margin-left:8px;
+    width:500px;
+    margin-left:100px;
 }
 
 #join_frm > ul > li > #btn {
-    width:300px;
+    width:400px;
     height:45px;
     background-color: #333;
     color:#fff;
@@ -93,23 +99,23 @@
 
 
 #join_frm > ul > li > span > .upload-name {
+    display:inline-block;
     padding: 0 10px;
     vertical-align: middle;
-    width: 175px;
-    height: 40px;
+    width: 260px;
+    height: 60px;
     color: #999999;
     margin-right:20px;
 }
 
 #join_frm > ul > li > span > label {
-    padding: 12px 14px;
+    display:inline-block;
+    padding: 22px 24px;
     color: #fff;
     vertical-align: middle;
     background-color: #333;
     cursor: pointer;
     border-radius: 10px;
-    width:100px;
-    height: 40px;
     font-size: 13px;
     font-weight:bold;
     box-shadow:1px 1px 1px 0px rgba(0,0,0,0.2);
