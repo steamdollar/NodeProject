@@ -41,6 +41,7 @@
             webSocket.onmessage = (event) => {
                 const chat = document.querySelector('#chat')
                 const liElement = document.createElement('li')
+                liElement.setAttribute('class', `{{userid}}`)
                 liElement.innerHTML = event.data
                 chat.appendChild(liElement)
                 // console.log(event.data)
