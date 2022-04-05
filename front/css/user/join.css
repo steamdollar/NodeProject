@@ -70,6 +70,10 @@
     
 }
 
+#join_check > label {
+    padding:5px 0;
+}
+
 #join_frm > ul > .join_image {
     margin-left:8px;
 }
@@ -98,7 +102,7 @@
 }
 
 #join_frm > ul > li > span > label {
-    padding: 11px 14px;
+    padding: 12px 14px;
     color: #fff;
     vertical-align: middle;
     background-color: #333;
