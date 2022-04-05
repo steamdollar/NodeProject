@@ -29,8 +29,16 @@
 
         </div>
         <header id="header">
+            <div id="banner">
                 <div id="logo_box">
                     <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+
+                <div id="access2">
+                    <a href ='/board'>Board</a>
+                    <a href="/board/notice">Notice</a>
+                    <a href="/user/profile?nickname={{nickname}}">Profile</a>
+                    <a href="" id="logout">Logout</a>
                 </div>
     
                 <div id="hamberger">
@@ -49,10 +57,11 @@
                         </ul>
                     </div>
                 </div>
+            </div> 
         </header>
         {% block content %}
         {% endblock %}
     </div>
-</body>
 
+</body>
 </html>

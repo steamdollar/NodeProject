@@ -1,41 +1,19 @@
 *{
-    padding: 0;
-    margin: 0;
     letter-spacing: -0.05em;
     box-sizing: border-box;
 }
-ul,li{
-    list-style: none;
-}
-a{
-    text-decoration: none;
-}
-#header {
-    z-index:5;
-    display:block;
-    float: top;
-    background: #96fafa;
-}
 
-#banner{
-    width: 100%;
-    height: 200px;
-    margin: 0 auto;
-    position: relative;
-    top: 0;
-    z-index: 100;
-}
 /*  */
-h1 {
+/* h1 {
     position: absolute;
     left:50%;
     transform: translate(-50%);
-}
+} */
 
-#wrap {
+/* #wrap {
     position:relative;
     width : 100%;
-}
+} */
 
 #update_frm_wrap {
     margin: 44px auto 0 auto;

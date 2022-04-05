@@ -1,42 +1,14 @@
 * {
-    margin: 0;
-    padding:0;
     box-sizing: border-box;
     letter-spacing: -0.05em;
 }
 
-ul,li{
-    list-style: none;
-}
 
 a {
-    text-decoration: none;
     color: black;
 }
 
-
-/*  wrap  */
-
-
-/* header  */
-
-#header {
-    z-index:5;
-    display:block;
-    float: top;
-    background: #96fafa;
-}
-
-#banner{
-    width: 100%;
-    height: 150px;
-    margin: 0 auto;
-    position: relative;
-    top: 0;
-    z-index: 100;
-}
-
-/* wrap */
+/*  */
 
 #content_wrap {
     margin: auto auto;
@@ -63,7 +35,6 @@ a {
     flex-direction: column;
     justify-content: center;
 }
-
 
 h2 {
     font-size: 18px;
