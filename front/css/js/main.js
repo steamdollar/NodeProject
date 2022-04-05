@@ -21,7 +21,7 @@ function init(){
     let imgPos = 0
     let position = 0
     // img-area 크기
-    const imgWidth = 900
+    const imgWidth = 950
     const images = document.querySelector('#pic_box')
 
     function plusposition() {
