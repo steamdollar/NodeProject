@@ -47,4 +47,28 @@ h1 {
 #update_frm_wrap > form {
     margin: 10px auto;
     border: 1px solid black;
+    width: 480px;
+
+    border-radius: 10px;
+    padding: 20px;
 }
+
+.tbody > tr > .metadata {
+    font-size: 14px;
+    width: 100px;
+}
+
+tr {
+    height: 30px;
+}
+
+.value > input{
+    border:none;
+    outline: none;
+    border-bottom: 2px solid #333;
+}
+
+#userimg {
+    border-bottom: none;
+}
+
