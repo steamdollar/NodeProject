@@ -118,7 +118,7 @@ input[id="icon"] + label > span:nth-child(3) {
 
 #menu > ul > li >a{
     display: inline-block;
-    font-size: 60px;
+    font-size: 90px;
     font-family: 'FF Signa Serif Stencil', 'Book';
     color: #96fafa;
 
@@ -126,7 +126,7 @@ input[id="icon"] + label > span:nth-child(3) {
 
 #menu > ul > li:hover > a {
     text-decoration: line-through;
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 3px;
     /* transition: all 0.2s ease-in-out; */
 }
 
