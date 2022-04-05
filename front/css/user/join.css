@@ -70,6 +70,10 @@
     
 }
 
+#join_frm > ul > .join_image {
+    margin-left:8px;
+}
+
 #join_frm > ul > li > #btn {
     width:300px;
     height:45px;
@@ -83,35 +87,31 @@
 
 }
 
-#join_frm > ul > .join_image {
-    
-}
-
 
 #join_frm > ul > li > span > .upload-name {
     padding: 0 10px;
     vertical-align: middle;
-    width: 170px;
+    width: 175px;
     height: 40px;
     color: #999999;
     margin-right:20px;
 }
 
 #join_frm > ul > li > span > label {
-    /* display: inline-block; */
     padding: 11px 14px;
     color: #fff;
     vertical-align: middle;
-    background-color: #999999;
+    background-color: #333;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
     width:100px;
     height: 40px;
     font-size: 13px;
+    font-weight:bold;
+    box-shadow:1px 1px 1px 0px rgba(0,0,0,0.2);
 }
 
 #join_frm > ul > li > span input[type="file"] {
-    /* position: absolute; */
     width: 0;
     height: 0;
     padding: 0;
