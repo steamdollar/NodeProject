@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5d690f53370747fe1ba19cdfe9287f34b23a05f9
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,36 +35,36 @@
                     <table id="pf_table">
                         <tbody class="tbody">
                             <tr>
-                                <td> * 아이디 </td>
-                                <td> {{user.userid}} </td>
+                                <td class='metadata'> * 아이디 </td>
+                                <td class="value"> {{user.userid}} </td>
                             </tr>
                             <tr>
-                                <td> * 비밀번호 </td>
-                                <td> <input type="password" name="userpw" value="{{user.userpw}}" id="userpw"> </td>
+                                <td class='metadata'> * 비밀번호 </td>
+                                <td class="value"> <input type="password" name="userpw" value="{{user.userpw}}" id="userpw"> </td>
                             </tr>
                             <tr>
-                                <td> * 프로필 사진 </td>
-                                <td> <input type="file" name="userimg" value="{{user.userimg}}" id="userimg"> </td>
+                                <td class='metadata'> * 프로필 사진 </td>
+                                <td class="value"> <input type="file" name="userimg" value="{{user.userimg}}" id="userimg"> </td>
                             </tr>
                             <tr>
-                                <td> * 닉네임 </td>
-                                <td> <input type="text" name="nickname" value="{{user.nickname}}" id="nickname"> </td>
+                                <td class='metadata'> * 닉네임 </td>
+                                <td class="value"> <input type="text" name="nickname" value="{{user.nickname}}" id="nickname"> </td>
                             </tr>
                             <tr>
-                                <td> * 주소 </td>
-                                <td> <input type="text" name="address" value="{{user.address}}" id="address"> </td>
+                                <td class='metadata'> * 주소 </td>
+                                <td class="value"> <input type="text" name="address" value="{{user.address}}" id="address"> </td>
                             </tr>
                             <tr>
-                                <td> * 성별 </td>
-                                <td> <input type="text" name="gender" value='남자' id="gender"> </td>
+                                <td class='metadata'> * 성별 </td>
+                                <td class="value"> <input type="text" name="gender" value='남자' id="gender"> </td>
                             </tr>
                             <tr>
-                                <td> * 전화번호 </td>
-                                <td> <input type="text" name="phone" value="{{user.phone}}" id="phone"> </td>
+                                <td class='metadata'> * 전화번호 </td>
+                                <td class="value"> <input type="text" name="phone" value="{{user.phone}}" id="phone"> </td>
                             </tr>
                             <tr>
-                                <td> * 핸드폰번호 </td>
-                                <td> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
+                                <td class='metadata'> * 핸드폰번호 </td>
+                                <td class="value"> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
                             </tr>
                         </tbody>       
                     </table>
@@ -79,7 +76,6 @@
                     <button><a href="/user/profile?nickname={{user.nickname}}">프로필</a></button>
                 </div>
             </form>
-
         </div>
     </div>
 
@@ -100,7 +96,6 @@
             formData.append('address',document.querySelector('#address').value)
             formData.append('phone',document.querySelector('#phone').value)
             formData.append('mobile',document.querySelector('#mobile').value)
-
             formData.append('email',document.querySelector('#email').value)
             formData.append('userintro',document.querySelector('#userintro').value)
            
