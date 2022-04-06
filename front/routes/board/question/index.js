@@ -10,7 +10,7 @@ const option = {
 
 router.get('/', async (req,res) => {
  
-    res.render('./board/notice/notice_list.html')
+    res.render('./board/question/question_list.html')
 })
 
 module.exports = router

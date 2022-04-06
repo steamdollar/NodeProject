@@ -7,6 +7,7 @@
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/user/join.css">
+    <link rel="stylesheet" href="/user/font.css">
 </head>
 <body>
     <div id="join">
@@ -25,21 +26,16 @@
                     <li>
                         <h3>패스워드</h3>
                         <span>
-                            <input type="text" name="userpw" id="userpw" value="">
+                            <input type="password" name="userpw" id="userpw" value="">
                         </span>
                     </li>
-                    <li>
+                    <li class = join_image>
                         <h3>프로필사진</h3>
                         <span>
+                            <input class="upload-name" value="이미지" placeholder="이미지">
+                            <label for="userimg">파일찾기</label>
                             <input type="file" name="userimg" id="userimg">
-                            <!-- <input type="file" name="userimg2" id="userimg2">
-                            <input type="file" name="userimg3" id="userimg3">
-                            <input type="file" name="userimg4" id="userimg4">
-                            <input type="file" name="userimg5" id="userimg5"> -->
                         </span>
-                        <!-- 파일을 업로드해 submit 하면 서버에 저장하고 링크만 
-                        DB에 저장하고 사진을 렌더링하고 싶을때 img src의 값을 주는식으로
-                        구현할 예정?-->
                     </li>
                     <li>
                         <h3>이름</h3>
@@ -114,13 +110,10 @@
                             </label>
                         </div>
                     </li>
-                    <!-- <li>
-                        <span> 약관에 동의하십니까? </span>
-                        <input type="checkbox" checked>
-                    </li> -->
-                    <!-- script에 조건문써서 체크 안되면 동의해주세요 알람 띄우게-->
+                    <li>
+                        <input type="submit" id="btn" value="회원가입">
+                    </li>
                 </ul>
-                <input type="submit" id="btn" value="회원가입">
             </form>
         </div>
     </div>
@@ -202,11 +195,5 @@
             }     
         })
     </script>
-
-    <!-- 카카오 이용하는거 어떻게 하는 건지 공부 필요-->
-
-    <!-- 사용해야 하는가 oauth2.0인지 그냥 ouath인지..
-    이건 회원가입이 필요없다는데 왜 회원 가입 페이지가 필요할까..
-    회원 가입 양식을 내 맘대로 정할수 있는건가?-->
 </body>
 </html>

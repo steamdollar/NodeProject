@@ -1,23 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style> img { height:100px; width:100px;}</style>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
+{% extends 'utils/header.html' %}
 
+{% block content %}
 <body>
-    
-    <span id="userid">{{userid}}</span><br>
+    <span id="userid">{{userid}}</span>
+    <div id="view_wrap">
+        <dl>
+            <dt id="view_dt">
+                <div id="view_title">
+                    <span id="title">{{cate1_view.title}}</span>
+                </div>
+                <div id="view_head">
+                    <span id="category">{{cate1_view.category}}</span>
+                    <span id="view_date">{{ cate1_view.date }}</span>
+                    <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
+                </div>
+            </dt>
+            <dd id="view_dd">
+                <div id="view_content">
+                    {{ cate1_view.content }}
+                </div>
+            </dd>
+        </dl>
 
-    카테고리 : <span id="category">{{cate1_view.category}}</span><br>
-    제목 : <span id="title">{{cate1_view.title}}</span><br/>
-    닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
-    내용 : {{ cate1_view.content }}<br/>
-    작성일자 : {{ cate1_view.date }}
+        <!-- 카테고리 : <span id="category">{{cate1_view.category}}</span><br>
+        제목 : <span id="title">{{cate1_view.title}}</span><br/>
+        닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
+        내용 : {{ cate1_view.content }}<br/>
+        작성일자 : {{ cate1_view.date }} -->
+    </div>
     <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
         <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
         <input type="submit" value="글 삭제">
@@ -87,7 +97,6 @@
         </span>
     </template>
     <!--댓글 수정 -->
-
     <script type="text/javascript">
         const option = {
             'Content-type':'application/json',
@@ -453,5 +462,4 @@
             
         })
     </script>
-</body>
-</html>
+{% endblock %}

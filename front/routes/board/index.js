@@ -6,9 +6,10 @@ const cookieParser = require('cookie-parser')
 const multer = require('multer')
 const path = require('path')
 const cate1Router = require('./cate1/index.js')
-const QnARouter = require('./QnA/QnA_index.js')
+const QnARouter = require('./QnA/index.js')
 const noticeRouter = require('./notice/index.js')
-
+const requestRouter = require('./request/index.js')
+const questionRouter = require('./question/index.js')
 const app = express()
 
 const upload = multer({
@@ -41,5 +42,8 @@ router.use('/QnA', QnARouter)
 // notice
 router.use('/notice', noticeRouter)
 
+router.use('/request', requestRouter)
+
+router.use('/question', questionRouter)
 
 module.exports = router

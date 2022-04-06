@@ -18,6 +18,39 @@ app.use(express.static('public'))
 app.use(Auth)
 app.use(router)
 
+// app.post('/api/auth', (req, res, next) => {
+//     try {
+//         const { token } = req.body
+//         if (token === undefined) throw new Error('no token')
+//         const [header,payload,sign] = token.split('.') // 결과물이 뭐냐.
+//         //[eyJ0cHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9,eyJ1c2VyaWQiOiJhZG1pbiIsIm5hbWUiOiJhYSIsIm5pY2tuYW1lIjoicXdlcSIsInVzZXJsZXZlbCI6MX0,LEgXmfqxlZvB3+ryHOTkfnntVA1BD4k6FL17saBJBBE]
+//         const signature = createSignature(header,payload)
+
+//         if (sign !== signature) throw new Error('invalid token')
+//         const user = JSON.parse( Buffer.from(payload,'base64').toString('utf-8') )
+
+//         const response = {
+//             errno:0,
+//             ...user
+//         }
+//         res.json(response)
+//     }
+//     catch (e) {
+//         console.log(e.message)
+//         if( e.message == 'no token') {
+//             const response = {
+//                 errno:1
+//             }
+//             res.json(response)
+//         }
+//         else if (e.message == 'invalid token') {
+//             const response = {
+//                 errno:2
+//             }
+//             res.json(response)
+//         }
+//     }
+// })
 // app.post('/api/auth', (req, res) => {
 //     try {
 //         const {token} = req.cookies

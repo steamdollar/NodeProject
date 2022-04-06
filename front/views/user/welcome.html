@@ -1,32 +1,36 @@
-{% include "../utils/header.html" %}
+{% extends "../utils/header.html" %}
 {% block content %}
+    <div id="welcome_wrap">
+        <div id="wel_back">
 
-    <h2>회원 가입이 완료 되었습니다!</h2>
-    <div id ="welcome">
+            <div><img src="http://localhost:3000/logo.jpg"></div>
+            <h3 id="wel_nick"> {{nickname}}님, 환영합니다!</h3>
 
+            <div class="wel_text">대충 공간을 채워줄 환영문구.. 이런거 해보세요!</div>
+            <div class="wel_text">저런것도 해보세요!</div>
 
+            <div id="wel_button">
+                <span id="gd"><a href="/">메인으로</a></span>
+                <span><a href="/board">게시판</a></span>
+            </div>
+                
+            <div class="wel_msg">
+                즐거운 시간 되세요!
+            </div>
+            <div class="wel_enj">
+                Enjoy it!
+            </div>
+
+            <div id="wel_foot">
+                <div class="wel_ftr">
+                    in PA db and sb exist alternatively
+                </div>
+
+                <div class="wel_ftr">
+                    does not matter since they are going to start clearing
+                </div class="wel_ftr">
+            </div>
+            <span id="wel_copy">@ powered by team4</span>
+        </div>
     </div>
-    <!-- <template id ="welcomes"></template> -->
-        <h3> {{nickname}}님, 환영합니다!</h3> 
-        <ul>
-            <li>
-                <span id="userid">아이디 : {{userid}} </span> 
-            </li>
-            <li>
-                <span id="username">이름 : {{username}} </span>
-            </li>
-            <li>
-                <span id="nickname">닉네임 :{{nickname}}</span>
-            </li>
-            <li>
-                <span id="address">이메일 : {{email}}</span>
-            </li>
-            <li>
-                <span id="mobile">핸드폰 : {{mobile}}</span>
-            </li>
-        </ul>
-    <!-- </template> -->
-    <button><a href="/user/login">로그인</a></button>
-    <!-- 회원 가입 submit시 제출한 데이터의 값을 그대로 get/쿼리스트링으로
-    넘겨줘서 표현할 예정-->
 {% endblock %}

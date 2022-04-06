@@ -16,12 +16,15 @@
     <link rel="stylesheet" href="/user/login.css">
     <link rel="stylesheet" href="/user/profile.css">
     <link rel="stylesheet" href="/user/update.css">
+    <link rel="stylesheet" href="/user/welcome.css">
+    <link rel="stylesheet" href="/user/font.css">
     <link rel="stylesheet" href="/board/cate1/list.css">
     <link rel="stylesheet" href="/board/cate1/update.css">
     <link rel="stylesheet" href="/board/cate1/view.css">
     <link rel="stylesheet" href="/board/cate1/write.css">
+    <script type="text/javascript" src="http://localhost:3000/js/scroll.js"></script>
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
+
 </head>
 <body>
     <div id="wrap">
@@ -29,8 +32,16 @@
 
         </div>
         <header id="header">
+            <div id="banner">
                 <div id="logo_box">
                     <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+
+                <div id="access2">
+                    <a href ='/board'>Board</a>
+                    <a href="/board/notice">Notice</a>
+                    <a href="/user/profile2">Profile</a>
+                    <a href="" id="logout">Logout</a>
                 </div>
     
                 <div id="hamberger">
@@ -42,17 +53,18 @@
                     </label>
                     <div id="menu">
                         <ul>
-                            <li><a href="#">Introdue</a></li>
+                            <li><a href="#">Introduce</a></li>
                             <li><a href="#">Enjoy it!</a></li>
-                            <li><a href="#">Board</a></li>
+                            <li><a href="#">News</a></li>
                             <li><a href="#">This month</a></li>
                         </ul>
                     </div>
                 </div>
+            </div> 
         </header>
         {% block content %}
         {% endblock %}
     </div>
-</body>
 
+</body>
 </html>

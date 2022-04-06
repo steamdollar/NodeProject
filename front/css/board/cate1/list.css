@@ -1,0 +1,140 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+
+#board_search > #frm_search {
+    width:80%;
+    height:200px;
+    margin:130px auto 0;
+    background:#f2f3f5;
+    padding:20px;
+    border-radius: 5px;
+}
+
+#board_search > #frm_search > #board_frm > #board_select {
+    width:835px;
+    padding:30px;
+    border-bottom:1px solid #e0e1e3;
+    margin: 0 auto;
+}
+
+#board_search > #frm_search > #board_frm > #board_select > #board_cate > #category{
+    width:300px;
+    height:40px;
+    padding:10px 10px;
+    line-height:normal;
+}
+
+#category > option {
+    display:block;
+    height:20px;
+    line-height:normal;
+}
+
+#board_search > #frm_search > #board_frm > #board_select > #board_key > #keyword {
+    width:300px;
+    height:40px;
+    padding-left:10px;
+ 
+}
+
+#board_submit {
+    width:300px;
+    margin:20px auto;
+}
+
+#board_submit > #search {
+    width:300px;
+    height:40px;
+    overflow: hidden;
+    color: #eee;
+    background:#212e4e;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: -0.5px;
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+#board_submit > #search:hover{
+    background:#3aa9e2;
+}
+
+#board_main {
+    width:100%;
+}
+
+#board_writer {
+    display:block;
+    width:80%;
+    height:40px;
+    margin:40px auto 0px;
+    
+}
+
+#board_writer > #address {
+    display:block;
+    padding:10px;
+    background:#212e4e;
+    font-size:18px;
+    border-radius: 5px;
+    color:#eee;
+    cursor: pointer;
+    float:right;
+    line-height:15px;
+}
+
+#board_table {
+    position:relative;
+    border-collapse: collapse;
+    border-top:2px solid #333;
+    width:80%;
+    margin: 0 auto 0;
+    
+}
+
+
+#board_thead > tr {
+    font-size: 25px;
+    background: #f4f5f7;
+    padding:15px;
+    height:60px;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    border-bottom: 1px solid #e2e2e2;
+    text-align: center;
+    border:none;
+    box-sizing: border-box;
+    outline:none;
+   
+    
+}
+
+#board_list {
+    font-size:15px;
+    
+}
+
+#board_list > tr {
+    height:60px;
+    padding:5px;
+    border-bottom: 1px solid #e2e2e2;
+    font-size:20px;
+    
+}
+
+#board_list > tr > #temp_title {
+    text-align:left;
+    font-style:normal;
+}
+
+.th_thum {
+    width:200px;
+    height:200px;
+}
+
+
