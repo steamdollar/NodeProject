@@ -12,6 +12,7 @@
                 <div id="view_head">
                     <span id="category">{{cate1_view.category}}</span>
                     <span id="view_date">{{ cate1_view.date }}</span>
+                    <span id="writerid">{{cate1_view.userid}}</span>
                     <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
                 </div>
             </dt>
@@ -156,10 +157,14 @@
             e.preventDefault()
 
             const idx = delForm.querySelector('#idx')
+            const writerid = document.querySelector('#writerid')
+            const userid = document.querySelector('#userid')
             
             const data = {
                 idx:idx.value,
-                category:category.innerHTML
+                category:category,
+                writerid:writerid.innerHTML,
+                userid:userid.innerHTML
             }
 
 

@@ -148,12 +148,13 @@ exports.viewuser = async (req,res) => {
 
 
 exports.del = async (req,res)=>{
-    const {idx, category} = req.body
+    const {idx, category, writerid, userid} = req.body
 
     const sql = `select * from cate1_bridge where midx = ?`
     const param = [idx]
 
     try {
+        if( writerid === userid ) { throw new Error('작성자가 아님') }
         const [result] = await pool.execute(sql,param)
 
         for (i = 0; i<result.length; i++) {
@@ -187,9 +188,9 @@ exports.del = async (req,res)=>{
     catch (e) {
         console.log(e.message)
         const response = {
-            errormsg: e.message
+            errormsg: e.message,
+            errno:1
         }
-        
         res.json(response)  
     }
 }

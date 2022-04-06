@@ -42,8 +42,7 @@ const check = async (req, res, next) => {
 
 router.get('/view', check, async (req, res) => {
     const idx = req.query
-    console.log('asd',req.query)
-    console.log(idx)
+
     const { token } = req.cookies
     const [ header , payload, sign ] = token.split('.')
     const user = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
