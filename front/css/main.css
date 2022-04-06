@@ -89,6 +89,7 @@
 
 #chat_box{
     width: 25%;
+    height: 50%;
     /* height: 100%; /크기조정해도됨 */
     background: red;
 }

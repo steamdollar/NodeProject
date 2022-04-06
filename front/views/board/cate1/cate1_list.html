@@ -65,6 +65,7 @@
 
         <template id="board_temp">
             <tr>
+                <th>{img1}</th>
                 <th>{category}</th>
                 <th id="temp_title"><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
                 <th>{nickname}</th>
@@ -116,8 +117,8 @@
         </script> -->
 <style>
     .thumb {
-        width:100px !important;
-        height: 100px !important;
+        width:30px !important;
+        height: 30px !important;
     }
 
     #paging > ul > li:nth-child(1) {
@@ -130,15 +131,15 @@
     #imgZone > span {
         position: relative;
     }
-
-    .cloak {
-        display:none;
+    img {
+        width: 50px;
+        height: 50px;
     }
-
 </style>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     let test = {}
+    let hope = []
     const option = {
             'Content-type':'application/json',
             withCredentials:true
@@ -150,44 +151,27 @@
         
 
         const data = { category:category }
-
+        
         const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
         test = { ...response1.data }
         const cate1_list = response1.data
 
         let content_list = []
+        let content_list2 = []
         for (let i =0; i<response1.data.result1.length; i++) {
             if(response1.data.result1[i].hidden =='off') {
                 content_list.push(response1.data.result1[i])
+                content_list2.push(response1.data.result1[i])
             }
         }
 
-        let template = ''
-        search_list = []
-        const board_temp = document.querySelector('#board_temp').innerHTML
-        const promise = content_list.forEach(async (v)=>{
-            search_list.push(v)
-            let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
-
-            template += board_temp.replaceAll('{idx}', idx)
-                            .replace('{category}',category)
-                            .replace('{title}',title)
-                            .replace('{content}',content)
-                            .replace('{userid}', userid)
-                            .replace('{nickname}',nickname)
-                            .replace('{date}',date)
-                            .replace('{hit}',hit)
-                            .replace('{likes}',likes)
-        })
-
-        board_list.innerHTML = template
         //
         //
         // 썸네일
         const response2 = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
         const tempThumb = response2.data.final_result // [{}, {}, {}]
         let thumbNail = []
-
+        // console.log(tempThumb)
         for (let i = 0; i<tempThumb.length; i++) {
             if(tempThumb[i].img1 !== 'N/A') {
                 thumbNail.push(tempThumb[i].img1)
@@ -197,19 +181,37 @@
             }
         }
 
-        for ( let i =0; i<thumbNail.length; i++) {
-            const imgZone = document.querySelector('#imgZone')
-            const imgSpan = document.createElement('span')
-            const imgElement = document.createElement('img')
-            imgElement.setAttribute('class','thumb')
-            imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i]}`)
-            
-            imgSpan.append(imgElement)
-            imgZone.append(imgSpan)
-            if( thumbNail[i] === 'default.jpg' ) {
-                imgSpan.setAttribute('class', 'cloak')
-            }
+
+        for (let i = 0; i<content_list2.length; i++) {
+            let nProduct = { ...content_list2[i] }
+            nProduct.img1 = thumbNail[i]
+            hope.push(nProduct)
         }
+
+        let template = ''
+        search_list = []
+        const board_temp = document.querySelector('#board_temp').innerHTML
+        
+        const promise = hope.forEach( (v)=>{
+            search_list.push(v)
+            let {idx, img1, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+            
+            template +=
+                board_temp.replace('{img1}',`<img src='http://localhost:4000/uploads/${img1}'>`)
+                .replace('{idx}', idx)
+                .replace('{category}',category)
+                // .replace('{img1}', `<img src='http://localhost:4000/uploads/${img1}'>`)
+                .replace('{a}','asdf')
+                .replace('{title}',title)
+                .replace('{content}',content)
+                .replace('{userid}', userid)
+                .replace('{nickname}',nickname)
+                .replace('{date}',date)
+                .replace('{hit}',hit)
+                .replace('{likes}',likes)
+        })
+
+        board_list.innerHTML = template
         //
         //
         // 페이징
@@ -246,10 +248,11 @@
             paging.appendChild(liElement)
         }
 
-        const Nodes = response1.data.result1.slice((page - 1) * view_article, page * view_article)
+        const Nodes = hope.slice((page - 1) * view_article, page * view_article)
         const board_row = document.querySelector('#board_temp')
         const tbody = document.querySelector('#board_list')
-        console.log(Nodes)
+
+
         Nodes.forEach( v => {
             const clone = document.importNode(board_row.content,true)
             const th = clone.querySelectorAll('th')
@@ -257,15 +260,16 @@
             aElement.href=`/board/cate1/view/?idx=${v.idx}`
             aElement.innerHTML = v.subject
 
-            th[0].innerHTML = v.idx
-            th[1].innerHTML = v.category
-            th[2].innerHTML = v.title
-            th[3].innerHTML = v.userid
-            th[4].innerHTML = v.nickname
-            th[5].innerHTML = v.content
-            th[6].innerHTML = v.date
-            th[7].innerHTML = v.hit
-            th[8].innerHTML = v.likes
+            th[0].innerHTML = v.img1
+            th[1].innerHTML = v.idx
+            th[2].innerHTML = v.category
+            th[3].innerHTML = v.title
+            th[4].innerHTML = v.userid
+            th[5].innerHTML = v.nickname
+            th[6].innerHTML = v.content
+            th[7].innerHTML = v.date
+            th[8].innerHTML = v.hit
+            th[9].innerHTML = v.likes
 
             tbody.appendChild(clone)
         })
@@ -275,7 +279,7 @@
     function pagemove(num) {
             const trElement = document.querySelector('#board_temp').innerHTML
             const view_article = 10
-            const raw = test.result1
+            const raw = hope
             let refine = []
 
             for(i = 0; i <raw.length; i++) {
@@ -285,7 +289,7 @@
             }
 
             const Nodes = refine.slice((num-1) * view_article, num * view_article)
-
+            console.log(Nodes)
             let template = ''
             Nodes.forEach( v=> {
                 template += trElement.replaceAll('{idx}', v.idx)
@@ -297,13 +301,13 @@
                             .replace('{date}',v.date)
                             .replace('{hit}',v.hit)
                             .replace('{likes}',v.likes)
+                            .replace('{img1}', `<img src='http://localhost:4000/uploads/${v.img1}'>`)
             })
 
             const tbody = document.querySelector('#board_list')
             tbody.innerHTML = template
     }
 
-    
 </script>
 {% endblock %}
 

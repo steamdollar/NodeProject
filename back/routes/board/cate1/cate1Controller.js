@@ -122,13 +122,13 @@ exports.view = async (req,res) => {
 }
 
 exports.viewuser = async (req,res) => {
-    console.log('asda',req.user)
+
     const {nickname} = req.user
     const sql = `select * from user where nickname=?`
     const param = [nickname]
     try{
         const [result] = await pool.execute(sql,param)
-        console.log(result)
+
         const response = {
             result,
             errno:0
@@ -488,7 +488,7 @@ exports.imgUpdate = async (req, res) => {
 
 exports.thumbnail = async (req, res) => {
     const { category } = req.body
-    console.log(category)
+
     const sql = `select * from cate1 where hidden = 'off' and category = "${category}";`
     const param1 = [category]
 
@@ -504,7 +504,7 @@ exports.thumbnail = async (req, res) => {
             const [[result1]] = await pool.execute(sql1, param1)
             final_result.push(result1)
         }
-        console.log(final_result)
+
         const response = {
             final_result
         }
@@ -568,7 +568,7 @@ exports.search = async (req, res) => {
             for(let i = 0; i<midx.length; i++) {
                 const param3 = [midx[i].midx]
                 const [result3] = await pool.execute(sql3, param3)
-                console.log(result3[0])
+
                 final.push(result3[0])
             }
 
