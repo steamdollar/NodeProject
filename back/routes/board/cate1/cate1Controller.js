@@ -46,8 +46,8 @@ exports.write = async (req,res) => {
 
 exports.list = async (req,res)=>{
     const {category} = req.body
-    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from ${category} c left join cate1_like l on c.idx = l.m_idx group by c.idx;`
-    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden='off'`
+    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where c.category = '${category}' group by c.idx;`
+    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and category = '${category}'`
     try {
         const [result1] = await pool.execute(sql1)
         const [[{total_record}]] = await pool.execute(sql2)
@@ -59,7 +59,6 @@ exports.list = async (req,res)=>{
         res.json(response) 
     } 
     catch (e) {
-        console.log(e.message)
         const response = {
             errormsg: e.message
         }
@@ -383,7 +382,7 @@ exports.hashtagLoad = async (req, res) => {
 
 exports.imgUp = async (req, res) => {
     const { midx, category } = req.body
-    
+
     let images = []
     for(let i=1; i<=5; i++) {
         try {
@@ -446,7 +445,6 @@ exports.imgLoad = async (req, res) => {
 
 exports.imgUpdate = async (req, res) => {
     const { idx, category, originLength } = req.body
-    console.log(originLength) // 원래있던 사진 수
 
     let images = []
     for(let i=1; i<=5; i++) {
@@ -459,7 +457,6 @@ exports.imgUpdate = async (req, res) => {
         }
     }
 
-    console.log(images)
     try {
         let final_result = []
         for ( let i = 0; i < images.length; i++) {
@@ -491,21 +488,23 @@ exports.imgUpdate = async (req, res) => {
 
 exports.thumbnail = async (req, res) => {
     const { category } = req.body
-    const sql = `select * from ${category} where hidden = 'off'`
+    console.log(category)
+    const sql = `select * from cate1 where hidden = 'off' and category = "${category}";`
     const param1 = [category]
 
     try {
         const [result] = await pool.execute(sql, param1)
-        // console.log(result[0].idx) // [{}, {}, {}]
+        // console.log(result[0]) // [{}, {}, {}]
         let final_result = []
 
         for ( let i = 0; i < result.length; i++ ) {
             const sql1 = `select img1 from image where category=? and midx=?`
             const param1 = [category, result[i].idx]
             // console.log(result[i].idx)
-            const [result1] = await pool.execute(sql1, param1)
+            const [[result1]] = await pool.execute(sql1, param1)
             final_result.push(result1)
         }
+        console.log(final_result)
         const response = {
             final_result
         }
@@ -588,5 +587,33 @@ exports.search = async (req, res) => {
             }
             res.json(response)
         }
+    }
+}
+
+exports.searchThumbNail = async (req, res) => {
+    const { thumbIdx } = req.body
+
+    const sql = `select img1 from image where midx=?`
+    let final_result = []
+    try {
+        for (let i = 0; i< thumbIdx.length; i++) {
+            const param = [thumbIdx[i]]
+            const [[result]] = await pool.execute(sql, param)
+            final_result.push(result)
+        }
+
+        const response = {
+            final_result,
+            errorno: "none"
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno: e.errno
+        }
+        res.json(response)
     }
 }

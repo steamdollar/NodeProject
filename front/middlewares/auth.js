@@ -19,6 +19,19 @@ exports.Auth = async (req, res, next) => {
     }
 }
 
+// exports.Auth = async (req, res, next) => {
+
+
+//     const response = await axios.post('http://localhost:4000/api/auth', body, option)
+
+//     if (response.data === true) {
+//         next ()
+//     }
+//     else {
+//         res.render('token.html')
+//     }
+// }
+
 // const { createSignature } = require('../../back/utils/jwt')
 
 // exports.Auth = (req,res,next) => {

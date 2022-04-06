@@ -13,87 +13,7 @@
         }
     </style>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript">
-        const option = {
-                'Content-type':'application/json',
-                withCredentials:true
-            }
-        
-            document.addEventListener('DOMContentLoaded', async() => {
-            
-            const uri = location.pathname
-            const category = uri.split('/')[2]
-            
-            
-            const searchOp = "{{option}}"
-            const searchKey = "{{keyword}}"
-
-            const data = {
-                category:category,
-                searchOp:searchOp,
-                searchKey:searchKey
-            }
-
-            const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
-            const cate1_list = response1.data.result
-            console.log(cate1_list)
-
-            let content_list = []
-
-            if(cate1_list !== undefined) {
-                for (let i =0; i<cate1_list.length; i++) {
-                    if(cate1_list[i].hidden =='off') {
-                        content_list.push(cate1_list[i])
-                    }
-                }
-            }
-
-            let template = ''
-            search_list = []
-            const board_temp = document.querySelector('#board_temp').innerHTML
-            const promise = content_list.forEach(async (v)=>{
-                search_list.push(v)
-                let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
-
-                template += board_temp.replaceAll('{idx}', idx)
-                                .replace('{category}',category)
-                                .replace('{title}',title)
-                                .replace('{content}',content)
-                                .replace('{userid}', userid)
-                                .replace('{nickname}',nickname)
-                                .replace('{date}',date)
-                                .replace('{hit}',hit)
-                                .replace('{likes}',likes)
-            })
-
-            board_list.innerHTML = template
-            //
-            //
-            
-            const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
-            const tempThumb = response.data.result1 // [{}, {}, {}]
-            let thumbNail = []
-
-            for (let i = 0; i<tempThumb.length; i++) {
-                if(tempThumb[i].img1 !== 'N/A') {
-                    thumbNail.push(tempThumb[i].img1)
-                }
-                else {
-                    thumbNail.push('default.jpg')
-                }
-            }
-
-            for ( let i =0; i<thumbNail.length; i++) {
-                const imgZone = document.querySelector('#imgZone')
-                const imgSpan = document.createElement('span')
-                const imgElement = document.createElement('img')
-                imgElement.setAttribute('class','thumb')
-                imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i]}`)
-                imgSpan.append(imgElement)
-                imgZone.append(imgSpan)
-            }
-        })
-    </script>
+    
 </head>
 <body>
     <span id="option" value="{{option}}" class="hidden"></span>
@@ -128,7 +48,7 @@
         <template id="board_temp">
             <tr>
 
-                <th>{idx}</th>
+                <th class="index">{idx}</th>
                 <th>{category}</th>
                 <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
                 <th>{userid}</th>
@@ -142,5 +62,109 @@
 
         <span id="imgZone"></span>
 
+        <script type="text/javascript">
+            const option = {
+                    'Content-type':'application/json',
+                    withCredentials:true
+                }
+            
+                document.addEventListener('DOMContentLoaded', async() => {
+                
+                const uri = location.pathname
+                const category = uri.split('/')[2]
+                const searchOp = "{{option}}"
+                const searchKey = "{{keyword}}"
+    
+                const data = {
+                    category:category,
+                    searchOp:searchOp,
+                    searchKey:searchKey
+                }
+    
+                const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
+                const cate1_list = response1.data.result
+    
+                let content_list = []
+    
+                if(cate1_list !== undefined) {
+                    for (let i =0; i<cate1_list.length; i++) {
+                        if(cate1_list[i].hidden =='off') {
+                            content_list.push(cate1_list[i])
+                        }
+                    }
+                }
+    
+                let template = ''
+                search_list = []
+                const board_temp = document.querySelector('#board_temp').innerHTML
+                const promise = content_list.forEach(async (v)=>{
+                    search_list.push(v)
+                    let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+    
+                    template += board_temp.replaceAll('{idx}', idx)
+                                    .replace('{category}',category)
+                                    .replace('{title}',title)
+                                    .replace('{content}',content)
+                                    .replace('{userid}', userid)
+                                    .replace('{nickname}',nickname)
+                                    .replace('{date}',date)
+                                    .replace('{hit}',hit)
+                                    .replace('{likes}',likes)
+                })
+    
+                board_list.innerHTML = template
+                //
+                //
+                
+                // const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
+                // const tempThumb = response.data.final_result // [{}, {}, {}]
+                // let thumbNail = []
+
+                // for (let i = 0; i<tempThumb.length; i++) {
+                //     if(tempThumb[i].img1 !== 'N/A') {
+                //         thumbNail.push(tempThumb[i].img1)
+                //     }
+                //     else {
+                //         thumbNail.push('default.jpg')
+                //     }
+                // }
+                const qwe = document.querySelectorAll('.index')
+                // console.log(qwe[0].innerHTML)
+                let thumbIdx = []
+                for (i = 0; i < qwe.length; i ++) {
+                    thumbIdx.push(qwe[i].innerHTML)
+                }
+
+    
+                const thumbData = {
+                    thumbIdx: thumbIdx
+                }
+
+                const response2 = await axios.post('http://localhost:4000/api/board/cate1/searchThumbNail', thumbData, option)
+                console.log(response2.data.final_result)
+                const thumbNail = response2.data.final_result
+
+                for ( let i =0; i<thumbNail.length; i++) {
+                    if( thumbNail[i].img1 !== 'N/A') {
+                        const imgZone = document.querySelector('#imgZone')
+                        const imgSpan = document.createElement('span')
+                        const imgElement = document.createElement('img')
+                        imgElement.setAttribute('class','thumb')
+                        imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i].img1}`)
+                        imgSpan.append(imgElement)
+                        imgZone.append(imgSpan)
+                    }
+                    else {
+                        const imgZone = document.querySelector('#imgZone')
+                        const imgSpan = document.createElement('span')
+                        const imgElement = document.createElement('img')
+                        imgElement.setAttribute('class','thumb')
+                        imgElement.setAttribute('src', `http://localhost:4000/uploads/default.jpg`)
+                        imgSpan.append(imgElement)
+                        imgZone.append(imgSpan)
+                    }
+                }
+            })
+        </script>
 </body>
 </html>
