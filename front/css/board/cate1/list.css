@@ -3,11 +3,89 @@
     padding:0px;
 }
 
+#board_search > #frm_search {
+    width:80%;
+    height:200px;
+    margin:130px auto 0;
+    background:#f2f3f5;
+    padding:20px;
+    border-radius: 5px;
+}
+
+#board_search > #frm_search > #board_frm > #board_select {
+    width:835px;
+    padding:30px;
+    border-bottom:1px solid #e0e1e3;
+    margin: 0 auto;
+}
+
+#board_search > #frm_search > #board_frm > #board_select > #board_cate > #category{
+    width:300px;
+    height:40px;
+    padding-left:10px;
+}
+
+#board_search > #frm_search > #board_frm > #board_select > #board_key > #keyword {
+    width:300px;
+    height:40px;
+    padding-left:10px;
+ 
+}
+
+#board_submit {
+    width:300px;
+    margin:20px auto;
+}
+
+#board_submit > #search {
+    width:300px;
+    height:40px;
+    overflow: hidden;
+    color: #eee;
+    background:#212e4e;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: -0.5px;
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+#board_submit > #search:hover{
+    background:#3aa9e2;
+}
+
+#board_main {
+    width:100%;
+}
+
+#board_writer {
+    display:block;
+    width:80%;
+    height:40px;
+    margin:40px auto 0px;
+    
+}
+
+#board_writer > #a_write {
+    display:block;
+    padding:10px;
+    background:#212e4e;
+    font-size:18px;
+    border-radius: 5px;
+    color:#eee;
+    cursor: pointer;
+    float:right;
+}
+
 #board_table {
+    position:relative;
     border-collapse: collapse;
     border-top:2px solid #333;
     width:80%;
-    margin: 150px auto 0;
+    margin: 0 auto 0;
     
 }
 
@@ -45,8 +123,4 @@
     height:200px;
 }
 
-#board_write {
-    width:100%;
-    margin-top:50px;
-    margin-left:180px;
-}
+

@@ -2,54 +2,88 @@
 
 {% block content %}
 <body>
-    <table id="board_table">
-        <thead id="board_thead">
+    <div id="board_search">
+        <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
+            <div id="board_frm">
+                <div id="board_select">
+                    <div id="board_cate" style="display:inline-block;" >
+                        <strong style="display:inline; padding:10px;" >검색옵션</strong>
+                        <select name="option" id="category" >
+                            <option value="" disabled>검색 옵션 선택</option>
+                            <option value="nickname" id="nickname" selected>닉네임</option>
+                            <option value="hashtag" id="hashtag">해시태그</option>
+                            <option value="title" id="title">제목</option>
+                            <option value="content" id="content">내용</option>
+                        </select>
+                    </div>
+                    <div id="board_key" style="display:inline-block;">
+                        <strong style="padding:10px 10px 10px 38px;">검색</strong>
+                        <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
+                    </div>
+                </div>
+                <div id="board_submit">
+                    <input type="submit" name="search" id="search" value="검색">
+                </div>
+                <!-- <div id="board_submit">
+                    <strong style="padding:10px 10px 10px 38px;">검색</strong>
+                    <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
+                    <input type="submit" name="search" id="search" value="검색">
+                </div> -->
+            </div>
+        </form>
+    </div>
+    <div id="board_main">
+        <div id="board_writer">
+            <a href="/board/cate1/write" id="a_write">글쓰기</a>
+        </div>
+        <table id="board_table">
+            <thead id="board_thead">
+                <tr>
+                    <!-- <th class="th_thum"><div id="imgZone"></div></th> -->
+                    <th>번호</th>
+                    <th>카테고리</th>
+                    <th>제목</th>
+                    <th>작성자 아이디</th>
+                    <th>작성자 닉네임</th>
+                    <th>내용</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                    <th>좋아요</th>
+                </tr>
+            </thead>
+
+            <tbody id="board_list">
+
+            </tbody>
+
+        </table>
+        <div id="paging">
+            <ul>
+                
+            </ul>
+        </div>
+
+        <template id="board_column">
+        </template>
+
+        <template id="board_temp">
             <tr>
-                <th class="th_thum"><div id="imgZone"></div></th>
-                <th>번호</th>
-                <th>카테고리</th>
-                <th>제목</th>
-                <th>작성자 아이디</th>
-                <th>작성자 닉네임</th>
-                <th>내용</th>
-                <th>작성일</th>
-                <th>조회수</th>
-                <th>좋아요</th>
+
+                <th>{idx}</th>
+                <th>{category}</th>
+                <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
+                <th>{userid}</th>
+                <th>{nickname}</th>
+                <th>{content}</th>
+                <th>{date}</th>
+                <th>{hit}</th>
+                <th>{likes}</th>
             </tr>
-        </thead>
-
-        <tbody id="board_list">
-
-        </tbody>
-
-    </table>
-    <div id="paging">
-        <ul>
-            
-        </ul>
+        </template>
     </div>
 
-    <template id="board_column">
-    </template>
-
-    <template id="board_temp">
-        <tr>
-
-            <th>{idx}</th>
-            <th>{category}</th>
-            <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
-            <th>{userid}</th>
-            <th>{nickname}</th>
-            <th>{content}</th>
-            <th>{date}</th>
-            <th>{hit}</th>
-            <th>{likes}</th>
-        </tr>
-    </template>
-
-
     <!-- <div id="imgZone"></div> -->
-    <div id="board_write">
+    <!-- <div id="board_write">
         <a href="/board/cate1/write">글쓰기</a>
         <div id="board_search">
             <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
@@ -60,15 +94,11 @@
                     <option value="title" id="title">제목</option>
                     <option value="content" id="content">내용</option>
                 </select>
-                <!-- <input type="hidden" id="option" name="option"> -->
                 <input type="text" name='keyword' placeholder="키워드를 입력하세요">
                 <input type="submit" name="search" id="search" value="선택">
             </form>
         </div>
-    </div>
-    <div>
-        <h2>검색</h2>
-    </div>
+    </div> -->
     <!-- <div id="board_search">
         <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
             <select name="option" id="category" >
