@@ -13,7 +13,7 @@
         const cate1 = document.querySelector('#cate1')
         const notice = document.querySelector('#notice')
         const QnA = document.querySelector('#QnA')
-        const request = document.querySelector('request')
+        const request = document.querySelector('#request')
         const question = document.querySelector('#question')
         const frm_search = document.querySelector('#frm_search')
         const search_btn = document.querySelector('#search_btn')
@@ -59,12 +59,13 @@
 
             
             }
-            else if(question === true){
+            else if(question.selected === true){
                 body.board_db = question.value
             }
-            else if(request === true){
+            else if(request.selected === true){
                 body.board_db = request.value
             }
+            console.log(body.board_db)
             const response = await axios.post('http://localhost:4000/api/admin/boardlist', body, option)
             const board = response.data.result
             const board_list = document.querySelector('#board_list') //빈 tbody
@@ -93,7 +94,7 @@
             await console.log(template)
 
             board_list.innerHTML = template
-
+            console.log("검색된 게시판은", search_list)
             search_list.forEach(async(v)=>{
                 const {idx, hidden} = v
                 let hiddenElement = document.querySelector(`#check_no${idx}`)
@@ -223,12 +224,12 @@
                 search_btn.disabled = false
 
             })
-
+            //글 내리기
             let data = {}
             data.idx = []
             data.hidden = []
             data.category = []
-            frm_hidden.addEventListener('submit', async (e)=>{ //글 내리기
+            frm_hidden.addEventListener('submit', async (e)=>{ 
                 e.preventDefault()
                 data = {}
                 data.idx = []
