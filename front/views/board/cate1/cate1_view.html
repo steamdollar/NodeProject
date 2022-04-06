@@ -2,11 +2,32 @@
 
 {% block content %}
 <body>
-    카테고리 : <span id="category">{{cate1_view.category}}</span><br>
-    제목 : <span id="title">{{cate1_view.title}}</span><br/>
-    닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
-    내용 : {{ cate1_view.content }}<br/>
-    작성일자 : {{ cate1_view.date }}
+    <span id="userid">{{userid}}</span>
+    <div id="view_wrap">
+        <dl>
+            <dt id="view_dt">
+                <div id="view_title">
+                    <span id="title">{{cate1_view.title}}</span>
+                </div>
+                <div id="view_head">
+                    <span id="category">{{cate1_view.category}}</span>
+                    <span id="view_date">{{ cate1_view.date }}</span>
+                    <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
+                </div>
+            </dt>
+            <dd id="view_dd">
+                <div id="view_content">
+                    {{ cate1_view.content }}
+                </div>
+            </dd>
+        </dl>
+
+        <!-- 카테고리 : <span id="category">{{cate1_view.category}}</span><br>
+        제목 : <span id="title">{{cate1_view.title}}</span><br/>
+        닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
+        내용 : {{ cate1_view.content }}<br/>
+        작성일자 : {{ cate1_view.date }} -->
+    </div>
     <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
         <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
         <input type="submit" value="글 삭제">

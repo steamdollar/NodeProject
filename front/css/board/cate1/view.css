@@ -7,3 +7,15 @@ img {
     width:100px;
     height:100px;
 }
+
+#view_dt {
+    padding: 29px 50px 22px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+
+#view_wrap {
+    width:80%;
+    height:700px;
+    margin:130px auto 0;
+}
