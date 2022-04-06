@@ -22,7 +22,14 @@
 #board_search > #frm_search > #board_frm > #board_select > #board_cate > #category{
     width:300px;
     height:40px;
-    padding-left:10px;
+    padding:10px 10px;
+    line-height:normal;
+}
+
+#category > option {
+    display:block;
+    height:20px;
+    line-height:normal;
 }
 
 #board_search > #frm_search > #board_frm > #board_select > #board_key > #keyword {
@@ -69,7 +76,7 @@
     
 }
 
-#board_writer > #a_write {
+#board_writer > #address {
     display:block;
     padding:10px;
     background:#212e4e;
@@ -78,6 +85,7 @@
     color:#eee;
     cursor: pointer;
     float:right;
+    line-height:15px;
 }
 
 #board_table {
@@ -91,7 +99,7 @@
 
 
 #board_thead > tr {
-    font-size: 20px;
+    font-size: 25px;
     background: #f4f5f7;
     padding:15px;
     height:60px;
@@ -115,7 +123,13 @@
     height:60px;
     padding:5px;
     border-bottom: 1px solid #e2e2e2;
+    font-size:20px;
     
+}
+
+#board_list > tr > #temp_title {
+    text-align:left;
+    font-style:normal;
 }
 
 .th_thum {

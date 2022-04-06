@@ -34,18 +34,15 @@
     </div>
     <div id="board_main">
         <div id="board_writer">
-            <a id="address" href="" id="a_write">글쓰기</a>
+            <a id="address" href="">글쓰기</a>
         </div>
         <table id="board_table">
             <thead id="board_thead">
                 <tr>
                     <!-- <th class="th_thum"><div id="imgZone"></div></th> -->
-                    <th>번호</th>
                     <th>카테고리</th>
                     <th>제목</th>
-                    <th>작성자 아이디</th>
-                    <th>작성자 닉네임</th>
-                    <th>내용</th>
+                    <th>작성자</th>
                     <th>작성일</th>
                     <th>조회수</th>
                     <th>좋아요</th>
@@ -68,13 +65,9 @@
 
         <template id="board_temp">
             <tr>
-
-                <th>{idx}</th>
                 <th>{category}</th>
-                <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
-                <th>{userid}</th>
+                <th id="temp_title"><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
                 <th>{nickname}</th>
-                <th>{content}</th>
                 <th>{date}</th>
                 <th>{hit}</th>
                 <th>{likes}</th>
@@ -196,8 +189,8 @@
         let thumbNail = []
 
         for (let i = 0; i<tempThumb.length; i++) {
-            if(tempThumb[i][0].img1 !== 'N/A') {
-                thumbNail.push(tempThumb[i][0].img1)
+            if(tempThumb[i].img1 !== 'N/A') {
+                thumbNail.push(tempThumb[i].img1)
             }
             else {
                 thumbNail.push('default.jpg')
@@ -256,7 +249,7 @@
         const Nodes = response1.data.result1.slice((page - 1) * view_article, page * view_article)
         const board_row = document.querySelector('#board_temp')
         const tbody = document.querySelector('#board_list')
-        
+        console.log(Nodes)
         Nodes.forEach( v => {
             const clone = document.importNode(board_row.content,true)
             const th = clone.querySelectorAll('th')
