@@ -1,54 +1,67 @@
 {% extends 'utils/header.html' %}
 
 {% block content %}
-        <h1>회원 정보 수정 페이지입니다.</h1>
-        <div id="update_frm_wrap">
-            
+    <div id="update_wrap">
+        <div id="update_form">
             <form method="post" id="update_frm" action="http://localhost:4000/api/user/update">
-                <div>
-                    <table id="pf_table">
-                        <tbody class="tbody">
-                            <tr>
-                                <td class='metadata'> * 아이디 </td>
-                                <td class="value"> {{user.userid}} </td>
-                            </tr>
-                            <tr>
-                                <td class='metadata'> * 비밀번호 </td>
-                                <td class="value"> <input type="password" name="userpw" value="{{user.userpw}}" id="userpw"> </td>
-                            </tr>
-                            <tr>
-                                <td class='metadata'> * 프로필 사진 </td>
-                                <td class="value"> <input type="file" name="userimg" value="{{user.userimg}}" id="userimg"> </td>
-                            </tr>
-                            <tr>
-                                <td class='metadata'> * 닉네임 </td>
-                                <td class="value"> <input type="text" name="nickname" value="{{user.nickname}}" id="nickname"> </td>
-                            </tr>
-                            <tr>
-                                <td class='metadata'> * 주소 </td>
-                                <td class="value"> <input type="text" name="address" value="{{user.address}}" id="address"> </td>
-                            </tr>
-                            <tr>
-                                <td class='metadata'> * 성별 </td>
-                                <td class="value"> <input type="text" name="gender" value='남자' id="gender"> </td>
-                            </tr>
-                            <tr>
-                                <td class='metadata'> * 전화번호 </td>
-                                <td class="value"> <input type="text" name="phone" value="{{user.phone}}" id="phone"> </td>
-                            </tr>
-                            <tr>
-                                <td class='metadata'> * 핸드폰번호 </td>
-                                <td class="value"> <input type="text" name="mobile" value="{{user.mobile}}" id="mobile"> </td>
-                            </tr>
-                        </tbody>       
-                    </table>
-                </div>
-                <div>
-                    <input type="submit" id="btn" value="수정">
-                </div>
-                <div>
-                    <button><a href="/user/profile?nickname={{user.nickname}}">프로필</a></button>
-                </div>
+                <ul>
+                    <li>
+                        <h3>아이디</h3>
+                        <span>
+                            <input type="text" name="userid" id="userid" value="{{user.userid}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>비밀번호</h3>
+                        <span>
+                            <input type="password" name="userpw" id="userpw" value="{{user.userpw}}">
+                        </span>
+                    </li>
+                    <li class="update_image">
+                        <h3>프로필사진</h3>
+                        <span>
+                            <input class="upload-name" value="이미지" placeholder="이미지">
+                            <label for="userimg">파일찾기</label>
+                            <input type="file" name="userimg" id="userimg">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>닉네임</h3>
+                        <span>
+                            <input type="text" name="nickname" id="nickname" value="{{user.nickname}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>주소</h3>
+                        <span>
+                            <input type="text" name="address" id="address" value="{{user.adress}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>성별</h3>
+                        <span>
+                            <input type="text" name="gender" id="gender" value="{{user.gender}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>전화번호</h3>
+                        <span>
+                            <input type="text" name="phone" id="phone" value="{{user.phone}}">
+                        </span>
+                    </li>
+                    <li>
+                        <h3>핸드폰번호</h3>
+                        <span>
+                            <input type="text" name="mobile" id="mobile" value="{{user.mobile}}">
+                        </span>
+                    </li>
+                    <li>
+                        <input type="submit" id="btn" value="수정">
+                    </li>
+                    <li>
+                        <button id="profile_btn"><a href="/user/profile?nickname={{user.nickname}}">프로필</a></button>
+                    </li>
+                </ul>
             </form>
         </div>
     </div>
