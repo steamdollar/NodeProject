@@ -34,7 +34,7 @@
     </div>
     <div id="board_main">
         <div id="board_writer">
-            <a href="/board/cate1/write" id="a_write">글쓰기</a>
+            <a id="address" href="" id="a_write">글쓰기</a>
         </div>
         <table id="board_table">
             <thead id="board_thead">
@@ -154,6 +154,7 @@
         const category = location.pathname.split('/')[2]
         const address = document.querySelector('#address')
         address.setAttribute('href', `/board/cate1/write?category=${category}`)
+        
 
         const data = { category:category }
 
