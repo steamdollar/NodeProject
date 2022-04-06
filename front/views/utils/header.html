@@ -1,73 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript">
-        const islogin = location.search.split('=')[1] === 'true' ? true : false
-        if (islogin) location.href='http://localhost:3000'
-    </script>
-    <link rel="stylesheet" href="/main2.css">
-    <link rel="stylesheet" href="/main.css">
-    <link rel="stylesheet" href="/user/join.css">
-    <link rel="stylesheet" href="/user/login.css">
-    <link rel="stylesheet" href="/user/profile.css">
-    <link rel="stylesheet" href="/user/update.css">
-    <link rel="stylesheet" href="/user/welcome.css">
-    <link rel="stylesheet" href="/user/font.css">
-    <link rel="stylesheet" href="/board/cate1/list.css">
-    <link rel="stylesheet" href="/board/cate1/update.css">
-    <link rel="stylesheet" href="/board/cate1/view.css">
-    <link rel="stylesheet" href="/board/cate1/write.css">
-    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
-
-</head>
-<body>
-    <div id="wrap">
-        <div id="Transparency" class="">
-
-        </div>
-        <header id="header">
-            <div id="banner">
-                <div id="logo_box">
-                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
-                </div>
-
-                <div id="access2">
-                    <a href ='/board'>Board</a>
-                    <a href="/board/notice">Notice</a>
-                    <a href="/user/profile2">Profile</a>
-                    <a href="" id="logout">Logout</a>
-                </div>
-    
-                <div id="hamberger">
-                    <input type="checkbox" id="icon">
-                    <label for="icon">  <!--label은 인라인 스타일-->
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </label>
-                    <div id="menu">
-                        <ul>
-                            <li><a href="#">Introduce</a></li>
-                            <li><a href="#">Enjoy it!</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">This month</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div> 
-        </header>
-        {% block content %}
-        {% endblock %}
-    </div>
-
-</body>
-=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,5 +67,4 @@
     </div>
 
 </body>
->>>>>>> e4404518e06cb9ac9518aa8deb5edf60f660eb36
 </html>
