@@ -593,7 +593,7 @@ exports.search = async (req, res) => {
 exports.searchThumbNail = async (req, res) => {
     const { thumbIdx } = req.body
 
-    const sql = `select img1 from image where midx=?`
+    const sql = `select midx ,img1 from image where midx=?`
     let final_result = []
     try {
         for (let i = 0; i< thumbIdx.length; i++) {
@@ -601,7 +601,6 @@ exports.searchThumbNail = async (req, res) => {
             const [[result]] = await pool.execute(sql, param)
             final_result.push(result)
         }
-
         const response = {
             final_result,
             errorno: "none"

@@ -116,53 +116,33 @@
                 //
                 //
                 
-                // const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
-                // const tempThumb = response.data.final_result // [{}, {}, {}]
-                // let thumbNail = []
-
-                // for (let i = 0; i<tempThumb.length; i++) {
-                //     if(tempThumb[i].img1 !== 'N/A') {
-                //         thumbNail.push(tempThumb[i].img1)
-                //     }
-                //     else {
-                //         thumbNail.push('default.jpg')
-                //     }
-                // }
-                const qwe = document.querySelectorAll('.index')
-                // console.log(qwe[0].innerHTML)
+                const filtered = document.querySelectorAll('.index')
                 let thumbIdx = []
-                for (i = 0; i < qwe.length; i ++) {
-                    thumbIdx.push(qwe[i].innerHTML)
+                for (i = 0; i < filtered.length; i ++) {
+                    thumbIdx.push(filtered[i].innerHTML)
                 }
-
-    
                 const thumbData = {
                     thumbIdx: thumbIdx
                 }
 
                 const response2 = await axios.post('http://localhost:4000/api/board/cate1/searchThumbNail', thumbData, option)
-                console.log(response2.data.final_result)
                 const thumbNail = response2.data.final_result
 
                 for ( let i =0; i<thumbNail.length; i++) {
+                    const imgZone = document.querySelector('#imgZone')
+                    const imgSpan = document.createElement('span')
+                    const imgElement = document.createElement('img')
+                    imgElement.setAttribute('class','thumb')
+                    imgElement.setAttribute('id', `thumb${thumbNail[i].midx}`)
+
                     if( thumbNail[i].img1 !== 'N/A') {
-                        const imgZone = document.querySelector('#imgZone')
-                        const imgSpan = document.createElement('span')
-                        const imgElement = document.createElement('img')
-                        imgElement.setAttribute('class','thumb')
                         imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i].img1}`)
-                        imgSpan.append(imgElement)
-                        imgZone.append(imgSpan)
                     }
                     else {
-                        const imgZone = document.querySelector('#imgZone')
-                        const imgSpan = document.createElement('span')
-                        const imgElement = document.createElement('img')
-                        imgElement.setAttribute('class','thumb')
                         imgElement.setAttribute('src', `http://localhost:4000/uploads/default.jpg`)
-                        imgSpan.append(imgElement)
-                        imgZone.append(imgSpan)
                     }
+                    imgSpan.append(imgElement)
+                    imgZone.append(imgSpan)
                 }
             })
         </script>
