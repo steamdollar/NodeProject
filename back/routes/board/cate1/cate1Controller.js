@@ -488,9 +488,10 @@ exports.imgUpdate = async (req, res) => {
 
 exports.thumbnail = async (req, res) => {
     const { category } = req.body
+    console.log(category)
     const sql = `select * from cate1 where hidden = 'off' and category = "${category}";`
     const param1 = [category]
-    console.log("섬네일카테고리",category)
+
     try {
         const [result] = await pool.execute(sql, param1)
         // console.log(result[0]) // [{}, {}, {}]
@@ -500,9 +501,10 @@ exports.thumbnail = async (req, res) => {
             const sql1 = `select img1 from image where category=? and midx=?`
             const param1 = [category, result[i].idx]
             // console.log(result[i].idx)
-            const [result1] = await pool.execute(sql1, param1)
+            const [[result1]] = await pool.execute(sql1, param1)
             final_result.push(result1)
         }
+        console.log(final_result)
         const response = {
             final_result
         }
@@ -585,5 +587,33 @@ exports.search = async (req, res) => {
             }
             res.json(response)
         }
+    }
+}
+
+exports.searchThumbNail = async (req, res) => {
+    const { thumbIdx } = req.body
+
+    const sql = `select img1 from image where midx=?`
+    let final_result = []
+    try {
+        for (let i = 0; i< thumbIdx.length; i++) {
+            const param = [thumbIdx[i]]
+            const [[result]] = await pool.execute(sql, param)
+            final_result.push(result)
+        }
+
+        const response = {
+            final_result,
+            errorno: "none"
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message,
+            errno: e.errno
+        }
+        res.json(response)
     }
 }
