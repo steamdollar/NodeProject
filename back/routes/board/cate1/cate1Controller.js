@@ -46,8 +46,8 @@ exports.write = async (req,res) => {
 
 exports.list = async (req,res)=>{
     const {category} = req.body
-    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from ${category} c left join cate1_like l on c.idx = l.m_idx group by c.idx;`
-    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden='off'`
+    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where c.category = '${category}' group by c.idx;`
+    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and category = '${category}'`
     try {
         const [result1] = await pool.execute(sql1)
         const [[{total_record}]] = await pool.execute(sql2)
@@ -59,7 +59,6 @@ exports.list = async (req,res)=>{
         res.json(response) 
     } 
     catch (e) {
-        console.log(e.message)
         const response = {
             errormsg: e.message
         }
@@ -383,7 +382,7 @@ exports.hashtagLoad = async (req, res) => {
 
 exports.imgUp = async (req, res) => {
     const { midx, category } = req.body
-    
+
     let images = []
     for(let i=1; i<=5; i++) {
         try {
@@ -459,7 +458,7 @@ exports.imgUpdate = async (req, res) => {
         }
     }
 
-    console.log(images)
+    console.log("이거인가요?", category)
     try {
         let final_result = []
         for ( let i = 0; i < images.length; i++) {
@@ -491,12 +490,12 @@ exports.imgUpdate = async (req, res) => {
 
 exports.thumbnail = async (req, res) => {
     const { category } = req.body
-    const sql = `select * from ${category} where hidden = 'off'`
+    const sql = `select * from cate1 where hidden = 'off' and category = "${category}";`
     const param1 = [category]
-
+    console.log(category)
     try {
         const [result] = await pool.execute(sql, param1)
-        // console.log(result[0].idx) // [{}, {}, {}]
+        // console.log(result[0]) // [{}, {}, {}]
         let final_result = []
 
         for ( let i = 0; i < result.length; i++ ) {
