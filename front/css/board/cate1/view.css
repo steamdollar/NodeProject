@@ -20,10 +20,28 @@ img {
 
 #view_dt > #view_head {
     padding-top:20px;
+    font-size:25px;
+}
+
+#view_dt > #view_head > #category {
+    display:inline-block;
+    color:#666666;
+    padding-right:25px;
+    border-right:1px solid #666666;
+    width:70px;
+    height:20px;
+    
+    
+}
+
+#view_dt > #view_head > #view_date {
+    color:#666666;
+    padding-left:15px;
 }
 
 #view_dt > #view_head > #nickname {
-    
+    /* display:block; */
+    float:right;
 }
 
 #view_wrap {
