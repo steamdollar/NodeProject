@@ -256,15 +256,14 @@ exports.like = async(req, res) => {
     const { idx, userid } = req.body
     const sql1 = 'select * from cate1_like where m_idx=? and userid=?'
     const sql2 = 'insert into cate1_like(m_idx, userid) values(?,?)'
-    const param1 = [idx, userid]
-    const param2 = [idx, userid]
+    const param = [idx, userid]
 
     try {
-        const [result] = await pool.execute(sql1, param1)
+        const [result] = await pool.execute(sql1, param)
 
-        if (result.length != 0) { throw new Error('좋아요는 한 번만 가능합니다') }
+        if (result.length != 0) { throw new Error('좋아요 cancel') }
         
-        const [result2] = await pool.execute(sql2, param2)
+        const [result2] = await pool.execute(sql2, param)
 
         const response = {
             result2,
@@ -274,43 +273,11 @@ exports.like = async(req, res) => {
     }
     catch (e) {
         console.log(e.message)
+        const sql = 'delete from cate1_like where m_idx=? and userid=?'
+        const [result3] = await pool.execute(sql, param)
         const response = {
             errormsg: e.message,
             errno:1
-        }
-        
-        res.json(response) 
-    }
-}
-
-//
-
-exports.likeCancel = async (req, res) => {
-    const { idx, userid } = req.body
-    const sql1 = 'select * from cate1_like where m_idx=? and userid=?'
-    const sql2 = 'delete from cate1_like where m_idx=? and userid=?'
-    const param1 = [idx, userid]
-    const param2 = [idx, userid]
-
-    try {
-        const [result] = await pool.execute(sql1, param1)
-
-        if( result.length == 0 ) { throw new Error('좋아요를 누른 적이 없습니다') }
-
-        const [result2] = await pool.execute(sql2, param2)
-
-        const response = {
-            result2,
-            errno:0
-        }
-        res.json(response) 
-
-    }
-    catch (e) {
-        console.log(e.message)
-        const response = {
-            errormsg: e.message,
-            errno:2
         }
         
         res.json(response) 
