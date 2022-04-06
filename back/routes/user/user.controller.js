@@ -166,10 +166,7 @@ exports.login = async (req,res)=>{
 
 exports.profile = async (req,res)=>{
     const usernickname = req.user.nickname
-    console.log(req.body.uri4)
     const writernickname = req.body.uri4
-
-    console.log(usernickname,writernickname)
     if(usernickname == writernickname || writernickname == undefined){
         const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where nickname=?'
         const param = [usernickname]
@@ -197,15 +194,16 @@ exports.profile = async (req,res)=>{
         const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where nickname=?'
         const param = [writernickname]
         console.log(param)
+        const param2 = [decodeURI(writernickname)]
         try {
-            const [result] = await pool.execute(sql,param)
-            console.log('왜',result)
+            const [result] = await pool.execute(sql,param2)
             response = {
                 usernickname,
                 writernickname,
                 result,
                 errno:0
             }
+            console.log(result)
             res.json(response)
     
         } catch(e){

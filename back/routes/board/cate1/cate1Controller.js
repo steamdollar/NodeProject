@@ -445,7 +445,6 @@ exports.imgLoad = async (req, res) => {
 
 exports.imgUpdate = async (req, res) => {
     const { idx, category, originLength } = req.body
-    console.log(originLength) // 원래있던 사진 수
 
     let images = []
     for(let i=1; i<=5; i++) {
@@ -458,7 +457,6 @@ exports.imgUpdate = async (req, res) => {
         }
     }
 
-    console.log("이거인가요?", category)
     try {
         let final_result = []
         for ( let i = 0; i < images.length; i++) {

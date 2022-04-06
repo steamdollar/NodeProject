@@ -29,7 +29,7 @@ module.exports = (server) => {
             switch (type) {
                 case 'send_msg':
                     sockets.forEach( v => {     
-                        v.send(`${obj.userid} : ${data}`)
+                        v.send(`${obj.userid}: ${data}`)
                     })
                 break;
             }            

@@ -37,7 +37,6 @@ router.use('/profile', (req,res)=>{
     const {token} = req.cookies
     const userid = token.split('.')
     const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
-    console.log(deUserid.nickname)
 
     if( deUserid.nickname == nickname) {
         res.render('./user/profile')
@@ -46,6 +45,8 @@ router.use('/profile', (req,res)=>{
         res.render('./user/userinfo')
     }
 })
+
+
 
 router.use('/welcome', (req,res)=>{
     const { userid, username, nickname, mobile, email } = req.query
