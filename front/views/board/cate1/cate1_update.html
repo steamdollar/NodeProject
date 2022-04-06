@@ -202,7 +202,7 @@
             const title = update_frm.querySelector('#title')
             const content = update_frm.querySelector('#content')
             const idx = update_frm.querySelector('#idx')
-
+            const category = document.querySelector('.hidden_category').innerHTML
             const hashtagss = document.querySelectorAll('.hashtags')
             let temphash = []
 
@@ -214,7 +214,7 @@
                 title:title.value,
                 content:content.value,
                 idx: idx.value,
-                temphash
+                temphash,
             }
 
             const response = await axios.post('http://localhost:4000/api/board/cate1/update', data, option)
@@ -222,7 +222,7 @@
             //
 
             const formData = new FormData()
-            formData.append('category', cate)
+            formData.append('category', category)
             formData.append('idx', idx.value)
             // for ( let i = 1; i<6; i++) {
             //     try {
@@ -263,7 +263,7 @@
             formData.append('img4', img4.files[0])
             formData.append('img5', img5.files[0])
 
-            const category = document.querySelector('.hidden_category').innerHTML
+            
 
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
