@@ -9,7 +9,7 @@ const cate1Router = require('./cate1/index.js')
 const QnARouter = require('./QnA/index.js')
 const noticeRouter = require('./notice/index.js')
 const requestRouter = require('./request/index.js')
-const questionRouter = require('./request/index.js')
+const questionRouter = require('./question/index.js')
 const app = express()
 
 const upload = multer({

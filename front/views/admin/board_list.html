@@ -14,6 +14,7 @@
         const notice = document.querySelector('#notice')
         const QnA = document.querySelector('#QnA')
         const request = document.querySelector('request')
+        const question = document.querySelector('#question')
         const frm_search = document.querySelector('#frm_search')
         const search_btn = document.querySelector('#search_btn')
         const board_hidden = document.querySelector('#board_hidden')
@@ -58,11 +59,12 @@
 
             
             }
-            else{
-
+            else if(question === true){
+                body.board_db = question.value
+            }
+            else if(request === true){
                 body.board_db = request.value
-                
-            } 
+            }
             const response = await axios.post('http://localhost:4000/api/admin/boardlist', body, option)
             const board = response.data.result
             const board_list = document.querySelector('#board_list') //빈 tbody
@@ -290,6 +292,7 @@
                     <option value="notice" id="notice">notice</option>
                     <option value="QnA" id="QnA">QnA</option>
                     <option value="request" id="request">청원</option>
+                    <option value="question" id="question">코드 자문</option>
                 </select>
                 <input type="submit" name="category" id="submit_category" value="선택">
             </form>
