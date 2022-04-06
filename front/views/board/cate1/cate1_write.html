@@ -16,7 +16,6 @@
             const question = document.querySelector('#question')
             const QnA = document.querySelector('#QnA')
             const request = document.querySelector('#request')
-            console.log("라이트페이지", category)
             nickInput.disabled= true
             hiddenSpan.disabled = true
 
@@ -26,6 +25,11 @@
                 request.selected = true
             } else if(category == "question"){
                 question.selected = true
+            }
+
+            const notice = document.querySelector('#notice')
+            if("{{userlevel}}" != 3) {
+                notice.remove()
             }
 
         })
@@ -59,6 +63,7 @@
                 <option value="question" id="question">코드 자문 게시판</option>
                 <option value="QnA" id="QnA">Q&A 게시판</option>
                 <option value="request" id="request">청원 게시판</option>
+                <option value="notice" id="notice">공지사항</option>
             </select>
         </div>
         <div>
@@ -132,6 +137,8 @@
 
         write_frm.addEventListener('submit', async(e) => {
             e.preventDefault()
+
+            
 
             const option = {
                 'Content-type':'application/json',
