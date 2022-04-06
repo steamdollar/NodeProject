@@ -12,6 +12,7 @@
                 <div id="view_head">
                     <span id="category">{{cate1_view.category}}</span>
                     <span id="view_date">{{ cate1_view.date }}</span>
+                    <span id="writerid">{{cate1_view.userid}}</span>
                     <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
                 </div>
             </dt>
@@ -22,11 +23,6 @@
             </dd>
         </dl>
 
-        <!-- 카테고리 : <span id="category">{{cate1_view.category}}</span><br>
-        제목 : <span id="title">{{cate1_view.title}}</span><br/>
-        닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
-        내용 : {{ cate1_view.content }}<br/>
-        작성일자 : {{ cate1_view.date }} -->
     </div>
     <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
         <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
@@ -46,9 +42,6 @@
         <input type="submit" value="좋아요" id="thumb">
     </form>
 
-    <form method="post" action="http://localhost:4000/api/board/cate1/likeCancel" id="likeCancel">
-        <input type="submit" value="좋아요 취소" id="thumbCancel">
-    </form>
 
     <span id="userimg"></span>
     
@@ -121,7 +114,7 @@
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/viewuser', null, option)
             const Usernick = response2.data.result[0].nickname
             let nickname = "{{cate1_view.nickname}}"
-            console.log(nickname)
+
             if(nickname !== Usernick){
               
             } else{
@@ -145,42 +138,17 @@
             }
 
             const response = await axios.post('http://localhost:4000/api/board/cate1/like', data ,option)
-
+            const likeCount = document.querySelector('#likecount')
             if (response.data.errno === 1) {
-                alert('좋아요는 한 번만 가능합니다')
+                alert('좋아요를 취소하였습니다')
+                likeCount.innerHTML--
             }
-
             else {
-                const likeCount = document.querySelector('#likecount')
+                alert('이 게시물을 추천했습니다.')
                 likeCount.innerHTML++
             }
         })
 
-        // 좋아요 취소
-
-        const likeCancel = document.querySelector('#likeCancel')
-        likeCancel.addEventListener('submit', async (e) => {
-            e.preventDefault()
-
-            const idx = document.querySelector('#idx')
-            const userid = document.querySelector('#userid')
-
-            const data = {
-                userid:userid.innerHTML,
-                idx: idx.value
-            }
-
-            const response = await axios.post('http://localhost:4000/api/board/cate1/likeCancel', data ,option)
-
-            if (response.data.errno === 2) {
-                alert('이 게시글에 좋아요를 누르지 않았습니다.')
-            }
-
-            else {
-                const likeCount = document.querySelector('#likecount')
-                likeCount.innerHTML--
-            }
-        })
         
         // 글 삭제
 
@@ -189,15 +157,18 @@
             e.preventDefault()
 
             const idx = delForm.querySelector('#idx')
-            
+            const writerid = document.querySelector('#writerid')
+            const userid = document.querySelector('#userid')
+
             const data = {
                 idx:idx.value,
-                category:category.innerHTML
+                category:category,
+                writerid:writerid.innerHTML,
+                userid:userid.innerHTML
             }
 
-
             const response = await axios.post('http://localhost:4000/api/board/cate1/delete', data, option)
-            
+
             if(response.data.errno === 0 ) {
                 alert('글 삭제가 완료되었습니다.')
                 location.href='/board/cate1'
