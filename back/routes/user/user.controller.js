@@ -199,7 +199,6 @@ exports.profile = async (req,res)=>{
         console.log(param)
         try {
             const [result] = await pool.execute(sql,param)
-            console.log('왜',result)
             response = {
                 usernickname,
                 writernickname,
