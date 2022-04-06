@@ -83,14 +83,15 @@
             let thumbNail = []
 
             for (let i = 0; i<tempThumb.length; i++) {
-                try {
+                if (tempThumb[i][0].img1 !== 'N/A') {
                     thumbNail.push(tempThumb[i][0].img1)
                 }
-                catch (e) {
+                else {
                     thumbNail.push('default.jpg')
                 }
+                
             }
-
+            console.log(thumbNail)
             for ( let i =0; i<thumbNail.length; i++) {
                 const imgZone = document.querySelector('#imgZone')
                 const imgSpan = document.createElement('span')
@@ -100,9 +101,7 @@
                 
                 imgSpan.append(imgElement)
                 imgZone.append(imgSpan)
-                if( thumbNail[i] === 'default.jpg' ) {
-                    imgSpan.setAttribute('class', 'cloak')
-                }
+
             }
             //
             //
