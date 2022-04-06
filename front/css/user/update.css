@@ -1,52 +1,113 @@
 *{
     letter-spacing: -0.05em;
     box-sizing: border-box;
+    margin:0px;
+    padding:0px;
 }
 
-/*  */
-/* h1 {
-    position: absolute;
-    left:50%;
-    transform: translate(-50%);
-} */
 
-/* #wrap {
-    position:relative;
-    width : 100%;
-} */
+#update_wrap {
+    width:100%;
+    height:100%;
+    padding-top:200px;
+}
 
-#update_frm_wrap {
-    margin: 44px auto 0 auto;
-    position:relative;
+#update_frm {
+    margin: 0 auto;
+    width:800px;
+    border: 1px solid #c6c6c6;
+    padding:40px 90px;
+    border-radius: 15px;
+
+}
+
+#update_form > #update_frm > ul {
     display:flex;
     justify-content: center;
+    flex-direction: column;
+    align-items:center;
 }
 
-#update_frm_wrap > form {
-    margin: 10px auto;
-    border: 1px solid black;
-    width: 480px;
-
-    border-radius: 10px;
-    padding: 20px;
+#update_form > #update_frm > ul > .update_image{
+    width:500px;
+    margin-left:100px;
 }
 
-.tbody > tr > .metadata {
-    font-size: 14px;
-    width: 100px;
-}
-
-tr {
-    height: 30px;
-}
-
-.value > input{
+#update_frm > ul > li > span > input {
+    width:400px;
+    height:60px;
     border:none;
     outline: none;
-    border-bottom: 2px solid #333;
+    border-radius: 5px;
+    background: #eee;
+    padding:10px;
 }
 
-#userimg {
-    border-bottom: none;
+#update_form > #update_frm > ul > li > h3{
+    margin-top:45px;
+    margin-bottom:10px;
 }
 
+#update_frm > ul > li > span > .upload-name {
+    display:inline-block;
+    padding: 0 10px;
+    vertical-align: middle;
+    width: 280px;
+    height: 60px;
+    color: #999999;
+    margin-right:20px;
+
+}
+
+#update_frm > ul > li > span > label {
+    display:inline-block;
+    padding: 22px 24px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #333;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight:bold;
+    box-shadow:1px 1px 1px 0px rgba(0,0,0,0.2);
+}
+
+#update_frm > ul > li > span input[type="file"] {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+#update_frm > ul > li > #btn {
+    width:400px;
+    height:45px;
+    background-color: #333;
+    color:#fff;
+    font-weight:bold;
+    font-size:14px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding:5px 0px;
+    margin-top: 30px;
+
+}
+
+#update_frm > ul > li > #profile_btn {
+    width:400px;
+    height:45px;
+    background-color: #333;
+    cursor: pointer;
+    border-radius: 5px;
+    padding:5px 0px;
+    margin-top:10px;
+    
+}
+
+#update_frm > ul > li > #profile_btn > a {
+    margin-top:10px;
+    color:#fff;
+    font-weight:bold;
+    font-size:14px;
+}
