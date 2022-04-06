@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style> img { height:100px; width:100px;}</style>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
+{% extends 'utils/header.html' %}
 
+{% block content %}
 <body>
-    
-    <span id="userid">{{userid}}</span><br>
-
     카테고리 : <span id="category">{{cate1_view.category}}</span><br>
     제목 : <span id="title">{{cate1_view.title}}</span><br/>
     닉네임 : <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span> <br />
@@ -87,7 +76,6 @@
         </span>
     </template>
     <!--댓글 수정 -->
-
     <script type="text/javascript">
         const option = {
             'Content-type':'application/json',
@@ -453,5 +441,4 @@
             
         })
     </script>
-</body>
-</html>
+{% endblock %}
