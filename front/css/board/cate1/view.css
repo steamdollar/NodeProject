@@ -1,0 +1,33 @@
+* {
+    margin:0px;
+    padding:0px;    
+}
+
+img {
+    width:100px;
+    height:100px;
+}
+
+#view_dt {
+    padding: 40px 50px 22px;
+    border-top:1px solid;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+#view_dt > #view_title {
+    font-size:34px;
+}
+
+#view_dt > #view_head {
+    padding-top:20px;
+}
+
+#view_dt > #view_head > #nickname {
+    
+}
+
+#view_wrap {
+    width:80%;
+    height:700px;
+    margin:130px auto 0;
+}
