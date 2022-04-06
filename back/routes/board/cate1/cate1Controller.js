@@ -154,7 +154,7 @@ exports.del = async (req,res)=>{
     const param = [idx]
 
     try {
-        if( writerid === userid ) { throw new Error('작성자가 아님') }
+        if( writerid !== userid ) { throw new Error('작성자가 아님') }
         const [result] = await pool.execute(sql,param)
 
         for (i = 0; i<result.length; i++) {
@@ -231,9 +231,6 @@ exports.update = async(req, res) => {
             const param6 = [idx, result5.insertId]
             const [result6] = await pool.execute(sql6, param6)
         }
-
-
-
 
         const response = {
             result,

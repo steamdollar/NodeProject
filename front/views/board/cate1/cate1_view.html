@@ -114,7 +114,7 @@
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/viewuser', null, option)
             const Usernick = response2.data.result[0].nickname
             let nickname = "{{cate1_view.nickname}}"
-            console.log(nickname)
+
             if(nickname !== Usernick){
               
             } else{
@@ -159,7 +159,7 @@
             const idx = delForm.querySelector('#idx')
             const writerid = document.querySelector('#writerid')
             const userid = document.querySelector('#userid')
-            
+
             const data = {
                 idx:idx.value,
                 category:category,
@@ -167,9 +167,8 @@
                 userid:userid.innerHTML
             }
 
-
             const response = await axios.post('http://localhost:4000/api/board/cate1/delete', data, option)
-            
+
             if(response.data.errno === 0 ) {
                 alert('글 삭제가 완료되었습니다.')
                 location.href='/board/cate1'
