@@ -492,7 +492,7 @@ exports.thumbnail = async (req, res) => {
     const { category } = req.body
     const sql = `select * from cate1 where hidden = 'off' and category = "${category}";`
     const param1 = [category]
-    console.log(category)
+    console.log("섬네일카테고리",category)
     try {
         const [result] = await pool.execute(sql, param1)
         // console.log(result[0]) // [{}, {}, {}]
