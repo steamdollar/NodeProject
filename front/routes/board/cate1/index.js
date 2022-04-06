@@ -19,7 +19,7 @@ router.get('/write', (req, res) => {
             const [ header, payload, sign ] = token.split('.')    
             const user = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
             // console.log(user) // { userid: 'sila', username: 'qwerty', nickname: 'qwerty', level: 1 }
-
+            
             res.render('./board/cate1/cate1_write.html', {
                 userid:user.userid,
                 nickname:user.nickname

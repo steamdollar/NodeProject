@@ -1,4 +1,4 @@
-// question list
+// request list
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
@@ -10,7 +10,7 @@ const option = {
 
 router.get('/', async (req,res) => {
  
-    res.render('./board/notice/notice_list.html')
+    res.render('./board/request/request_list.html')
 })
 
 module.exports = router

@@ -50,7 +50,7 @@
 
     <!-- <div id="imgZone"></div> -->
     <div id="board_write">
-        <a href="/board/cate1/write">글쓰기</a>
+        <a id="address" href="">글쓰기</a>
         <div id="board_search">
             <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
                 <select name="option" id="category" >
@@ -101,6 +101,9 @@
         }
     document.addEventListener('DOMContentLoaded', async() => {
         const category = location.pathname.split('/')[2]
+        const address = document.querySelector('#address')
+        address.setAttribute('href', `/board/cate1/write?category=${category}`)
+
         const data = { category:category }
 
         const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
