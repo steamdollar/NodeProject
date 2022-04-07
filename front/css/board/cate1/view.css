@@ -8,6 +8,13 @@ img {
     height:100px;
 }
 
+#view_wrap > dl {
+    width:100%;
+    margin:0 auto;
+    border-bottom:1px solid #e2e2e2;
+    height:750px;
+}
+
 #view_dt {
     padding: 40px 50px 22px;
     border-top:1px solid;
@@ -20,14 +27,98 @@ img {
 
 #view_dt > #view_head {
     padding-top:20px;
+    font-size:25px;
 }
 
-#view_dt > #view_head > #nickname {
+#view_dt > #view_head > #category {
+    display:inline-block;
+    color:#666666;
+    padding-right:25px;
+    border-right:1px solid #666666;
+    width:70px;
+    height:20px;
+    
     
 }
 
+#view_dt > #view_head > #view_date {
+    color:#666666;
+    padding-left:15px;
+}
+
+#view_dt > #view_head > #nickname {
+    /* display:block; */
+    float:right;
+}
+
+#view_dt > #view_head > #view_hash {
+    color:#666666;
+}
+
 #view_wrap {
-    width:80%;
+    width:70%;
     height:700px;
     margin:130px auto 0;
+}
+
+#view_dd {
+    width:70%;
+    margin: 100px auto 20px;
+    font-size:25px;
+    
+   
+}
+
+#view_dd > #view_content {
+    height:400px;
+}
+
+#view_dd > #view_good {
+    display:flex;
+    justify-content:space-evenly;
+    margin:0 auto;
+    
+}
+
+#view_hash {
+    height:50px;
+    color:#666666;
+    font-size:25px;
+}
+
+#view_dd > #view_good > #like > #thumb {
+    width:50px;
+    height:50px;
+    background-image:url('http://localhost:3000/love.png');
+    background-repeat:no-repeat;
+    background-position: top right;
+    border:none;
+}
+
+#view_dd > #view_good > #likecancel {
+    
+}
+
+
+#view_cmt {
+    width:70%;
+    margin:80px 285px;
+    font-size:25px;
+}
+
+#view_cmt > #view_app > #commentApp > .c_list {
+    border-bottom:1px solid;
+}
+
+#view_cmt > #view_app > #commentApp > .c_list > .comment-row {
+    display:flex;
+    width:1350px;
+    height:50px;
+    padding:20px;
+    flex-direction:row;
+    justify-content:space-between;
+}
+
+#view_cmt > #view_app > #commentApp > .c_list > .comment-content {
+   
 }
