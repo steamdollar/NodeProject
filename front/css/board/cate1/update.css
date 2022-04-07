@@ -106,10 +106,16 @@
 
 
 /* pic */
-
+img {
+    width: 100px !important;
+    height: 100px !important;
+}
 
 #upd_imgZone {
     width: 810px;
+    height: 100px;
+    display:inline-block;
+    position:relative;
 }
 
 #upd_imgZone > span > input {
@@ -127,6 +133,27 @@
     color: #eee;
     margin: 10px;
     font-size: 20px;
+}
+
+/* loaded mg */
+
+.imgContainer {
+    bottom: 0px;
+}
+
+.imgLoad {
+    bottom: 1000px !important
+}
+
+.imgDelBtn {
+    font-size: 24px;
+    background: #eee;
+    font-weight: 600;
+    margin: 0 4px 0 0;
+}
+
+.delBtn {
+    font-size: 12px;
 }
 
 #upd_imgZone > span > span{

@@ -84,10 +84,12 @@
             for ( let i = 0; i < imgArr.length; i++) {
                 
                 const imgOriginalSpan = document.createElement('span')
+                imgOriginalSpan.setAttribute('class', 'imgContainer')
                 const imgSpan = document.createElement('span')
                 const imgElement = document.createElement('img')
                 imgElement.setAttribute('src', `http://localhost:4000/uploads/${imgArr[i]}`)
                 imgElement.setAttribute('id', `origin${i+1}a`)
+                imgSpan.setAttribute('class', 'imgLoad')
                 imgSpan.prepend(imgElement)
                 imgOriginalSpan.append(imgSpan)
                 upd_imgZone.append(imgOriginalSpan)
@@ -101,7 +103,8 @@
                 
 
                 const delHandler = document.createElement('span')
-                delHandler.innerHTML = 'X'
+                delHandler.innerHTML = 'x'
+                delHandler.setAttribute('class', 'imgDelBtn')
                 imgSpan.prepend(delHandler)
 
                 delHandler.addEventListener('click', async(e) => {
@@ -112,28 +115,6 @@
                     newImg.setAttribute('id', `img${i+1}`)
                     inputSpan.prepend(newImg)
                 })
-
-                // let updateFlag = false
-                // imgElement.addEventListener('click', () => {
-                           
-                //     if (updateFlag == false) {
-                //         const newImg = document.createElement('input')
-                //         imgSpan.append(newImg)
-                //         newImg.setAttribute('type', 'file')
-                //         newImg.setAttribute('name', `img${i+1}a`)
-                //         newImg.setAttribute('id', `img${i+1}a`)
-                //     }
-                //     else {
-                //         const newImg = document.querySelector(`#img${i+1}a`)
-                //         newImg.remove()
-                //     }
-                //     updateFlag = !updateFlag   
-                // })
-                // img 각각에 updateHandler 함수를 붙여보는건 어떨까?
-                // 클릭하면 이미지 넣는게 뜨고 > 새 이미지를 넣으면
-                // 원 이미지를 지우고 새 이미지를 넣는 함수..
-                // X 하나 span이든 뭐든 위에 주고 누르면 사진 삭제
-                // 
             }
             const inputSpan = document.createElement('span')
             let upNum = imgArr.length +1
@@ -206,6 +187,13 @@
         })
 
         const hashtag = document.querySelector('#hashtag')
+        hashtag.addEventListener('keydown', (e) => {
+            if(e.keyCode === 13) {
+                e.preventDefault()
+            }
+        })
+
+        const upd_submit = document.querySelector('#upd_submit')
         hashtag.addEventListener('keydown', (e) => {
             if(e.keyCode === 13) {
                 e.preventDefault()
