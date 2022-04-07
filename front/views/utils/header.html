@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/board/cate1/view.css">
     <link rel="stylesheet" href="/board/cate1/write.css">
     <link rel="stylesheet" href="/matching/duo.css">
+    <link rel="stylesheet" href="/common/footer.css">
     <script type="text/javascript" src="http://localhost:3000/js/scroll.js"></script>
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
 
@@ -64,8 +65,12 @@
             </div> 
         </header>
         {% block content %}
+
         {% endblock %}
+        {% include 'utils/footer.html' %}
+        
     </div>
+
 
 </body>
 </html>
