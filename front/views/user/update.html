@@ -74,7 +74,7 @@
             const btn = document.querySelector('#btn')
             btn.value='수정중~~'
             btn.disabled= true
-            const {userid,userpw,userimg,nickname,address,phone,mobile,userintro,email} = e.target
+            const {userid,userpw,userimg,nickname,address,phone,mobile} = e.target
             const formData = new FormData()
             formData.append('userid',document.querySelector('#userid').value)
             formData.append('userpw',document.querySelector('#userpw').value)
@@ -83,8 +83,6 @@
             formData.append('address',document.querySelector('#address').value)
             formData.append('phone',document.querySelector('#phone').value)
             formData.append('mobile',document.querySelector('#mobile').value)
-            formData.append('email',document.querySelector('#email').value)
-            formData.append('userintro',document.querySelector('#userintro').value)
 
             const option = {
                 'Content-type':'application/json',

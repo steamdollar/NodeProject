@@ -9,6 +9,8 @@ img {
 }
 
 #view_wrap > dl {
+    width:100%;
+    margin:0 auto;
     border-bottom:1px solid #e2e2e2;
     height:750px;
 }
@@ -74,6 +76,7 @@ img {
 #view_dd > #view_good {
     display:flex;
     justify-content:space-evenly;
+    margin:0 auto;
     
 }
 
@@ -98,7 +101,7 @@ img {
 
 
 #view_cmt {
-    width:80%;
+    width:70%;
     margin:80px 285px;
     font-size:25px;
 }
@@ -109,8 +112,11 @@ img {
 
 #view_cmt > #view_app > #commentApp > .c_list > .comment-row {
     display:flex;
-    width:100px;
-    justify-content:space-around;
+    width:1350px;
+    height:50px;
+    padding:20px;
+    flex-direction:row;
+    justify-content:space-between;
 }
 
 #view_cmt > #view_app > #commentApp > .c_list > .comment-content {
