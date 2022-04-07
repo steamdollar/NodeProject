@@ -7,7 +7,7 @@ const router = require('./routes')
 const webSocket = require('./socket.js')
 const cookieParser = require('cookie-parser')
 const axios = require('axios')
-const { Auth } = require('./middlewares/auth.js')
+// const { Auth } = require('./middlewares/auth.js')
 let cookieShuttle = {}
 
 app.set('view engine','html')
@@ -39,14 +39,6 @@ app.get('/',(req,res)=>{
   }
 })
 
-
-app.get('/user/profile2', async (req, res) => {
-  const {token} = req.cookies
-  const userid = token.split('.')
-  const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
-  const nickname = deUserid.nickname
-  res.redirect(`/user/profile?nickname=${nickname}`)
-})
 
 app.use(express.static('image'))
 app.use(express.static('css'))

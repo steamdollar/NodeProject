@@ -71,4 +71,17 @@ router.use('/user_like',(req,res)=>{
     res.render('./user/user_like')
 })
 
+router.get('/logout', (req, res) => {
+    res.clearCookie('token', {path : '/'})
+    res.send(`<script>alert('로그아웃 되었읍니다.'); location.href='/';</script>`)
+})
+
+router.get('/profile2', async (req, res) => {
+    const {token} = req.cookies
+    const userid = token.split('.')
+    const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
+    const nickname = deUserid.nickname
+    res.redirect(`/user/profile?nickname=${nickname}`)
+  })
+
 module.exports = router

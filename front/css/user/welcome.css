@@ -23,12 +23,13 @@
 #wel_nick {
     text-align:center;
     margin: 40px 0 10px 0px;
-    font-size:24px;
+    font-size:28px;
 }
 
 .wel_text {
     margin: 8px;
     text-align: center;
+    font-size: 16px;
 }
 
 #wel_button {
@@ -55,10 +56,12 @@
     display:inline-block !important;
     width: 150px !important;
     height: 50px !important;
+    font-size: 18px;
+    line-height: 54px;
 }
 
 .wel_msg {
-    font-size: 20px;
+    font-size: 24px;
     text-align:center;
     margin: 0 0 6px 0;
 }
@@ -66,6 +69,7 @@
 .wel_enj {
     text-align:center;
     margin-bottom: 6px;
+    font-size: 18px;
 }
 
 #wel_foot {
@@ -81,6 +85,7 @@
 
 #wel_copy {
     font-size: 12px;
-    font: 10px;
-    top: -10px;
+    margin: 5px 10px 30px 2px;
+    color:#333;
+
 }

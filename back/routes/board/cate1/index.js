@@ -13,7 +13,6 @@ router.use('/check', cate1Router.check)
 
 // like
 router.use('/like',cate1Router.like)
-router.use('/likeCancel',cate1Router.likeCancel)
 router.use('/likeCount', cate1Router.likeCount)
 
 // hashtag
