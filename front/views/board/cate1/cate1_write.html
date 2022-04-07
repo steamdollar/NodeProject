@@ -1,12 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% extends 'utils/header.html' %}
+
+{% block content %}
+
+<div id= write_wrap>
+    <h1 id="wrt_h1">write 페이지</h1>
+    <div id="frm_wrp">
+        
+        <span id="hidden"> {{ userid }} </span>
+        
+        <form method="post" action="http://localhost:4000/api/board/cate1/imageUpload" id="write_frm" enctype="multipart/form-data">
+
+            <input type="text" name="nickname" id="nickname" value="{{nickname}}" class="hidden">
+
+            <div id="wrt_cate">
+
+                <h3><strong>Category</strong> </h3>
+
+                <select name="category" id="category" >
+                    <option value="" disabled> 카테고리 선택</option>
+                    <option value="cate1" id="cate1"selected>자유 게시판</option>
+                    <option value="question" id="question">코드 자문 게시판</option>
+                    <option value="QnA" id="QnA">Q&A 게시판</option>
+                    <option value="request" id="request">청원 게시판</option>
+                    <option value="notice" id="notice">공지사항</option>
+                </select>
+
+            </div>
+
+            <div id="wrt_title">
+                <h3 id="write_title_idx"><strong>Title</strong></h3>
+                <input type="text" name="title" placeholder="제목입력" id="wrt_title_input" value="cate1">
+            </div>
+
+            <div id="wrt_content">
+                <h3><strong>내용</strong></h3>
+
+                <textarea name="content" placeholder="내용입력" id="wrt_content_txt" ></textarea>
+            </div>
+
+            <div id="wrt_pic_zone">
+                <span id="pic_up">사진 업로드 </span>
+                <span>
+                    <input type="file" name="img1" id="img1">
+                    <input type="file" name="img2" id="img2">
+                    <input type="file" name="img3" id="img3">
+                    <input type="file" name="img4" id="img4">
+                    <input type="file" name="img5" id="img5">
+                </span>
+            </div>
+
+            <br>
+
+            <div id="ht_frm">
+                <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
+                <div id="ht_wrap"></div>
+            </div>
+
+            <input type="submit" value="글작성">
+
+        </form>
+    </div>
+</div>
+    <style>
+        #hidden {
+            display:none;
+        }
+    </style>
     <script type="text/javascript">
+
         document.addEventListener('DOMContentLoaded', () => {
             let hiddenSpan = document.querySelector('#hidden')
             let nickInput = document.querySelector('#nickname')
@@ -24,77 +85,20 @@
             } else if(category == "request"){
                 request.selected = true
             } else if(category == "question"){
-                question.selected = true
-            }
+                question.selected = true                }
 
             const notice = document.querySelector('#notice')
             if("{{userlevel}}" != 3) {
                 notice.remove()
             }
-
         })
-    </script>
-    <style>
-        #hidden {
-            display:none;
-        }
-    </style>
-</head>
 
-<body>
-    <div>
-        <h1>write 페이지</h1>
-    </div>
-    
-    <span id="hidden"> {{ userid }} </span>
-    
-    <form method="post" action="http://localhost:4000/api/board/cate1/imageUpload" id="write_frm" enctype="multipart/form-data">
-        <input type="text" name="nickname" id="nickname" value="{{nickname}}">
-        <div>
-            <strong>제목</strong> <br>
-            <input type="text" name="title" placeholder="제목입력" id="title" value="cate1">
-        </div>
-        <div>
-            <strong>category</strong> <br>
-            <!-- <input type="text" name="category" placeholder="카테고리 선택", id="category" value="cate1"> -->
-            <select name="category" id="category" >
-                <option value="" disabled> 카테고리 선택</option>
-                <option value="cate1" id="cate1"selected>자유 게시판</option>
-                <option value="question" id="question">코드 자문 게시판</option>
-                <option value="QnA" id="QnA">Q&A 게시판</option>
-                <option value="request" id="request">청원 게시판</option>
-                <option value="notice" id="notice">공지사항</option>
-            </select>
-        </div>
-        <div>
-            <strong>내용</strong> <br>
-            <textarea name="content" placeholder="내용입력" id="content" > aaa</textarea>
-        </div>
-        <div>
-            <span >사진 업로드 </span>
-            <span>
-                <input type="file" name="img1" id="img1">
-                <input type="file" name="img2" id="img2">
-                <input type="file" name="img3" id="img3">
-                <input type="file" name="img4" id="img4">
-                <input type="file" name="img5" id="img5">
-            </span>
-        </div>
-        <br>
 
-        <div id="ht_frm">
-            <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
-            <div id="ht_wrap"></div>
-        </div>
-        <input type="submit" value="글작성">
-    </form>
-
-    <script type="text/javascript">
         const htForm = document.querySelector('#ht_frm')
         const htText = document.querySelector('#hashtag')
         const category = document.querySelector('#category')
         
-
+        // enter를 이용해 해시 태그 추가, 삭제
         htForm.addEventListener('keydown', (e) => {
             if (e.keyCode === 13) {
                 const htDelete = document.createElement('span')
@@ -108,7 +112,7 @@
                 htElement2.innerHTML='#'
                 htElement.innerHTML = `${htText.value}`
 
-                const htDiv = document.createElement('div')
+                const htDiv = document.createElement('span')
                 htDiv.append(htDelete)
                 htDiv.append(htElement2)
                 htDiv.append(htElement)
@@ -125,20 +129,33 @@
                 }
             }
         })
-        // enter를 이용해 해시 태그 추가, 삭제
         
+        // 엔터 누르면 글 작성이 완료되어버리는 것 방지
         const write_frm = document.querySelector('#write_frm')
         write_frm.addEventListener('keydown', (e) => {
             if(e.keyCode === 13) {
                 e.preventDefault()
+
             }
         })
-        // 엔터 누르면 글 작성이 완료되어버리는 것 방지
 
+        // enter 누르면 줄 바꾸기 기능
+        const wrt_content_txt = document.querySelector('#wrt_content_txt')
+        wrt_content_txt.addEventListener('keydown', (e) => {
+            if(e.keyCode === 13) {
+                console.log('keydown recog')
+                const paragraph = document.createElement('br')
+                wrt_content_txt.append(paragraph)
+            }
+        })
+
+
+        //
+        //
+
+        // submit시 백엔드로 요청 전송
         write_frm.addEventListener('submit', async(e) => {
             e.preventDefault()
-
-            
 
             const option = {
                 'Content-type':'application/json',
@@ -149,8 +166,8 @@
             const nickname = document.querySelector('#nickname')
             const title = document.querySelector('#title')
             const content = document.querySelector('#content')
-            
             const hashtagss = document.querySelectorAll('.hashtags')
+
             let temphash = []
 
             for (i=0; i<hashtagss.length; i++) {
@@ -193,5 +210,4 @@
             }
         })
     </script>
-</body>
-</html>
+{% endblock %}

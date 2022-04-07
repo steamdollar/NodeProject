@@ -1,0 +1,113 @@
+/* css stylesheet */
+* {
+    box-sizing: border-box;
+}
+
+.hidden {
+    display:none;
+}
+
+/* */
+
+#write_wrap {
+    display:block;
+    width: 1200px;
+    height: 1200px;
+    margin: 150px auto 0 auto;
+    border: 3px solid rgb(214, 214, 214);
+}
+
+#frm_wrp {
+    position : relative; 
+    width: 1000px;
+    height: 900px;
+    margin: 0 auto;
+    display:flex;
+    justify-content: center;
+}
+
+/* wrt_title  */
+
+#wrt_h1 {
+    display:block;
+    margin: 50px 0 28px 80px;
+    font-size: 40px;
+}
+
+#wrt_title {
+    height: 60px;
+    margin: 20px 0 32px 0;
+    padding: 10px 0 10px 0;
+    font-size: 24px;
+}
+
+#wrt_title_input {
+    width: 700px;
+    height: 36px;
+    align-items: center;
+    font-size: 18px;
+    padding: 6px 0 0 10px;
+}
+
+/* wrt_cate */
+
+#wrt_cate {
+    height: 60px;
+    margin: 20px 0 30px 0;
+    padding: 10px 0 10px 0;
+    font-size: 24px;
+}
+
+#wrt_cate > h3 {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+#wrt_cate > select {
+    width: 200px;
+    height: 36px;
+    align-items: center;
+    font-size: 18px;
+}
+
+
+/* wrt_content */
+
+#wrt_content > h3 {
+    font-size: 28px;
+    margin: 50px 0 10px 0 !important;
+}
+
+textarea {
+    width: 700px;
+    height: 530px;
+    font-size: 16px;
+    padding: 4px;
+    margin: 0 0 30px 0;
+}
+
+/* pic */
+
+
+#wrt_pic_zone {
+    width: 700px;
+}
+
+#pic_up {
+    display:block;
+    font-size: 24px;
+    margin: 0 0 12px 0;
+}
+
+#wrt_pic_zone > span:nth-child(2) > input {
+    margin: 5px 10px 5px 4px;
+}
+
+/*  hashtag  */
+
+#ht_frm > input {
+    width: 700px;
+    height: 28px;
+    padding: 4px 0 0 4px;
+    margin: 0 0 8px 0;
+}
