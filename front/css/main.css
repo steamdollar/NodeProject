@@ -112,6 +112,8 @@
 }
 #chat_space {
     position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 #frm_chat {
@@ -140,14 +142,29 @@
 
 #chat {
     position:relative;
+    width: 90%;
+    height: 90%;
+    background: #ed2a61;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:nowrap;
+    /* overflow: auto; */
+    overflow-y: scroll;
+    overflow-x: hidden;
+
 }
 
 .me {
     text-align: right;
+    width: 100%;
+    display: block;
 }
 
 .you {
     text-align: left;
+    width: 100%;
+    display: block;
 }
 
 #deco{
