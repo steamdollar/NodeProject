@@ -60,7 +60,7 @@
 
     width: 1800px;
     height: auto;
-    min-height: 1000px;
+    min-height: 1200px;
     /* background: red; */
     margin: 0 auto;
     margin-top: 100px;
@@ -80,7 +80,7 @@
 #frm_duo {
     width: 1400px;
     height: 100px;
-    background: #464646;
+    background: #3a3a3a;
     display: flex;
     justify-content: space-around;
     border-radius: 20px;
@@ -90,7 +90,7 @@
 #duo_search_box{
     width: 1400px;
     height: 100px;
-    background: #464646;
+    background: #3a3a3a;
     display: flex;
     justify-content: space-between;
     padding: 0 65px;
@@ -103,7 +103,7 @@
     width: 1400px;
     height: auto;
     min-height: 100px;
-    background: #464646;
+    background: #3a3a3a;
     display: flex;
     border-radius: 20px;
     padding: 50px 0;
@@ -113,7 +113,7 @@
     width: 1400px;
     height: auto;
     min-height: 100px;
-    background: #464646;
+    background: #3a3a3a;
     display: flex;
     border-radius: 20px;
     /* padding: 0 65px; */
