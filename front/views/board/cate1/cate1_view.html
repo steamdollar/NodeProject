@@ -20,18 +20,95 @@
                 <div id="view_content">
                     {{ cate1_view.content }}
                 </div>
+                <div id="view_good">
+                    <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
+                        <input type="submit" value="" id="thumb">
+                    </form>
+            
+                    <form method="post" action="http://localhost:4000/api/board/cate1/likeCancel" id="likeCancel">
+                        <input type="submit" value="좋아요 취소" id="thumbCancel">
+                    </form>
+                </div>  
             </dd>
+            <div id="view_hash">
+                Hashtage : 
+                {% for item in cate1_hashtag %}
+                <span>#{{item.hashtag_name}}</span>
+                {% endfor %}
+            </div>  
         </dl>
-
     </div>
-    <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
-        <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
-        <input type="submit" value="글 삭제">
-    </form>
-    <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
+    <!-- <div>
+        <ul id="commentApp">
+        </ul>
+    </div> -->
+    <!-- 댓글시스템 렌더링하는 div-->
+    <div id="view_cmt">
+        <div id="view_app">
+            <ul id="commentApp">
+            </ul>
+        </div>
+        <template id="commentForm">
+            <li class="comment-form">
+                <form method="post" action="">
+                    <h4>댓글쓰기 <span>()</span> </h4>
+                    <span class="ps_box">
+                        <input type="text" placeholder="여러분의 소중한 댓글을 입력해주세요." class="int" value="" name="input">
+                    </span>
+                    <input type="submit" class="btn" value="등록" />
+                </form>
+            </li>
+        </template>
+        <!-- 댓글 작성 -->
+        <template id="commentList">
+            <li class="c_list">
+                <ul class="comment-row">
+                    <li class="comment-id"></li>
+                    <li class="comment-content">    
+                        <input type="hidden" name="idx" value="" />
+                        <span class="comment-delete-btn">X</span>
+                    </li>
+                    <li class="comment-date"></li>
+                </ul>
+            </li>
+        </template>
+        <!-- 댓글 목록 -->
+        <template id="commentInput">
+            <span>
+                <input type="text" class="comment-update-input" value="">
+            </span>
+        </template>
+    </div>
+    <div id="view_form">
+        <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
+            <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
+            <input type="submit" value="글 삭제">
+        </form>
+        <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
+    </div>
+    <!-- <div>
+        <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
+            <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
+            <input type="submit" value="글 삭제">
+        </form>
+        <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
+        <br>
+        hashtag : 
+        {% for item in cate1_hashtag %}
+        <span>#{{item.hashtag_name}}</span>
+        {% endfor %}
 
+        <br>
+        <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
+            <input type="submit" value="좋아요" id="thumb">
+        </form>
 
-    <br>
+        <form method="post" action="http://localhost:4000/api/board/cate1/likeCancel" id="likeCancel">
+            <input type="submit" value="좋아요 취소" id="thumbCancel">
+        </form>
+    </div> -->
+
+    <!-- <br>
     hashtag : 
     {% for item in cate1_hashtag %}
     <span>#{{item.hashtag_name}}</span>
@@ -42,6 +119,12 @@
         <input type="submit" value="좋아요" id="thumb">
     </form>
 
+<<<<<<< HEAD
+    <form method="post" action="http://localhost:4000/api/board/cate1/likeCancel" id="likeCancel">
+        <input type="submit" value="좋아요 취소" id="thumbCancel">
+    </form> -->
+=======
+>>>>>>> 9c247449c2bf0a5464dfd8d9abff5161d6f75153
 
     <span id="userimg"></span>
     
@@ -56,7 +139,6 @@
         </ul>
     </div>
     <!-- 댓글시스템 렌더링하는 div-->
-
     <template id="commentForm">
         <li class="comment-form">
             <form method="post" action="">
@@ -69,7 +151,6 @@
         </li>
     </template>
     <!-- 댓글 작성 -->
-
     <template id="commentList">
         <li>
             <ul class="comment-row">
@@ -83,7 +164,6 @@
         </li>
     </template>
     <!-- 댓글 목록 -->
-
     <template id="commentInput">
         <span>
             <input type="text" class="comment-update-input" value="">
