@@ -47,6 +47,7 @@
                 spanElement.innerHTML = event.data
                 divElement.appendChild(spanElement)
                 chat.appendChild(divElement)
+                
 
                 const author = spanElement.innerHTML.split(':')[0]
                 if ( author == "{{userid}}") {
@@ -55,6 +56,8 @@
                 else {
                     divElement.setAttribute('class', 'you')
                 }
+                
+                chat.scrollTop = chat.scrollHeight
             }
 
             webSocket.onclose = () => {
@@ -73,7 +76,7 @@
                 alert('로그아웃 되었습니다')
                 location.href='http://localhost:3000'
             })
-
+            
             //시간
 
 
@@ -316,8 +319,10 @@
             </div>
         </div>
         <div id="container3">
+            <div id="live_chat">
+                <img src="http://localhost:3000/live_chat.png">
+            </div>
             <div id="chat_box">
-                <h1>Live Talk</h1>
                 <div id="chat_wrap">
                     <div id="chat_space">
                         <ul id="chat">
@@ -327,10 +332,8 @@
                 </div>
 
                 <form id="frm_chat" action="/" method="get">
-                    <!-- <div class="chat_input_box"> -->
-                        <input type="text" name="input" id="input">
-                        <input type="submit" value="전송">
-                    <!-- </div> -->
+                    <input type="text" name="input" id="input">
+                    <input type="submit" value="전송">
                 </form>
             </div>
             <div id="deco">
