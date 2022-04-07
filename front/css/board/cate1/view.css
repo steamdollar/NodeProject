@@ -64,7 +64,7 @@ img {
 #view_dd {
     width:70%;
     margin: 100px auto 20px;
-    font-size:25px;
+    font-size:30px;
     
    
 }
@@ -95,30 +95,97 @@ img {
     border:none;
 }
 
-#view_dd > #view_good > #likecancel {
-    
-}
-
-
 #view_cmt {
-    width:70%;
+    /* width:70%;
     margin:80px 285px;
-    font-size:25px;
+    font-size:25px; */
+    width:100%;
+    margin:80px auto 100px;
 }
 
 #view_cmt > #view_app > #commentApp > .c_list {
-    border-bottom:1px solid;
+ 
+
 }
 
 #view_cmt > #view_app > #commentApp > .c_list > .comment-row {
     display:flex;
     width:1350px;
-    height:50px;
-    padding:20px;
+    padding:40px 0px 40px 0px;
     flex-direction:row;
     justify-content:space-between;
+    border-bottom:1px solid #e2e2e2;
+    margin:0 auto;
+    font-size:26px;
+
 }
 
-#view_cmt > #view_app > #commentApp > .c_list > .comment-content {
-   
+#view_cmt > #view_app > #commentApp > .c_list > .comment-row > .comment-content {
+    display:flex;
+    justify-content:space-between;
+    width:1000px;
+
+}
+
+#view_cmt > #view_app > #commentApp > .c_list > .comment-row > .comment-content > #hide {
+    display:block;
+}
+
+
+#view_cmt > #view_app > #commentApp > .c_list > .comment-row > .comment-content > .comment-delete-btn {
+    display:block;
+    width:50px;
+    text-align: right;
+}
+
+
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm {
+    width:1350px;
+    height:70px;
+    margin:20px auto;
+    text-align:right;
+    
+}
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm > h4 {
+    font-size:24px;
+}
+
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm > .btn {
+    height:50px;
+    width:100px;
+    border-radius: 5px;
+    background-color: #333;
+    color:#eee;
+    font-size:20px;
+    border:1px;
+    
+}
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm > .ps_box > .int {
+    width:500px;
+    height:50px;
+    border-radius:5px;
+    padding-left:10px;
+    font-size:18px;
+}
+
+
+#view_list {
+    width:300px;
+    height:30px;
+    margin:0 auto;
+}
+
+#view_list > .v_list {
+  display:block;  
+  padding:20px;
+  background-color: #333;
+  margin:0 auto;
+  text-align: center;
+  color:#eee;
+  font-size:24px;
+  border-radius: 5px;
 }
