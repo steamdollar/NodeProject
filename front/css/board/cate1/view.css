@@ -3,15 +3,48 @@
     padding:0px;    
 }
 
-img {
-    width:100px;
-    height:100px;
+#view_dd > #view_content > #view_userimg {
+    width:600px;
+    height: auto;
+    min-height: 400px;
+    margin:0 auto;
+}
+
+#view_dd > #view_content > #view_userimg > #userimg > span {
+    display: block;
+    width:400px;
+    height: 300px;
+    margin:0 auto;
+}
+
+#view_dd > #view_content > #view_userimg > #userimg > span > img {
+    display: inline-block;
+    width:400px;
+    height:300px;
+    margin:0 auto;
+
+    
+}
+
+#writerid {
+    display:none;
+}
+
+#useruser > #userid {
+    display:none;
+}
+
+#view_wide {
+    height:100%;
+}
+
+#view_wrap {
+    height:60%;
 }
 
 #view_wrap > dl {
     width:100%;
     margin:0 auto;
-    border-bottom:1px solid #e2e2e2;
     height:750px;
 }
 
@@ -63,20 +96,19 @@ img {
 
 #view_dd {
     width:70%;
-    margin: 100px auto 20px;
-    font-size:25px;
+    margin: 60px auto 20px;
+    font-size:30px;
     
    
 }
 
 #view_dd > #view_content {
-    height:400px;
+    height:auto;
+    min-height:600px;
 }
 
 #view_dd > #view_good {
-    display:flex;
-    justify-content:space-evenly;
-    margin:0 auto;
+text-align:center;
     
 }
 
@@ -86,39 +118,141 @@ img {
     font-size:25px;
 }
 
+#view_like {
+    padding-top:15px;
+    text-align: center;
+}
+
 #view_dd > #view_good > #like > #thumb {
-    width:50px;
-    height:50px;
-    background-image:url('http://localhost:3000/love.png');
+    background-image:url('http://localhost:3000/good.png');
+    background-position:  0px 0px;
     background-repeat:no-repeat;
-    background-position: top right;
+    background-color: white;
     border:none;
+    font-size:35px;
 }
-
-#view_dd > #view_good > #likecancel {
-    
-}
-
 
 #view_cmt {
-    width:70%;
+    /* width:70%;
     margin:80px 285px;
-    font-size:25px;
+    font-size:25px; */
+    width:100%;
+    margin:130px auto 100px;
 }
 
-#view_cmt > #view_app > #commentApp > .c_list {
-    border-bottom:1px solid;
+#view_app {
+    margin-top:350px;
 }
+
 
 #view_cmt > #view_app > #commentApp > .c_list > .comment-row {
     display:flex;
     width:1350px;
-    height:50px;
-    padding:20px;
+    padding:40px 0px 40px 0px;
     flex-direction:row;
     justify-content:space-between;
+    border-bottom:1px solid #e2e2e2;
+    margin:0 auto;
+    font-size:26px;
+
 }
 
-#view_cmt > #view_app > #commentApp > .c_list > .comment-content {
-   
+#view_cmt > #view_app > #commentApp > .c_list > .comment-row > .comment-content {
+    display:flex;
+    justify-content:space-between;
+    width:1000px;
+
+}
+
+#view_cmt > #view_app > #commentApp > .c_list > .comment-row > .comment-content > #hide {
+    display:block;
+}
+
+
+#view_cmt > #view_app > #commentApp > .c_list > .comment-row > .comment-content > .comment-delete-btn {
+    display:block;
+    width:50px;
+    text-align: right;
+}
+
+
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm {
+    width:1350px;
+    height:70px;
+    margin:20px auto;
+    text-align:right;
+    
+}
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm > h4 {
+    font-size:24px;
+}
+
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm > .btn {
+    height:50px;
+    width:100px;
+    border-radius: 5px;
+    background-color: #333;
+    color:#eee;
+    font-size:20px;
+    border:1px;
+    
+}
+
+#view_cmt > #view_app > #commentApp > .comment-form > .cmt_frm > .ps_box > .int {
+    width:500px;
+    height:50px;
+    border-radius:5px;
+    padding-left:10px;
+    font-size:18px;
+}
+
+
+#view_list {
+    width:300px;
+    height:30px;
+    margin:0 auto;
+}
+
+#view_list > .v_list {
+  display:block;  
+  padding:20px;
+  background-color: #333;
+  margin:0 auto;
+  text-align: center;
+  color:#eee;
+  font-size:24px;
+  border-radius: 5px;
+}
+
+#view_form {
+    display:flex;
+    justify-content:right;
+    padding-bottom:10px;
+    border-bottom:1px solid #e2e2e2;
+}
+
+#view_form > #view_modify > #form_lk {
+    display:block;
+    width:100px;
+    height:30px;
+    background-color: #333;
+    padding-top:8px;
+    color:#eee;
+    text-align:center;
+    border-radius: 5px;
+    
+}
+
+#view_form > #del_frm > #view_form_sub {
+  width:100px;
+  height:30px;
+  border-radius: 5px;
+  padding-top:3px;
+  background-color: #333;
+  color:#eee;
+  border:1px;
+  margin-left:15px;
 }
