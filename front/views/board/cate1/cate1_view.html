@@ -2,93 +2,102 @@
 
 {% block content %}
 <body>
-    <span id="userid">{{userid}}</span>
-    <div id="view_wrap">
-        <dl>
-            <dt id="view_dt">
-                <div id="view_title">
-                    <span id="title">{{cate1_view.title}}</span>
-                </div>
-                <div id="view_head">
-                    <span id="category">{{cate1_view.category}}</span>
-                    <span id="view_date">{{ cate1_view.date }}</span>
-                    <span id="writerid">{{cate1_view.userid}}</span>
-                    <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
-                </div>
-            </dt>
-            <dd id="view_dd">
-                <div id="view_content">
-                    <span id="userimg"></span>
-                    {{ cate1_view.content }}
-                </div>
-                <div id="view_good">
-                    <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
-                        <input type="submit" value="" id="thumb">
-                    </form>
-                </div>  
-            </dd>
-            <div id="view_hash">
-                Hashtage : 
-                {% for item in cate1_hashtag %}
-                <span>#{{item.hashtag_name}}</span>
-                {% endfor %}
-            </div>  
-        </dl>
+    <div id="useruser">
+        <span id="userid">{{userid}}</span>
     </div>
-    <!-- <div>
-        <ul id="commentApp">
-        </ul>
-    </div> -->
-    <!-- 댓글시스템 렌더링하는 div-->
-    <div id="view_cmt">
-        <div id="view_app">
+    <div id="view_wide">
+        <div id="view_wrap">
+            <dl>
+                <dt id="view_dt">
+                    <div id="view_title">
+                        <span id="title">{{cate1_view.title}}</span>
+                    </div>
+                    <div id="view_head">
+                        <span id="category">{{cate1_view.category}}</span>
+                        <span id="view_date">{{ cate1_view.date }}</span>
+                        <span id="writerid">{{cate1_view.userid}}</span>
+                        <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
+                    </div>
+                </dt>
+                <dd id="view_dd">
+                    <div id="view_content">
+                        <div id="view_userimg">
+                            <span id="userimg"></span>
+                        </div>
+                        {{ cate1_view.content }}
+                    </div>
+                    <div id="view_good">
+                        <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
+                            <input type="submit" value="💗" id="thumb">
+                        </form>
+                    </div>
+                    <div id="view_like">
+                        <span id="likecount"></span>
+                    </div> 
+                </dd>
+                <div id="view_form">
+                    <div id="view_modify">
+                        <a href='/board/cate1/update?idx={{cate1_view.idx}}' id="form_lk">수정</a>
+                    </div>
+                    <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
+                        <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
+                        <input type="submit" value="글 삭제" id="view_form_sub">
+                    </form>
+                </div>
+                <div id="view_hash">
+                    Hashtage : 
+                    {% for item in cate1_hashtag %}
+                    <span>#{{item.hashtag_name}}</span>
+                    {% endfor %}
+                </div>  
+            </dl>
+        </div>
+        <!-- <div>
             <ul id="commentApp">
             </ul>
-        </div>
-        <template id="commentForm">
-            <li class="comment-form">
-                <form method="post" action="" class="cmt_frm">
-                    <h4>댓글 <span>()</span> </h4>
-                    <span class="ps_box">
-                        <input type="text" placeholder="여러분의 소중한 댓글을 입력해주세요." class="int" value="" name="input">
-                    </span>
-                    <input type="submit" class="btn" value="댓글달기" />
-                </form>
-            </li>
-        </template>
-        <!-- 댓글 작성 -->
-        <template id="commentList">
-            <li class="c_list">
-                <ul class="comment-row">
-                    <li class="comment-id"></li>
-                    <li class="comment-content">    
-                        <input type="hidden" name="idx" value=""/>
-                        <span class="comment-delete-btn">X</span>
-                    </li>
-                    <li class="comment-date"></li>
+        </div> -->
+        <!-- 댓글시스템 렌더링하는 div-->
+        <div id="view_cmt">
+            <div id="view_app">
+                <ul id="commentApp">
                 </ul>
-            </li>
-        </template>
-        <!-- 댓글 목록 -->
-        <template id="commentInput">
-            <span>
-                <input type="text" class="comment-update-input" value="">
-            </span>
-        </template>
+            </div>
+            <template id="commentForm">
+                <li class="comment-form">
+                    <form method="post" action="" class="cmt_frm">
+                        <h4>댓글 <span>()</span> </h4>
+                        <span class="ps_box">
+                            <input type="text" placeholder="여러분의 소중한 댓글을 입력해주세요." class="int" value="" name="input">
+                        </span>
+                        <input type="submit" class="btn" value="댓글달기" />
+                    </form>
+                </li>
+            </template>
+            <!-- 댓글 작성 -->
+            <template id="commentList">
+                <li class="c_list">
+                    <ul class="comment-row">
+                        <li class="comment-id"></li>
+                        <li class="comment-content">    
+                            <input type="hidden" name="idx" value=""/>
+                            <span class="comment-delete-btn">X</span>
+                        </li>
+                        <li class="comment-date"></li>
+                    </ul>
+                </li>
+            </template>
+            <!-- 댓글 목록 -->
+            <template id="commentInput">
+                <span>
+                    <input type="text" class="comment-update-input" value="">
+                </span>
+            </template>
+        </div>
+        <div id="view_list">
+            <a href="/board/cate1" class="v_list">글 목록</a>
+        </div>
     </div>
-    <div id="view_list">
-        <a href="/board/cate1" class="v_list">글 목록</a>
-    </div>
-    <div id="view_form">
-        <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
-            <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
-            <input type="submit" value="글 삭제">
-        </form>
-        <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
-    </div>
-    <div>
-        <span id="likecount"></span>
-    </div>
+    
     <script type="text/javascript">
         const option = {
             'Content-type':'application/json',

@@ -3,15 +3,48 @@
     padding:0px;    
 }
 
-img {
-    width:100px;
-    height:100px;
+#view_dd > #view_content > #view_userimg {
+    width:600px;
+    height: auto;
+    min-height: 400px;
+    margin:0 auto;
+}
+
+#view_dd > #view_content > #view_userimg > #userimg > span {
+    display: block;
+    width:400px;
+    height: 300px;
+    margin:0 auto;
+}
+
+#view_dd > #view_content > #view_userimg > #userimg > span > img {
+    display: inline-block;
+    width:400px;
+    height:300px;
+    margin:0 auto;
+
+    
+}
+
+#writerid {
+    display:none;
+}
+
+#useruser > #userid {
+    display:none;
+}
+
+#view_wide {
+    height:100%;
+}
+
+#view_wrap {
+    height:60%;
 }
 
 #view_wrap > dl {
     width:100%;
     margin:0 auto;
-    border-bottom:1px solid #e2e2e2;
     height:750px;
 }
 
@@ -63,20 +96,19 @@ img {
 
 #view_dd {
     width:70%;
-    margin: 100px auto 20px;
+    margin: 60px auto 20px;
     font-size:30px;
     
    
 }
 
 #view_dd > #view_content {
-    height:400px;
+    height:auto;
+    min-height:600px;
 }
 
 #view_dd > #view_good {
-    display:flex;
-    justify-content:space-evenly;
-    margin:0 auto;
+text-align:center;
     
 }
 
@@ -86,13 +118,18 @@ img {
     font-size:25px;
 }
 
+#view_like {
+    padding-top:15px;
+    text-align: center;
+}
+
 #view_dd > #view_good > #like > #thumb {
-    width:50px;
-    height:50px;
-    background-image:url('http://localhost:3000/love.png');
+    background-image:url('http://localhost:3000/good.png');
+    background-position:  0px 0px;
     background-repeat:no-repeat;
-    background-position: top right;
+    background-color: white;
     border:none;
+    font-size:35px;
 }
 
 #view_cmt {
@@ -100,13 +137,13 @@ img {
     margin:80px 285px;
     font-size:25px; */
     width:100%;
-    margin:80px auto 100px;
+    margin:130px auto 100px;
 }
 
-#view_cmt > #view_app > #commentApp > .c_list {
- 
-
+#view_app {
+    margin-top:350px;
 }
+
 
 #view_cmt > #view_app > #commentApp > .c_list > .comment-row {
     display:flex;
@@ -188,4 +225,34 @@ img {
   color:#eee;
   font-size:24px;
   border-radius: 5px;
+}
+
+#view_form {
+    display:flex;
+    justify-content:right;
+    padding-bottom:10px;
+    border-bottom:1px solid #e2e2e2;
+}
+
+#view_form > #view_modify > #form_lk {
+    display:block;
+    width:100px;
+    height:30px;
+    background-color: #333;
+    padding-top:8px;
+    color:#eee;
+    text-align:center;
+    border-radius: 5px;
+    
+}
+
+#view_form > #del_frm > #view_form_sub {
+  width:100px;
+  height:30px;
+  border-radius: 5px;
+  padding-top:3px;
+  background-color: #333;
+  color:#eee;
+  border:1px;
+  margin-left:15px;
 }
