@@ -2,120 +2,76 @@
 
 {% block content %}
 <body>
-    <div id="board_search">
-        <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
-            <div id="board_frm">
-                <div id="board_select">
-                    <div id="board_cate" style="display:inline-block;" >
-                        <strong style="display:inline; padding:10px;" >검색옵션</strong>
-                        <select name="option" id="category" >
-                            <option value="" disabled>검색 옵션 선택</option>
-                            <option value="nickname" id="nickname" selected>닉네임</option>
-                            <option value="hashtag" id="hashtag">해시태그</option>
-                            <option value="title" id="title">제목</option>
-                            <option value="content" id="content">내용</option>
-                        </select>
-                    </div>
-                    <div id="board_key" style="display:inline-block;">
-                        <strong style="padding:10px 10px 10px 38px;">검색</strong>
-                        <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
-                    </div>
-                </div>
-                <div id="board_submit">
-                    <input type="submit" name="search" id="search" value="검색">
-                </div>
-                <!-- <div id="board_submit">
-                    <strong style="padding:10px 10px 10px 38px;">검색</strong>
-                    <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
-                    <input type="submit" name="search" id="search" value="검색">
-                </div> -->
-            </div>
-        </form>
-    </div>
-    <div id="board_main">
-        <div id="board_writer">
-            <a id="address" href="">글쓰기</a>
-        </div>
-        <table id="board_table">
-            <thead id="board_thead">
-                <tr>
-                    <!-- <th class="th_thum"><div id="imgZone"></div></th> -->
-                    <th>카테고리</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
-                    <th>좋아요</th>
-                </tr>
-            </thead>
-
-            <tbody id="board_list">
-
-            </tbody>
-
-        </table>
-        <div id="paging">
-            <ul>
-                
-            </ul>
-        </div>
-
-        <template id="board_column">
-        </template>
-
-        <template id="board_temp">
-            <tr>
-                <th>{img1}</th>
-                <th>{category}</th>
-                <th id="temp_title"><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
-                <th>{nickname}</th>
-                <th>{date}</th>
-                <th>{hit}</th>
-                <th>{likes}</th>
-            </tr>
-        </template>
-    </div>
-
-
-    <!-- <div id="imgZone"></div> -->
-    <!-- <div id="board_write">
-        <a href="/board/cate1/write">글쓰기</a>
+    <div id="cate1_wrap">
         <div id="board_search">
             <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
-                <select name="option" id="category" >
-                    <option value="" disabled>검색 옵션 선택</option>
-                    <option value="nickname" id="nickname" selected>nickname</option>
-                    <option value="hashtag" id="hashtag">해시태그</option>
-                    <option value="title" id="title">제목</option>
-                    <option value="content" id="content">내용</option>
-                </select>
-                <input type="text" name='keyword' placeholder="키워드를 입력하세요">
-                <input type="submit" name="search" id="search" value="선택">
+                <div id="board_frm">
+                    <div id="board_select">
+                        <div id="board_cate" style="display:inline-block;" >
+                            <strong style="display:inline; padding:10px;" >검색옵션</strong>
+                            <select name="option" id="category" >
+                                <option value="" disabled>검색 옵션 선택</option>
+                                <option value="nickname" id="nickname" selected>닉네임</option>
+                                <option value="hashtag" id="hashtag">해시태그</option>
+                                <option value="title" id="title">제목</option>
+                                <option value="content" id="content">내용</option>
+                            </select>
+                        </div>
+                        <div id="board_key" style="display:inline-block;">
+                            <strong style="padding:10px 10px 10px 38px;">검색</strong>
+                            <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
+                        </div>
+                    </div>
+                    <div id="board_submit">
+                        <input type="submit" name="search" id="search" value="검색">
+                    </div>
+                </div>
             </form>
         </div>
-    </div> -->
-    <!-- <div id="board_search">
-        <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
-            <select name="option" id="category" >
-                <option value="" disabled>검색 옵션 선택</option>
-                <option value="nickname" id="nickname" selected>nickname</option>
-                <option value="hashtag" id="hashtag">해시태그</option>
-                <option value="title" id="title">제목</option>
-                <option value="content" id="content">내용</option>
-            </select>
-            <input type="text" name='keyword' placeholder="키워드를 입력하세요">
-            <input type="submit" name="search" id="search" value="선택">
-        </form>
-    </div> -->
-        <!-- <script type="text/javascript">
-            const frm_search = document.querySelector('#frm_search')
-            const hiddenOp = document.querySelector('#option')
-            frm_search.addEventListener('submit', async(e) => {
-                e.preventDefault()
-                hiddenOp.value = category.value
-                
-            })
-        </script> -->
+        <div id="board_main">
+            <div id="board_writer">
+                <a id="address" href="">글쓰기</a>
+            </div>
+            <table id="board_table">
+                <thead id="board_thead">
+                    <tr>
+                        <th>로고</th>
+                        <th>카테고리</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                        <th>좋아요</th>
+                    </tr>
+                </thead>
+    
+                <tbody id="board_list">
+    
+                </tbody>
+    
+            </table>
+            <div id="paging">
+                <ul>
+                    
+                </ul>
+            </div>
+    
+            <template id="board_column">
+            </template>
+    
+            <template id="board_temp">
+                <tr>
+                    <th>{img1}</th>
+                    <th>{category}</th>
+                    <th id="temp_title"><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
+                    <th>{nickname}</th>
+                    <th>{date}</th>
+                    <th>{hit}</th>
+                    <th>{likes}</th>
+                </tr>
+            </template>
+        </div>
+    </div>
 <style>
     .thumb {
         width:30px !important;
