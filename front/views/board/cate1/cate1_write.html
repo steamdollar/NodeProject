@@ -33,30 +33,36 @@
             </div>
 
             <div id="wrt_content">
-                <h3><strong>내용</strong></h3>
+                <h3><strong>Content</strong></h3>
 
-                <textarea name="content" placeholder="내용입력" id="wrt_content_txt" ></textarea>
+                <textarea name="content" placeholder="내용입력" id="wrt_content_txt" style='resize: vertical;' ></textarea>
             </div>
 
             <div id="wrt_pic_zone">
-                <span id="pic_up">사진 업로드 </span>
+                <span id="pic_up"><h3> 사진 업로드 </h3></span>
                 <span>
+                    <span><label for="img1">파일 선택</label></span>
                     <input type="file" name="img1" id="img1">
+                    <span><label for="img2">파일 선택</label></span>
                     <input type="file" name="img2" id="img2">
+                    <span><label for="img3">파일 선택</label></span>
                     <input type="file" name="img3" id="img3">
+                    <span><label for="img4">파일 선택</label></span>
                     <input type="file" name="img4" id="img4">
+                    <span><label for="img5">파일 선택</label></span>
                     <input type="file" name="img5" id="img5">
                 </span>
             </div>
 
             <br>
 
+            <div id="hashtag_idx"><h3> # hashtag </h3></div>
             <div id="ht_frm">
                 <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
                 <div id="ht_wrap"></div>
             </div>
 
-            <input type="submit" value="글작성">
+            <input type="submit" value="글작성" id="wrt_submit">
 
         </form>
     </div>
@@ -101,24 +107,27 @@
         // enter를 이용해 해시 태그 추가, 삭제
         htForm.addEventListener('keydown', (e) => {
             if (e.keyCode === 13) {
+                e.preventDefault()
+                const htWrap = document.querySelector('#ht_wrap')
                 const htDelete = document.createElement('span')
-                htDelete.innerHTML = 'X_'
+                htDelete.innerHTML = 'x'
                 htDelete.setAttribute('class', `htDeleter`)
                 
                 const htElement = document.createElement('span')
-                const htElement2 = document.createElement('sapn')
+                const htElement2 = document.createElement('span')
                 htElement.setAttribute('class', `hashtags`)
                 htElement2.setAttribute('class', `hashtagsform`)
                 htElement2.innerHTML='#'
                 htElement.innerHTML = `${htText.value}`
 
                 const htDiv = document.createElement('span')
+                htDiv.setAttribute('class', 'htDiv')
                 htDiv.append(htDelete)
                 htDiv.append(htElement2)
                 htDiv.append(htElement)
                 
+                htWrap.append(htDiv)
                 
-                htForm.append(htDiv)
                 htText.value = ''
 
                 const htDeleteHandler = document.querySelectorAll('.htDeleter')
@@ -131,21 +140,17 @@
         })
         
         // 엔터 누르면 글 작성이 완료되어버리는 것 방지
-        const write_frm = document.querySelector('#write_frm')
-        write_frm.addEventListener('keydown', (e) => {
+        const wrt_submit = document.querySelector('#wrt_submit')
+        wrt_submit.addEventListener('keydown', (e) => {
             if(e.keyCode === 13) {
                 e.preventDefault()
-
             }
         })
 
-        // enter 누르면 줄 바꾸기 기능
-        const wrt_content_txt = document.querySelector('#wrt_content_txt')
-        wrt_content_txt.addEventListener('keydown', (e) => {
+        const hashtag = document.querySelector('#hashtag')
+        hashtag.addEventListener('keydown', (e) => {
             if(e.keyCode === 13) {
-                console.log('keydown recog')
-                const paragraph = document.createElement('br')
-                wrt_content_txt.append(paragraph)
+                e.preventDefault()
             }
         })
 
@@ -164,8 +169,8 @@
 
             const userid = document.querySelector('#hidden')
             const nickname = document.querySelector('#nickname')
-            const title = document.querySelector('#title')
-            const content = document.querySelector('#content')
+            const title = document.querySelector('#wrt_title_input')
+            const content = document.querySelector('#wrt_content_txt')
             const hashtagss = document.querySelectorAll('.hashtags')
 
             let temphash = []
