@@ -412,31 +412,16 @@ exports.imgUpdate = async (req, res) => {
 
     let temp = [img1, img2, img3, img4, img5]
     let images = []
-    // for(let i=1; i<=5; i++) {
-    //     try {
-    //         const [img] = req.files[`img`+i] 
-    //         images.push(img.filename)
-    //     }
-    //     catch(e) {
-    //         images.push('N/A')
-    //     }
-    // }
-
+    console.log(temp)
     for( let i=0; i<5; i++) {
-        if ( temp[i] === '' || temp[i] == undefined) {
+        const tempName = temp[i].split('/')
+        console.log(tempName)
+        if (tempName.length === 1) {
             images.push('N/A')
-            console.log(images)
         }
         else {
-            const tempName = temp[i].split('/')
-            console.log(tempName)
-            if (tempName.length === 1) {
-                images.push('N/A')
-            }
-            else {
-                images.push(tempName[tempName.length-1])
-            }
-        }
+            images.push(tempName[tempName.length-1])
+        }    
     }
 
     console.log(images)
