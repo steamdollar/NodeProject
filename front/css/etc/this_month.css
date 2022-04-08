@@ -1,12 +1,19 @@
+#rank_wrap{
+    width: 100%;
+    height: 1200px;
+
+}
+
 #rank{
     width: 100%;
-    height: 2000px;
+    height: 100%;
     background: rgb(243, 243, 243);
+
 }
 
 #circle{
     width: 1400px;
-    height: 1000px;
+    height: 800px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -37,22 +44,107 @@
 }
 
 #rank_content{
-    background: pink;
+    /* background: pink; */
     width: 1400px;
-    height: 500px;
+    height: auto;
     margin: 0 auto;
     margin-top: -300px;
+    display: flex;
+    justify-content: space-around;
 
 }
 
 #rank_content > h1{
     width: 50px;
-    font-size: 40px;
-    height: 500px;
-    writing-mode: vertical-rl;
+    font-size: 60px;
+    height: 900px;
+    writing-mode: vertical-lr;
     transform: rotate(180deg);
     font-family: "Multicolore";
     text-align: center;
     letter-spacing: 2px;
+    margin-top: 150px;
+    color: rgb(253, 136, 40)
 
+}
+#rank_student{
+    margin-top: 200px;
+    width: 400px;
+    height: 1000px;
+
+}
+/* 마일리지 */
+#rank_student > h1{
+    width: 400px;
+    font-size: 40px;
+    font-family: "Multicolore";
+    /* font-family: 'FF Signa Serif Stencil', 'Book'; */
+    margin-top: 50px;
+    letter-spacing: 2px;
+    color: rgb(255, 195, 146)
+}
+
+#rank_student>div{
+    width: 500px;
+    height: 400px;
+}
+/* prizes */
+#prizes>h2{
+    font-size: 36px;
+    margin-top: 60px;
+    /* font-family: "Multicolore"; */
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    letter-spacing: 2px;
+    margin-left: 20px;
+    color: rgb(253, 136, 40)
+}   
+
+#prizes{
+    width: 500px;
+    height: 400px;
+}
+.prizes_box{
+    width: 500px;
+    height: 200px;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.prizes_box:nth-child(1){
+    margin-bottom: 50px;
+}
+
+.best{
+    width: 300px;
+    font-size: 30px;
+    color: rgb(253, 136, 40)
+}
+
+.code_ranking{
+    display: inline-block;
+    color: #858585;
+}
+
+.prizes{
+    margin-top: 20px;
+    font-size: 24px;
+    color: rgb(253, 136, 40)
+}
+
+.cultural_gift, .coffee_coupon{
+    margin-top: 30px;
+    font-size: 20px;
+    color: rgb(253, 136, 40)
+}
+
+.rank_idx{
+    font-size: 30px!important;
+    display: inline-block;
+    margin-top: 10px;
+    color: rgb(255, 195, 146)
+}
+
+.ranker_info{
+    display: inline-block;
+    margin-left: 10px;
 }
