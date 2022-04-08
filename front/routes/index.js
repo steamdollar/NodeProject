@@ -12,5 +12,10 @@ router.use('/user',userRouter)
 router.use('/board', boardRouter)
 router.use('/admin',adminRouter)
 router.use('/matching',matchingRouter)
-
+router.use('/thismonth', (req,res)=>{
+    res.render('etc/this_month.html')
+})
+router.use('/intro', (req,res)=>{
+    res.render('etc/introduce.html')
+})
 module.exports = router
