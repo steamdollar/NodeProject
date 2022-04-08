@@ -9,7 +9,6 @@ const option = {
 }
 
 router.get('/', async (req,res) => {
- 
     res.render('./board/notice/notice_list.html')
 })
 

@@ -1,0 +1,63 @@
+/*  css stylesheet  */
+
+/*  door */
+
+#door {
+    display:inline-block;
+    margin-top:120px;
+}
+#door > span {
+    display:flex;
+    justify-content: center;
+}
+
+#door > span > img {
+    width: 80%;
+}
+
+#board_table {
+    width: 100%;
+    margin: 100px 0 0 0;
+    padding: 0 100px 0 100px;
+    border:none;
+}
+
+#board_list {
+    position:relative;
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 60px 0 60px;
+}
+
+.cards {
+    display:inline-block;
+    text-align: center;
+    margin: 40px;
+}
+
+.cards > #temp_title {
+    font-size: 40px;
+    display:inline-block;
+    margin: 10px 0 0 0;
+}
+
+.cards > #temp_title > a {
+    transition: all 1s;
+}
+
+.cards > #temp_title > a:hover {
+    background: #e0f7fa;
+}
+
+.cards > span > a > img {
+    width: 400px;
+    height: 400px;
+    transition: all 0.2s;
+}
+
+.cards > span > a > img:hover {
+    transform: scale(1.2);
+}
+
+
