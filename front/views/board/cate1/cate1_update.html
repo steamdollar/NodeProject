@@ -114,6 +114,7 @@
                     inputSpan.prepend(newImg)
                 })
             }
+            
             const inputSpan = document.createElement('span')
             let upNum = imgArr.length +1
             for ( i = 0; i <5-imgArr.length; i++) {
@@ -229,48 +230,47 @@
             //
 
             const formData = new FormData()
-            let tempForm = {}
             formData.append('category', category)
             formData.append('idx', idx.value)
+            // for ( let i = 1; i<6; i++) {
+            //     try {
+            //         formData.append(`img`+i, `img`+i.files[0])
 
+            //     }
+            //     catch (e) {
+            //         formData.append(`img`+i, 'N/A')
+            //         console.log('err')
+            //         console.log(`img`+i)
+            //     }
+            // }
+
+            // for ( i = 1; i<6; i++) {
+            //     if(`img${i}`.type !== 'file') {
+            //         formData.append(`img${i}`, 'N/B')
+            //         console.log(`img${i}`.type,'N/B')
+            //     }
+            //     else {
+            //         formData.append(`img${i}`, `img${i}`.files[0])
+            //     }
+            // }
             const originImg = document.querySelectorAll('.hidden')
 
             formData.append('originLength', originImg.length)
 
-            if( img1 === null) {
-                formData.append ('img1', 'pass')
-            }
-            else {
-                formData.append('img1', img1.value)
-            }
+            // for ( i = 1; i <= originImg.length; i++) {
+            //     formData.append(`img${i}`, `origin${i}a`.src)
+            // }
+            
+            // for ( i = 5-originImg.length; i<=5; i++) {
+            //     formData.append(`$img${i}`, `img${i}`.files[0])
+            // }
 
-            if( img2 === null) {
-                formData.append ('img2', 'pass')
-            }
-            else {
-                formData.append('img2', img2.value)
-            }
 
-            if( img3 === null) {
-                formData.append ('img3', 'pass')
-            }
-            else {
-                formData.append('img3', img3.value)
-            }
-
-            if( img4 === null) {
-                formData.append ('img4', 'pass')
-            }
-            else {
-                formData.append('img4', img4.value)
-            }
-
-            if( img5 === null) {
-                formData.append ('img5', 'pass')
-            }
-            else {
-                formData.append('img5', img5.value)
-            }
+            formData.append('img1', img1.value || img1.files[0])
+            formData.append('img2', img2.value || img2.files[0])
+            formData.append('img3', img3.value || img3.files[0])
+            formData.append('img4', img4.value || img4.files[0])
+            formData.append('img5', img5.value || img5.files[0])
 
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 

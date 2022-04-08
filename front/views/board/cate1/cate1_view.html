@@ -4,6 +4,7 @@
 <body>
     <div id="useruser">
         <span id="userid">{{userid}}</span>
+        <span id="mynick" style ='display: none;'>{{nickname}}</span>
     </div>
     <div id="view_wide">
         <div id="view_wrap">
@@ -170,7 +171,7 @@
 
             const data = {
                 idx:idx.value,
-                category:category,
+                category:category.innerHTML,
                 writerid:writerid.innerHTML,
                 userid:userid.innerHTML
             }
@@ -344,7 +345,7 @@
                 }
                 // state 변수를 업데이트 해준다. 방금 쓴 댓글을 추가하고, length 값을 1 더한다.
 
-                const nickname = document.querySelector('#nickname')
+                const mynick = document.querySelector('#mynick')
                 const content = input.value
                 const userid = document.querySelector('#userid')
                 
@@ -352,7 +353,7 @@
                     cate: cate,
                     idx: idx.value,
                     content: content,
-                    nickname:nickname.innerHTML,
+                    nickname:mynick.innerHTML,
                     userid:userid.innerHTML
                 }
                 
