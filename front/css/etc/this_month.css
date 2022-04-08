@@ -1,0 +1,58 @@
+#rank{
+    width: 100%;
+    height: 2000px;
+    background: rgb(243, 243, 243);
+}
+
+#circle{
+    width: 1400px;
+    height: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* background: red; */
+}
+
+.circle{
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    border: 2px solid rgb(253, 136, 40);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.kac{
+    position: absolute;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    color: rgb(253, 136, 40);
+}
+
+#rank_content{
+    background: pink;
+    width: 1400px;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: -300px;
+
+}
+
+#rank_content > h1{
+    width: 50px;
+    font-size: 40px;
+    height: 500px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: "Multicolore";
+    text-align: center;
+    letter-spacing: 2px;
+
+}
