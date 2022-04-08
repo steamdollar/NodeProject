@@ -1,6 +1,7 @@
 {% extends 'utils/header.html' %}
 
 {% block content %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXNKTQr4kxZ_hCT6ugSw36FBd3aDpI_Hk&callback=myMap"></script>
 <body>
     <div id="intro_wrap">
         <div id="intro_logo">
@@ -8,50 +9,133 @@
                 Introduce
             </h3>
         </div>
-        <div id="img_wrap">
-            <div id="introimg">
-                <img src="http://localhost:3000/intro_main.jpg" id="intro_img">
-                <div id="kg_text">
-                    <h1>
-                        KYUNGIL
-                        <br>
-                        COMMUNITY
-                    </h1>
+        <div id="intro_contents">
+            <div id="img_wrap">
+                <div id="introimg">
+                    <div id="itg">
+                        <img src="http://localhost:3000/intro_main.jpg" id="intro_img">
+                    </div>
+                    <div id="kg_text">
+                        <h1>
+                            KYUNGIL
+                            <br>
+                            COMMUNITY
+                        </h1>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="kg_content">
-            <p>
-                팀 프로젝트를 시작하기에 앞서서 팀장과 팀원들이 프로젝트의 방향성과 컨셉에 대해 밤새 고민하다
-                생각해낸 것이 바로 경일 아카데미 커뮤니티 사이트입니다.  
-                <br>
-                본 사이트를 개발하게 된 취지는 경일아 카데미에 다니는 학생들이 좀더 서로에 대해 알아가고 취업정보, 코드정보 등을 공유하고 같이
-                공부할 수 있는 기회를 제공하는 공간이 필요하다고 생각해서 만들게 되었습니다. 많은 경일 학생들이 
-                이 사이트를 이용해서 경일 아카데미를 대표하는 커뮤니티 사이트가 되기를 바랍니다.
-            </p>
-        </div>
-        <div id="classroom">
+            <div id="kg_content">
+                <p>
+                    팀 프로젝트를 시작하기에 앞서서 팀장과 팀원들이 프로젝트의 방향성과 컨셉에 대해 밤새 고민하다
+                    생각해낸 것이 바로 경일 아카데미 커뮤니티 사이트입니다.  
+                    <br>
+                    본 사이트를 개발하게 된 취지는 경일아 카데미에 다니는 학생들이 좀더 서로에 대해 알아가고 취업정보, 코드정보 등을 공유하고 같이
+                    공부할 수 있는 기회를 제공하는 공간이 필요하다고 생각해서 만들게 되었습니다. 많은 경일 학생들이 
+                    이 사이트를 이용해서 경일 아카데미를 대표하는 커뮤니티 사이트가 되기를 바랍니다.
+                </p>
+            </div>
+
             <div id="classtype">
                 <h4>
                     Class
                 </h4>
             </div>
-            <ul id="info_class">
-                <li>
-                    <img src="http://localhost:3000/blockchain2.jpg">
-                </li>
-                <li>
-                    <img src="http://localhost:3000/gameplan.jpg">
-                </li>
-                <li>
-                    <img src="http://localhost:3000/arvr.jpg">
-                </li>
-                <li>
-                    <img src="http://localhost:3000/program.jpg">
-                </li>
-            </ul>
+            <div id="classroom">
+                <ul id="info_class">
+                    <li>
+                        <div class="img_layout">
+                            <img src="http://localhost:3000/blockchain2.jpg">
+                        </div>
+                        <h2>
+                            BLOCK &nbsp;CHAIN<br>
+                            Technology
+                        </h2>
+                        <p>
+                            - Javascript<br>
+                            - 스마트웹 프론트앤드 개발<br>
+                            - 솔리디티, 핀테크<br>
+                            - 블록체인 앱 개발 기획 및 멘토링<br>
+                        </p>
+                    </li>
+                    <li>
+                        <div class="img_layout">
+                            <img src="http://localhost:3000/gameplan.jpg">
+                        </div>
+                        <h2>
+                            GAME &nbsp;DIRECTING<br>
+                            Convention
+                        </h2>
+                        <p>
+                            - 네코랜드 스튜디오<br>
+                            - 보드게임 제작, 온라임게임 제작<br>
+                            - Unity 라이브 서비스
+                        </p>
+                    </li>
+                    <li>
+                        <div class="img_layout">
+                            <img src="http://localhost:3000/arvr.jpg">
+                        </div>
+                        <h2>
+                            AR / VR<br>
+                            Technology
+                        </h2>
+                        <p>
+                            - 3D 그래픽<br>
+                            - 프로그래밍 언어<br>
+                            - VR/AR 컨텐츠 개발
+                        
+                        </p>
+                    </li>
+                    <li>
+                        <div class="img_layout">
+                            <img src="http://localhost:3000/program.jpg">
+                        </div>
+                        <h2>
+                            GAME &nbsp;PROGRAMMING<br>
+                            Technology
+                        </h2>
+                        <p>
+                            - WinAPI<br>
+                            - Unity 서비스<br>
+                            - RPG Game Develop Guide
+    
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div id="map" style="width:100%; height: 600px;"></div>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXNKTQr4kxZ_hCT6ugSw36FBd3aDpI_Hk&callback=initMap&region=kr"></script>
+            <script>
+                function initMap() {
+                var seoul = { lat: 37.5398 ,lng: 127.1233 };
+                var map = new google.maps.Map(
+                    document.getElementById('map'), {
+                    zoom: 18,
+                    center: seoul
+                    });
+                new google.maps.Marker({
+                    position: seoul,
+                    map:map,
+                    label:"경일 아카데미"
+                })
+                
+                }
+
+
+            </script>
         </div>
+        
+        
 
     </div>
-
+    <script>
+        function myMap(){
+            let mapOptions = {
+                center: new google.maps.Lating(37.5398,127.1233),zoom:5
+            }
+            let map = new google.maps.Map(
+                document.getElementById("googleMap")
+            )
+        }
+    </script>
 {% endblock %}
