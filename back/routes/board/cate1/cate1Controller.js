@@ -409,8 +409,8 @@ exports.imgLoad = async (req, res) => {
 }
 
 exports.imgUpdate = async (req, res) => {
-    const { idx, category, originLength } = req.body
-
+    const { idx, category, originLength, img1, img2, img3, img4, img5 } = req.body
+    console.log(img1, img2, img3, img4, img5)
     let images = []
     for(let i=1; i<=5; i++) {
         try {

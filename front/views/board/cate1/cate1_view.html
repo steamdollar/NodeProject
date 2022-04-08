@@ -225,7 +225,7 @@
         //
         document.addEventListener('DOMContentLoaded', async () => {
             const uri = location.pathname
-            const [,,cate,] = location.pathname.split('/')
+            const cate = document.querySelector('#category').innerHTML
             const data = {
                 idx:idx.value,
                 cate:cate,
@@ -364,7 +364,6 @@
                 input.value = '' // 댓글 등록하면 form은 다시 빈 칸이 된다.
                 counting.innerHTML = `(${state.length})` // 화면에 렌더링되는 댓글 수도 업데이트 해준다.
                 
-
                 commentView()
 
                 const comments = commentApp.querySelectorAll('li')
@@ -387,8 +386,6 @@
                         index = i
                     }
                 }
-
-                console.log(index)
 
                 newReply[index].updateFlag = 'false'
                 console.log(idx,newReply)
@@ -415,7 +412,6 @@
                     const updateReply = await axios.post('http://localhost:4000/api/board/comment/update', data, option)
 
                     const newReplay = [...state.replay]
-                    console.log(newReplay)
                     let index 
                     for(let i =0; i < newReplay.length; i++){
                         if(newReplay[i].idx === idx){
