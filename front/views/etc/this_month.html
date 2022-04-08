@@ -1,5 +1,65 @@
 {% extends 'utils/header.html' %}
 
 {% block content %}
-<!-- 여기컨텐ㅊ츠 -->
+<div id="rank">
+    <div id="circle">
+        <div class="circle">
+            <span class="kac">K    A    C</span>
+        </div>
+    </div>
+    <div id="rank_content">
+        <h1> Ranking Of April </h1>
+        <div id="rank_student">
+            <h1>Milege Event</h1>
+            <div>
+                <h2>Prizes</h2>
+                <h3 class="prizes">문화 상품권 20,000</h3>
+                <ul class="cultural_gift">
+                    
+
+                </ul>
+                <ul class="coffee_coupon">
+
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<template class="ranker_temp">
+    <li>
+        <span class="rank_idx">{idx}</span>
+        <span class="ranker_info">{username}({userid})</span>
+    </li>
+</template>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async()=>{
+
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
+        const response = await axios.post('http://localhost:4000/api/rank', null, option)
+
+        console.log(response.data)
+        const ranker = response.data
+
+        const ranker_temp = document.querySelector('.ranker_temp').innerHTML //질문왕 템플릿
+        const cultural_gift = document.querySelector('.cultural_gift') //질문왕 넣을 div
+        let template = ''
+
+        ranker.forEach((v)=>{
+            const {userid, nickname, idx} = v
+            template += ranker_temp.replace('{userid}',userid)
+                                    .replace('{username}', nickname)
+                                    .replace('{idx}', idx)
+        })
+        cultural_gift.innerHTML = template
+        
+    })
+</script>
 {% endblock %}
