@@ -1,7 +1,6 @@
 /*  css stylesheet  */
 
 /*  door */
-
 #door {
     display:inline-block;
     margin-top:120px;
@@ -57,7 +56,5 @@
 }
 
 .cards > span > a > img:hover {
-    transform: scale(1.2);
+    transform: scale(1.25);
 }
-
-

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'utils/header.html' %}
 {% block content %}
 <link rel="stylesheet" href="/board/notice/notice_view.css">
@@ -90,3 +91,97 @@
 </script>
 
 {% endblock %}
+=======
+{% extends 'utils/header.html' %}
+{% block content %}
+<link rel="stylesheet" href="/board/notice/notice_view.css">
+
+<span id="door">
+    <span><img src="http://localhost:4000/uploads/door.png"></span>
+</span>
+
+<table id="board_table">
+    <tbody id="board_list">
+        
+    </tbody>
+</table>
+
+<template id="board_temp">
+    <div class="cards">
+       <span><a href="http://localhost:3000/board/cate1/view?idx={idx}">{img1}</a></span>
+        <br>
+        <span id="temp_title">
+            <a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a>
+        </span>
+    </div>
+</template>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+    let test = {}
+    let hope = []
+    const option = {
+        'Content-type':'application/json',
+        withCredentials:true
+    }
+
+    document.addEventListener('DOMContentLoaded', async() => {
+        const category = location.pathname.split('/')[2]
+        const data = { category:category }
+
+        const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
+        test = { ...response1.data }
+        const cate1_list = response1.data
+
+        let content_list2 = []
+        for (let i =0; i<response1.data.result1.length; i++) {
+            if(response1.data.result1[i].hidden =='off') {
+                content_list2.push(response1.data.result1[i])
+            }
+        }
+
+//
+//
+// 썸네일
+    const response2 = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
+    const tempThumb = response2.data.final_result // [{}, {}, {}]
+    let thumbNail = []
+
+    for (let i = 0; i<tempThumb.length; i++) {
+        if(tempThumb[i].img1 !== 'N/A') {
+            thumbNail.push(tempThumb[i].img1)
+        }
+        else {
+            thumbNail.push('default.jpg')
+        }
+    }
+
+
+    for (let i = 0; i<content_list2.length; i++) {
+        let nProduct = { ...content_list2[i] }
+        nProduct.img1 = thumbNail[i]
+        hope.push(nProduct)
+    }
+
+    let template = ''
+    search_list = []
+    const board_temp = document.querySelector('#board_temp').innerHTML
+
+    const promise = hope.forEach( (v)=>{
+    search_list.push(v)
+    let {idx, img1, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+    template +=
+        board_temp.replace('{img1}',`<img src='http://localhost:4000/uploads/${img1}'>`)
+        .replace('{title}',title)
+        .replace('{idx}', idx)
+    })
+
+    board_list.innerHTML = template
+})
+
+</script>
+
+{% endblock %}
+>>>>>>> ef2ff9c63b273edffe73d54d469d0f3577cbf0e8

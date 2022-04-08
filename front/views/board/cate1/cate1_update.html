@@ -146,7 +146,7 @@
         const htText = document.querySelector('#hashtag')
         const ht_wrap = document.querySelector('#ht_wrap')
         htForm.addEventListener('keydown', (e) => {
-            if (e.keyCode === 13 && htText.innerHTML !== '') {
+            if (e.keyCode === 13 && htText.value !== '') {
                 const htDelete = document.createElement('span')
                 htDelete.innerHTML = 'x'
                 htDelete.setAttribute('class', `htDeleter`)
