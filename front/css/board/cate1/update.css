@@ -106,7 +106,7 @@
 
 
 /* pic */
-img {
+.imgLoad > img {
     width: 100px !important;
     height: 100px !important;
 }
@@ -133,6 +133,8 @@ img {
     color: #eee;
     margin: 10px;
     font-size: 20px;
+    bottom: 12px;
+    position: relative;
 }
 
 /* loaded mg */
@@ -146,10 +148,10 @@ img {
 }
 
 .imgDelBtn {
-    font-size: 24px;
+    font-size: 30px;
     background: #eee;
     font-weight: 600;
-    margin: 0 4px 0 0;
+    margin: 0 6px 0 4px;
 }
 
 .delBtn {
@@ -191,7 +193,7 @@ img {
     align-items: center;
 }
 
-#ht_wrap > .htDiv {
+#ht_wrap > .hashwrap {
     margin: 0 8px 0 0;
     background:rgb(214, 214, 214);
     height: 30px;
@@ -215,7 +217,7 @@ img {
     line-height: 40px;
     position:absolute;
     right: 194px;
-    bottom: -100px;
+    bottom: 10px;
     background: #333;
     color: #eee;
     border-radius: 5px;

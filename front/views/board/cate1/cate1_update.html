@@ -29,17 +29,15 @@
             <div id="ht_frm">
                 <div id="upd_hashtag_idx"><h3> # hashtag </h3></div>
                 <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
-                <div id="ht_wrap"></div>
-
-
-                {% for item in cate1_hashtag %}
-                <div>
-                <span class="htDeleter">x</span>
-                <span>#</span>
-                <span class="hashtags">{{item.hashtag_name}}</span>
+                <div id="ht_wrap">
+                    {% for item in cate1_hashtag %}
+                    <span class="hashwrap">
+                    <span class="htDeleter">x</span>
+                    <span>#</span>
+                    <span class="hashtags">{{item.hashtag_name}}</span>
+                    </span>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-
             </div>
             
             <input type="submit" value="글수정" id="upd_submit">
@@ -146,10 +144,11 @@
             // enter를 이용해 해시 태그 추가, 삭제
         const htForm = document.querySelector('#ht_frm')
         const htText = document.querySelector('#hashtag')
+        const ht_wrap = document.querySelector('#ht_wrap')
         htForm.addEventListener('keydown', (e) => {
             if (e.keyCode === 13) {
                 const htDelete = document.createElement('span')
-                htDelete.innerHTML = 'X'
+                htDelete.innerHTML = 'x'
                 htDelete.setAttribute('class', `htDeleter`)
                 
                 const htElement = document.createElement('span')
@@ -158,13 +157,13 @@
                 htElement.innerHTML = `${htText.value}`
                 htElement2.innerHTML = '#'
 
-                const htDiv = document.createElement('div')
+                const htDiv = document.createElement('span')
                 htDiv.append(htDelete)
                 htDiv.append(htElement2)
 
                 htDiv.append(htElement)
-                
-                htForm.append(htDiv)
+                htDiv.setAttribute('class','hashwrap')
+                ht_wrap.append(htDiv)
                 htText.value = ''
 
                 const htDeleteHandler = document.querySelectorAll('.htDeleter')
@@ -179,8 +178,8 @@
         
         // 엔터 누르면 글 작성이 완료되어버리는 것 방지
         
-        const update_frm = document.querySelector('#update_frm')
-        update_frm.addEventListener('keydown', (e) => {
+        const update_frm = document.querySelector('#upd_frm')
+        upd_frm.addEventListener('keydown', (e) => {
             if(e.keyCode === 13) {
                 e.preventDefault()
             }
@@ -194,11 +193,12 @@
         })
 
         const upd_submit = document.querySelector('#upd_submit')
-        hashtag.addEventListener('keydown', (e) => {
+        upd_submit.addEventListener('keydown', (e) => {
             if(e.keyCode === 13) {
                 e.preventDefault()
             }
         })
+
 
         //
         //
@@ -269,8 +269,6 @@
             formData.append('img3', img3.files[0])
             formData.append('img4', img4.files[0])
             formData.append('img5', img5.files[0])
-
-            
 
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
