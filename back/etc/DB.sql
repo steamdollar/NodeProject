@@ -59,7 +59,7 @@ CREATE TABLE comment (
     midx INT NOT NULL,
     content TEXT NOT NULL,
     userid VARCHAR(30) NOT NULL,
-    nickname VARCHAR(30) NOT NULL,
+    nickname VARCHAR(200) NOT NULL,
     date VARCHAR(30) NOT NULL,
     updateFlag varchar(5) default 'true',
     FOREIGN key (`userid`) REFERENCES `user` (`userid`)
