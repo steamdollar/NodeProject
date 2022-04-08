@@ -1,66 +1,115 @@
 {% extends 'utils/header.html' %}
 
 {% block content %}
-<div id="rank">
-    <div id="circle">
-        <div class="circle">
-            <span class="kac">K    A    C</span>
-        </div>
-    </div>
-    <div id="rank_content">
-        <h1> Ranking Of April </h1>
-        <div id="rank_student">
-            <h1>Milege Event</h1>
-            <div>
-                <h2>Prizes</h2>
-                <h3 class="prizes">문화 상품권 20,000</h3>
-                <ul class="cultural_gift">
-                    
-
-                </ul>
-                <h3 class="prizes">커피 쿠폰 5,000</h3>
-                <ul class="coffee_coupon">
-
-
-                </ul>
-
+<div id="rank_wrap">
+    <div id="rank">
+        <div id="circle">
+            <div class="circle">
+                <span class="kac">K    A    C</span>
             </div>
         </div>
-    </div>
+        <div id="rank_content">
+            <h1> Ranking Of April ― </h1>
+            <div id="rank_student">
+                <h1>Milege Event</h1>
+                <div id="prizes">
+                    <h2> Prizes 🧡</h2>
+                    <div class="prizes_box">
 
+                        <h3 class="best">이달의 해결왕</h3>
+                        <span class="code_ranking">코드 자문 게시판 댓글 수 랭킹</span>
+                        <h3 class="prizes">문화 상품권 20,000</h3>
+                        <ul class="cultural_gift">
+                    
+                        </ul>
+                    </div>
+
+                    <div class="prizes_box">
+                        <h3 class="best">이달의 질문왕</h3>
+                        <span class="code_ranking">코드 자문 게시판 게시글 랭킹</span>
+                        <h3 class="prizes">커피 쿠폰 5,000</h3>
+                        <ul class="coffee_coupon">
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+<style>
+    html{background: rgb(243, 243, 243);}
+</style>
 
 <template class="ranker_temp">
     <li>
-        <span class="rank_idx">{idx}</span>
+        <span class="rank_idx">{idx}등</span>
         <span class="ranker_info">{username}({userid})</span>
     </li>
 </template>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', async()=>{
+
+
+        var maskingName = function(strName) {
+            if (strName.length > 2) {
+                var originName = strName.split('');
+                originName.forEach(function(name, i) {
+                if (i === 0 || i === originName.length - 1) return;
+                originName[i] = '*';
+                });
+                var joinName = originName.join();
+                return joinName.replace(/,/g, '');
+            } else {
+                var pattern = /.$/; // 정규식
+                return strName.replace(pattern, '*');
+            }
+        };
 
         const option = {
             'Content-type':'application/json',
             withCredentials:true
         }
-        const response = await axios.post('http://localhost:4000/api/rank', null, option)
+        const response = await axios.post('http://localhost:4000/api/rank/first', null, option)
 
         console.log(response.data)
-        const ranker = response.data
+        const ranker1 = response.data
 
         const ranker_temp = document.querySelector('.ranker_temp').innerHTML //질문왕 템플릿
         const cultural_gift = document.querySelector('.cultural_gift') //질문왕 넣을 div
         let template = ''
 
-        ranker.forEach((v)=>{
+        ranker1.forEach((v)=>{
             const {userid, nickname, idx} = v
-            template += ranker_temp.replace('{userid}',userid)
+            const change_userid = maskingName(`${userid}`.replaceAll(' ',''))
+            
+            template += ranker_temp.replace('{userid}',change_userid)
                                     .replace('{username}', nickname)
                                     .replace('{idx}', idx)
         })
         cultural_gift.innerHTML = template
-        
+
+
+        const coffee_coupon = document.querySelector('.coffee_coupon')
+        let template2 = ''
+
+        const response2 = await axios.post('http://localhost:4000/api/rank/second', null, option)
+        const rank2 = response2.data
+
+        rank2.forEach((v)=>{
+            const {userid, nickname, idx} = v
+            const change_userid = maskingName(`${userid}`.replaceAll(' ',''))
+            
+            template2 += ranker_temp.replace('{userid}',change_userid)
+                                    .replace('{username}', nickname)
+                                    .replace('{idx}', idx)
+        })
+        coffee_coupon.innerHTML = template2
+
     })
 </script>
 {% endblock %}

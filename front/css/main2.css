@@ -281,7 +281,7 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 #slide_area{
     width: 1200px;
     height: 600px;
-    background-color: red;
+    /* background-color: red; */
     margin-left: 500px;
     position: relative;
     overflow: hidden;
