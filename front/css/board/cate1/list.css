@@ -8,6 +8,13 @@
     min-height:1300px;
 }
 
+
+#card_news {
+    width:80%;
+    height:100px;
+    margin: 200px auto 0px;
+}
+
 #board_search > #frm_search {
     width:80%;
     height:200px;
