@@ -24,6 +24,8 @@ a {
     border-radius: 10px;
     margin: 0 auto;
     top: 250px !important;
+    background: #f8f8ef;
+    margin-top: 50px;
 }
 
 #profile_wrap {
@@ -73,7 +75,7 @@ a {
     height: 200px;
     margin: auto 0;
     padding: 70px 0 0 60px;
-    font-size:12px;
+    font-size:15px;
 }
 
 #profile > ul > li {
@@ -162,8 +164,9 @@ a {
 }
 
 #footer_wrap {
-    bottom: 0 !important;
+    bottom: -650px !important;
     position: relative;
+
 }
 
 /* 
