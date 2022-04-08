@@ -1,8 +1,7 @@
 
 #duo_content{
     width: 100%;
-    height: auto;
-    min-height: 1600px;
+    height: 2600px;
     /* background: rgb(255, 229, 229); */
     margin: 0 auto;
     margin-top: 150px;
@@ -85,6 +84,7 @@
     justify-content: space-around;
     border-radius: 20px;
     padding: 0 58px;
+    margin-bottom: 40px;
 
 }
 #duo_search_box{
@@ -95,6 +95,7 @@
     justify-content: space-between;
     padding: 0 65px;
     border-radius: 20px;
+    margin-bottom: 40px;
 
 }
 
@@ -107,6 +108,7 @@
     display: flex;
     border-radius: 20px;
     padding: 50px 0;
+    margin-bottom: 40px;
 }
 
 #other_account{
