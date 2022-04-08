@@ -53,6 +53,7 @@
     width: 400px;
     height: 400px;
     transition: all 0.2s;
+    border-radius: 10px;
 }
 
 .cards > span > a > img:hover {

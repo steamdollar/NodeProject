@@ -51,8 +51,6 @@ create table cate1_bridge(
     hidx int not null
 );
 
-
-
 CREATE TABLE comment (
     idx INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     mcategory VARCHAR(30),

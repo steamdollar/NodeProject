@@ -152,9 +152,8 @@ exports.del = async (req,res)=>{
 
     const sql = `select * from cate1_bridge where midx = ?`
     const param = [idx]
-
     try {
-        if( writerid !== userid ) { throw new Error('작성자가 아님') }
+        if( writerid !== userid && userid !== 'admin' ) { throw new Error('작성자가 아님') }
         const [result] = await pool.execute(sql,param)
 
         for (i = 0; i<result.length; i++) {
@@ -409,18 +408,38 @@ exports.imgLoad = async (req, res) => {
 }
 
 exports.imgUpdate = async (req, res) => {
-    const { idx, category, originLength } = req.body
+    const { idx, category, originLength, img1, img2, img3, img4, img5 } = req.body
 
+    let temp = [img1, img2, img3, img4, img5]
     let images = []
-    for(let i=1; i<=5; i++) {
-        try {
-            const [img] = req.files[`img`+i] 
-            images.push(img.filename)
-        }
-        catch(e) {
+    // for(let i=1; i<=5; i++) {
+    //     try {
+    //         const [img] = req.files[`img`+i] 
+    //         images.push(img.filename)
+    //     }
+    //     catch(e) {
+    //         images.push('N/A')
+    //     }
+    // }
+
+    for( let i=0; i<5; i++) {
+        if ( temp[i] === '' || temp[i] == undefined) {
             images.push('N/A')
+            console.log(images)
+        }
+        else {
+            const tempName = temp[i].split('/')
+            console.log(tempName)
+            if (tempName.length === 1) {
+                images.push('N/A')
+            }
+            else {
+                images.push(tempName[tempName.length-1])
+            }
         }
     }
+
+    console.log(images)
 
     try {
         let final_result = []

@@ -114,6 +114,7 @@
                     inputSpan.prepend(newImg)
                 })
             }
+            
             const inputSpan = document.createElement('span')
             let upNum = imgArr.length +1
             for ( i = 0; i <5-imgArr.length; i++) {
@@ -264,11 +265,12 @@
             //     formData.append(`$img${i}`, `img${i}`.files[0])
             // }
 
-            formData.append('img1', img1.files[0])
-            formData.append('img2', img2.files[0])
-            formData.append('img3', img3.files[0])
-            formData.append('img4', img4.files[0])
-            formData.append('img5', img5.files[0])
+
+            formData.append('img1', img1.value || img1.files[0])
+            formData.append('img2', img2.value || img2.files[0])
+            formData.append('img3', img3.value || img3.files[0])
+            formData.append('img4', img4.value || img4.files[0])
+            formData.append('img5', img5.value || img5.files[0])
 
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
