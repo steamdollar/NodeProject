@@ -106,7 +106,7 @@
         
         // enter를 이용해 해시 태그 추가, 삭제
         htForm.addEventListener('keydown', (e) => {
-            if (e.keyCode === 13 && htText.innerHTML !== '') {
+            if (e.keyCode === 13 && htText.value !== '') {
                 e.preventDefault()
                 const htWrap = document.querySelector('#ht_wrap')
                 const htDelete = document.createElement('span')

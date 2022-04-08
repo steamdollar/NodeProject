@@ -42,10 +42,10 @@
 
         let content_list2 = []
         for (let i =0; i<response1.data.result1.length; i++) {
-        if(response1.data.result1[i].hidden =='off') {
-            content_list2.push(response1.data.result1[i])
+            if(response1.data.result1[i].hidden =='off') {
+                content_list2.push(response1.data.result1[i])
+            }
         }
-    }
 
 //
 //
@@ -53,7 +53,7 @@
     const response2 = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
     const tempThumb = response2.data.final_result // [{}, {}, {}]
     let thumbNail = []
-// console.log(tempThumb)
+
     for (let i = 0; i<tempThumb.length; i++) {
         if(tempThumb[i].img1 !== 'N/A') {
             thumbNail.push(tempThumb[i].img1)
