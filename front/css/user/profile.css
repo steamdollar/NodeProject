@@ -160,3 +160,17 @@ a {
 #white_btn > a {
     color:#fff;
 }
+
+#footer_wrap {
+    bottom: 0 !important;
+    position: relative;
+}
+
+/* 
+커맄큘럼
+지도
+교수자
+처음에 사진 큰거 하나
+
+bodot.co.kr
+*/
