@@ -409,6 +409,11 @@ exports.imgLoad = async (req, res) => {
 
 exports.imgUpdate = async (req, res) => {
     const { idx, category, img1, img2, img3, img4, img5 } = req.body
+    console.log(typeof(img2))
+    console.log(typeof(img4))
+
+    // 1번까지 있으면 img1 까지만 ㄱbody로, 나머지는 req.file로 받아온다.
+    // const img1 = req.body
 
     let images = []
 
@@ -423,8 +428,10 @@ exports.imgUpdate = async (req, res) => {
         catch(e) {
             images.push('N/A')
         }
+        undefined
     }
-    if (img2 !== undefined) {
+
+    if (img2 !== undefined ) {
         images.push(img2.split('/')[4])
     }
     else {
@@ -436,7 +443,7 @@ exports.imgUpdate = async (req, res) => {
             images.push('N/A')
         }
     }
-    if (img3 !== undefined) {
+    if (img3 !== undefined || img3 !== [undefined]) {
         images.push(img3.split('/')[4])
     }
     else {
