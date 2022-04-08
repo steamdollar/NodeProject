@@ -1,17 +1,67 @@
-{% extends "../utils/header.html" %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/user/font.css">
+    <link rel="stylesheet" href="/user/welcome.css">
+    <link rel="stylesheet" href="/main2.css">
+    <link rel="stylesheet" href="/main.css">
+    <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+    <link href="//db.onlinewebfonts.com/c/e0af8ee8cc49f194718d96d95440836f?family=Multicolore" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="http://localhost:3000/js/scroll.js"></script>
+    <link rel="stylesheet" href="/common/footer.css">
+</head>
+<body>
+    <div id="wrap">
+        <div id="Transparency" class="">
+
+        </div>
+        <header id="header">
+            <div id="banner">
+                <div id="logo_box">
+                    <a href="/"><img id="logo"src="http://localhost:3000/logo.png"></a>
+                </div>
+
+                <div id="access">
+                    <a href="/user/join">Join</a>
+                    <a href="/user/login">Login</a>
+                    <a href="http://localhost:4000/api/user/kakao/login">Kakao Login</a>
+                </div>
+    
+                <div id="hamberger">
+                    <input type="checkbox" id="icon">
+                    <label for="icon">  <!--label은 인라인 스타일-->
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <div id="menu">
+                        <ul>
+                            <li><a href="http://localhost:3000/community/introduce">Introduce</a></li>
+                            <li><a href="http://localhost:3000/matching/duo">Enjoy it!</a></li>
+                            <li><a href="http://localhost:3000/board/notice">News</a></li>
+                            <li><a href="http://localhost:3000/rank">This month</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </header>
     <div id="welcome_wrap">
         <div id="wel_back">
 
             <div><img src="http://localhost:3000/logo.jpg"></div>
             <h3 id="wel_nick"> {{nickname}}님, 환영합니다!</h3>
 
-            <div class="wel_text">대충 공간을 채워줄 환영문구.. 이런거 해보세요!</div>
-            <div class="wel_text">저런것도 해보세요!</div>
+            <div class="wel_text">경일 커뮤니티에서 당신의 인싸력을 널리 펼치세요!</div>
+            <div class="wel_text">준비되셨나요?</div>
 
             <div id="wel_button">
                 <span><a href="/">메인으로</a></span>
-                <span><a href="/board">게시판</a></span>
+                <span><a href="/user/login">로그인</a></span>
             </div>
                 
             <div class="wel_msg">
@@ -23,14 +73,32 @@
 
             <div id="wel_foot">
                 <div class="wel_ftr">
-                    in PA db and sb exist alternatively
+                    if you are reading this text,
                 </div>
 
                 <div class="wel_ftr">
-                    does not matter since they are going to start clearing
+                    you should talk to other 3 people that you saw this or you are going to die.
                 </div class="wel_ftr">
             </div>
             <div id="wel_copy">@ powered by team4</div>
         </div>
     </div>
-{% endblock %}
+    <footer id="footer_wrap">
+        <div id="footer"> 
+            <span class="footer_first">경일 아카데미 블록체인 5기 </span>
+            <br>
+            <span class="other_span">김규리 이승준 장주찬</span>
+            <br>
+            <span class="other_span">서울특별시 강동구 천호대로 995 금복빌딩 3,4층 경일게임아카데미(지하철 5,8호선 1번출구 10m이내)</span>
+    
+        </div>
+    
+    </footer>
+</div>    
+</body>
+<style>
+    #wrap{
+        height:1200px !important;
+    }
+</style>
+</html>
