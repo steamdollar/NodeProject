@@ -1,14 +1,16 @@
 #intro_wrap{
     margin-top:200px;
+    height: 3400px;
 }
 
 #intro_logo {
-    width:100%;
+    width:1600px;
     height:120px;
     font-family: 'FF Signa Serif Stencil', 'Book';
     font-size:50px;
     margin:200px auto 0px;
-    text-align:center;
+    text-align:left;
+    padding-top:20px;
 }
 
 #intro_contents {
@@ -36,11 +38,11 @@
 }
 #intro_contents > #img_wrap > #introimg > #kg_text{
     position: relative;
-    bottom:100px;
+    bottom:80px;
     z-index:2;
     font-family: 'FF Signa Serif Stencil', 'Book';
     font-weight:300;
-    font-size:80px;
+    font-size:60px;
     padding-left:200px;
 }
 
@@ -55,7 +57,7 @@
 #intro_contents > #classtype > h4 {
     font-family: 'FF Signa Serif Stencil', 'Book';
     font-size:50px;
-    padding:80px 0;
+    padding:80px 0 40px;
 }
 
 #intro_contents > #classroom > #info_class {
@@ -89,4 +91,17 @@
 #intro_contents > #classroom > #info_class > li > p {
     padding-top:20px;
     color:#636363;
+    font-size:20px;
+}
+
+#intro_locate > h4 {
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    font-size:50px;
+    padding:80px 0 40px;
+}
+
+#intro_locate > #intro_address {
+    font-size:25px;
+    text-align: center;
+    padding-bottom:50px;
 }
