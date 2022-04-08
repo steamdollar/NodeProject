@@ -12,7 +12,8 @@
 }
 
 #intro_text {
-    
+    width:100%;
+    margin:0 auto;
 }
 
 #img_wrap {
@@ -61,13 +62,19 @@
 }
 
 #classtype {
-    width:80%;
+    width:100%;
+    display:flex;
+    justify-content:left;
     padding-left:20px;
 }
 
 #classtype > h4 {
+    width:100%;
+    height:100%;
     font-family: 'FF Signa Serif Stencil', 'Book';
     font-size:50px;
+    padding-bottom:20px;
+    margin:0 auto;
 }
 
 #info_class {
