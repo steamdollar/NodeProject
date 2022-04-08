@@ -194,11 +194,12 @@ exports.duoSearch = async(req,res)=>{
         }
 
         console.log("나랑 뜰 애들", match)
+        const match_overlap_delete = [... new Set(match)]
 
 
         const response = {
             my_info:my_rate_list,
-            match_info:match
+            match_info:match_overlap_delete
         }
         res.json(response)
 

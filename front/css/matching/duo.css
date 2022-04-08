@@ -1,0 +1,196 @@
+
+#duo_content{
+    width: 100%;
+    height: auto;
+    min-height: 1600px;
+    /* background: rgb(255, 229, 229); */
+    margin: 0 auto;
+    margin-top: 150px;
+    background: black;
+    
+}
+
+#lol_logo_name{
+    width: 100%;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+
+}
+
+#lol_logo_name::before{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('http://localhost:3000/lol_banner.jpg');
+    background-size: 100% 100%;
+    background-repeat :no-repeat;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    top:0;
+    left:0;
+    position:absolute;
+    background-size:100%;
+    z-index:-1;
+    content:"";
+    width:100%;
+    height:100%;
+
+}
+
+#lol_logo_name > h1{
+    color: #fff;
+    width: 100%;
+    font-size: 120px;
+    text-align: center;
+
+    font-family: 'FF Signa Serif Stencil', 'Book'!important;
+}
+
+#lol_logo_name>span{
+    
+    display: block;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'FF Signa Serif Stencil', 'Book'!important;
+}
+
+#lol_content_wrap{
+
+    width: 1800px;
+    height: auto;
+    min-height: 1200px;
+    /* background: red; */
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+#lol_input_box{
+    width: 1400px;
+    height: auto;
+    min-height: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+#frm_duo {
+    width: 1400px;
+    height: 100px;
+    background: #3a3a3a;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 20px;
+    padding: 0 58px;
+
+}
+#duo_search_box{
+    width: 1400px;
+    height: 100px;
+    background: #3a3a3a;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 65px;
+    border-radius: 20px;
+
+}
+
+
+#my_account{
+    width: 1400px;
+    height: auto;
+    min-height: 100px;
+    background: #3a3a3a;
+    display: flex;
+    border-radius: 20px;
+    padding: 50px 0;
+}
+
+#other_account{
+    width: 1400px;
+    height: auto;
+    min-height: 100px;
+    background: #3a3a3a;
+    display: flex;
+    border-radius: 20px;
+    /* padding: 0 65px; */
+    padding: 50px 0;
+}
+
+#frm_duo> input{
+    display: block;
+
+}
+
+#lol_nickname{
+    width: 800px;
+    font-size: 30px;
+    height: 80px;
+    align-self: center;
+    border-radius: 10px;
+}
+#register_btn, #duo_search{
+    width: 200px;
+    font-size: 30px;
+    height: 50px;
+    align-self: center;
+    color: #fff;
+    background: #808080;
+    border-radius: 10px;
+    line-height: 50px;
+
+}
+
+#frm_duo>h2{
+    font-size: 40px;
+    width: 200px;
+    height: 50px;
+    align-self: center;
+    color: #fff;
+    line-height: 70px;
+}
+
+
+#duo_search_box> h2{
+    font-size: 40px;
+    width: 800px;
+    height: 50px;
+    color: #fff;
+    align-self: center;
+    line-height: 70px;
+}
+
+#my_account > h2 , #other_account >h2{
+    font-size: 40px;
+    width: 800px;
+    height: 50px;
+    align-self: center;
+    color: #fff;
+    padding: 0 65px;
+    line-height: 70px;
+}
+
+#my_account>table, #other_account > table{
+    width: 1600px;
+    height: auto;
+    min-height: 50px;
+    color: #fff;
+    font-size: 30px;
+}
+
+.lol_user_column{
+    font-size: 50px;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+
+#duo_list, #my_list{
+    margin: 20px 0;
+}
+
+#my_list > th, #duo_list > th{
+    margin: 20px;
+}
