@@ -250,37 +250,72 @@
             const formData = new FormData()
             formData.append('category', category)
             formData.append('idx', idx.value)
-            // for ( let i = 1; i<6; i++) {
-            //     try {
-            //         formData.append(`img`+i, `img`+i.files[0])
 
-            //     }
-            //     catch (e) {
-            //         formData.append(`img`+i, 'N/A')
-            //         console.log('err')
-            //         console.log(`img`+i)
-            //     }
+            console.log(img1.files)
+
+            // if ( img1.files === null ) { 
+            //     formData.append('img1',img1.value)
+            // } else if (img2.files === null) {
+            //     formData.append('img2',img2.value)
+            // } else if (img3.files === null) {
+            //     formData.append('img3',img3.value)
+            // } else if (img4.files === null) {
+            //     formData.append('img4',img4.value)
+            //  } else if (img5.files === null) {
+            //     formData.append('img5',img5.value)
+            //  }
+
+            if( img1.files === null) {
+                formData.append('img1', img1.value)
+            }
+            else {
+                formData.append('img1', img1.files[0])
+            }
+            if( img2.files === null) {
+                formData.append('img2', img2.value)
+            }
+            else {
+                formData.append('img2', img2.files[0])
+            }
+            if( img3.files === null) {
+                formData.append('img3', img3.value)
+            }
+            else {
+                formData.append('img3', img3.files[0])
+            }
+            if( img4.files === null) {
+                formData.append('img4', img4.value)
+            }
+            else {
+                formData.append('img4', img4.files[0])
+            }
+            if( img5.files === null) {
+                formData.append('img5', img5.value)
+            }
+            else {
+                formData.append('img5', img5.files[0])
+            }
+
+            // // formData.append('img1', img1.files[0] || null)
+            // if ( img1.files[0] == empty) {
+            //     formData.append('img1', img1.value)
             // }
+            // formData.append('img2', img2.files[0])
+            // formData.append('img3', img3.files[0])
+            // formData.append('img4', img4.files[0])
+            // formData.append('img5', img5.files[0])
 
-            // for ( i = 1; i<6; i++) {
-            //     if(`img${i}`.type !== 'file') {
-            //         formData.append(`img${i}`, 'N/B')
-            //         console.log(`img${i}`.type,'N/B')
-            //     }
-            //     else {
-            //         formData.append(`img${i}`, `img${i}`.files[0])
-            //     }
-            // }
-            const originImg = document.querySelectorAll('.hidden')
-
-            formData.append('originLength', originImg.length)
-
-            formData.append('img1', img1.value || img1.files[0])
-            formData.append('img2', img2.value || img2.files[0])
-            formData.append('img3', img3.value || img3.files[0])
-            formData.append('img4', img4.value || img4.files[0])
-            formData.append('img5', img5.value || img5.files[0])
-
+            // console.log('------------')
+            // console.log(img1.value) // 원래 파일이 있다면 이 값이 있다.
+            // console.log(img1.files[0])
+            // // 있다면 value값을 보내준다.
+            // // 있다가 삭제하면 빈칸이 나옴 (undefined도 안 뜸) null?
+            // console.log(img2.value) // 새로 올린 파일이 없다면 아무것도 안뜸
+            // // 있다면 fakepath 어쩌구가 뜸. 단, 파일이 업로드 되지 않음.
+            // console.log(img2.files[0])  // 새로 올린 파일이 없다면 undefined
+            // // 있다면 파일의 이름, 시간 각각이 객체로 나옴
+            // console.log('------------')
+                console.log(formData.get('img2'))
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
             if (response.data.errno === 0 && response2.data.errno === 0 ) {

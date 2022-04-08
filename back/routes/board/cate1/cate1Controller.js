@@ -408,23 +408,87 @@ exports.imgLoad = async (req, res) => {
 }
 
 exports.imgUpdate = async (req, res) => {
-    const { idx, category, originLength, img1, img2, img3, img4, img5 } = req.body
+    const { idx, category, img1, img2, img3, img4, img5 } = req.body
 
-    let temp = [img1, img2, img3, img4, img5]
     let images = []
-    console.log(temp)
-    for( let i=0; i<5; i++) {
-        const tempName = temp[i].split('/')
-        console.log(tempName)
-        if (tempName.length === 1) {
+
+    if (img1 !== undefined) {
+        images.push(img1.split('/')[4])
+    }
+    else {
+        try {
+            const [img] = req.files[img1]
+            images.push(img.filename)
+        }
+        catch(e) {
             images.push('N/A')
         }
-        else {
-            images.push(tempName[tempName.length-1])
-        }    
     }
-
+    if (img2 !== undefined) {
+        images.push(img2.split('/')[4])
+    }
+    else {
+        try {
+            const [img] = req.files[img2]
+            images.push(img.filename)
+        }
+        catch(e) {
+            images.push('N/A')
+        }
+    }
+    if (img3 !== undefined) {
+        images.push(img3.split('/')[4])
+    }
+    else {
+        try {
+            const [img] = req.files[img3]
+            images.push(img.filename)
+        }
+        catch(e) {
+            images.push('N/A')
+        }
+    }
+    if (img4 !== undefined) {
+        images.push(img4.split('/')[4])
+    }
+    else {
+        try {
+            const [img] = req.files[img4]
+            images.push(img.filename)
+        }
+        catch(e) {
+            images.push('N/A')
+        }
+    }
+    if (img5 !== undefined) {
+        images.push(img5.split('/')[4])
+    }
+    else {
+        try {
+            const [img] = req.files[img5]
+            images.push(img.filename)
+        }
+        catch(e) {
+            images.push('N/A')
+        }
+    }
+        // const tempName = temp[i].split('/')
+        // if (tempName.length === 1) {
+        //     images.push('N/A')
+        // }
+        // else {
+        //     images.push(tempName[tempName.length-1])
+        // }    
+    
     console.log(images)
+    // for(let i=1; i<=5; i++) {
+    //     try {
+    //         const [img] = req.files[`img`+i] 
+    //         images.push(img.filename)
+    //     }catch(e){
+    //         images.push('N/A')
+    //     }
+    // }
 
     try {
         let final_result = []
