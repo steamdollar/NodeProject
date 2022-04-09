@@ -53,14 +53,23 @@
 
             try {
                 const response = await axios.post('http://localhost:4000/api/user/login', body, option)
-                if (response.data.errno !== 0 ) {throw new Error('id/pw를 확인해주세요')}
+                
+                if (response.data.errno === 1 ) {throw new Error('id/pw를 확인해주세요')}
+                if(response.data.errno === 2) { throw new Error('활동이 정지된 계정입니다. 관리자에게 문의해주세요.')}
 
                 alert(`id: ${response.data.result[0].userid}, nick: ${response.data.result[0].nickname}`)
 
                 location.href='http://localhost:3000'
             }
+
             catch (e) {
-                alert(e.message)
+                if ( e.message === '활동이 정지된 계정입니다. 관리자에게 문의해주세요.') {
+                    alert(e.message)
+                    location.href='http://localhost:3000'
+                }
+                else {
+                    alert (e.message)
+                }
             }
         })
     </script>
