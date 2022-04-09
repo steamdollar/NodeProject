@@ -7,6 +7,7 @@
     <div id="search_wrap">
         <span id="option" value="{{option}}" class="hidden"></span>
         <span id="keyword" value="{{keyword}}" class="hidden"></span>
+        <span id="spare" value="{{category}}" class="hidden"></span>
 
         <div id="board_search">
             <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
@@ -25,6 +26,7 @@
                         <div id="board_key" style="display:inline-block;">
                             <strong style="padding:10px 10px 10px 38px;">검색</strong>
                             <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
+                            <input type="hidden" name="category" value="{{category}}">
                         </div>
                     </div>
                     <div id="board_submit">
@@ -92,9 +94,9 @@
             let test = {}
 
                 document.addEventListener('DOMContentLoaded', async() => {
-                
-                    const uri = location.pathname
-                    const category = "{{category}}"
+                    const spare = document.querySelector('#spare').value
+
+                    const category = "{{category}}" || spare
                     const searchOp = "{{option}}"
                     const searchKey = "{{keyword}}"
         
