@@ -27,6 +27,8 @@ router.use('/thumbnail', cate1Router.thumbnail)
 router.use('/imgUpdate', upload.fields([{name:'img1'},{name:'img2'},
 {name:'img3'},{name:'img4'},{name:'img5'}]), cate1Router.imgUpdate)
 
+router.use('/imgUpdate2', cate1Router.imgUpdate2)
+
 // search
 router.use('/search', cate1Router.search)
 router.use('/searchThumbNail', cate1Router.searchThumbNail)
