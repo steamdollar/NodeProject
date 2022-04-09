@@ -409,69 +409,90 @@ exports.imgLoad = async (req, res) => {
 
 exports.imgUpdate = async (req, res) => {
     const { idx, category, img1, img2, img3, img4, img5 } = req.body
+    console.log(typeof(img2))
+    console.log(typeof(img4))
+
+    
+
+    // 1번까지 있으면 img1 까지만 ㄱbody로, 나머지는 req.file로 받아온다.
+    // const img1 = req.body
 
     let images = []
 
-    if (img1 !== undefined) {
-        images.push(img1.split('/')[4])
-    }
-    else {
-        try {
-            const [img] = req.files[img1]
-            images.push(img.filename)
-        }
-        catch(e) {
-            images.push('N/A')
-        }
-    }
-    if (img2 !== undefined) {
-        images.push(img2.split('/')[4])
-    }
-    else {
-        try {
-            const [img] = req.files[img2]
-            images.push(img.filename)
-        }
-        catch(e) {
-            images.push('N/A')
-        }
-    }
-    if (img3 !== undefined) {
-        images.push(img3.split('/')[4])
-    }
-    else {
-        try {
-            const [img] = req.files[img3]
-            images.push(img.filename)
-        }
-        catch(e) {
-            images.push('N/A')
-        }
-    }
-    if (img4 !== undefined) {
-        images.push(img4.split('/')[4])
-    }
-    else {
-        try {
-            const [img] = req.files[img4]
-            images.push(img.filename)
-        }
-        catch(e) {
-            images.push('N/A')
-        }
-    }
-    if (img5 !== undefined) {
-        images.push(img5.split('/')[4])
-    }
-    else {
-        try {
-            const [img] = req.files[img5]
-            images.push(img.filename)
-        }
-        catch(e) {
-            images.push('N/A')
-        }
-    }
+    console.log('body',img1,img2,img3,img4,img5)
+    // 삭제만한느경우에 대해서 
+    // idx 를 가지고 DB에서 img1,img2,img3,img4,img5 에 필드에 값이 존재하는지 체크하고.
+    // DB img1이랑 body img1 이랑 비교해서 값이 같으면, 삭제를 안하는거고,
+    // DB img1 이랑 body img1 이랑 값이 다르면 삭제해라. 
+
+    console.log(req.file)
+    const { img1:newImg1,img2:newImg2,img3:newImg3,img4:newImg4,img5:newImg5 } = req.file
+    console.log('file',newImg1,newImg2,newImg3,newImg4,newImg5)
+    // 삭제만할경우]
+    // 삭제하고 업로드할경우 / 업로드 똑같은 프로세스 
+
+    // if (img1 !== undefined) {
+    //     images.push(img1.split('/')[4])
+    // }
+    // else {
+    //     try {
+    //         const [img] = req.files[img1]
+    //         images.push(img.filename)
+    //     }
+    //     catch(e) {
+    //         images.push('N/A')
+    //     }
+    //     undefined
+    // }
+
+    // if (img2 !== undefined ) {
+    //     images.push(img2.split('/')[4])
+    // }
+    // else {
+    //     try {
+    //         const [img] = req.files[img2]
+    //         images.push(img.filename)
+    //     }
+    //     catch(e) {
+    //         images.push('N/A')
+    //     }
+    // }
+    // if (img3 !== undefined || img3 !== [undefined]) {
+    //     images.push(img3.split('/')[4])
+    // }
+    // else {
+    //     try {
+    //         const [img] = req.files[img3]
+    //         images.push(img.filename)
+    //     }
+    //     catch(e) {
+    //         images.push('N/A')
+    //     }
+    // }
+    // if (img4 !== undefined) {
+    //     images.push(img4.split('/')[4])
+    // }
+    // else {
+    //     try {
+    //         const [img] = req.files[img4]
+    //         images.push(img.filename)
+    //     }
+    //     catch(e) {
+    //         images.push('N/A')
+    //     }
+    // }
+    // if (img5 !== undefined) {
+    //     images.push(img5.split('/')[4])
+    // }
+    // else {
+    //     try {
+    //         const [img] = req.files[img5]
+    //         images.push(img.filename)
+    //     }
+    //     catch(e) {
+    //         images.push('N/A')
+    //     }
+    // }
         // const tempName = temp[i].split('/')
         // if (tempName.length === 1) {
         //     images.push('N/A')
@@ -490,30 +511,30 @@ exports.imgUpdate = async (req, res) => {
     //     }
     // }
 
-    try {
-        let final_result = []
-        for ( let i = 0; i < images.length; i++) {
-            const sql1 = `update image set img${i+1} = ? where midx=? and category=?`
-            // console.log(sql1)
-            const param1 = [images[i], idx, category] 
+    // try {
+    //     let final_result = []
+    //     for ( let i = 0; i < images.length; i++) {
+    //         const sql1 = `update image set img${i+1} = ? where midx=? and category=?`
+    //         // console.log(sql1)
+    //         const param1 = [images[i], idx, category] 
 
-            const [result1] = await pool.execute(sql1, param1)
-            final_result.push(result1)
-        }
+    //         const [result1] = await pool.execute(sql1, param1)
+    //         final_result.push(result1)
+    //     }
 
-        const response = {
-            final_result,
-            errno:0,
-        }
-        res.json(response)
-    }
-    catch (e) {
-        console.log(e.message)
-        const response = {
-            errormsg : e.message
-        }
-        res.json(response)
-    }
+    //     const response = {
+    //         final_result,
+    //         errno:0,
+    //     }
+    //     res.json(response)
+    // }
+    // catch (e) {
+    //     console.log(e.message)
+    //     const response = {
+    //         errormsg : e.message
+    //     }
+    //     res.json(response)
+    // }
 }
 
 // `update cate1 set title=?, content=?, date=? where idx=?`
