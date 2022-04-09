@@ -131,14 +131,14 @@ exports.join = async (req,res)=>{
 exports.login = async (req,res)=>{
     const { userid, userpw } = req.body
 
-    const sql = 'SELECT userid, userimg, username, nickname, address, gender, phone, mobile, email, level, available from user where userid = ? and userpw = ?'
+    const sql = 'SELECT userid, userimg, username, nickname, address, gender, phone, mobile, email, level from user where userid = ? and userpw = ?'
     const param = [userid, userpw]
     
     try {
         const [result] = await pool.execute(sql, param)
 
         if( result.length === 0 ) {throw Error ('id/pw를 확인해주세요')}
-        if( result[0].available === 'off') { throw new Error ('활동이 정지된 계정입니다. 관리자에게 문의 해주세요.')}
+
         const jwt = createToken(result[0])
 
         res.cookie('token', jwt, {
@@ -155,22 +155,12 @@ exports.login = async (req,res)=>{
 
     } catch (e) {
         console.log(e.message)
-        if(e.message = '활동이 정지된 계정입니다. 관리자에게 문의 해주세요.') {
-            const response = {
-                errormsg: e.message,
-                errno: 2
-            }
-            res.json(response)
+        const response = {
+            result:[],
+            errormsg:e.message,
+            errno:e.errno
         }
-        else {
-            console.log(e.message)
-            const response = {
-                result:[],
-                errormsg:e.message,
-                errno: 1
-            }
-            res.json(response)
-        }
+        res.json(response)
     }
 }
 

@@ -1,56 +1,46 @@
 {% extends 'utils/header.html' %}
 {% block content %}
     <div id="us_cate1">
-        <div>
-            <h2> cate1_리스트 </h2>
+        <div id="cate1_bduser">
+            <h2> 게시글 보기 </h2>
         </div>
-        <table>
-            <thead>
+        <table id="board_table">
+            <thead id="board_thead">
                 <tr>
-                    <th>로고</th>
-                    <th>카테고리</th>
+                    <th>번호</th>
                     <th>제목</th>
                     <th>작성자</th>
                     <th>작성일</th>
                     <th>조회수</th>
-                    <th>좋아요</th>
                 </tr>
             </thead>
     
             <tbody id="profile_user">
     
-            </tbody>
-    
+            </tbody> 
         </table>
-    </div>
-        
-
-    <template id = "profiles_users">
-        <table id="us_tb">
-            <tr>
-                <td>idx</td>
-                <td>title</td>
-                <td>작성자</td>
-                <td>작성일자</td>
-                <td>hit</td>
-            </tr>
-
+        <div id="paging">
+            <ul>
+                
+            </ul>
+        </div>
+        <template id = "profiles_users"> 
+                <tr>
+                    <th id="idx">{idx}</th>
+                    <th id="temp_title"><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></th> 
+                    <th id="nickname">{nickname}</th> 
+                    <th id="date">{date}</th>
+                    <th id="hit">{hit}</th>
+                </tr>
             
-            <tr>
-                <td id="idx">{idx}</td>
-                <td><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></td> 
-                <td id="nickname">{nickname}</td> 
-                <td id="date">{date}</td>
-                <td id="hit">{hit}</td>
-            </tr>
-           
-        </table>
-    </template>
+            </table>
+        </template>
+    </div>
 
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded',async() =>{
         let template = ''
-        const profile = document.querySelector('#profil_user')
+        const profile = document.querySelector('#profile_user')
         const profiles = document.querySelector('#profiles_users').innerHTML
 
         const option = {
@@ -59,7 +49,7 @@
         }
 
         const response = await axios.post('http://localhost:4000/api/user/userprofile',null,option)
-        console.log(response.data)
+        console.log(response.data.result)
         if(response.data.errno == 0){
            for(let i = 0; i< response.data.result.length; i++){
             const {idx,title,nickname,date,hit} = response.data.result[i]
@@ -73,7 +63,31 @@
                                 
             profile.innerHTML = template
             }
-        }  
+        }
+
     })
+
 </script>
+<style>
+    /* #profile_user{
+        font-size:16px;
+    }
+
+    #profile_user > tr {
+        height:60px;
+        padding:5px;
+        border-bottom: 1px solid #e2e2e2;
+        font-size:20px;
+    }
+
+    #profile_user > tr > #tem_title {
+        text-align:left;
+        font-style:normal; 
+    } */
+    #footer_wrap {
+    bottom: -650px !important;
+    position: relative;
+
+}
+</style>
 {% endblock %}

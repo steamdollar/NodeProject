@@ -1,38 +1,48 @@
-{% include "../utils/header.html" %}
-    <h2> cate1_댓글 </h2>
-    <div id = profile>
+{% extends 'utils/header.html' %}
+{% block content %}
 
-
+<div id="us_cate1">
+    <div id="cate1_bduser">
+        <h2> 댓글 보기 </h2>
     </div>
-    <template id = profiles>
-        <table>
+    <table id="board_table">
+        <thead id="board_thead">
             <tr>
-                <td>idx</td>
-                <td>cate</td>
-                <td>title</td>
-                <td>content</td>
-                <td>작성자</td>
-                <td>작성일</td>
+                <th id="cm_id">번호</th>
+                <th id="cm_cate">카테고리</th>
+                <th id="cm_ct">제목</th>
+                <th id="cm_cont">내용</th>
+                <th id="cm_wt">작성자</th>
+                <th id="cm_date">작성일</th>
             </tr>
+        </thead>
 
+        <tbody id="profile_user">
+
+        </tbody> 
+    </table>
+    <div id="paging">
+        <ul>
             
+        </ul>
+    </div>
+    <template id = "profiles_users"> 
             <tr>
-                <td id="idx">{idx}</td>
-                <td id="cate">{cate}</td>
-                <td><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></td>
-                <td id="content">{content}</td> 
-                <td id="nickname">{nickname}</td>
-                <td id="date">{date}</td>
+                <th id="idx">{idx}</th>
+                <th id="cate">{cate}</th>
+                <th id="temp_title"><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></th> 
+                <th id="content">{content}</th>
+                <th id="nickname">{nickname}</th> 
+                <th id="date">{date}</th>
             </tr>
-           
         </table>
     </template>
-</body>
+</div>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded',async() =>{
         let template = ''
-        const profile = document.querySelector('#profile')
-        const profiles = document.querySelector('#profiles').innerHTML
+        const profile = document.querySelector('#profile_user')
+        const profiles = document.querySelector('#profiles_users').innerHTML
 
         const option = {
             'Content-type':'application/json',
@@ -57,4 +67,31 @@
         }  
     })
 </script>
-</html>
+<style>
+    #board_thead > tr > #cm_id {
+        width:50px;
+    }
+
+    #board_thead > tr > #cm_cate {
+        width:100px;
+    }
+
+    #board_thead > tr > #cm_wt {
+        width: 100px;
+    }
+
+    #board_thead > tr > #cm_date {
+        width:150px;
+    }
+    
+    #cm_ct {
+        width:400px;
+    }
+    
+    #footer_wrap {
+    bottom: -650px !important;
+    position: relative;
+
+}
+</style>
+{% endblock %}

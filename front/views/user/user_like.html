@@ -1,36 +1,46 @@
-{% include "../utils/header.html" %}
-    <h2> cate1_좋아요 </h2>
-    <div id = profile>
-
-
+{% extends 'utils/header.html' %}
+{% block content %}
+<div id="us_cate1">
+    <div id="cate1_bduser">
+        <h2> 게시글 보기 </h2>
     </div>
-    <template id = profiles>
-        <table>
+    <table id="board_table">
+        <thead id="board_thead">
             <tr>
-                <td>idx</td>
-                <td>title</td>
-                <td>작성자</td>
-                <td>작성일자</td>
-                <td>hit</td>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회수</th>
             </tr>
+        </thead>
 
+        <tbody id="profile_user">
+
+        </tbody> 
+    </table>
+    <div id="paging">
+        <ul>
             
+        </ul>
+    </div>
+    <template id = "profiles_users"> 
             <tr>
-                <td id="idx">{idx}</td>
-                <td><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></td> 
-                <td id="nickname">{nickname}</td>
-                <td id="date">{date}</td>
-                <td id="hit">{hit}</td>
+                <th id="idx">{idx}</th>
+                <th id="temp_title"><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></th> 
+                <th id="nickname">{nickname}</th> 
+                <th id="date">{date}</th>
+                <th id="hit">{hit}</th>
             </tr>
-           
+        
         </table>
     </template>
-</body>
+</div>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded',async() =>{
         let template = ''
-        const profile = document.querySelector('#profile')
-        const profiles = document.querySelector('#profiles').innerHTML
+        const profile = document.querySelector('#profile_user')
+        const profiles = document.querySelector('#profiles_users').innerHTML
 
         const option = {
             'Content-type':'application/json',
@@ -54,4 +64,11 @@
         }  
     })
 </script>
-</html>
+<style>
+    #footer_wrap {
+    bottom: -650px !important;
+    position: relative;
+
+}
+</style>
+{% endblock %}
