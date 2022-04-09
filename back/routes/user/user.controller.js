@@ -138,7 +138,7 @@ exports.login = async (req,res)=>{
         const [result] = await pool.execute(sql, param)
 
         if( result.length === 0 ) {throw Error ('id/pw를 확인해주세요')}
-
+        console.log(result)
         const jwt = createToken(result[0])
 
         res.cookie('token', jwt, {
