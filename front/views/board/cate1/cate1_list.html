@@ -32,6 +32,8 @@
             <div id="board_writer">
                 <a id="address" href="">글쓰기</a>
             </div>
+
+            
             <table id="board_table">
                 <thead id="board_thead">
                     <tr>
@@ -96,12 +98,14 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     let test = {}
+    let tempthumb2 = []
     let hope = []
     const option = {
             'Content-type':'application/json',
             withCredentials:true
         }
-    document.addEventListener('DOMContentLoaded', async() => {
+    
+        document.addEventListener('DOMContentLoaded', async() => {
         const category = location.pathname.split('/')[2]
         const address = document.querySelector('#address')
         address.setAttribute('href', `/board/cate1/write?category=${category}`)
@@ -113,11 +117,10 @@
         test = { ...response1.data }
         const cate1_list = response1.data
 
-        let content_list = []
+
         let content_list2 = []
         for (let i =0; i<response1.data.result1.length; i++) {
             if(response1.data.result1[i].hidden =='off') {
-                content_list.push(response1.data.result1[i])
                 content_list2.push(response1.data.result1[i])
             }
         }
@@ -138,12 +141,15 @@
             }
         }
 
+        tempthumb2 = thumbNail.reverse()
 
         for (let i = 0; i<content_list2.length; i++) {
             let nProduct = { ...content_list2[i] }
-            nProduct.img1 = thumbNail[i]
+            nProduct.img1 = tempthumb2[i]
             hope.push(nProduct)
         }
+
+        // hope = tempHope.reverse()
 
         let template = ''
         search_list = []
@@ -157,8 +163,6 @@
                 board_temp.replace('{img1}',`<img src='http://localhost:4000/uploads/${img1}'>`)
                 .replace('{idx}', idx)
                 .replace('{category}',category)
-                // .replace('{img1}', `<img src='http://localhost:4000/uploads/${img1}'>`)
-                .replace('{a}','asdf')
                 .replace('{title}',title)
                 .replace('{content}',content)
                 .replace('{userid}', userid)
@@ -246,7 +250,6 @@
             }
 
             const Nodes = refine.slice((num-1) * view_article, num * view_article)
-            console.log(Nodes)
             let template = ''
             Nodes.forEach( v=> {
                 template += trElement.replaceAll('{idx}', v.idx)

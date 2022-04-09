@@ -46,7 +46,8 @@ exports.write = async (req,res) => {
 
 exports.list = async (req,res)=>{
     const {category} = req.body
-    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where c.category = '${category}' group by c.idx;`
+    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
+    from cate1 c left join cate1_like l on c.idx = l.m_idx where c.category = '${category}' group by c.idx order by idx desc;`
     const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and category = '${category}'`
     try {
         const [result1] = await pool.execute(sql1)
@@ -543,7 +544,7 @@ exports.imgUpdate = async (req, res) => {
 exports.thumbnail = async (req, res) => {
     const { category } = req.body
 
-    const sql = `select * from cate1 where hidden = 'off' and category = "${category}";`
+    const sql = `select * from cate1 where hidden = 'off' and category = "${category}" ;`
     const param1 = [category]
 
     try {
@@ -581,12 +582,15 @@ exports.search = async (req, res) => {
     if( searchOp !== 'hashtag') {
         const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
         from ${category} c left join ${category}_like l on c.idx = l.m_idx 
-        WHERE c.${searchOp} LIKE "%${searchKey}%" group by c.idx ;`
+        WHERE c.${searchOp} LIKE "%${searchKey}%" group by c.idx order by idx desc;`
 
+        const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and ${searchOp} = '${searchKey}'`
         try {
             const [result] = await pool.execute(sql)
+            const [[{total_record}]] = await pool.execute(sql2)
             const response = {
                 result,
+                total_record,
                 errorno: "none"
             }
             res.json(response)
@@ -607,6 +611,9 @@ exports.search = async (req, res) => {
         
         let midx = []
         try {
+            const sql4 = `SELECT count(hashtag_name) as total_record FROM hashtag where hashtag_name='${searchKey}'`
+            const [[{total_record}]] = await pool.execute(sql4)
+
             for (let i=0; i<result1[0].length; i++) {
                 const sql2 = `select * from cate1_bridge where hidx=?`
                 const param2 = [result1[0][i].hidx]
@@ -617,7 +624,7 @@ exports.search = async (req, res) => {
             const sql3 = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, 
             c.date, c.hit, count(l.m_idx) likes, c.hidden 
             from ${category} c left join ${category}_like l on c.idx = l.m_idx 
-            WHERE c.idx= ? group by c.idx ;`
+            WHERE c.idx= ? group by c.idx order by idx desc;`
             let final = []
             for(let i = 0; i<midx.length; i++) {
                 const param3 = [midx[i].midx]
@@ -626,9 +633,10 @@ exports.search = async (req, res) => {
                 final.push(result3[0])
             }
 
-            const result = final
+            const result = final.reverse()
             const response = {
                 result,
+                total_record,
                 errorno: "none"
             }
             res.json(response)
@@ -645,20 +653,20 @@ exports.search = async (req, res) => {
 }
 
 exports.searchThumbNail = async (req, res) => {
-    const { thumbIdx } = req.body
-
-    const sql = `select img1 from image where midx=?`
+    const { index_list } = req.body
+    const sql = `select img1 from image where midx=?;`
     let final_result = []
+
     try {
-        for (let i = 0; i< thumbIdx.length; i++) {
-            const param = [thumbIdx[i]]
+        for (let i = 0; i< index_list.length; i++) {
+            const param = [index_list[i]]
             const [[result]] = await pool.execute(sql, param)
             final_result.push(result)
         }
 
         const response = {
             final_result,
-            errorno: "none"
+            errorno: 0
         }
         res.json(response)
     }

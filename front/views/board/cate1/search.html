@@ -1,170 +1,278 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .hidden {display:none;}
-        .thumb {
-            width:100px !important;
-            height: 100px !important;
-        }
-    </style>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    
-</head>
+{% extends 'utils/header.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" href="/board/cate1/search.css">
 <body>
-    <span id="option" value="{{option}}" class="hidden"></span>
-    <span id="keyword" value="{{keyword}}" class="hidden"></span>
-    <h1><a href='/'>logo</a></h1>
-    <h2> cate1_리스트 </h2>
-    <table width="100%" border="1">
+    <div id="search_wrap">
+        <span id="option" value="{{option}}" class="hidden"></span>
+        <span id="keyword" value="{{keyword}}" class="hidden"></span>
 
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>카테고리</th>
-                <th>제목</th>
-                <th>작성자 아이디</th>
-                <th>작성자 닉네임</th>
-                <th>내용</th>
-                <th>작성일</th>
-                <th>조회수</th>
-                <th>좋아요</th>
-            </tr>
-        </thead>
+        <div id="board_search">
+            <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
+                <div id="board_frm">
+                    <div id="board_select">
+                        <div id="board_cate" style="display:inline-block;" >
+                            <strong style="display:inline; padding:10px;" >검색옵션</strong>
+                            <select name="option" id="category" >
+                                <option value="" disabled>검색 옵션 선택</option>
+                                <option value="nickname" id="nickname" selected>닉네임</option>
+                                <option value="hashtag" id="hashtag">해시태그</option>
+                                <option value="title" id="title">제목</option>
+                                <option value="content" id="content">내용</option>
+                            </select>
+                        </div>
+                        <div id="board_key" style="display:inline-block;">
+                            <strong style="padding:10px 10px 10px 38px;">검색</strong>
+                            <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
+                        </div>
+                    </div>
+                    <div id="board_submit">
+                        <input type="submit" name="search" id="search" value="검색">
+                    </div>
+                </div>
+            </form>
+        </div>
 
-        <tbody id="board_list">
 
-        </tbody>
+        <div id="board_main">
+            <div id="board_writer">
+                <a id="address" href="">글쓰기</a>
+            </div>
 
-    </table>
+            
+            <table id="board_table">
+                <thead id="board_thead">
+                    <tr>
+                        <th>로고</th>
+                        <th>카테고리</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                        <th>좋아요</th>
+                    </tr>
+                </thead>
+    
+                <tbody id="board_list">
+    
+                </tbody>
+    
+            </table>
+            <div id="paging">
+                <ul>
+                    
+                </ul>
+            </div>
+    
+            <template id="board_column">
+            </template>
+    
+            <template id="board_temp">
+                <tr>
+                    <th>{img1}</th>
+                    <th>{category}</th>
+                    <th id="temp_title"><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
+                    <th>{nickname}</th>
+                    <th>{date}</th>
+                    <th>{hit}</th>
+                    <th>{likes}</th>
+                </tr>
+            </template>
+        </div>
+        <!-- 여기까지 -->
 
-        <template id="board_column">
-        </template>
-
-        <template id="board_temp">
-            <tr>
-
-                <th class="index">{idx}</th>
-                <th>{category}</th>
-                <th><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></th>
-                <th>{userid}</th>
-                <th>{nickname}</th>
-                <th>{content}</th>
-                <th>{date}</th>
-                <th>{hit}</th>
-                <th>{likes}</th>
-            </tr>
-        </template>
-
-        <span id="imgZone"></span>
+    </div>
 
         <script type="text/javascript">
             const option = {
                     'Content-type':'application/json',
                     withCredentials:true
                 }
-            
+            let hope = []
+            let test = {}
+
                 document.addEventListener('DOMContentLoaded', async() => {
                 
-                const uri = location.pathname
-                const category = uri.split('/')[2]
-                const searchOp = "{{option}}"
-                const searchKey = "{{keyword}}"
-    
-                const data = {
-                    category:category,
-                    searchOp:searchOp,
-                    searchKey:searchKey
-                }
-    
-                const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
-                const cate1_list = response1.data.result
-    
-                let content_list = []
-    
-                if(cate1_list !== undefined) {
-                    for (let i =0; i<cate1_list.length; i++) {
-                        if(cate1_list[i].hidden =='off') {
-                            content_list.push(cate1_list[i])
+                    const uri = location.pathname
+                    const category = uri.split('/')[2]
+                    const searchOp = "{{option}}"
+                    const searchKey = "{{keyword}}"
+        
+                    const data = {
+                        category:category,
+                        searchOp:searchOp,
+                        searchKey:searchKey
+                    }
+        
+                    const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
+                    const cate1_list = response1.data.result
+                    test = { ...response1.data }
+        
+                    let content_list = []
+                    
+                    let index_list = [] // 섬네일을 가져올 글의 idx를 여기에..
+
+                    if(cate1_list !== undefined) {
+                        for (let i =0; i<cate1_list.length; i++) {
+                            if(cate1_list[i].hidden =='off') {
+                                content_list.push(cate1_list[i])
+                                index_list.push(cate1_list[i].idx)
+                            }
                         }
                     }
-                }
+
+                    const thumbData = {
+                        index_list: index_list
+                    }   
+
+                    let thumbNail = []
+                    const response2 = await axios.post('http://localhost:4000/api/board/cate1/searchThumbNail', thumbData, option)
+
+                    const tempThumb = response2.data.final_result
+
+                    for (let i = 0; i<tempThumb.length; i++) {
+                        if(tempThumb[i].img1 !== 'N/A') {
+                            thumbNail.push(tempThumb[i].img1)
+                        }
+                        else {
+                            thumbNail.push('default.jpg')
+                        }
+                    }
+
+
+                    for (let i = 0; i<content_list.length; i++) {
+                        let nProduct = { ...content_list[i] }
+                        nProduct.img1 = thumbNail[i]
+                        hope.push(nProduct)
+                    }
+
+                    // thumbNail(img1)과 글 정보 결합
+                    //
+                    //
+
+                    let template = ''
+                    search_list = []
+                    const board_temp = document.querySelector('#board_temp').innerHTML
+
+                    const promise = hope.forEach(async (v)=>{
+                        search_list.push(v)
+                        let {idx, img1, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+        
+                        template += board_temp.replace('{img1}',`<img src='http://localhost:4000/uploads/${img1}'>`)
+                                        .replace('{idx}', idx)
+                                        .replace('{category}',category)
+                                        .replace('{title}',title)
+                                        .replace('{content}',content)
+                                        .replace('{userid}', userid)
+                                        .replace('{nickname}',nickname)
+                                        .replace('{date}',date)
+                                        .replace('{hit}',hit)
+                                        .replace('{likes}',likes)
+                    })
     
-                let template = ''
-                search_list = []
-                const board_temp = document.querySelector('#board_temp').innerHTML
-                const promise = content_list.forEach(async (v)=>{
-                    search_list.push(v)
-                    let {idx, category, title, nickname, userid, content, date, hit, likes, hidden} = v
-    
-                    template += board_temp.replaceAll('{idx}', idx)
-                                    .replace('{category}',category)
-                                    .replace('{title}',title)
-                                    .replace('{content}',content)
-                                    .replace('{userid}', userid)
-                                    .replace('{nickname}',nickname)
-                                    .replace('{date}',date)
-                                    .replace('{hit}',hit)
-                                    .replace('{likes}',likes)
+                    board_list.innerHTML = template
+
+                    const trElement = document.querySelector('#board_temp').innerHTML
+                    //
+                    //
+
+                    const { total_record } = response1.data
+                    const view_article = 10 // 한 페이지에 있는 블럭 수
+                    const block_article = 10 // 한 블럭에 보일 갯수
+
+                    const total_page = Math.ceil(total_record/view_article)
+                    const total_block = Math.ceil(total_page/block_article)
+                    let page = 4
+                    const current_block = Math.ceil(page/block_article)
+                    const block = ((current_block-1) * block_article)
+
+                    let end_block = block + block_article
+                    if(end_block > total_page) {end_block = total_page}
+                    
+                    const paging = document.querySelector('#paging > ul')
+        
+                    for  ( let i = 0; i<=end_block; i++) {
+                        const liElement = document.createElement('li')
+                        const aElement = document.createElement('a')
+
+                        aElement.setAttribute('onClick', `pagemove(${i})`)
+                        aElement.innerHTML = `[${i}]`
+                        liElement.appendChild(aElement)
+                        paging.appendChild(liElement)
+                    }
+
+                    const Nodes = hope.slice((page - 1) * view_article, page * view_article)
+                    const board_row = document.querySelector('#board_temp')
+                    const tbody = document.querySelector('#board_list')
+
+                    Nodes.forEach( v => {
+                        const clone = document.importNode(board_row.content,true)
+                        const th = clone.querySelectorAll('th')
+                        const aElement = document.createElement('a')
+                        aElement.href=`/board/cate1/view/?idx=${v.idx}`
+                        aElement.innerHTML = v.subject
+
+                        th[0].innerHTML = v.img1
+                        th[1].innerHTML = v.idx
+                        th[2].innerHTML = v.category
+                        th[3].innerHTML = v.title
+                        th[4].innerHTML = v.userid
+                        th[5].innerHTML = v.nickname
+                        th[6].innerHTML = v.content
+                        th[7].innerHTML = v.date
+                        th[8].innerHTML = v.hit
+                        th[9].innerHTML = v.likes
+
+                        tbody.appendChild(clone)
+                    })
+                    pagemove(1)
                 })
-    
-                board_list.innerHTML = template
-                //
-                //
-                
-                // const response = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
-                // const tempThumb = response.data.final_result // [{}, {}, {}]
-                // let thumbNail = []
 
-                // for (let i = 0; i<tempThumb.length; i++) {
-                //     if(tempThumb[i].img1 !== 'N/A') {
-                //         thumbNail.push(tempThumb[i].img1)
-                //     }
-                //     else {
-                //         thumbNail.push('default.jpg')
-                //     }
-                // }
-                const qwe = document.querySelectorAll('.index')
-                // console.log(qwe[0].innerHTML)
-                let thumbIdx = []
-                for (i = 0; i < qwe.length; i ++) {
-                    thumbIdx.push(qwe[i].innerHTML)
-                }
+                function pagemove(num) {
+                    const trElement = document.querySelector('#board_temp').innerHTML
+                    const view_article = 10
+                    const raw = hope
+                    let refine = []
 
-    
-                const thumbData = {
-                    thumbIdx: thumbIdx
-                }
-
-                const response2 = await axios.post('http://localhost:4000/api/board/cate1/searchThumbNail', thumbData, option)
-                console.log(response2.data.final_result)
-                const thumbNail = response2.data.final_result
-
-                for ( let i =0; i<thumbNail.length; i++) {
-                    if( thumbNail[i].img1 !== 'N/A') {
-                        const imgZone = document.querySelector('#imgZone')
-                        const imgSpan = document.createElement('span')
-                        const imgElement = document.createElement('img')
-                        imgElement.setAttribute('class','thumb')
-                        imgElement.setAttribute('src', `http://localhost:4000/uploads/${thumbNail[i].img1}`)
-                        imgSpan.append(imgElement)
-                        imgZone.append(imgSpan)
+                    for(i = 0; i <raw.length; i++) {
+                        if( raw[i].hidden !== 'on') {
+                            refine.push(raw[i])
+                        }
                     }
-                    else {
-                        const imgZone = document.querySelector('#imgZone')
-                        const imgSpan = document.createElement('span')
-                        const imgElement = document.createElement('img')
-                        imgElement.setAttribute('class','thumb')
-                        imgElement.setAttribute('src', `http://localhost:4000/uploads/default.jpg`)
-                        imgSpan.append(imgElement)
-                        imgZone.append(imgSpan)
-                    }
+
+                    const Nodes = refine.slice((num-1) * view_article, num * view_article)
+                    let template = ''
+                    Nodes.forEach( v=> {
+                        template += trElement.replaceAll('{idx}', v.idx)
+                                    .replace('{category}',v.category)
+                                    .replace('{title}',v.title)
+                                    .replace('{content}',v.content)
+                                    .replace('{userid}', v.userid)
+                                    .replace('{nickname}',v.nickname)
+                                    .replace('{date}',v.date)
+                                    .replace('{hit}',v.hit)
+                                    .replace('{likes}',v.likes)
+                                    .replace('{img1}', `<img src='http://localhost:4000/uploads/${v.img1}'>`)
+                    })
+
+                    const tbody = document.querySelector('#board_list')
+                    tbody.innerHTML = template
                 }
-            })
+
+
+
         </script>
-</body>
-</html>
+
+    <style>
+        .hidden {display:none;}
+        #board_list > tr > th > img {
+            width: 50px !important;
+            height: 50px !important;
+        }
+        #paging > ul > li:nth-child(1) {
+            display:none;
+        }
+    </style>
+
+{% endblock %}
