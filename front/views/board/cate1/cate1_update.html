@@ -315,9 +315,13 @@
             // // 있다면 fakepath 어쩌구가 뜸. 단, 파일이 업로드 되지 않음.
             // console.log(img2.files[0])  // 새로 올린 파일이 없다면 undefined
             // // 있다면 파일의 이름, 시간 각각이 객체로 나옴
-            // console.log('------------')
+            console.log('------------')
+            console.log(formData.get('img1'))
             console.log(formData.get('img2'))
             console.log(formData.get('img3'))
+            console.log(formData.get('img4'))
+            console.log(formData.get('img5'))
+            console.log('------------')
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
             if (response.data.errno === 0 && response2.data.errno === 0 ) {
