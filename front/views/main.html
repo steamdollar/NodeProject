@@ -294,40 +294,32 @@
 
 
     <content id="main_content">
+<!-- 카드 뉴스 파트-->
         <div id="container1">
-            <div id="card_news">
-                <div class="card">
-                    <h1>경일 카드뉴스</h1>
-                    <ul id="card_box">
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
 
-                    </ul>
-                </div>
+            <div id='card_wrap'>
+
+                <table id="board_table">
+                    <tbody id="board_list">
+                        
+                    </tbody>
+                </table>
+
+                <template id="board_temp">
+                    <div class="cards">
+                    <span><a href="http://localhost:3000/board/cate1/view?idx={idx}">{img1}</a></span>
+                        <br>
+                        <span id="temp_title">
+                            <a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a>
+                        </span>
+                    </div>
+                </template>
+
             </div>
+
         </div>
+<!-- 여기까지 -->
+
         <div id="container2">
             <div id="hot_board">
                 <h2>인기 게시물</h1>
@@ -401,9 +393,113 @@
 
     {% include "./utils/footer.html" %}
 
+    <script type="text/javascript">
+        let test = {}
+        let hope = []
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
 
+    document.addEventListener('DOMContentLoaded', async() => {
+        const data = { category: 'notice' }
+
+        const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
+        test = { ...response1.data }
+        const cate1_list = response1.data
+
+        let content_list2 = []
+        for (let i =0; i<response1.data.result1.length; i++) {
+            if(response1.data.result1[i].hidden =='off') {
+                content_list2.push(response1.data.result1[i])
+            }
+        }
+
+    // 썸네일
+
+        const response2 = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
+        const tempThumb = response2.data.final_result // [{}, {}, {}]
+        let thumbNail = []
+
+        for (let i = 0; i<tempThumb.length; i++) {
+            if(tempThumb[i].img1 !== 'N/A') {
+                thumbNail.push(tempThumb[i].img1)
+            }
+            else {
+                thumbNail.push('default.jpg')
+            }
+        }
+
+
+        for (let i = 0; i<content_list2.length; i++) {
+            let nProduct = { ...content_list2[i] }
+            nProduct.img1 = thumbNail[i]
+            hope.push(nProduct)
+        }
+
+        let template = ''
+        search_list = []
+        const board_temp = document.querySelector('#board_temp').innerHTML
+
+        const promise = hope.forEach( (v)=>{
+        search_list.push(v)
+        let {idx, img1, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+        template +=
+            board_temp.replace('{img1}',`<img src='http://localhost:4000/uploads/${img1}'>`)
+            .replace('{title}',title)
+            .replace('{idx}', idx)
+        })
+
+        board_list.innerHTML = template
+    })
+
+    </script>
 </div>
+<style>
+    #container1 {
+        position: relative;
+    }
+
+    #card_wrap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    #board_table {
+        position:relative;
+    }
+
+    #board_list {
+        display:flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        position:relative;
+        width: 800px !important;
+        
+    }
+
+    .cards {
+        width: 300px;
+        padding: 25px 30px 25px 30px;
+    }
+
+    .cards > span:nth-child(2) {
+        text-align: center;
+        color: black !important;
+
+    }
+
+    .cards > span > a > img {
+        width: 300px !important;
+        height:200px;
+    }
+
+    #temp_title {
+        font-size: 40px;
+        text-align: center;
+    }
+</style>
 </body>
-
-
 </html>
