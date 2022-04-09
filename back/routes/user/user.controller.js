@@ -284,6 +284,7 @@ exports.userprofile = async (req,res) => {
     const param = [userid]
     try{
         const [result] = await pool.execute(sql,param)
+        console.log(result)
         const response = {
             result,
             errno:0

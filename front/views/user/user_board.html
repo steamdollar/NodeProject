@@ -1,12 +1,32 @@
-{% include "../utils/header.html" %}
-    {% block content %}
-    <h2> cate1_리스트 </h2>
-    <div id = profile>
-
-
-    </div>
-    <template id = profiles>
+{% extends 'utils/header.html' %}
+{% block content %}
+    <div id="us_cate1">
+        <div>
+            <h2> cate1_리스트 </h2>
+        </div>
         <table>
+            <thead>
+                <tr>
+                    <th>로고</th>
+                    <th>카테고리</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                    <th>좋아요</th>
+                </tr>
+            </thead>
+    
+            <tbody id="profile_user">
+    
+            </tbody>
+    
+        </table>
+    </div>
+        
+
+    <template id = "profiles_users">
+        <table id="us_tb">
             <tr>
                 <td>idx</td>
                 <td>title</td>
@@ -26,12 +46,12 @@
            
         </table>
     </template>
-    {% endblock %}
+
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded',async() =>{
         let template = ''
-        const profile = document.querySelector('#profile')
-        const profiles = document.querySelector('#profiles').innerHTML
+        const profile = document.querySelector('#profil_user')
+        const profiles = document.querySelector('#profiles_users').innerHTML
 
         const option = {
             'Content-type':'application/json',
@@ -56,4 +76,4 @@
         }  
     })
 </script>
-</html>
+{% endblock %}
