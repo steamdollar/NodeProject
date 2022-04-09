@@ -7,6 +7,7 @@
     <div id="search_wrap">
         <span id="option" value="{{option}}" class="hidden"></span>
         <span id="keyword" value="{{keyword}}" class="hidden"></span>
+        <span id="spare" value="{{category}}" class="hidden"></span>
 
         <div id="board_search">
             <form method="get" action="http://localhost:3000/board/cate1/search" id="frm_search">
@@ -25,6 +26,7 @@
                         <div id="board_key" style="display:inline-block;">
                             <strong style="padding:10px 10px 10px 38px;">검색</strong>
                             <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
+                            <input type="hidden" name="category" value="{{category}}">
                         </div>
                     </div>
                     <div id="board_submit">
@@ -80,7 +82,6 @@
                 </tr>
             </template>
         </div>
-        <!-- 여기까지 -->
 
     </div>
 
@@ -93,9 +94,9 @@
             let test = {}
 
                 document.addEventListener('DOMContentLoaded', async() => {
-                
-                    const uri = location.pathname
-                    const category = uri.split('/')[2]
+                    const spare = document.querySelector('#spare').value
+
+                    const category = "{{category}}" || spare
                     const searchOp = "{{option}}"
                     const searchKey = "{{keyword}}"
         
@@ -104,6 +105,7 @@
                         searchOp:searchOp,
                         searchKey:searchKey
                     }
+                    console.log(data)
         
                     const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
                     const cate1_list = response1.data.result
@@ -114,7 +116,7 @@
                     let index_list = [] // 섬네일을 가져올 글의 idx를 여기에..
 
                     if(cate1_list !== undefined) {
-                        for (let i =0; i<cate1_list.length; i++) {
+                        for (let i = 0; i < cate1_list.length; i++) {
                             if(cate1_list[i].hidden =='off') {
                                 content_list.push(cate1_list[i])
                                 index_list.push(cate1_list[i].idx)

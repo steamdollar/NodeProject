@@ -82,10 +82,12 @@ router.get('/update', async (req, res) => {
 })
 
 router.get('/search', async (req, res )=> {
-    const {option, keyword} = req.query
+    const {option, keyword, category} = req.query
+    
     res.render('./board/cate1/search.html', {
         option,
-        keyword
+        keyword,
+        category
     })
 })
 
