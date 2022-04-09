@@ -20,6 +20,7 @@
                         <div id="board_key" style="display:inline-block;">
                             <strong style="padding:10px 10px 10px 38px;">검색</strong>
                             <input type="text" name='keyword' id="keyword" placeholder="내용을 입력하세요">
+                            <input type="hidden" name="category" value='' id="search_cate">
                         </div>
                     </div>
                     <div id="board_submit">
@@ -28,6 +29,7 @@
                 </div>
             </form>
         </div>
+
         <div id="board_main">
             <div id="board_writer">
                 <a id="address" href="">글쓰기</a>
@@ -110,6 +112,8 @@
         const address = document.querySelector('#address')
         address.setAttribute('href', `/board/cate1/write?category=${category}`)
         
+        const search_cate = document.querySelector('#search_cate')
+        search_cate.setAttribute('value', category)
 
         const data = { category:category }
         
