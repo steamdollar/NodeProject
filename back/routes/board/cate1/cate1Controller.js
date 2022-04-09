@@ -579,15 +579,24 @@ exports.thumbnail = async (req, res) => {
 exports.search = async (req, res) => {
     const {searchKey,searchOp, category} = req.body
 
+
     if( searchOp !== 'hashtag') {
         const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
-        from ${category} c left join ${category}_like l on c.idx = l.m_idx 
+        from cate1 c left join cate1_like l on c.idx = l.m_idx 
         WHERE c.${searchOp} LIKE "%${searchKey}%" group by c.idx order by idx desc;`
 
         const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and ${searchOp} = '${searchKey}'`
         try {
-            const [result] = await pool.execute(sql)
+            const [result1] = await pool.execute(sql)
             const [[{total_record}]] = await pool.execute(sql2)
+
+            let result = []
+            for ( let i = 0; i<result1.length; i++) {
+                if(result1[i].category === `${category}`) {
+                    result.push(result1[i])
+                }
+            }
+
             const response = {
                 result,
                 total_record,
@@ -621,19 +630,31 @@ exports.search = async (req, res) => {
                 const [result2] = await pool.execute(sql2, param2)
                 midx.push(result2[0])
             }
-            const sql3 = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, 
-            c.date, c.hit, count(l.m_idx) likes, c.hidden 
-            from ${category} c left join ${category}_like l on c.idx = l.m_idx 
-            WHERE c.idx= ? group by c.idx order by idx desc;`
+
             let final = []
+
             for(let i = 0; i<midx.length; i++) {
+                const sql3 = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, 
+                c.date, c.hit, count(l.m_idx) likes, c.hidden 
+                from cate1 c left join cate1_like l on c.idx = l.m_idx 
+                WHERE c.idx= ? group by c.idx order by idx desc;`
+
                 const param3 = [midx[i].midx]
-                const [result3] = await pool.execute(sql3, param3)
 
-                final.push(result3[0])
+                const [[result3]] = await pool.execute(sql3, param3)
+
+                final.push(result3)
             }
+            
+            const preresult = final.reverse()
+            console.log(preresult)
 
-            const result = final.reverse()
+            let result = []
+            for ( let i = 0; i<preresult.length; i++) {
+                if(preresult[i].category === `${category}`) {
+                    result.push(preresult[i])
+                }
+            }
             const response = {
                 result,
                 total_record,

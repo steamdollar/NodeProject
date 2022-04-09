@@ -80,7 +80,6 @@
                 </tr>
             </template>
         </div>
-        <!-- 여기까지 -->
 
     </div>
 
@@ -95,7 +94,7 @@
                 document.addEventListener('DOMContentLoaded', async() => {
                 
                     const uri = location.pathname
-                    const category = uri.split('/')[2]
+                    const category = "{{category}}"
                     const searchOp = "{{option}}"
                     const searchKey = "{{keyword}}"
         
@@ -104,6 +103,7 @@
                         searchOp:searchOp,
                         searchKey:searchKey
                     }
+                    console.log(data)
         
                     const response1 = await axios.post('http://localhost:4000/api/board/cate1/search', data, option)
                     const cate1_list = response1.data.result
@@ -114,7 +114,7 @@
                     let index_list = [] // 섬네일을 가져올 글의 idx를 여기에..
 
                     if(cate1_list !== undefined) {
-                        for (let i =0; i<cate1_list.length; i++) {
+                        for (let i = 0; i < cate1_list.length; i++) {
                             if(cate1_list[i].hidden =='off') {
                                 content_list.push(cate1_list[i])
                                 index_list.push(cate1_list[i].idx)
