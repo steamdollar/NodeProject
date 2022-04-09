@@ -2,48 +2,73 @@
 
 /*  door */
 
+#notice_wrap{
+    width: 1600px;
+    min-height: 1200px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+
+#door_box{
+    width: 100%;
+    height: auto;
+    max-height: 450px;
+    overflow: hidden;
+    border-radius: 20px;
+}
 #door {
-    display:inline-block;
+    display:block;
+    width: 100%;
+    height: 100%;
     margin-top:120px;
 }
-#door > span {
+#door > div {
     display:flex;
     justify-content: center;
 }
 
-#door > span > img {
-    width: 80%;
+#door > div > img {
+    width: 100%;
+    max-height:fit-content;
+    margin-top: -28%;
+
 }
 
 #board_table {
     width: 100%;
-    margin: 100px 0 0 0;
-    padding: 0 100px 0 100px;
+    margin: 150px 0 0 0;
     border:none;
 }
 
 #board_list {
+    width: 1600px;
+    height: auto;
     position:relative;
     display:flex;
-    justify-content: space-evenly;
     flex-wrap: wrap;
-    padding: 0 60px 0 60px;
+
 }
 
 .cards {
-    display:inline-block;
+    display:block;
+    width: 33.333%;
+    height: auto;
     text-align: center;
-    margin: 40px;
+    margin: 40px 0!important;
+
 }
 
 .cards > #temp_title {
     font-size: 40px;
     display:inline-block;
-    margin: 10px 0 0 0;
+    margin: 20px 0 0 0;
+
 }
 
 .cards > #temp_title > a {
     transition: all 1s;
+    color: #e0f7fa;
 }
 
 .cards > #temp_title > a:hover {
@@ -52,7 +77,7 @@
 
 .cards > span > a > img {
     width: 400px;
-    height: 400px;
+    height: 500px;
     transition: all 0.2s;
     border-radius: 10px;
 }

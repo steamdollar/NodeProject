@@ -52,6 +52,7 @@
     padding:7px 14px;
     box-sizing:border-box;
     border-radius: 7px;
+    font-size:20px;
 }
 
 #login_frm > #login_login {

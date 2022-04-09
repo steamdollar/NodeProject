@@ -2,30 +2,36 @@
 {% block content %}
 <link rel="stylesheet" href="/board/notice/notice_view.css">
 
-<!-- <span id="door">
-    <span><img src="http://localhost:4000/uploads/door.png"></span>
-</span> -->
 
-<table id="board_table">
-    <tbody id="board_list">
-        
-    </tbody>
-</table>
-
-<template id="board_temp">
-    <div class="cards">
-       <span><a href="http://localhost:3000/board/cate1/view?idx={idx}">{img1}</a></span>
-        <br>
-        <span id="temp_title">
-            <a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a>
-        </span>
+<div id="notice_wrap">
+    <div id="door_box">
+        <div id="door">
+            <div><img src="http://localhost:3000/card_banner.jpg"></div>
+        </div>
     </div>
-</template>
+    <div id="board_table">
+        <div id="board_list">
+            
+        </div>
+    </div>
 
+    <template id="board_temp">
+        <div class="cards">
+            <span><a href="http://localhost:3000/board/cate1/view?idx={idx}">{img1}</a></span>
+            <br>
+            <span id="temp_title">
+                <a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a>
+            </span>
+        </div>
+    </template>
+</div>
 <style>
 
     #footer_wrap{
-        margin-bottom: -650px;
+        margin-bottom: -500px;
+    }
+    html {
+        background: rgb(22, 22, 22);
     }
 </style>
 
