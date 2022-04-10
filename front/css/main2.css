@@ -348,4 +348,4 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 
 ::-webkit-scrollbar { width: 5px;}
 ::-webkit-scrollbar-track { background-color: rgb(214, 214, 214); }
-::-webkit-scrollbar-thumb { background: #0f42b1; border-radius: 10px;}
+::-webkit-scrollbar-thumb { background: #94e1ff; border-radius: 10px;}
