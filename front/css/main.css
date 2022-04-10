@@ -104,7 +104,7 @@
 
 
 .many_likes > li > a{
-    font-size: 26px;
+    font-size: 20px;
     /* display: inline-block; */
 }
 
@@ -130,7 +130,7 @@
 }
 
 .event_list > li > a{
-    font-size: 26px;
+    font-size: 20px;
     display: inline-block;
     /* text-decoration: underline; */
 }
@@ -174,7 +174,7 @@
 }
 
 .best_student > li{
-    font-size: 26px;
+    font-size: 20px;
     /* text-decoration: underline; */
 }
 
