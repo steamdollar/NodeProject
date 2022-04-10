@@ -349,8 +349,9 @@ exports.usercmt = async (req,res) => {
                 total_record,
                 errno:0
             }
+            
             res.json(response)
-        
+            
         } catch(e){
             console.log(e.message)
             response = {
@@ -373,6 +374,7 @@ exports.usercmt = async (req,res) => {
                 total_record,
                 errno:0
             }
+            console.log(result)
             res.json(response)
         
         } catch(e){
