@@ -38,7 +38,7 @@
                 </dd>
                 <div id="view_form">
                     <div id="view_modify">
-                        <a href='/board/cate1/update?idx={{cate1_view.idx}}' id="form_lk">수정</a>
+                        <a href='/board/cate1/update?idx={{cate1_view.idx}}' id="form_lk" class="hell">수정</a>
                     </div>
                     <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
                         <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
@@ -119,11 +119,12 @@
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/viewuser', null, option)
             const Usernick = response2.data.result[0].nickname
             let nickname = "{{cate1_view.nickname}}"
-
-            if(nickname !== Usernick){
-              
-            } else{
-
+            console.log(nickname)
+            console.log(Usernick)
+            
+            if(nickname !== Usernick && Usernick !== 'admin'){
+                const hell = document.querySelector('.hell')
+                hell.setAttribute('style', 'display:none;')
             }
             
         })
