@@ -60,7 +60,7 @@
 #container2 > div > h2{
     width: 100%;
     height: 40px;
-    margin-left: 10px;
+    padding-left: 10px;
     padding-top: 10px;
 
 }
@@ -74,28 +74,110 @@
 /* 인기게시물 */
 #hot_board{
     width: 100%;
-    height: 33.3%;
+    height: 30%;
     /* background: pink; */
 }
+
+.many_likes{
+    width: 100%;
+    height: 250px;
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.many_likes > li{
+    width: 100%;
+    height: 40px;
+    /* border-bottom:solid 1px #000; */
+    /* background: #7e7e7e; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 14px;
+    box-sizing: border-box;
+}
+
+.many_likes > li > a{
+    font-size: 26px;
+    /* display: inline-block; */
+}
+
+.event_list{
+    width: 100%;
+    height: 250px;
+    background: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.event_list > li{
+    width: 100%;
+    height: 40px;
+    background: #7e7e7e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 14px;
+    box-sizing: border-box;
+}
+
+.event_list > li > a{
+    font-size: 26px;
+    display: inline-block;
+    /* text-decoration: underline; */
+}
+
 #hot_board>h2, #event_board>h2,#this_month_student>h2{
     font-size: 30px;
+    height: 10%;
+    /* background: #3c6ffa; */
 }
 /* 이벤트 게시물 */
 #event_board{
     width: 100%;
-    height: 33.3%;
+    height: 30%;
     /* background: orange; */
 }
 /* 이달의 학우 */
 #this_month_student{
     width: 100%;
-    height: 33.3%;
+    height: 30%;
     /* background: yellow; */
+}
+.best_student{
+    width: 100%;
+    height: 250px;
+    /* background: yellowgreen; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.best_student > li{
+    width: 100%;
+    height: 40px;
+    /* background: #7e7e7e; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 14px;
+    box-sizing: border-box;
+}
+
+.best_student > li{
+    font-size: 26px;
+    /* text-decoration: underline; */
 }
 
 #container3{
     width: 25%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 #chat_box{
     width: 100%;
@@ -124,7 +206,7 @@
 
 #chat_wrap{
     width: 80%;
-    height: 100%;
+    height: 460px;
     margin: 0 auto;
 }
 #chat_space {
