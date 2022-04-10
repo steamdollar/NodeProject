@@ -168,7 +168,7 @@ exports.profile = async (req,res)=>{
     const usernickname = req.user.nickname
     const writernickname = req.body.uri4
     if(usernickname == writernickname || writernickname == undefined){
-        const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where nickname=?'
+        const sql = 'SELECT userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro from user where nickname=?;'
         const param = [usernickname]
 
         try {
@@ -280,9 +280,9 @@ exports.logout = (req,res) => {
 
 exports.userprofile = async (req,res) => {
     const {userid} = req.user
-    const sql = `SELECT * from cate1 where userid=? and hidden = 'off'`
+    const sql = `SELECT * from cate1 where userid=? and hidden = 'off' order by date desc;`
 
-    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and userid = ?`
+    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and userid = ? order by date desc`
     const param = [userid]
     try{
         const [result] = await pool.execute(sql,param)
@@ -308,7 +308,7 @@ exports.usercmt = async (req,res) => {
     const {userid} = req.user
     const sql = `
     SELECT c.idx, c.mcategory, c.midx, c.content, c.userid, c.nickname, c.date, count(c.idx) likes, 
-    title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.userid=? group by c.idx order by count(c.idx) DESC;`
+    title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.userid=? group by c.idx order by date DESC;`
     const sql2 = `SELECT count(idx) as total_record FROM comment where userid = ?`
     const param = [userid]
     try{
@@ -333,7 +333,7 @@ exports.usercmt = async (req,res) => {
 
 exports.userlike = async (req,res) => {
     const {userid} = req.user
-    const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by count(c.idx) DESC;'
+    const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by date DESC;'
     const param = [userid]
     const sql2 = `SELECT count(m_idx) as total_record FROM cate1_like where userid = ?`
     try{
