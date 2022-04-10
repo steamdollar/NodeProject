@@ -279,81 +279,164 @@ exports.logout = (req,res) => {
 }
 
 exports.userprofile = async (req,res) => {
-    const {userid} = req.user
-    const sql = `SELECT * from cate1 where userid=? and hidden = 'off' order by date desc;`
+    const usernickname = req.user.nickname
+    const writernickname = req.body.uri4
+    console.log('이거',usernickname,writernickname)
+    if(usernickname == writernickname || writernickname == undefined){
+        const sql = `SELECT * from cate1 where nickname=? and hidden = 'off' order by date desc;`
 
-    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and userid = ? order by date desc`
-    const param = [userid]
-    try{
-        const [result] = await pool.execute(sql,param)
-        const [[{total_record}]] = await pool.execute(sql2, param)
-        const response = {
-            result,
-            total_record,
-            errno:0
-        }
-        res.json(response)
-    
-    } catch(e){
-        console.log(e.message)
-        response = {
-            
-            errno:1
-        }
-        res.json(response)
-    }  
+        const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and nickname = ? order by date desc`
+        const param = [usernickname]
+        try{
+            const [result] = await pool.execute(sql,param)
+            const [[{total_record}]] = await pool.execute(sql2, param)
+            const response = {
+                result,
+                total_record,
+                errno:0
+            }
+            res.json(response)
+        
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
+        }  
+    } else {
+        const sql = `SELECT * from cate1 where nickname=? and hidden = 'off' order by date desc;`
+
+        const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and nickname = ? order by date desc`
+        const param = [writernickname]
+        try{
+            const [result] = await pool.execute(sql,param)
+            const [[{total_record}]] = await pool.execute(sql2, param)
+            const response = {
+                result,
+                total_record,
+                errno:0
+            }
+            res.json(response)
+        
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
+        }  
+    }
 }
 
 exports.usercmt = async (req,res) => {
-    const {userid} = req.user
-    const sql = `
-    SELECT c.idx, c.mcategory, c.midx, c.content, c.userid, c.nickname, c.date, count(c.idx) likes, 
-    title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.userid=? group by c.idx order by date DESC;`
-    const sql2 = `SELECT count(idx) as total_record FROM comment where userid = ?`
-    const param = [userid]
-    try{
-        const [result] = await pool.execute(sql,param)
-        const [[{total_record}]] = await pool.execute(sql2, param)
-        const response = {
-            result,
-            total_record,
-            errno:0
-        }
-        res.json(response)
-    
-    } catch(e){
-        console.log(e.message)
-        response = {
-            
-            errno:1
-        }
-        res.json(response)
-    }  
+    const usernickname = req.user.nickname
+    const writernickname = req.body.uri4
+
+    if(usernickname == writernickname || writernickname ==undefined){
+        const sql = `
+        SELECT c.idx, c.mcategory, c.midx, c.content, c.userid, c.nickname, c.date, count(c.idx) likes, 
+        title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.nickname=? group by c.idx order by date DESC;`
+        const sql2 = `SELECT count(idx) as total_record FROM comment where nickname = ?`
+        const param = [usernickname]
+        try{
+            const [result] = await pool.execute(sql,param)
+            const [[{total_record}]] = await pool.execute(sql2, param)
+            const response = {
+                result,
+                total_record,
+                errno:0
+            }
+            res.json(response)
+        
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
+        }  
+    } else {
+        const sql = `
+        SELECT c.idx, c.mcategory, c.midx, c.content, c.userid, c.nickname, c.date, count(c.idx) likes, 
+        title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.nickname=? group by c.idx order by date DESC;`
+        const sql2 = `SELECT count(idx) as total_record FROM comment where nickname = ?`
+        const param = [writernickname]
+        try{
+            const [result] = await pool.execute(sql,param)
+            const [[{total_record}]] = await pool.execute(sql2, param)
+            const response = {
+                result,
+                total_record,
+                errno:0
+            }
+            res.json(response)
+        
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
+        }  
+    }
 }
 
 exports.userlike = async (req,res) => {
-    const {userid} = req.user
-    const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by date DESC;'
-    const param = [userid]
-    const sql2 = `SELECT count(m_idx) as total_record FROM cate1_like where userid = ?`
-    try{
-        const [result] = await pool.execute(sql,param)
-        const [[{total_record}]] = await pool.execute(sql2, param)
-        console.log('안농',result)
-        const response = {
-            result,
-            total_record,
-            errno:0
-        }
-        console.log(total_record)
-        res.json(response)
-    
-    } catch(e){
-        console.log(e.message)
-        response = {
-            
-            errno:1
-        }
-        res.json(response)
-    }  
+    const userid = req.user.userid
+    const writeruserid = req.body.uri4
+
+    if(userid == writeruserid || writeruserid ==undefined){
+        const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by date DESC;'
+        const param = [userid]
+        const sql2 = `SELECT count(m_idx) as total_record FROM cate1_like where userid = ?`
+        try{
+            const [result] = await pool.execute(sql,param)
+            const [[{total_record}]] = await pool.execute(sql2, param)
+            console.log('안농',result)
+            const response = {
+                result,
+                total_record,
+                errno:0
+            }
+            console.log(total_record)
+            res.json(response)
+        
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
+        }  
+    } else {
+        const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by date DESC;'
+        const param = [writeruserid]
+        const sql2 = `SELECT count(m_idx) as total_record FROM cate1_like where userid = ?`
+        try{
+            const [result] = await pool.execute(sql,param)
+            const [[{total_record}]] = await pool.execute(sql2, param)
+            console.log('안농',result)
+            const response = {
+                result,
+                total_record,
+                errno:0
+            }
+            console.log(total_record)
+            res.json(response)
+        
+        } catch(e){
+            console.log(e.message)
+            response = {
+                
+                errno:1
+            }
+            res.json(response)
+        }  
+    }
 }

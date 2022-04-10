@@ -50,7 +50,16 @@
             withCredentials:true
         }
 
-        const response = await axios.post('http://localhost:4000/api/user/userprofile',null,option)
+        const uri = location.href
+        const uri2 = uri.split('/')[4]
+        const uri3 = uri2.split('?')[1]
+        const uri4 = uri3.split('=')[1]
+
+        const data = {
+            uri4
+        }
+
+        const response = await axios.post('http://localhost:4000/api/user/userprofile',data,option)
     
         if(response.data.errno == 0){
            for(let i = 0; i< response.data.result.length; i++){

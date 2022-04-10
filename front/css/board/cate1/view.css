@@ -124,7 +124,6 @@ text-align:center;
 }
 
 #view_dd > #view_good > #like > #thumb {
-    background-image:url('http://localhost:3000/good.png');
     background-position:  0px 0px;
     background-repeat:no-repeat;
     background-color: white;

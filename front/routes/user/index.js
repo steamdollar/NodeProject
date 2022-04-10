@@ -39,13 +39,17 @@ router.use('/profile', (req,res)=>{
     const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
 
     if( deUserid.nickname == nickname) {
-        res.render('./user/profile')
+        res.render('./user/profile',{
+            nickname:deUserid.nickname,
+            userid:deUserid.userid
+        })
     }
     else {
-        res.render('./user/userinfo')
+        res.render('./user/userinfo',{
+            nickname:deUserid.nickname
+        })
     }
 })
-
 
 
 router.use('/welcome', (req,res)=>{
