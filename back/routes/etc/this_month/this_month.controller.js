@@ -1,8 +1,8 @@
 
 const pool = require('../../../db').pool
 exports.rank1 = async(req,res)=>{
-    const sql = `select userid, nickname, count(*) as count from cate1 where category = "question" 
-    group by userid, nickname order by count(*) DESC LIMIT 2;`
+    const sql = `select userid, nickname, count(nickname) as count from comment where mcategory = "question" 
+    group by userid, nickname order by count(nickname) DESC LIMIT 2;`
     try {
 
         const [result] = await pool.execute(sql)
@@ -29,7 +29,7 @@ exports.rank1 = async(req,res)=>{
 
 exports.rank2 = async(req,res)=>{
 
-    const sql2 = `select nickname, userid, count(*) as count from comment where mcategory = "question"
+    const sql2 = `select nickname, userid, count(*) as count from cate1 where category = "question"
     group by nickname,userid order by count(*) desc limit 5;`
 
     try {

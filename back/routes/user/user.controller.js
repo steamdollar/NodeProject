@@ -280,8 +280,8 @@ exports.logout = (req,res) => {
 
 exports.userprofile = async (req,res) => {
     const usernickname = req.user.nickname
-    const writernickname = req.body.uri4
-    console.log('이거',usernickname,writernickname)
+    const writernickname = decodeURI(req.body.uri4)
+    console.log('ㅇㄹㅇㄹ',usernickname,writernickname)
     if(usernickname == writernickname || writernickname == undefined){
         const sql = `SELECT * from cate1 where nickname=? and hidden = 'off' order by date desc;`
 
@@ -333,7 +333,7 @@ exports.userprofile = async (req,res) => {
 
 exports.usercmt = async (req,res) => {
     const usernickname = req.user.nickname
-    const writernickname = req.body.uri4
+    const writernickname = decodeURI(req.body.uri4)
 
     if(usernickname == writernickname || writernickname ==undefined){
         const sql = `
@@ -388,7 +388,7 @@ exports.usercmt = async (req,res) => {
 
 exports.userlike = async (req,res) => {
     const userid = req.user.userid
-    const writeruserid = req.body.uri4
+    const writeruserid = decodeURI(req.body.uri4)
 
     if(userid == writeruserid || writeruserid ==undefined){
         const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by date DESC;'
