@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="/common/footer.css">
     <link rel="stylesheet" href="/user/font.css">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" charset="utf-8"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
-    <script type="text/javascript" src="http://localhost:3000/js/scroll.js"></script>
+    <script type="text/javascript" src="http://localhost:3000/js/main.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://localhost:3000/js/scroll.js" charset="utf-8"></script>
     <script type="text/javascript">
     
 
@@ -323,21 +323,25 @@
         <div id="container2">
             <div id="hot_board">
                 <h2>인기 게시물</h1>
-                <div class="many_likes">
+                <ul class="many_likes">
 
-                </div>
+                </ul>
             </div>
             <div id="event_board">
                 <h2>진행 중인 이벤트</h2>
-                <div class="event_list">
-
-                </div>
+                <ul class="event_list">
+                    <li><a href="#">이벤트 중인 게시물......1</a></li>
+                    <li><a href="#">이벤트 중인 게시물......2</a></li>
+                    <li><a href="#">이벤트 중인 게시물......3</a></li>
+                    <li><a href="#">이벤트 중인 게시물......4</a></li>
+                    <li><a href="#">이벤트 중인 게시물......5</a></li>
+                </ul>
             </div>
             <div id="this_month_student">
-                <h2>이달의 학우</h2>
-                <div class="best_student">
+                <h2><a href="http://localhost:3000/rank">이달의 학우</a></h2>
+                <ul class="best_student">
 
-                </div>
+                </ul>
             </div>
         </div>
         <div id="container3">
@@ -387,6 +391,16 @@
                 </div>
             </div>
         </div>
+
+        <template id="hot_temp">
+            <li><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></li>
+        </template>
+
+        <template id="hot_student_temp">
+            <li>{nickname}({userid})</li>
+
+        </template>
+
     
 
     </content>
@@ -452,6 +466,76 @@
         })
 
         board_list.innerHTML = template
+
+        //인기글
+
+        const board_response = await axios.post('http://localhost:4000/api/hotboard', null, option)
+        let board_template = ''
+        const many_likes = document.querySelector('.many_likes') //인기글 리스트 들어가는 곳
+        const hot_temp = document.querySelector('#hot_temp').innerHTML //Hot 템플릿 innerhtml
+
+        console.log(board_response.data)
+
+        const board_inner = board_response.data
+
+        board_inner.forEach((v)=>{
+            const {idx, title} = v
+            board_template += hot_temp.replace('{idx}', idx)
+                                        .replace('{title}', title)
+        })
+
+        many_likes.innerHTML = board_template
+
+        //이달의 학우
+
+        //이름 변경
+        var maskingName = function(strName) {
+            if (strName.length > 2) {
+                var originName = strName.split('');
+                originName.forEach(function(name, i) {
+                if (i === 0 || i === originName.length - 1) return;
+                originName[i] = '*';
+                });
+                var joinName = originName.join();
+                return joinName.replace(/,/g, '');
+            } else {
+                var pattern = /.$/; // 정규식
+                return strName.replace(pattern, '*');
+            }
+        };
+
+
+        const student_response = await axios.post('http://localhost:4000/api/hotstudent1', null, option)
+        let student_template = ''
+        const best_student = document.querySelector('.best_student') //이달의 학생 로드 할 곳
+        const hot_student_temp = document.querySelector('#hot_student_temp').innerHTML //템플릿 innerhtml
+
+
+        let student_arr = student_response.data //댓글 top 3 리스트
+        const student_response2 = await axios.post('http://localhost:4000/api/hotstudent2', null, option)
+
+        student_response.data.forEach((v)=>{
+            const {nickname, userid} = v
+            const change_userid = maskingName(`${userid}`.replaceAll(' ',''))
+
+            student_template += hot_student_temp.replace('{userid}',change_userid)
+                                    .replace('{nickname}', nickname)
+
+        })
+        student_response2.data.forEach((v)=>{
+            const {nickname, userid} = v
+            const change_userid = maskingName(`${userid}`.replaceAll(' ',''))
+
+            student_template += hot_student_temp.replace('{userid}',change_userid)
+                                    .replace('{nickname}', nickname)
+
+        })
+
+        best_student.innerHTML = student_template
+
+
+        
+
     })
 
     </script>
@@ -499,6 +583,14 @@
     #temp_title {
         font-size: 40px;
         text-align: center;
+
+    }
+
+    #temp_title > a {
+        color: black;
+        text-align: center;
+        display: block;
+        width: 100%;
     }
 </style>
 </body>

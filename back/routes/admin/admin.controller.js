@@ -133,7 +133,7 @@ exports.userSearch = async (req,res)=>{
 
 exports.userUpdate = async (req,res)=>{
     const body = req.body
-    console.log(body.beforeData.level)
+    // console.log(body.beforeData.level)
     let modified_userid = []
     let modified_userlevel = []
     let modified_nickname = []
