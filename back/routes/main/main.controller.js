@@ -66,3 +66,37 @@ exports.hotstudent2 = async (req,res)=>{
         
     }
 }
+
+
+exports.img = async(req,res)=>{
+    const { category } = req.body
+
+    const sql = `select * from cate1 where hidden = 'off' and category = "${category}" order by date desc limit 6;`
+    const param1 = [category]
+
+    try {
+        const [result] = await pool.execute(sql, param1)
+        // console.log(result[0]) // [{}, {}, {}]
+        let final_result = []
+
+        for ( let i = 0; i < result.length; i++ ) {
+            const sql1 = `select img1 from image where category=? and midx=?`
+            const param1 = [category, result[i].idx]
+            // console.log(result[i].idx)
+            const [[result1]] = await pool.execute(sql1, param1)
+            final_result.push(result1)
+        }
+
+        const response = {
+            final_result
+        }
+        res.json(response) 
+    } 
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            errormsg: e.message
+        }
+        res.json(response)  
+    }
+}

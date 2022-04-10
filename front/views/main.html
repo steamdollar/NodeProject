@@ -431,11 +431,11 @@
 
     // 썸네일
 
-        const response2 = await axios.post('http://localhost:4000/api/board/cate1/thumbnail', data, option) 
+        const response2 = await axios.post('http://localhost:4000/api/cardimg', data, option) 
         const tempThumb = response2.data.final_result // [{}, {}, {}]
         let thumbNail = []
 
-        for (let i = 0; i<tempThumb.length; i++) {
+        for (let i = 0; i<6; i++) {
             if(tempThumb[i].img1 !== 'N/A') {
                 thumbNail.push(tempThumb[i].img1)
             }
@@ -445,7 +445,7 @@
         }
 
 
-        for (let i = 0; i<content_list2.length; i++) {
+        for (let i = 0; i<6; i++) {
             let nProduct = { ...content_list2[i] }
             nProduct.img1 = thumbNail[i]
             hope.push(nProduct)

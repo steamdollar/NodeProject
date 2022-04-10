@@ -6,6 +6,6 @@ router.post('/hotboard', mainController.hotboard)
 
 router.post('/hotstudent1', mainController.hotstudent1)
 router.post('/hotstudent2', mainController.hotstudent2)
-
+router.post('/cardimg',mainController.img)
 
 module.exports = router
