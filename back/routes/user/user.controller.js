@@ -280,13 +280,16 @@ exports.logout = (req,res) => {
 
 exports.userprofile = async (req,res) => {
     const {userid} = req.user
-    const sql = 'SELECT * from cate1 where userid=?'
+    const sql = `SELECT * from cate1 where userid=? and hidden = 'off'`
+
+    const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and userid = ?`
     const param = [userid]
     try{
         const [result] = await pool.execute(sql,param)
-        console.log(result)
+        const [[{total_record}]] = await pool.execute(sql2, param)
         const response = {
             result,
+            total_record,
             errno:0
         }
         res.json(response)
