@@ -408,12 +408,111 @@ exports.imgLoad = async (req, res) => {
     }
 }
 
-exports.imgUpdate = async (req, res) => {
-    const { idx, category, img1, img2, img3, img4, img5 } = req.body
-    console.log(typeof(img2))
-    console.log(typeof(img4))
+exports.imgUpdate2 = async (req, res) => {
+    const { tt, category, idx } = req.body
+    const param = ['N/A', idx, category]
+    const param1 = [idx, category]
 
+    if(tt.img1 === 'N/A') {
+        const sql1 = 'update image set img1=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+    if(tt.img2 === 'N/A') {
+        const sql1 = 'update image set img2=? where midx=? and category=?'
+        const result = await pool.execute(sql1, param)
+    }
+    if(tt.img3 === 'N/A') {
+        const sql1 = 'update image set img3=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+    if(tt.img4 === 'N/A') {
+        const sql1 = 'update image set img4=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+    if(tt.img5 === 'N/A') {
+        const sql1 = 'update image set img5=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+
+    const sql = 'select * from image where midx=? and category=?'
+    const [result] = await pool.execute(sql, param1)
     
+    const response = {
+        result,
+        errno:0
+    }
+    res.json(response)
+}
+
+exports.imgUpdate = async (req, res) => {
+    const { idx, category } = req.body
+    // console.log(img1) // string, http:// 어쩌구 파일 주소가 나옴
+    // console.log(typeof(img2)) // 먼가 넣고 제출하면 밝은 undefined 즉 새로 넣은 녀석은  req.body로 받으면 타입이 undefined로 온다.
+    // console.log(typeof(img4)) // 암 것도 안 넣으면 string,  value = undefined
+
+    let images = []
+
+    for(let i=1; i<=5; i++) {
+        try {
+            const [img] = req.files[`img`+i] 
+            images.push(img.filename)
+        }catch(e){
+            images.push('N/A')
+        }
+    }
+
+    console.log(images)
+    try {
+        for ( let i =0 ; i <5; i++) {
+            if(images[i] !== 'N/A') {
+                const sql = `update image set img${i+1}=? where midx=? and category=?`
+                const param = [images[i], idx, category]
+                const result = await pool.execute(sql, param)
+            }
+        }
+
+        const sql2 = 'select * from image where midx=? and category=?'
+        const param = [idx, category]
+        const [result] = await pool.execute(sql2, param)
+
+        const response = {
+            result,
+            errno: 0
+        }
+        res.json(response)
+    }
+    catch (e) {
+        console.log(e.message)
+        const response = {
+            emsg: e.message,
+            errno : 1
+        }
+        res.json(response)
+    }
+}
+
+
+exports.imgUpdateOld = async (req, res) => {
+    const { idx, category, img1, img2, img3, img4, img5 } = req.body
+    console.log(typeof(img1)) // string
+    console.log(img1) // http:// 어쩌구 파일 주소가 나옴
+    console.log(typeof(img2)) // 먼가 넣고 제출하면 밝은 undefined 즉 새로 넣은 녀석은  req.body로 받으면 타입이 undefined로 온다.
+    console.log(typeof(img4)) // 암 것도 안 넣으면 string
+    console.log(img4)   // 암것도 안넣으면 undefined라는 값을 가지는 string이 온다.
+
+    let newImg = []
+
+    if ( typeof(img1) === string && img1 !== 'undefined') {
+        const newImg1 = img1.split('/')[4]
+        newImg.push(newImg1)
+    }
+    else if (typeof(img1) === string && img1 == 'undefined') {
+        newImg.push('N/A')
+    }
+    else if ( typeof(img1) == undefined ) {
+        const [newImg1] = req.files[img1]
+        newImg.push(img1.filename)
+    }
 
     // 1번까지 있으면 img1 까지만 ㄱbody로, 나머지는 req.file로 받아온다.
     // const img1 = req.body
@@ -428,7 +527,7 @@ exports.imgUpdate = async (req, res) => {
 
     console.log(req.file)
     const { img1:newImg1,img2:newImg2,img3:newImg3,img4:newImg4,img5:newImg5 } = req.file
-    console.log('file',newImg1,newImg2,newImg3,newImg4,newImg5)
+
     // 삭제만할경우]
     // 삭제하고 업로드할경우 / 업로드 똑같은 프로세스 
 

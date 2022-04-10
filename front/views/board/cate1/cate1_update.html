@@ -251,80 +251,110 @@
             formData.append('category', category)
             formData.append('idx', idx.value)
 
-            console.log(img1.files)
+            let tt = {}
 
-            // if ( img1.files === null ) { 
-            //     formData.append('img1',img1.value)
-            // } else if (img2.files === null) {
-            //     formData.append('img2',img2.value)
-            // } else if (img3.files === null) {
-            //     formData.append('img3',img3.value)
-            // } else if (img4.files === null) {
-            //     formData.append('img4',img4.value)
-            //  } else if (img5.files === null) {
-            //     formData.append('img5',img5.value)
-            //  }
 
-            if( img1.files === null) {
-                formData.append('img1', img1.value)
+            if(img1.files === null) {
+                if(typeof(img1.value) == 'string') {
+                    tt.img1 = img1.value // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img1 = 'N/A' // 없고, 없다
+                }
             }
             else {
-                formData.append('img1', img1.files[0])
+                if ( img1.files.length === 0 ) {
+                    tt.img1 = 'N/A'
+                }
+                else {
+                    formData.append('img1', img1.files[0])// file이 있는 경우 
+                }
             }
 
-            if( img2.files === null) {
-                formData.append('img2', img2.value)
+            if(img2.files === null) {
+                if(typeof(img2.value) == 'string') {
+                    tt.img2 = (img2.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img2 = 'N/A' // 없고, 없다
+                }
             }
             else {
-                formData.append('img2', img2.files[0])
-            }
-            if( img3.files === null) {
-                formData.append('img3', img3.value)
-            }
-            else {
-                formData.append('img3', img3.files[0])
-            }
-            if( img4.files === null) {
-                formData.append('img4', img4.value)
-            }
-            else {
-                formData.append('img4', img4.files[0])
-            }
-            if( img5.files === null) {
-                formData.append('img5', img5.value)
-            }
-            else {
-                formData.append('img5', img5.files[0])
+                if ( img2.files.length === 0 ) {
+                    tt.img2 = 'N/A'
+                }
+                else {
+                    formData.append('img2', img2.files[0])// file이 있는 경우 
+                }
             }
 
-            // // formData.append('img1', img1.files[0] || null)
-            // if ( img1.files[0] == empty) {
-            //     formData.append('img1', img1.value)
-            // }
-            // formData.append('img2', img2.files[0])
-            // formData.append('img3', img3.files[0])
-            // formData.append('img4', img4.files[0])
-            // formData.append('img5', img5.files[0])
 
-            // console.log('------------')
-            // console.log(img1.value) // 원래 파일이 있다면 이 값이 있다.
-            // console.log(img1.files[0])
-            // // 있다면 value값을 보내준다.
-            // // 있다가 삭제하면 빈칸이 나옴 (undefined도 안 뜸) null?
-            // console.log(img2.value) // 새로 올린 파일이 없다면 아무것도 안뜸
-            // // 있다면 fakepath 어쩌구가 뜸. 단, 파일이 업로드 되지 않음.
-            // console.log(img2.files[0])  // 새로 올린 파일이 없다면 undefined
-            // // 있다면 파일의 이름, 시간 각각이 객체로 나옴
-            console.log('------------')
-            console.log(formData.get('img1'))
-            console.log(formData.get('img2'))
-            console.log(formData.get('img3'))
-            console.log(formData.get('img4'))
-            console.log(formData.get('img5'))
-            console.log('------------')
+            if(img3.files === null) {
+                if(typeof(img3.value) == 'string') {
+                    tt.img3 = (img3.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img3 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img3.files.length === 0 ) {
+                    tt.img3 = 'N/A'
+                }
+                else {
+                    formData.append('img3', img3.files[0])// file이 있는 경우 
+                }
+            }
+
+
+            if(img4.files === null) {
+                if(typeof(img4.value) == 'string') {
+                    tt.img4 = (img4.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img4 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img4.files.length === 0 ) {
+                    tt.img4 = 'N/A'
+                }
+                else {
+                    formData.append('img4', img4.files[0])// file이 있는 경우 
+                }
+            }
+
+
+            if(img5.files === null) {
+                if(typeof(img5.value) == 'string') {
+                    tt.img5 = (img5.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img5 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img5.files.length === 0 ) {
+                    tt.img5 = 'N/A'
+                }
+                else {
+                    formData.append('img5', img5.files[0])// file이 있는 경우 
+                } 
+            }
+
+
+            const tt2 = {
+                tt: tt,
+                category,
+                idx:idx.value
+            }
+
+            const response3 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate2', tt2 ,option)
+            console.log(response3.data.result)
+
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
-            if (response.data.errno === 0 && response2.data.errno === 0 ) {
+            if (response3.data.errno === 0 && response2.data.errno === 0 && response.data.errno === 0) {
                 alert('글 수정이 완료되었습니다.')
                 location.href=`/board/${category}`
             }
