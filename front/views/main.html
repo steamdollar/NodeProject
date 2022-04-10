@@ -12,6 +12,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js" charset="utf-8"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
+    <link href="//db.onlinewebfonts.com/c/e0af8ee8cc49f194718d96d95440836f?family=Multicolore" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="http://localhost:3000/js/main.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://localhost:3000/js/scroll.js" charset="utf-8"></script>
     <script type="text/javascript">
@@ -296,7 +297,7 @@
     <content id="main_content">
 <!-- 카드 뉴스 파트-->
         <div id="container1">
-
+            <h1 class="card_title">Card News</h1>
             <div id='card_wrap'>
 
                 <table id="board_table">
@@ -322,13 +323,13 @@
 
         <div id="container2">
             <div id="hot_board">
-                <h2>인기 게시물</h1>
+                <h2>인기 게시물 🔥</h1>
                 <ul class="many_likes">
 
                 </ul>
             </div>
             <div id="event_board">
-                <h2>진행 중인 이벤트</h2>
+                <h2>🎉 진행 중인 이벤트</h2>
                 <ul class="event_list">
                     <li><a href="#">이벤트 중인 게시물......1</a></li>
                     <li><a href="#">이벤트 중인 게시물......2</a></li>
@@ -338,7 +339,7 @@
                 </ul>
             </div>
             <div id="this_month_student">
-                <h2><a href="http://localhost:3000/rank">이달의 학우</a></h2>
+                <h2><a href="http://localhost:3000/rank"> 이달의 학생 🏆</a></h2>
                 <ul class="best_student">
 
                 </ul>
@@ -578,6 +579,7 @@
     .cards > span > a > img {
         width: 300px !important;
         height:200px;
+        border-radius: 10px;
     }
 
     #temp_title {

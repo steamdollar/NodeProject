@@ -22,11 +22,12 @@
     height: 100%;
     /* background-color: aliceblue; */
 }
-.card > h1{
+.card_title{
     display: block;
-    margin: 10px;
-    margin-bottom: 20px;
+    padding: 20px;
+    padding-left: 70px;
     font-size: 40px;
+    font-family: "Multicolore"!important;
 }
 
 #card_box {
@@ -66,9 +67,10 @@
 }
 /* 게시판 로드 */
 #container2{
-    width: 25%;
+    width: 24%;
     height: 100%;
     /* background: red; */
+    margin-right: 1%;
 }
 
 /* 인기게시물 */
@@ -97,7 +99,9 @@
     justify-content: center;
     padding-left: 14px;
     box-sizing: border-box;
+    border-bottom: 1px solid #cfcfcf;
 }
+
 
 .many_likes > li > a{
     font-size: 26px;
@@ -107,7 +111,7 @@
 .event_list{
     width: 100%;
     height: 250px;
-    background: red;
+    /* background: red; */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -116,12 +120,13 @@
 .event_list > li{
     width: 100%;
     height: 40px;
-    background: #7e7e7e;
+    /* background: #7e7e7e; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-left: 14px;
     box-sizing: border-box;
+    border-bottom: 1px solid #cfcfcf;
 }
 
 .event_list > li > a{
@@ -165,6 +170,7 @@
     justify-content: center;
     padding-left: 14px;
     box-sizing: border-box;
+    border-bottom: 1px solid #cfcfcf;
 }
 
 .best_student > li{
