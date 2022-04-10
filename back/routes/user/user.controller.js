@@ -333,6 +333,7 @@ exports.userlike = async (req,res) => {
     const {userid} = req.user
     const sql = 'SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(c.idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where l.userid=? group by c.idx order by count(c.idx) DESC;'
     const param = [userid]
+    const sql2 = `SELECT count(idx) as total_record FROM cate1_like where userid = ?`
     try{
         const [result] = await pool.execute(sql,param)
         console.log('안농',result)
