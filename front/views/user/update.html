@@ -37,10 +37,15 @@
                             <input type="text" name="address" id="address" value="{{user.adress}}">
                         </span>
                     </li>
-                    <li>
-                        <h3>성별</h3>
-                        <span>
-                            <input type="text" name="gender" id="gender" value="{{user.gender}}">
+                    <li id="qwe">
+                        <h3 id="gen">성별</h3>
+                        <span class ="join_gender">
+                            <span>
+                                <input type="radio" name="gender" value="남자" id="gender1"> <label for="gender1">남자</label>
+                            </span>
+                            <span>
+                                <input type="radio" name="gender" value="여자" id="gender2"> <label for="gender2">여자</label>
+                            </span>
                         </span>
                     </li>
                     <li>
@@ -67,6 +72,13 @@
     </div>
 
     <script type="text/javascript">
+        // const M = document.querySelector('#gender1')
+        // const F = document.querySelector('#gender2')
+
+        //     if(value ==="남자") M.checked = true 
+        //     if(value ==="여자") F.checked = true 
+
+            
         const frm = document.querySelector('#update_frm')
         frm.addEventListener('submit', async (e)=>{
             e.preventDefault()
@@ -74,13 +86,14 @@
             const btn = document.querySelector('#btn')
             btn.value='수정중~~'
             btn.disabled= true
-            const {userid,userpw,userimg,nickname,address,phone,mobile} = e.target
+            const {userid,userpw,userimg,nickname,address,gender,phone,mobile} = e.target
             const formData = new FormData()
             formData.append('userid',document.querySelector('#userid').value)
             formData.append('userpw',document.querySelector('#userpw').value)
             formData.append('userimg',userimg.files[0])
             formData.append('nickname',document.querySelector('#nickname').value)
             formData.append('address',document.querySelector('#address').value)
+            formData.append('gender',document.querySelector('input[name="gender"]:checked').value)
             formData.append('phone',document.querySelector('#phone').value)
             formData.append('mobile',document.querySelector('#mobile').value)
 

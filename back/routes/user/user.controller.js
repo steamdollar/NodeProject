@@ -221,10 +221,10 @@ exports.profile = async (req,res)=>{
 
 exports.update = async (req,res)=>{
     
-    const {userid,userpw,nickname,address,phone,mobile} = req.body
+    const {userid,userpw,nickname,address,gender,phone,mobile} = req.body
     const userimg = req.file.filename
-    const sql ="UPDATE user SET userpw=?, userimg=?, nickname=?, address=?, phone=?, mobile=? WHERE userid=?"
-    const param = [userpw,userimg,nickname,address,phone,mobile,userid]
+    const sql ="UPDATE user SET userpw=?, userimg=?, nickname=?, address=?, gender=?, phone=?, mobile=? WHERE userid=?"
+    const param = [userpw,userimg,nickname,address,gender,phone,mobile,userid]
     try{
         const [result] = await pool.execute(sql,param)
         
