@@ -528,7 +528,6 @@ exports.thumbnail = async (req, res) => {
 exports.search = async (req, res) => {
     const {searchKey,searchOp, category} = req.body
 
-
     if( searchOp !== 'hashtag') {
         const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
         from cate1 c left join cate1_like l on c.idx = l.m_idx 

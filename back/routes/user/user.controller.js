@@ -308,13 +308,15 @@ exports.usercmt = async (req,res) => {
     const {userid} = req.user
     const sql = `
     SELECT c.idx, c.mcategory, c.midx, c.content, c.userid, c.nickname, c.date, count(c.idx) likes, 
-    title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.userid=1111 group by c.idx order by count(c.idx) DESC;`
+    title, c.updateFlag from comment c left join cate1 l on c.midx = l.idx where c.userid=? group by c.idx order by count(c.idx) DESC;`
+    const sql2 = `SELECT count(idx) as total_record FROM comment where userid = ?`
     const param = [userid]
     try{
         const [result] = await pool.execute(sql,param)
-        console.log('댓글왓냐',result)
+        const [[{total_record}]] = await pool.execute(sql2, param)
         const response = {
             result,
+            total_record,
             errno:0
         }
         res.json(response)
