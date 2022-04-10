@@ -71,7 +71,7 @@ exports.hotstudent2 = async (req,res)=>{
 exports.img = async(req,res)=>{
     const { category } = req.body
 
-    const sql = `select * from cate1 where hidden = 'off' and category = "${category}" order by date desc limit 6;`
+    const sql = `select * from cate1 where hidden = 'off' and category = "${category}" order by date desc;`
     const param1 = [category]
 
     try {
