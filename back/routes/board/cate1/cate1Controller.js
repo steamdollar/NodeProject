@@ -46,7 +46,8 @@ exports.write = async (req,res) => {
 
 exports.list = async (req,res)=>{
     const {category} = req.body
-    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden from cate1 c left join cate1_like l on c.idx = l.m_idx where c.category = '${category}' group by c.idx;`
+    const sql1 = `SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
+    from cate1 c left join cate1_like l on c.idx = l.m_idx where c.category = '${category}' group by c.idx order by idx desc;`
     const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and category = '${category}'`
     try {
         const [result1] = await pool.execute(sql1)
@@ -152,9 +153,8 @@ exports.del = async (req,res)=>{
 
     const sql = `select * from cate1_bridge where midx = ?`
     const param = [idx]
-
     try {
-        if( writerid !== userid ) { throw new Error('작성자가 아님') }
+        if( writerid !== userid && userid !== 'admin' ) { throw new Error('작성자가 아님') }
         const [result] = await pool.execute(sql,param)
 
         for (i = 0; i<result.length; i++) {
@@ -408,53 +408,92 @@ exports.imgLoad = async (req, res) => {
     }
 }
 
+exports.imgUpdate2 = async (req, res) => {
+    const { tt, category, idx } = req.body
+    const param = ['N/A', idx, category]
+    const param1 = [idx, category]
+
+    if(tt.img1 === 'N/A') {
+        const sql1 = 'update image set img1=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+    if(tt.img2 === 'N/A') {
+        const sql1 = 'update image set img2=? where midx=? and category=?'
+        const result = await pool.execute(sql1, param)
+    }
+    if(tt.img3 === 'N/A') {
+        const sql1 = 'update image set img3=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+    if(tt.img4 === 'N/A') {
+        const sql1 = 'update image set img4=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+    if(tt.img5 === 'N/A') {
+        const sql1 = 'update image set img5=? where midx=? and category=?'
+        const result1 = await pool.execute(sql1, param)
+    }
+
+    const sql = 'select * from image where midx=? and category=?'
+    const [result] = await pool.execute(sql, param1)
+    
+    const response = {
+        result,
+        errno:0
+    }
+    res.json(response)
+}
+
 exports.imgUpdate = async (req, res) => {
-    const { idx, category, originLength } = req.body
+    const { idx, category } = req.body
 
     let images = []
+
     for(let i=1; i<=5; i++) {
         try {
             const [img] = req.files[`img`+i] 
             images.push(img.filename)
-        }
-        catch(e) {
+        }catch(e){
             images.push('N/A')
         }
     }
 
     try {
-        let final_result = []
-        for ( let i = 0; i < images.length; i++) {
-            const sql1 = `update image set img${i+1} = ? where midx=? and category=?`
-            // console.log(sql1)
-            const param1 = [images[i], idx, category] 
-
-            const [result1] = await pool.execute(sql1, param1)
-            final_result.push(result1)
+        for ( let i =0 ; i <5; i++) {
+            if(images[i] !== 'N/A') {
+                const sql = `update image set img${i+1}=? where midx=? and category=?`
+                const param = [images[i], idx, category]
+                const result = await pool.execute(sql, param)
+            }
         }
 
+        const sql2 = 'select * from image where midx=? and category=?'
+        const param = [idx, category]
+        const [result] = await pool.execute(sql2, param)
+
         const response = {
-            final_result,
-            errno:0,
+            result,
+            errno: 0
         }
         res.json(response)
     }
     catch (e) {
         console.log(e.message)
         const response = {
-            errormsg : e.message
+            emsg: e.message,
+            errno : 1
         }
         res.json(response)
     }
 }
 
-// `update cate1 set title=?, content=?, date=? where idx=?`
+
 // thumbnail
 
 exports.thumbnail = async (req, res) => {
     const { category } = req.body
 
-    const sql = `select * from cate1 where hidden = 'off' and category = "${category}";`
+    const sql = `select * from cate1 where hidden = 'off' and category = "${category}" ;`
     const param1 = [category]
 
     try {
@@ -491,13 +530,24 @@ exports.search = async (req, res) => {
 
     if( searchOp !== 'hashtag') {
         const sql = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, c.date, c.hit, count(l.m_idx) likes, c.hidden 
-        from ${category} c left join ${category}_like l on c.idx = l.m_idx 
-        WHERE c.${searchOp} LIKE "%${searchKey}%" group by c.idx ;`
+        from cate1 c left join cate1_like l on c.idx = l.m_idx 
+        WHERE c.${searchOp} LIKE "%${searchKey}%" group by c.idx order by idx desc;`
 
+        const sql2 = `SELECT count(idx) as total_record FROM cate1 where hidden = 'off' and ${searchOp} = '${searchKey}'`
         try {
-            const [result] = await pool.execute(sql)
+            const [result1] = await pool.execute(sql)
+            const [[{total_record}]] = await pool.execute(sql2)
+
+            let result = []
+            for ( let i = 0; i<result1.length; i++) {
+                if(result1[i].category === `${category}`) {
+                    result.push(result1[i])
+                }
+            }
+
             const response = {
                 result,
+                total_record,
                 errorno: "none"
             }
             res.json(response)
@@ -518,6 +568,9 @@ exports.search = async (req, res) => {
         
         let midx = []
         try {
+            const sql4 = `SELECT count(hashtag_name) as total_record FROM hashtag where hashtag_name='${searchKey}'`
+            const [[{total_record}]] = await pool.execute(sql4)
+
             for (let i=0; i<result1[0].length; i++) {
                 const sql2 = `select * from cate1_bridge where hidx=?`
                 const param2 = [result1[0][i].hidx]
@@ -525,21 +578,34 @@ exports.search = async (req, res) => {
                 const [result2] = await pool.execute(sql2, param2)
                 midx.push(result2[0])
             }
-            const sql3 = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, 
-            c.date, c.hit, count(l.m_idx) likes, c.hidden 
-            from ${category} c left join ${category}_like l on c.idx = l.m_idx 
-            WHERE c.idx= ? group by c.idx ;`
+
             let final = []
+
             for(let i = 0; i<midx.length; i++) {
+                const sql3 = ` SELECT c.idx, c.category, c.userid, c.nickname, c.title, c.content, 
+                c.date, c.hit, count(l.m_idx) likes, c.hidden 
+                from cate1 c left join cate1_like l on c.idx = l.m_idx 
+                WHERE c.idx= ? group by c.idx order by idx desc;`
+
                 const param3 = [midx[i].midx]
-                const [result3] = await pool.execute(sql3, param3)
 
-                final.push(result3[0])
+                const [[result3]] = await pool.execute(sql3, param3)
+
+                final.push(result3)
             }
+            
+            const preresult = final.reverse()
+            console.log(preresult)
 
-            const result = final
+            let result = []
+            for ( let i = 0; i<preresult.length; i++) {
+                if(preresult[i].category === `${category}`) {
+                    result.push(preresult[i])
+                }
+            }
             const response = {
                 result,
+                total_record,
                 errorno: "none"
             }
             res.json(response)
@@ -556,20 +622,20 @@ exports.search = async (req, res) => {
 }
 
 exports.searchThumbNail = async (req, res) => {
-    const { thumbIdx } = req.body
-
-    const sql = `select img1 from image where midx=?`
+    const { index_list } = req.body
+    const sql = `select img1 from image where midx=?;`
     let final_result = []
+
     try {
-        for (let i = 0; i< thumbIdx.length; i++) {
-            const param = [thumbIdx[i]]
+        for (let i = 0; i< index_list.length; i++) {
+            const param = [index_list[i]]
             const [[result]] = await pool.execute(sql, param)
             final_result.push(result)
         }
 
         const response = {
             final_result,
-            errorno: "none"
+            errorno: 0
         }
         res.json(response)
     }

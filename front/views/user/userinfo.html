@@ -1,36 +1,103 @@
-{% include "../utils/header.html" %}
-    <h2>프로필 보기</h2>
-    <div id="profile">
 
+{% extends 'utils/header.html' %}
 
+{% block content %}
+
+<div id="content_wrap">
+
+    <div id='profile_wrap'>
+        <div id="profile2"> 
+
+        </div>
     </div>
-    <template id="profiles">
-        <h2> {nickname}님, 환영합니다.</h2>
-        <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:100px; height:100px; margin-left:30px;" ></span>
-        <ul>
-            <li>
-                <span id="username">이름 : {username}</span>
-            </li>
-            <li>
-                <span id="nickname">닉네임 : {nickname}</span>
-            </li>
-            <li>
-                <span id="gender">성별 : {gender} </span>
-            </li>
-            <li>
-                <span id="email">이메일 : {email}</span>
-            </li>
-            <li>
-                <span id="userintro">자기소개 {userintro}: </span>
-            </li>
-        </ul>
-    </template>
+
+    <!-- <div id="button_wrap">
+        <div id="profile_right">
+            <div id="profile_history">
+                <span class="history">
+                    <span><a href="/user/user_board?nickname={{nickname}}">작성한 글 보기</a></span>
+                </span>
+                <span class="history">
+                    <span><a href=/user/user_comment>작성한 댓글 보기</a></span>
+                </span>
+                <span class="history">
+                    <span><a href=/user/user_like>좋아요 한 글 보기</a></span>                            
+                </span>
+            </div>
+        </div>
+    </div> -->
+</div>
+
+        <template id="profiles2">
+            <span id="userimg"><img src="http://localhost:4000/uploads/{userimg}" style="width:130px; height:130px; margin-left:30px;" ></span>
+            <ul>
+                <li>
+                    <span id="username">이름 : {username}</span>
+                </li>
+                <li>
+                    <span id="nickname">닉네임 : {nickname}</span>
+                </li>
+                <li>
+                    <span id="gender">성별 : {gender} </span>
+                </li>
+                <li>
+                    <span id="email">이메일 : {email}</span>
+                </li>
+                <li>
+                    <span id="userintro">자기소개 : {userintro} </span>
+                </li>
+            </ul>
+            <div id="button_wrap">
+                <div id="profile_right">
+                    <div id="profile_history">
+                        <span class="history">
+                            <span><a href="/user/user_board?nickname={nickname}">작성한 글 보기</a></span>
+                        </span>
+                        <span class="history">
+                            <span><a href="/user/user_comment?nickname={nickname}">작성한 댓글 보기</a></span>
+                        </span>
+                        <span class="history">
+                            <span><a href="/user/user_like?nickname={userid}">좋아요 한 글 보기</a></span>                            
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </template>
 </body>
+<style>
+    #footer_wrap {
+    bottom: -650px !important;
+    position: relative;
+    }
+
+    #profile2 > ul {
+    display: inline-block;
+    width: 320px;
+    height: 200px;
+    margin: auto 0;
+    padding: 70px 0 0 60px;
+    font-size: 15px;
+    }
+
+    #profile2 {
+    margin: 0 auto;
+    position: relative;
+    text-align: left;
+    justify-content: center;
+    }
+
+    #profile2 > ul > li {
+    margin: 5px 0 5px 0;
+    }
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', async() => {
+        
+
         let template = ''
-        const profile = document.querySelector('#profile')
-        const profiles = document.querySelector('#profiles').innerHTML
+        const profile = document.querySelector('#profile2')
+        const profiles = document.querySelector('#profiles2').innerHTML
         
         const uri = location.href
         const uri2 = uri.split('/')[4]
@@ -40,7 +107,6 @@
         const data = {
             uri4
         }
-
         const option = {
             'Content-type':'application/json',
             withCredentials:true
@@ -51,7 +117,7 @@
 
         if( response.data.errno ===0){
             const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
-            template = profiles.replace('{nickname}',nickname)
+            template = profiles.replaceAll('{nickname}',nickname)
                                .replace('{userid}',userid)
                                .replace('{username}',username)
                                .replace('{userimg}',userimg)
@@ -67,49 +133,6 @@
             
             
         }
-    })
-
-     
-
-        // // if(uri4 == usernickname){
-        // //     //주찬 님이 지금껏 적으신 코드
-        // //     if( response.data.errno ===0){
-        // //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
-            
-        // //     template = profiles.replace('{nickname}',nickname)
-        // //                        .replace('{userid}',userid)
-        // //                        .replace('{username}',username)
-        // //                        .replace('{userimg}',userimg)
-        // //                        .replace('{nickname}',nickname)
-        // //                        .replace('{address}',address)
-        // //                        .replace('{gender}',gender)
-        // //                        .replace('{phone}',phone)
-        // //                        .replace('{mobile}',mobile)
-        // //                        .replace('{email}',email)
-        // //                        .replace('{userintro}',userintro)
-
-        // //     profile.innerHTML = template
-        // // }
-        // // } else {
-        // //     //주찬님이 지금껏 적으신 코드에서 수정, 탈퇴..같은 기능과 민감 정보 제외한 html
-        // //     if( response.data.errno ===0){
-        // //     const {userid,username,userimg,nickname,address,gender,phone,mobile,email,userintro} = response.data.result[0]
-            
-        // //     template = profiles.replace('{nickname}',nickname)
-        // //                     //    .replace('{userid}',userid)
-        // //                        .replace('{username}',username)
-        // //                        .replace('{userimg}',userimg)
-        // //                        .replace('{nickname}',nickname)
-        // //                     //    .replace('{address}',address)
-        // //                        .replace('{gender}',gender)
-        // //                     //    .replace('{phone}',phone)
-        // //                     //    .replace('{mobile}',mobile)
-        // //                        .replace('{email}',email)
-        // //                        .replace('{userintro}',userintro)
-
-        // //     profile.innerHTML = template
-        // //     }
-        // }        
+    })      
 </script>
-</body>
-</html>
+{% endblock %}

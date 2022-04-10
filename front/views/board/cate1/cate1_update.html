@@ -1,50 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <style>
-        img {
-            height:100px !important; 
-            width: 100px !important;
-        }
-    </style>
-</head>
-<body>
+{% extends 'utils/header.html' %}
+
+{% block content %}
+<div id="update_wrap">
+    <h1 id="upd_h1">Update</h1>
     <span class="hidden_category">{{cate1_update.category}}</span>
-    <form method ='post' action="http://localhost:4000/api/board/cate1/imgUpdate" id="update_frm">
-        <div>
-            <strong>제목</strong> <br>
-            <input type="text" name="title" placeholder="제목입력" id="title" value="{{cate1_update.title}}">
-        </div>
-        <div>
-            <strong>내용</strong> <br>
-            <textarea name="content" placeholder="내용입력" id="content">{{cate1_update.content}}</textarea>
-        </div>
-        <input type="hidden" id="idx" name="idx" value="{{cate1_update.idx}}">
 
-        <span id="imgZone"></span>
+    <div id="upd_wrp">
+
+        <form method ='post' action="http://localhost:4000/api/board/cate1/imgUpdate" id="upd_frm">
+
+            <div id="upd_title">
+                <h3 id="upd_title_idx"><strong>Title</strong></h3>
+                <input type="text" name="title" placeholder="제목입력" id="upd_title_input" value="{{cate1_update.title}}">
+            </div>
+
+            <div id='upd_content'>
+                <h3><strong>Content</strong></h3>
+                <textarea name="content" placeholder="내용입력" id="upd_content_txt" style='resize: vertical;'>{{cate1_update.content}}</textarea>
+            </div>
 
 
-        <div id="ht_frm">
-            <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
-            <div id="ht_wrap"></div>
+            <input type="hidden" id="idx" name="idx" value="{{cate1_update.idx}}">
 
-        {% for item in cate1_hashtag %}
-        <div>
-        <span class="htDeleter">X___</span>
-        <span>#</span>
-        <span class="hashtags">{{item.hashtag_name}}</span>
-        </div>
-        {% endfor %}
-        </div>
-        
-        <input type="submit" value="글수정">
-    </form>
-        
+            <span id="upd_pic_up"><h3> 사진 업로드 </h3></span>
+
+            <span id="upd_imgZone">
+
+            </span>
+
+
+            <div id="ht_frm">
+                <div id="upd_hashtag_idx"><h3> # hashtag </h3></div>
+                <input id="hashtag" name="hashtag" placeholder="hashtag를 입력해주세요">
+                <div id="ht_wrap">
+                    {% for item in cate1_hashtag %}
+                    <span class="hashwrap">
+                    <span class="htDeleter">x</span>
+                    <span>#</span>
+                    <span class="hashtags">{{item.hashtag_name}}</span>
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <input type="submit" value="글수정" id="upd_submit">
+
+        </form>
+
+    </div>
+</div>        
+
+
+
     <script type="text/javascript">
         const option = {
             'Content-type':'application/json',
@@ -60,7 +67,7 @@
             const data = {idx:idx, cate:cate}
             const response = await axios.post('http://localhost:4000/api/board/cate1/imgLoad', data, option)
 
-            const imgZone = document.querySelector('#imgZone')
+            const upd_imgZone = document.querySelector('#upd_imgZone')
             const { img1, img2, img3, img4 ,img5 } = response.data.result1[0]
             const tempImgArr = [img1, img2, img3, img4, img5]
             const imgArr = []
@@ -75,16 +82,23 @@
 
             // img + input = 5 가 되도록 갯수를 맞춰 갯수 생성
             
-            for ( let i = 0; i < imgArr.length; i++) {
-                
+            for ( let i = 0; i < imgArr.length; i++) { // N/A 가 아닌 이미지 
                 const imgOriginalSpan = document.createElement('span')
-                const imgSpan = document.createElement('span')
+                imgOriginalSpan.setAttribute('class', 'imgContainer')
+
+                
                 const imgElement = document.createElement('img')
                 imgElement.setAttribute('src', `http://localhost:4000/uploads/${imgArr[i]}`)
                 imgElement.setAttribute('id', `origin${i+1}a`)
+                // 이미지 로드
+
+                const imgSpan = document.createElement('span')
+                imgSpan.setAttribute('class', 'imgLoad')
                 imgSpan.prepend(imgElement)
+
                 imgOriginalSpan.append(imgSpan)
-                imgZone.append(imgOriginalSpan)
+                upd_imgZone.append(imgOriginalSpan)
+
                 const dummyInput = document.createElement('input')
                 dummyInput.setAttribute('type', 'hidden')
                 dummyInput.setAttribute('name', `img${i+1}`)
@@ -95,50 +109,56 @@
                 
 
                 const delHandler = document.createElement('span')
-                delHandler.innerHTML = '_X_'
+                delHandler.innerHTML = 'x'
+                delHandler.setAttribute('class', 'imgDelBtn')
                 imgSpan.prepend(delHandler)
+                const handler = document.createElement('span')
+                handler.setAttribute('class', `handler${i+1}`)
+                handler.append(imgSpan)
+                upd_imgZone.append(handler)
 
                 delHandler.addEventListener('click', async(e) => {
                     e.target.parentNode.remove()
+                    const upd_imgZone = document.querySelector('#upd_imgZone')
+
                     const newImg = document.createElement('input')
                     newImg.setAttribute('type', 'file')
                     newImg.setAttribute('name', `img${i+1}`)
                     newImg.setAttribute('id', `img${i+1}`)
-                    inputSpan.prepend(newImg)
-                })
 
-                // let updateFlag = false
-                // imgElement.addEventListener('click', () => {
-                           
-                //     if (updateFlag == false) {
-                //         const newImg = document.createElement('input')
-                //         imgSpan.append(newImg)
-                //         newImg.setAttribute('type', 'file')
-                //         newImg.setAttribute('name', `img${i+1}a`)
-                //         newImg.setAttribute('id', `img${i+1}a`)
-                //     }
-                //     else {
-                //         const newImg = document.querySelector(`#img${i+1}a`)
-                //         newImg.remove()
-                //     }
-                //     updateFlag = !updateFlag   
-                // })
-                // img 각각에 updateHandler 함수를 붙여보는건 어떨까?
-                // 클릭하면 이미지 넣는게 뜨고 > 새 이미지를 넣으면
-                // 원 이미지를 지우고 새 이미지를 넣는 함수..
-                // X 하나 span이든 뭐든 위에 주고 누르면 사진 삭제
-                // 
+                    const newLabel = document.createElement('label')
+                    newLabel.setAttribute('for', `img${i+1}`)
+                    newLabel.innerHTML = '파일 선택'
+
+                    const handler = document.querySelector(`.handler${i+1}`)
+                    handler.append(newLabel)
+                    handler.append(newImg)
+                    // upd_imgZone.append(newLabel)
+                    //upd_imgZone.append(newImg)
+                    
+                })
             }
+
             const inputSpan = document.createElement('span')
-            let upNum = imgArr.length +1
+            inputSpan.setAttribute('class', 'asdf')
+            let upNum = imgArr.length
             for ( i = 0; i <5-imgArr.length; i++) {
                 
                 const inputElement = document.createElement('input')
                 inputElement.setAttribute('type', 'file')
-                inputElement.setAttribute('name', `img${upNum}`)
-                inputElement.setAttribute('id', `img${upNum}`)
-                inputSpan.append(inputElement)
-                imgZone.append(inputSpan)
+                inputElement.setAttribute('name', `img${upNum+1}`)
+                inputElement.setAttribute('id', `img${upNum+1}`)
+
+                const labelElement = document.createElement('label')
+                labelElement.setAttribute('for', `img${upNum+1}` )
+                labelElement.innerHTML = '파일 선택'
+
+                inputSpan.prepend(inputElement)
+                upd_imgZone.append(inputSpan)
+                
+                const handler2 = document.createElement('span')
+                handler2.append(labelElement)
+                upd_imgZone.append(handler2)
                 upNum++
             }
         })
@@ -155,10 +175,11 @@
             // enter를 이용해 해시 태그 추가, 삭제
         const htForm = document.querySelector('#ht_frm')
         const htText = document.querySelector('#hashtag')
+        const ht_wrap = document.querySelector('#ht_wrap')
         htForm.addEventListener('keydown', (e) => {
-            if (e.keyCode === 13) {
+            if (e.keyCode === 13 && htText.value !== '') {
                 const htDelete = document.createElement('span')
-                htDelete.innerHTML = 'X___'
+                htDelete.innerHTML = 'x'
                 htDelete.setAttribute('class', `htDeleter`)
                 
                 const htElement = document.createElement('span')
@@ -167,13 +188,13 @@
                 htElement.innerHTML = `${htText.value}`
                 htElement2.innerHTML = '#'
 
-                const htDiv = document.createElement('div')
+                const htDiv = document.createElement('span')
                 htDiv.append(htDelete)
                 htDiv.append(htElement2)
 
                 htDiv.append(htElement)
-                
-                htForm.append(htDiv)
+                htDiv.setAttribute('class','hashwrap')
+                ht_wrap.append(htDiv)
                 htText.value = ''
 
                 const htDeleteHandler = document.querySelectorAll('.htDeleter')
@@ -188,19 +209,36 @@
         
         // 엔터 누르면 글 작성이 완료되어버리는 것 방지
         
-        const update_frm = document.querySelector('#update_frm')
-        update_frm.addEventListener('keydown', (e) => {
+        const update_frm = document.querySelector('#upd_frm')
+        upd_frm.addEventListener('keydown', (e) => {
             if(e.keyCode === 13) {
                 e.preventDefault()
             }
         })
-        
+
+        const hashtag = document.querySelector('#hashtag')
+        hashtag.addEventListener('keydown', (e) => {
+            if(e.keyCode === 13) {
+                e.preventDefault()
+            }
+        })
+
+        const upd_submit = document.querySelector('#upd_submit')
+        upd_submit.addEventListener('keydown', (e) => {
+            if(e.keyCode === 13) {
+                e.preventDefault()
+            }
+        })
+
+
+        //
+        //
         // submit 
         update_frm.addEventListener('submit', async (e) => {
             e.preventDefault()
 
-            const title = update_frm.querySelector('#title')
-            const content = update_frm.querySelector('#content')
+            const upd_title_input = update_frm.querySelector('#upd_title_input')
+            const upd_content_txt = update_frm.querySelector('#upd_content_txt')
             const idx = update_frm.querySelector('#idx')
             const category = document.querySelector('.hidden_category').innerHTML
             const hashtagss = document.querySelectorAll('.hashtags')
@@ -211,8 +249,8 @@
             }
 
             const data = {
-                title:title.value,
-                content:content.value,
+                title:upd_title_input.value,
+                content:upd_content_txt.value,
                 idx: idx.value,
                 temphash,
             }
@@ -224,50 +262,111 @@
             const formData = new FormData()
             formData.append('category', category)
             formData.append('idx', idx.value)
-            // for ( let i = 1; i<6; i++) {
-            //     try {
-            //         formData.append(`img`+i, `img`+i.files[0])
 
-            //     }
-            //     catch (e) {
-            //         formData.append(`img`+i, 'N/A')
-            //         console.log('err')
-            //         console.log(`img`+i)
-            //     }
-            // }
+            let tt = {}
 
-            // for ( i = 1; i<6; i++) {
-            //     if(`img${i}`.type !== 'file') {
-            //         formData.append(`img${i}`, 'N/B')
-            //         console.log(`img${i}`.type,'N/B')
-            //     }
-            //     else {
-            //         formData.append(`img${i}`, `img${i}`.files[0])
-            //     }
-            // }
-            const originImg = document.querySelectorAll('.hidden')
 
-            formData.append('originLength', originImg.length)
+            if(img1.files === null) {
+                if(typeof(img1.value) == 'string') {
+                    tt.img1 = img1.value // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img1 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img1.files.length === 0 ) {
+                    tt.img1 = 'N/A'
+                }
+                else {
+                    formData.append('img1', img1.files[0])// file이 있는 경우 
+                }
+            }
 
-            // for ( i = 1; i <= originImg.length; i++) {
-            //     formData.append(`img${i}`, `origin${i}a`.src)
-            // }
-            
-            // for ( i = 5-originImg.length; i<=5; i++) {
-            //     formData.append(`$img${i}`, `img${i}`.files[0])
-            // }
+            if(img2.files === null) {
+                if(typeof(img2.value) == 'string') {
+                    tt.img2 = (img2.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img2 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img2.files.length === 0 ) {
+                    tt.img2 = 'N/A'
+                }
+                else {
+                    formData.append('img2', img2.files[0])// file이 있는 경우 
+                }
+            }
 
-            formData.append('img1', img1.files[0])
-            formData.append('img2', img2.files[0])
-            formData.append('img3', img3.files[0])
-            formData.append('img4', img4.files[0])
-            formData.append('img5', img5.files[0])
 
-            
+            if(img3.files === null) {
+                if(typeof(img3.value) == 'string') {
+                    tt.img3 = (img3.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img3 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img3.files.length === 0 ) {
+                    tt.img3 = 'N/A'
+                }
+                else {
+                    formData.append('img3', img3.files[0])// file이 있는 경우 
+                }
+            }
+
+
+            if(img4.files === null) {
+                if(typeof(img4.value) == 'string') {
+                    tt.img4 = (img4.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img4 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img4.files.length === 0 ) {
+                    tt.img4 = 'N/A'
+                }
+                else {
+                    formData.append('img4', img4.files[0])// file이 있는 경우 
+                }
+            }
+
+
+            if(img5.files === null) {
+                if(typeof(img5.value) == 'string') {
+                    tt.img5 = (img5.value) // 원 파일이 있다면, 수정하지 않았다면
+                }
+                else {
+                    tt.img5 = 'N/A' // 없고, 없다
+                }
+            }
+            else {
+                if ( img5.files.length === 0 ) {
+                    tt.img5 = 'N/A'
+                }
+                else {
+                    formData.append('img5', img5.files[0])// file이 있는 경우 
+                } 
+            }
+
+
+            const tt2 = {
+                tt: tt,
+                category,
+                idx:idx.value
+            }
+
+            const response3 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate2', tt2 ,option)
+            console.log(response3.data.result)
 
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/imgUpdate', formData ,option)
 
-            if (response.data.errno === 0 && response2.data.errno === 0 ) {
+            if (response3.data.errno === 0 && response2.data.errno === 0 && response.data.errno === 0) {
                 alert('글 수정이 완료되었습니다.')
                 location.href=`/board/${category}`
             }
@@ -276,5 +375,24 @@
             }
         })
     </script>
-</body>
-</html>
+    <style>
+        #footer_wrap {
+            bottom: -400px !important;
+        }
+
+        #upd_imgZone > span>  label {
+            display:inline-block;
+            width: 100px;
+            height: 40px;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 44px;
+            background:#333;
+            color: #eee;
+            margin: 20px 10px 10px 10px;
+            font-size: 20px;
+            bottom: 12px;
+            position: relative;
+        }
+    </style>
+{% endblock %}

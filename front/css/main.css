@@ -22,10 +22,12 @@
     height: 100%;
     /* background-color: aliceblue; */
 }
-.card > h1{
+.card_title{
     display: block;
-    margin: 10px;
-    margin-bottom: 20px;
+    padding: 20px;
+    padding-left: 70px;
+    font-size: 40px;
+    font-family: "Multicolore"!important;
 }
 
 #card_box {
@@ -47,73 +49,179 @@
 }
 
 #card_box > li > span{
+    padding-top: 8px;
     display: block;
     width: 100%;
     height: 30px;
     text-align: center;
+    font-size: 24px;
 
 }
 
 #container2 > div > h2{
     width: 100%;
     height: 40px;
-    margin-left: 10px;
+    padding-left: 10px;
     padding-top: 10px;
 
 }
 /* 게시판 로드 */
 #container2{
-    width: 25%;
+    width: 24%;
     height: 100%;
     /* background: red; */
+    margin-right: 1%;
 }
 
 /* 인기게시물 */
 #hot_board{
     width: 100%;
-    height: 33.3%;
+    height: 30%;
     /* background: pink; */
+}
+
+.many_likes{
+    width: 100%;
+    height: 250px;
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.many_likes > li{
+    width: 100%;
+    height: 40px;
+    /* border-bottom:solid 1px #000; */
+    /* background: #7e7e7e; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 14px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cfcfcf;
+}
+
+
+.many_likes > li > a{
+    font-size: 20px;
+    /* display: inline-block; */
+}
+
+.event_list{
+    width: 100%;
+    height: 250px;
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.event_list > li{
+    width: 100%;
+    height: 40px;
+    /* background: #7e7e7e; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 14px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cfcfcf;
+}
+
+.event_list > li > a{
+    font-size: 20px;
+    display: inline-block;
+    /* text-decoration: underline; */
+}
+
+#hot_board>h2, #event_board>h2,#this_month_student>h2{
+    font-size: 30px;
+    height: 10%;
+    /* background: #3c6ffa; */
 }
 /* 이벤트 게시물 */
 #event_board{
     width: 100%;
-    height: 33.3%;
+    height: 30%;
     /* background: orange; */
 }
 /* 이달의 학우 */
 #this_month_student{
     width: 100%;
-    height: 33.3%;
+    height: 30%;
     /* background: yellow; */
+}
+.best_student{
+    width: 100%;
+    height: 250px;
+    /* background: yellowgreen; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.best_student > li{
+    width: 100%;
+    height: 40px;
+    /* background: #7e7e7e; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 14px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cfcfcf;
+}
+
+.best_student > li{
+    font-size: 20px;
+    /* text-decoration: underline; */
 }
 
 #container3{
     width: 25%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 #chat_box{
     width: 100%;
-    height: 50%;
-    /* height: 100%; /크기조정해도됨 */
-    background: red;
+    height: 48%;
     position: relative;
+    outline: 1px solid #e7e7e7;
+    border-radius: 20px;
+    background: rgb(246, 237, 253);
+
 
 }
 
-#chat_box > h1{
-    text-align: center;
+#live_chat{
+    width: 100%;
+    height: 100px;
+    margin-top: -50px;
+    margin-bottom: 20px;
+
+}
+
+#live_chat > img{
+    width: 100%;
+    height: 100%;
+
 }
 
 #chat_wrap{
-    background: #ddd;
     width: 80%;
-    height: 80%;
+    height: 460px;
     margin: 0 auto;
 }
 #chat_space {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 80%;
+    background: #ffffff;
+    border-radius: 20px;
+    top: 30px;
 }
 
 #frm_chat {
@@ -122,29 +230,44 @@
     position: absolute;
     bottom: 15px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 #chat_input_box{
     width: 100%;
     height: 30px;
 }
+
+
 #frm_chat>input:nth-child(1){
     display: block;
-    width: 300px;
+    width: 260px;
     height: 30px;
+    margin-right: 16px;
+    outline:none;
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    border-radius: 10px;
+    font-size: 20px;
+    
 }
 #frm_chat>input:nth-child(2){
     display: block;
-    width: 60px;
+    width: 50px;
     height: 30px;
+    border-radius: 10px;
+    border: 1px solid #7e7e7e;
+    background: #7e7e7e;
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 34px;
 }
 
 #chat {
     position:relative;
+    top:20px;
     width: 90%;
     height: 90%;
-    background: #ed2a61;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -154,17 +277,57 @@
     overflow-x: hidden;
 
 }
+#chat::-webkit-scrollbar {
+    width: 5px!important;
+
+}
+
+#chat::-webkit-scrollbar-thumb{
+    background: rgb(128, 128, 128)!important;
+}
+
+#chat::-webkit-scrollbar-track {
+    background-color:#ffffff /*스크롤바 트랙 색상*/
+}
 
 .me {
     text-align: right;
     width: 100%;
     display: block;
+    margin: 4px 0;
 }
 
+.me > span{
+    display: inline-block;
+    padding: 5px;
+    background: #fff67d;
+    border-radius: 10px;
+    margin-right: 6px;
+    font-size: 20px;
+}
 .you {
     text-align: left;
     width: 100%;
     display: block;
+    margin: 4px 0;
+}
+.you > span{
+    display: inline-block;
+    padding: 5px;
+    background: #d4d4d4;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-size: 20px;
+}
+.you:nth-child(1) {
+    margin-top: -5px!important;
+}
+.you:nth-child(1) > span{
+    display: inline-block;
+    padding: 5px;
+    background: none!important;
+    border-radius: 10px;
+    margin-left: 6px;
 }
 
 #deco{
@@ -173,7 +336,8 @@
 }
 #calender{
     width: 100%;
-    height: 65%;
+    height: 63%;
+    margin-top: 20px;
 }
 
 /* 달력 */
@@ -181,7 +345,6 @@
 .sec_cal {
     width: 360px;
     margin: 0 auto;
-    font-family: "NotoSansR";
 }
 
 .sec_cal .cal_nav {
@@ -197,7 +360,9 @@
     width: 300px;
     text-align: center;
     line-height: 1;
+    font-size: 48px;
 }
+
 
 .sec_cal .cal_nav .nav {
     display: flex;
@@ -295,18 +460,27 @@
     height: 35%;
     /* background: violet; */
     display: flex;
-    justify-content: space-evenly;
-    padding-top: 50px;
+    justify-content: center;
+    padding: 0 10px;
+    padding-top: 40px;
+
 }
 .time_text{
     display: block;
     height: 20px;
-    font-size: 24px;
-    line-height: 50px;
+    width: 150px;
+    font-size: 26px;
+    line-height: 46px;
 
 }
 
 .h1-clock{
+    display: block;
+    width: 150px;
     height: 20px;
-
+    font-size: 34px;
+    line-height: 50px;
 }
+
+/*  card news  */
+

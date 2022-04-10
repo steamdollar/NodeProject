@@ -3,6 +3,18 @@
     padding:0px;
 }
 
+#cate1_wrap {
+    height:auto;
+    min-height:1300px;
+}
+
+
+#card_news {
+    width:80%;
+    height:100px;
+    margin: 200px auto 0px;
+}
+
 #board_search > #frm_search {
     width:80%;
     height:200px;
@@ -66,6 +78,8 @@
 
 #board_main {
     width:100%;
+    height:auto;
+    min-height:900px;
 }
 
 #board_writer {
@@ -137,4 +151,21 @@
     height:200px;
 }
 
+#paging > ul {
+    display:flex;
+    width:80%;
+    justify-content: center;
+    border-top:1px solid;
+    margin:80px auto 0;
+    
+}
+
+#paging > ul > li {
+    text-align: center;
+    width:30px;
+    height:50px;
+    padding: 80px 0px;
+    font-size: 20px;
+    cursor: pointer;
+}
 

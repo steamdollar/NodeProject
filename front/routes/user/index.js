@@ -39,13 +39,17 @@ router.use('/profile', (req,res)=>{
     const deUserid = JSON.parse(Buffer.from(userid[1], 'base64').toString('utf-8'))
 
     if( deUserid.nickname == nickname) {
-        res.render('./user/profile')
+        res.render('./user/profile',{
+            nickname:deUserid.nickname,
+            userid:deUserid.userid
+        })
     }
     else {
-        res.render('./user/userinfo')
+        res.render('./user/userinfo',{
+            nickname:deUserid.nickname
+        })
     }
 })
-
 
 
 router.use('/welcome', (req,res)=>{
@@ -73,7 +77,7 @@ router.use('/user_like',(req,res)=>{
 
 router.get('/logout', (req, res) => {
     res.clearCookie('token', {path : '/'})
-    res.send(`<script>alert('로그아웃 되었읍니다.'); location.href='/';</script>`)
+    res.send(`<script>alert('로그아웃 되었습니다.'); location.href='/';</script>`)
 })
 
 router.get('/profile2', async (req, res) => {

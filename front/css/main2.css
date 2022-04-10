@@ -7,9 +7,11 @@
 ul,li{
     list-style: none;
 }
+
 a{
     text-decoration: none;
 }
+
 #wrap{
     width: 100%;
     height: 1000px;
@@ -20,7 +22,7 @@ a{
 #Transparency{
     width: 100%;
     height: 100px;
-    background: #96fafa;
+    background: #e0f7fa;
     position: fixed;
     top: 0;
     z-index: 5;
@@ -49,6 +51,37 @@ a{
 #logo{
     width: 160px;
     height: 60px;
+}
+
+#bd_list {
+    display: none;
+    width:120px;
+    height:auto;
+    text-align:center;
+    padding:10px;
+    border:1px solid rgb(0, 0, 0);
+    background: #d3d3d3;
+    border-radius: 5px;
+    z-index: 100;
+    position: absolute;
+    left:-12px;
+
+
+}
+
+#bd_list > li {
+    margin:10px 0;
+}
+
+#bd_list > li > a {
+    padding: 10px;
+    color:#000000;
+    text-shadow: -2px 0 rgb(255, 255, 255), 0 2px rgb(255, 255, 255), 2px 0 rgb(255, 255, 255), 0 -2px rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+.menu_on{
+    display: block!important;
 }
 /* 여기서부터 햄버거 */
 
@@ -189,23 +222,46 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 #access > a{
     color: black;
     margin: 0 13px 0px 13px;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 
 /* 로그인 후 메뉴 */
 #access2 {
-    width: 400px;
-    height: 100px;
-    top: 40px;
+    width: 500px;
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
     position: absolute;
-    right: 120px;
+    right: 8%;
+    top:8%
 }
 
-#access2 > a{
+#access2 > ul{
+    width: 600px;
+    height: 100px;
+    display: flex;
+}
+
+#access2 > ul > li{
+    width: 110px;
+    height: 100%;
+}
+
+#access2 > ul > li > span{
+    display: inline-block;
     color: black;
-    margin: 0 10px 0px 10px;
-    font-size: 20px;
+    font-size: 24px;
+    padding: 30px;
+    cursor: pointer;
+}
+
+#access2 > ul > li > a{
+    display: inline-block;
+    color: black;
+    font-size: 24px;
+    padding: 30px;
+
 }
 
 
@@ -225,7 +281,7 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 #slide_area{
     width: 1200px;
     height: 600px;
-    background-color: red;
+    /* background-color: red; */
     margin-left: 500px;
     position: relative;
     overflow: hidden;
@@ -292,4 +348,4 @@ input[id="icon"]:checked + label > span:nth-child(3) {
 
 ::-webkit-scrollbar { width: 5px;}
 ::-webkit-scrollbar-track { background-color: rgb(214, 214, 214); }
-::-webkit-scrollbar-thumb { background: #0f42b1; border-radius: 10px;}
+::-webkit-scrollbar-thumb { background: #94e1ff; border-radius: 10px;}

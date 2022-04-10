@@ -1,0 +1,107 @@
+#intro_wrap{
+    margin-top:200px;
+    height: 3400px;
+}
+
+#intro_logo {
+    width:1600px;
+    height:120px;
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    font-size:50px;
+    margin:200px auto 0px;
+    text-align:left;
+    padding-top:20px;
+}
+
+#intro_contents {
+    display:flex;
+    width:1600px;
+    margin:0 auto;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#intro_contents > #img_wrap > #introimg {
+    position: relative;
+    top:0px;
+}
+
+#intro_contents > #img_wrap > #introimg > #itg > img {
+    width:1600px;
+}
+
+
+
+#intro_contents > #img_wrap > #introimg > #itg{
+    position: relative;
+    z-index:1;
+}
+#intro_contents > #img_wrap > #introimg > #kg_text{
+    position: relative;
+    bottom:80px;
+    z-index:2;
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    font-weight:300;
+    font-size:60px;
+    padding-left:200px;
+}
+
+#intro_contents >  #kg_content{
+    padding-left:200px;
+    font-size:25px;
+    color:#636363;
+    line-height: 60px;
+    font-weight:250;
+}
+
+#intro_contents > #classtype > h4 {
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    font-size:50px;
+    padding:80px 0 40px;
+}
+
+#intro_contents > #classroom > #info_class {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap:wrap;
+    width:100%;
+}
+
+#intro_contents > #classroom > #info_class > li {
+    width:380px;
+    height:500px;
+}
+#intro_contents > #classroom > #info_class > li > .img_layout {
+    width:100%;
+    height:220px;
+    overflow:hidden;
+}
+
+#intro_contents > #classroom > #info_class > li > .img_layout > img{
+    width:380px !important;
+}
+
+#intro_contents > #classroom > #info_class > li > h2 {
+    padding-top:20px;
+    font-weight:250;
+    font-size:30px;
+}
+
+#intro_contents > #classroom > #info_class > li > p {
+    padding-top:20px;
+    color:#636363;
+    font-size:20px;
+}
+
+#intro_locate > h4 {
+    font-family: 'FF Signa Serif Stencil', 'Book';
+    font-size:50px;
+    padding:80px 0 40px;
+}
+
+#intro_locate > #intro_address {
+    font-size:25px;
+    text-align: center;
+    padding-bottom:50px;
+}

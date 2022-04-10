@@ -2,174 +2,99 @@
 
 {% block content %}
 <body>
-    <span id="userid">{{userid}}</span>
-    <div id="view_wrap">
-        <dl>
-            <dt id="view_dt">
-                <div id="view_title">
-                    <span id="title">{{cate1_view.title}}</span>
-                </div>
-                <div id="view_head">
-                    <span id="category">{{cate1_view.category}}</span>
-                    <span id="view_date">{{ cate1_view.date }}</span>
-                    <span id="writerid">{{cate1_view.userid}}</span>
-                    <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
-                </div>
-            </dt>
-            <dd id="view_dd">
-                <div id="view_content">
-                    {{ cate1_view.content }}
-                </div>
-                <div id="view_good">
-                    <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
-                        <input type="submit" value="" id="thumb">
-                    </form>
-            
-                    <form method="post" action="http://localhost:4000/api/board/cate1/likeCancel" id="likeCancel">
-                        <input type="submit" value="좋아요 취소" id="thumbCancel">
-                    </form>
-                </div>  
-            </dd>
-            <div id="view_hash">
-                Hashtage : 
-                {% for item in cate1_hashtag %}
-                <span>#{{item.hashtag_name}}</span>
-                {% endfor %}
-            </div>  
-        </dl>
+    <div id="useruser">
+        <span id="userid">{{userid}}</span>
+        <span id="mynick" style ='display: none;'>{{nickname}}</span>
     </div>
-    <!-- <div>
-        <ul id="commentApp">
-        </ul>
-    </div> -->
-    <!-- 댓글시스템 렌더링하는 div-->
-    <div id="view_cmt">
-        <div id="view_app">
-            <ul id="commentApp">
-            </ul>
+    <div id="view_wide">
+        <div id="view_wrap">
+            <dl>
+                <dt id="view_dt">
+                    <div id="view_title">
+                        <span id="title">{{cate1_view.title}}</span>
+                    </div>
+                    <div id="view_head">
+                        <span id="category">{{cate1_view.category}}</span>
+                        <span id="view_date">{{ cate1_view.date }}</span>
+                        <span id="writerid">{{cate1_view.userid}}</span>
+                        <span id="nickname"><a id='userinfo' href="/user/profile?nickname={{cate1_view.nickname}}">{{ cate1_view.nickname }}</a></span>
+                    </div>
+                </dt>
+                <dd id="view_dd">
+                    <div id="view_content" style="white-space: pre-line;">
+                        <div id="view_userimg">
+                            <span id="userimg"></span>
+                        </div>
+                        {{ cate1_view.content }}
+                    </div>
+                    <div id="view_good">
+                        <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
+                            <input type="submit" value="💗" id="thumb">
+                        </form>
+                    </div>
+                    <div id="view_like">
+                        <span id="likecount"></span>
+                    </div> 
+                </dd>
+                <div id="view_form">
+                    <div id="view_modify">
+                        <a href='/board/cate1/update?idx={{cate1_view.idx}}' id="form_lk" class="hell">수정</a>
+                    </div>
+                    <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
+                        <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
+                        <input type="submit" value="글 삭제" id="view_form_sub">
+                    </form>
+                </div>
+                <div id="view_hash">
+                    
+                    {% for item in cate1_hashtag %}
+                    <span>#{{item.hashtag_name}}</span>
+                    {% endfor %}
+                </div> 
+                <div id="view_cmt">
+                    <div id="view_app">
+                        <ul id="commentApp">
+                        </ul>
+                    </div>
+                    <template id="commentForm">
+                        <li class="comment-form">
+                            <form method="post" action="" class="cmt_frm">
+                                <h4>댓글 <span>()</span> </h4>
+                                <span class="ps_box">
+                                    <input type="text" placeholder="여러분의 소중한 댓글을 입력해주세요." class="int" value="" name="input">
+                                </span>
+                                <input type="submit" class="btn" value="댓글달기" />
+                            </form>
+                        </li>
+                    </template>
+                    <!-- 댓글 작성 -->
+                    <template id="commentList">
+                        <li class="c_list">
+                            <ul class="comment-row">
+                                <li class="comment-id"></li>
+                                <li class="comment-content">    
+                                    <input type="hidden" name="idx" value=""/>
+                                    <span class="comment-delete-btn">X</span>
+                                </li>
+                                <li class="comment-date"></li>
+                            </ul>
+                        </li>
+                    </template>
+                    <!-- 댓글 목록 -->
+                    <template id="commentInput">
+                        <span>
+                            <input type="text" class="comment-update-input" value="">
+                        </span>
+                    </template>
+                    <div id="view_list">
+                        <a href="/board/cate1" class="v_list">글 목록</a>
+                    </div>
+                </div> 
+            </dl>
         </div>
-        <template id="commentForm">
-            <li class="comment-form">
-                <form method="post" action="">
-                    <h4>댓글쓰기 <span>()</span> </h4>
-                    <span class="ps_box">
-                        <input type="text" placeholder="여러분의 소중한 댓글을 입력해주세요." class="int" value="" name="input">
-                    </span>
-                    <input type="submit" class="btn" value="등록" />
-                </form>
-            </li>
-        </template>
-        <!-- 댓글 작성 -->
-        <template id="commentList">
-            <li class="c_list">
-                <ul class="comment-row">
-                    <li class="comment-id"></li>
-                    <li class="comment-content">    
-                        <input type="hidden" name="idx" value="" />
-                        <span class="comment-delete-btn">X</span>
-                    </li>
-                    <li class="comment-date"></li>
-                </ul>
-            </li>
-        </template>
-        <!-- 댓글 목록 -->
-        <template id="commentInput">
-            <span>
-                <input type="text" class="comment-update-input" value="">
-            </span>
-        </template>
+        <!-- 댓글시스템 렌더링하는 div-->
     </div>
-    <div id="view_form">
-        <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
-            <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
-            <input type="submit" value="글 삭제">
-        </form>
-        <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
-    </div>
-    <!-- <div>
-        <form method="post" action="http://localhost:4000/api/board/cate1/delete" id="del_frm">
-            <input type="hidden" name='idx' value="{{cate1_view.idx}}" id="idx"> 
-            <input type="submit" value="글 삭제">
-        </form>
-        <a href='/board/cate1/update?idx={{cate1_view.idx}}'>수정</a>
-        <br>
-        hashtag : 
-        {% for item in cate1_hashtag %}
-        <span>#{{item.hashtag_name}}</span>
-        {% endfor %}
-
-        <br>
-        <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
-            <input type="submit" value="좋아요" id="thumb">
-        </form>
-
-        <form method="post" action="http://localhost:4000/api/board/cate1/likeCancel" id="likeCancel">
-            <input type="submit" value="좋아요 취소" id="thumbCancel">
-        </form>
-    </div> -->
-
-    <!-- <br>
-    hashtag : 
-    {% for item in cate1_hashtag %}
-    <span>#{{item.hashtag_name}}</span>
-    {% endfor %}
-
-    <br>
-    <form method="post" action="http://localhost:4000/api/board/cate1/like" id="like">
-        <input type="submit" value="좋아요" id="thumb">
-    </form>
-
-<<<<<<< HEAD
-    <form method="post" action="http://localhost:4000/api/board/cate1/likeCancel" id="likeCancel">
-        <input type="submit" value="좋아요 취소" id="thumbCancel">
-    </form> -->
-=======
->>>>>>> 9c247449c2bf0a5464dfd8d9abff5161d6f75153
-
-    <span id="userimg"></span>
     
-
-    <br>
-    <a href="/board/cate1">글 목록</a>
-
-    <span id="likecount"></span>
-
-    <div>
-        <ul id="commentApp">
-        </ul>
-    </div>
-    <!-- 댓글시스템 렌더링하는 div-->
-    <template id="commentForm">
-        <li class="comment-form">
-            <form method="post" action="">
-                <h4>댓글쓰기 <span>()</span> </h4>
-                <span class="ps_box">
-                    <input type="text" placeholder="댓글 내용을 입력해주세요." class="int" value="" name="input">
-                </span>
-                <input type="submit" class="btn" value="등록" />
-            </form>
-        </li>
-    </template>
-    <!-- 댓글 작성 -->
-    <template id="commentList">
-        <li>
-            <ul class="comment-row">
-                <li class="comment-id"></li>
-                <li class="comment-content">    
-                    <input type="hidden" name="idx" value="" />
-                    <span class="comment-delete-btn">X</span>
-                </li>
-                <li class="comment-date"></li>
-            </ul>
-        </li>
-    </template>
-    <!-- 댓글 목록 -->
-    <template id="commentInput">
-        <span>
-            <input type="text" class="comment-update-input" value="">
-        </span>
-    </template>
-    <!--댓글 수정 -->
     <script type="text/javascript">
         const option = {
             'Content-type':'application/json',
@@ -194,11 +119,12 @@
             const response2 = await axios.post('http://localhost:4000/api/board/cate1/viewuser', null, option)
             const Usernick = response2.data.result[0].nickname
             let nickname = "{{cate1_view.nickname}}"
-
-            if(nickname !== Usernick){
-              
-            } else{
-
+            console.log(nickname)
+            console.log(Usernick)
+            
+            if(nickname !== Usernick && Usernick !== 'admin'){
+                const hell = document.querySelector('.hell')
+                hell.setAttribute('style', 'display:none;')
             }
             
         })
@@ -242,7 +168,7 @@
 
             const data = {
                 idx:idx.value,
-                category:category,
+                category:category.innerHTML,
                 writerid:writerid.innerHTML,
                 userid:userid.innerHTML
             }
@@ -297,7 +223,7 @@
         //
         document.addEventListener('DOMContentLoaded', async () => {
             const uri = location.pathname
-            const [,,cate,] = location.pathname.split('/')
+            const cate = document.querySelector('#category').innerHTML
             const data = {
                 idx:idx.value,
                 cate:cate,
@@ -386,8 +312,25 @@
                 // idx는 댓글이 현재 글의 몇 번째 댓글인지를 알려준다. 
                 // 그래서 지금까지 단 댓글 수를 먼저 계산하는게 2번째 항이고, 
                 // 없으면 세번째항의 value인 1을 가지는것.
-                
-                const result = {idx,userid:'{{userid}}', content:input.value, date: new Date(), updateFlag:'true'}
+
+                //날짜
+                let today = new Date()
+                let year = today.getFullYear()
+                let month = ('0' + (today.getMonth() + 1)).slice(-2)
+                let day = ('0' + today.getDate()).slice(-2)
+
+                let dateString = year + '-' + month + '-' + day
+
+                //시간
+                let today2 = new Date()
+                let hours = ('0' + today2.getHours()).slice(-2)
+                let minutes = ('0' + today2.getMinutes()).slice(-2)
+                let seconds = ('0' + today2.getSeconds()).slice(-2)
+
+                let timeString = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
+               
+    
+                const result = {idx,userid:'{{userid}}', content:input.value, date:timeString, updateFlag:'true'}
                 // 대충 저 state.replay 처럼 포맷 만들어준다.
                 state = {
                     ...state,
@@ -399,7 +342,7 @@
                 }
                 // state 변수를 업데이트 해준다. 방금 쓴 댓글을 추가하고, length 값을 1 더한다.
 
-                const nickname = document.querySelector('#nickname')
+                const mynick = document.querySelector('#mynick')
                 const content = input.value
                 const userid = document.querySelector('#userid')
                 
@@ -407,7 +350,7 @@
                     cate: cate,
                     idx: idx.value,
                     content: content,
-                    nickname:nickname.innerHTML,
+                    nickname:mynick.innerHTML,
                     userid:userid.innerHTML
                 }
                 
@@ -419,7 +362,6 @@
                 input.value = '' // 댓글 등록하면 form은 다시 빈 칸이 된다.
                 counting.innerHTML = `(${state.length})` // 화면에 렌더링되는 댓글 수도 업데이트 해준다.
                 
-
                 commentView()
 
                 const comments = commentApp.querySelectorAll('li')
@@ -442,8 +384,6 @@
                         index = i
                     }
                 }
-
-                console.log(index)
 
                 newReply[index].updateFlag = 'false'
                 console.log(idx,newReply)
@@ -470,7 +410,6 @@
                     const updateReply = await axios.post('http://localhost:4000/api/board/comment/update', data, option)
 
                     const newReplay = [...state.replay]
-                    console.log(newReplay)
                     let index 
                     for(let i =0; i < newReplay.length; i++){
                         if(newReplay[i].idx === idx){
@@ -513,4 +452,25 @@
             
         })
     </script>
+    <style>
+        #footer_wrap {
+        display:none;
+    
+    }
+    #view_cmt {
+        margin-top:70px;
+    }
+    #view_app {
+    margin-top:0px;
+    }
+
+    #view_list {
+        margin-top:100px;
+    }
+
+    
+    #view_list > .v_list {
+        margin-top:100px;
+    }
+    </style>
 {% endblock %}

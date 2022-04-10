@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="/main2.css">
     <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="/common/footer.css">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/user/font.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js" charset="utf-8"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <link href="//db.onlinewebfonts.com/c/92b994e3bb31598967f16764d8f05352?family=FF+Signa+Serif+Stencil" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="http://localhost:3000/js/main.js"></script>
-    <script type="text/javascript" src="http://localhost:3000/js/scroll.js"></script>
+    <link href="//db.onlinewebfonts.com/c/e0af8ee8cc49f194718d96d95440836f?family=Multicolore" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="http://localhost:3000/js/main.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://localhost:3000/js/scroll.js" charset="utf-8"></script>
     <script type="text/javascript">
     
 
@@ -47,6 +49,7 @@
                 spanElement.innerHTML = event.data
                 divElement.appendChild(spanElement)
                 chat.appendChild(divElement)
+                
 
                 const author = spanElement.innerHTML.split(':')[0]
                 if ( author == "{{userid}}") {
@@ -55,6 +58,8 @@
                 else {
                     divElement.setAttribute('class', 'you')
                 }
+                
+                chat.scrollTop = chat.scrollHeight
             }
 
             webSocket.onclose = () => {
@@ -73,7 +78,7 @@
                 alert('로그아웃 되었습니다')
                 location.href='http://localhost:3000'
             })
-
+            
             //시간
 
 
@@ -207,10 +212,39 @@
             </div>
 
             <div id="access2">
-                <a href ='/board'>Board</a>
-                <a href="/board/notice">Notice</a>
-                <a href="/user/profile?nickname={{nickname}}">Profile</a>
-                <a href="" id="logout">Logout</a>
+                <ul>
+                    <li>
+                        <span class="menu_open">Board</span>
+                        <ul id="bd_list" class="">
+                            <li>
+                                <a href="/board/cate1">자유게시판</a>
+                            </li>
+                            <li>
+                                <a href="/board/QnA">Q & A</a>
+                            </li>
+                            <li>
+                                <a href="/board/request">청원게시판</a>
+                            </li>
+                            <li>
+                                <a href="/board/question">코드자문</a>
+                            </li>
+                            <li>
+                                <a href="/board/notice">공지사항</a>
+                            </li>
+                        </ul>
+                     
+                    </li>
+                    <li>
+                        <a href="/board/notice">Notice</a>
+                    </li>
+                    <li>
+                        <a href="/user/profile?nickname={{nickname}}">Profile</a>
+                    </li>
+                    <li>
+                        <a href="/user/logout" id="logout">Logout</a>
+                    </li>
+
+                </ul>
             </div>
         
             <div id="hamberger">
@@ -222,10 +256,10 @@
                 </label>
                 <div id="menu">
                     <ul>
-                        <li><a href="#">Introduce</a></li>
-                        <li><a href="#">Enjoy it!</a></li>
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">This month</a></li>
+                        <li><a href="http://localhost:3000/community/introduce">Introduce</a></li>
+                        <li><a href="http://localhost:3000/matching/duo">Enjoy it!</a></li>
+                        <li><a href="http://localhost:3000/board/notice">News</a></li>
+                        <li><a href="http://localhost:3000/rank">This month</a></li>
                     </ul>
                 </div>
             </div>
@@ -261,63 +295,60 @@
 
 
     <content id="main_content">
+<!-- 카드 뉴스 파트-->
         <div id="container1">
-            <div id="card_news">
-                <div class="card">
-                    <h1>경일 카드뉴스</h1>
-                    <ul id="card_box">
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
-                        <li>
-                            <a href="#"><img src="http://localhost:3000/blockchain.jpeg"></a>
-                            <span>경일 카드뉴스 제목1</span>
-                        </li>
+            <h1 class="card_title">Card News</h1>
+            <div id='card_wrap'>
 
-                    </ul>
-                </div>
+                <table id="board_table">
+                    <tbody id="board_list">
+                        
+                    </tbody>
+                </table>
+
+                <template id="board_temp">
+                    <div class="cards">
+                    <span><a href="http://localhost:3000/board/cate1/view?idx={idx}">{img1}</a></span>
+                        <br>
+                        <span id="temp_title">
+                            <a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a>
+                        </span>
+                    </div>
+                </template>
+
             </div>
+
         </div>
+<!-- 여기까지 -->
+
         <div id="container2">
             <div id="hot_board">
-                <h2>인기 게시물</h1>
-                <div class="many_likes">
+                <h2>인기 게시물 🔥</h1>
+                <ul class="many_likes">
 
-                </div>
+                </ul>
             </div>
             <div id="event_board">
-                <h2>진행 중인 이벤트</h2>
-                <div class="event_list">
-
-                </div>
+                <h2>🎉 진행 중인 이벤트</h2>
+                <ul class="event_list">
+                    <li><a href="http://localhost:3000/board/cate1/view?idx=27">4월의 이벤트 공지</a></li>
+                    <li><a href="http://localhost:3000/board/cate1/view?idx=28">3월 이벤트 당첨자 발표</a></li>
+                    <li><a href="http://localhost:3000/board/cate1/view?idx=26">친구에게 학원 추천하고 선물받자!</a></li>
+                    <li><a href="http://localhost:3000/board/cate1/view?idx=25">마음을 전해보세요!</a></li>
+                </ul>
             </div>
             <div id="this_month_student">
-                <h2>이달의 학우</h2>
-                <div class="best_student">
+                <h2><a href="http://localhost:3000/rank"> 이달의 학생 🏆</a></h2>
+                <ul class="best_student">
 
-                </div>
+                </ul>
             </div>
         </div>
         <div id="container3">
+            <div id="live_chat">
+                <img src="http://localhost:3000/live_chat.png">
+            </div>
             <div id="chat_box">
-                <h1>Live Talk</h1>
                 <div id="chat_wrap">
                     <div id="chat_space">
                         <ul id="chat">
@@ -327,10 +358,8 @@
                 </div>
 
                 <form id="frm_chat" action="/" method="get">
-                    <!-- <div class="chat_input_box"> -->
-                        <input type="text" name="input" id="input">
-                        <input type="submit" value="전송">
-                    <!-- </div> -->
+                    <input type="text" name="input" id="input">
+                    <input type="submit" value="전송">
                 </form>
             </div>
             <div id="deco">
@@ -362,14 +391,208 @@
                 </div>
             </div>
         </div>
+
+        <template id="hot_temp">
+            <li><a href="http://localhost:3000/board/cate1/view?idx={idx}">{title}</a></li>
+        </template>
+
+        <template id="hot_student_temp">
+            <li>{nickname}({userid})</li>
+
+        </template>
+
     
 
     </content>
 
     {% include "./utils/footer.html" %}
 
+    <script type="text/javascript">
+        let test = {}
+        let hope = []
+        const option = {
+            'Content-type':'application/json',
+            withCredentials:true
+        }
 
+    document.addEventListener('DOMContentLoaded', async() => {
+        const data = { category: 'notice' }
+
+        const response1 = await axios.post('http://localhost:4000/api/board/cate1/list', data, option)
+        test = { ...response1.data }
+        const cate1_list = response1.data
+
+        let content_list2 = []
+        for (let i =0; i<response1.data.result1.length; i++) {
+            if(response1.data.result1[i].hidden =='off') {
+                content_list2.push(response1.data.result1[i])
+            }
+        }
+
+    // 썸네일
+
+        const response2 = await axios.post('http://localhost:4000/api/cardimg', data, option) 
+        const tempThumb = response2.data.final_result // [{}, {}, {}]
+        let thumbNail = []
+
+        for (let i = 0; i<6; i++) {
+            if(tempThumb[i].img1 !== 'N/A') {
+                thumbNail.push(tempThumb[i].img1)
+            }
+            else {
+                thumbNail.push('default.jpg')
+            }
+        }
+
+
+        for (let i = 0; i<6; i++) {
+            let nProduct = { ...content_list2[i] }
+            nProduct.img1 = thumbNail[i]
+            hope.push(nProduct)
+        }
+
+        let template = ''
+        search_list = []
+        const board_temp = document.querySelector('#board_temp').innerHTML
+
+        const promise = hope.forEach( (v)=>{
+        search_list.push(v)
+        let {idx, img1, category, title, nickname, userid, content, date, hit, likes, hidden} = v
+
+        template +=
+            board_temp.replace('{img1}',`<img src='http://localhost:4000/uploads/${img1}'>`)
+            .replace('{title}',title)
+            .replace('{idx}', idx)
+        })
+
+        board_list.innerHTML = template
+
+        //인기글
+
+        const board_response = await axios.post('http://localhost:4000/api/hotboard', null, option)
+        let board_template = ''
+        const many_likes = document.querySelector('.many_likes') //인기글 리스트 들어가는 곳
+        const hot_temp = document.querySelector('#hot_temp').innerHTML //Hot 템플릿 innerhtml
+
+        console.log(board_response.data)
+
+        const board_inner = board_response.data
+
+        board_inner.forEach((v)=>{
+            const {idx, title} = v
+            board_template += hot_temp.replace('{idx}', idx)
+                                        .replace('{title}', title)
+        })
+
+        many_likes.innerHTML = board_template
+
+        //이달의 학우
+
+        //이름 변경
+        var maskingName = function(strName) {
+            if (strName.length > 2) {
+                var originName = strName.split('');
+                originName.forEach(function(name, i) {
+                if (i === 0 || i === originName.length - 1) return;
+                originName[i] = '*';
+                });
+                var joinName = originName.join();
+                return joinName.replace(/,/g, '');
+            } else {
+                var pattern = /.$/; // 정규식
+                return strName.replace(pattern, '*');
+            }
+        };
+
+
+        const student_response = await axios.post('http://localhost:4000/api/hotstudent1', null, option)
+        let student_template = ''
+        const best_student = document.querySelector('.best_student') //이달의 학생 로드 할 곳
+        const hot_student_temp = document.querySelector('#hot_student_temp').innerHTML //템플릿 innerhtml
+
+
+        let student_arr = student_response.data //댓글 top 3 리스트
+        const student_response2 = await axios.post('http://localhost:4000/api/hotstudent2', null, option)
+
+        student_response.data.forEach((v)=>{
+            const {nickname, userid} = v
+            const change_userid = maskingName(`${userid}`.replaceAll(' ',''))
+
+            student_template += hot_student_temp.replace('{userid}',change_userid)
+                                    .replace('{nickname}', nickname)
+
+        })
+        student_response2.data.forEach((v)=>{
+            const {nickname, userid} = v
+            const change_userid = maskingName(`${userid}`.replaceAll(' ',''))
+
+            student_template += hot_student_temp.replace('{userid}',change_userid)
+                                    .replace('{nickname}', nickname)
+
+        })
+
+        best_student.innerHTML = student_template
+
+
+        
+
+    })
+
+    </script>
 </div>
-</body>
+<style>
+    #container1 {
+        position: relative;
+    }
 
+    #card_wrap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    #board_table {
+        position:relative;
+    }
+
+    #board_list {
+        display:flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        position:relative;
+        width: 800px !important;
+        
+    }
+
+    .cards {
+        width: 300px;
+        padding: 25px 30px 25px 30px;
+    }
+
+    .cards > span:nth-child(2) {
+        text-align: center;
+        color: black !important;
+
+    }
+
+    .cards > span > a > img {
+        width: 300px !important;
+        height:200px;
+        border-radius: 10px;
+    }
+
+    #temp_title {
+        font-size: 24px;
+        text-align: center;
+
+    }
+
+    #temp_title > a {
+        color: black;
+        text-align: center;
+        display: block;
+        width: 100%;
+    }
+</style>
+</body>
 </html>
