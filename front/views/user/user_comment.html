@@ -30,7 +30,7 @@
             <tr>
                 <th id="idx">{idx}</th>
                 <th id="cate">{cate}</th>
-                <th id="temp_title"><a href="/board/cate1/view?idx={idx}" id="title">{title}</a></th> 
+                <th id="temp_title"><a href="/board/cate1/view?idx={midx}" id="title">{title}</a></th> 
                 <th id="content">{content}</th>
                 <th id="nickname">{nickname}</th> 
                 <th id="date">{date}</th>
@@ -63,8 +63,9 @@
         const response = await axios.post('http://localhost:4000/api/user/usercmt',data,option)
         if(response.data.errno == 0){
            for(let i = 0; i< response.data.result.length; i++){
-            const {midx,mcategory,title,content,nickname,date} = response.data.result[i]
-            template += profiles.replaceAll('{idx}',midx)
+            const {idx, midx,mcategory,title,content,nickname,date} = response.data.result[i]
+            template += profiles.replaceAll('{idx}',idx)
+                                .replace('{midx}', midx)
                                 .replace('{cate}',mcategory)
                                 .replace('{title}',title)
                                 .replace('{content}',content)
@@ -110,8 +111,8 @@
                 const clone = document.importNode(board_row.content,true)
                 const th = clone.querySelectorAll('th')
                 const aElement = document.createElement('a')
-                aElement.href=`/board/cate1/view/?idx=${v.idx}`
-                aElement.innerHTML = v.subject
+                aElement.href=`/board/cate1/view/?idx=${v.midx}`
+                aElement.innerHTML = v.title
 
                 th[0].innerHTML = v.idx
                 th[1].innerHTML = v.mcategory
@@ -123,7 +124,7 @@
 
                 tbody.appendChild(clone)
         })
-        pagemove(1)
+         pagemove(1)
     })
 
     function pagemove(num) {
@@ -142,6 +143,7 @@
             let template = ''
             Nodes.forEach( v=> {
                 template += trElement.replaceAll('{idx}', v.idx)
+                            .replace('{midx}', v.midx)
                             .replace('{title}',v.title)
                             .replace('{cate}', v.mcategory)
                             .replace('{content}', v.content)
