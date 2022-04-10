@@ -50,53 +50,49 @@
                     {% for item in cate1_hashtag %}
                     <span>#{{item.hashtag_name}}</span>
                     {% endfor %}
-                </div>  
+                </div> 
+                <div id="view_cmt">
+                    <div id="view_app">
+                        <ul id="commentApp">
+                        </ul>
+                    </div>
+                    <template id="commentForm">
+                        <li class="comment-form">
+                            <form method="post" action="" class="cmt_frm">
+                                <h4>댓글 <span>()</span> </h4>
+                                <span class="ps_box">
+                                    <input type="text" placeholder="여러분의 소중한 댓글을 입력해주세요." class="int" value="" name="input">
+                                </span>
+                                <input type="submit" class="btn" value="댓글달기" />
+                            </form>
+                        </li>
+                    </template>
+                    <!-- 댓글 작성 -->
+                    <template id="commentList">
+                        <li class="c_list">
+                            <ul class="comment-row">
+                                <li class="comment-id"></li>
+                                <li class="comment-content">    
+                                    <input type="hidden" name="idx" value=""/>
+                                    <span class="comment-delete-btn">X</span>
+                                </li>
+                                <li class="comment-date"></li>
+                            </ul>
+                        </li>
+                    </template>
+                    <!-- 댓글 목록 -->
+                    <template id="commentInput">
+                        <span>
+                            <input type="text" class="comment-update-input" value="">
+                        </span>
+                    </template>
+                    <div id="view_list">
+                        <a href="/board/cate1" class="v_list">글 목록</a>
+                    </div>
+                </div> 
             </dl>
         </div>
-        <!-- <div>
-            <ul id="commentApp">
-            </ul>
-        </div> -->
         <!-- 댓글시스템 렌더링하는 div-->
-        <div id="view_cmt">
-            <div id="view_app">
-                <ul id="commentApp">
-                </ul>
-            </div>
-            <template id="commentForm">
-                <li class="comment-form">
-                    <form method="post" action="" class="cmt_frm">
-                        <h4>댓글 <span>()</span> </h4>
-                        <span class="ps_box">
-                            <input type="text" placeholder="여러분의 소중한 댓글을 입력해주세요." class="int" value="" name="input">
-                        </span>
-                        <input type="submit" class="btn" value="댓글달기" />
-                    </form>
-                </li>
-            </template>
-            <!-- 댓글 작성 -->
-            <template id="commentList">
-                <li class="c_list">
-                    <ul class="comment-row">
-                        <li class="comment-id"></li>
-                        <li class="comment-content">    
-                            <input type="hidden" name="idx" value=""/>
-                            <span class="comment-delete-btn">X</span>
-                        </li>
-                        <li class="comment-date"></li>
-                    </ul>
-                </li>
-            </template>
-            <!-- 댓글 목록 -->
-            <template id="commentInput">
-                <span>
-                    <input type="text" class="comment-update-input" value="">
-                </span>
-            </template>
-        </div>
-        <div id="view_list">
-            <a href="/board/cate1" class="v_list">글 목록</a>
-        </div>
     </div>
     
     <script type="text/javascript">
@@ -457,9 +453,23 @@
     </script>
     <style>
         #footer_wrap {
-        bottom: -450px !important;
-        position: relative;
+        display:none;
     
+    }
+    #view_cmt {
+        margin-top:70px;
+    }
+    #view_app {
+    margin-top:0px;
+    }
+
+    #view_list {
+        margin-top:100px;
+    }
+
+    
+    #view_list > .v_list {
+        margin-top:100px;
     }
     </style>
 {% endblock %}
