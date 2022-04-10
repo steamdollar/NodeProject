@@ -19,11 +19,13 @@
     
             </tbody> 
         </table>
+
         <div id="paging">
             <ul>
                 
             </ul>
         </div>
+
         <template id = "profiles_users"> 
                 <tr>
                     <th id="idx">{idx}</th>
@@ -32,12 +34,12 @@
                     <th id="date">{date}</th>
                     <th id="hit">{hit}</th>
                 </tr>
-            
-            </table>
         </template>
+
     </div>
 
 <script type="text/javascript">
+    let pager = []
     document.addEventListener('DOMContentLoaded',async() =>{
         let template = ''
         const profile = document.querySelector('#profile_user')
@@ -49,7 +51,7 @@
         }
 
         const response = await axios.post('http://localhost:4000/api/user/userprofile',null,option)
-        console.log(response.data.result)
+    
         if(response.data.errno == 0){
            for(let i = 0; i< response.data.result.length; i++){
             const {idx,title,nickname,date,hit} = response.data.result[i]
@@ -65,7 +67,82 @@
             }
         }
 
+        const trElement = document.querySelector('#profiles_users').innerHTML
+
+        const {total_record} = response.data
+        const view_article = 10 // 한 페이지에 있는 블럭 수
+        const block_article = 10 // 한 블럭에 보일 갯수
+
+        const total_page = Math.ceil(total_record/view_article)
+        const total_block = Math.ceil(total_page/block_article)
+        let page = 4
+        const current_block = Math.ceil(page/block_article)
+        const block = ((current_block-1) * block_article)
+
+        let end_block = block + block_article
+        if(end_block > total_page) {end_block = total_page}
+
+        const paging = document.querySelector('#paging > ul')
+            
+        for  ( let i = 0; i<=end_block; i++) {
+            const liElement = document.createElement('li')
+            const aElement = document.createElement('a')
+
+            aElement.setAttribute('onClick', `pagemove(${i})`)
+            aElement.innerHTML = `[${i}]`
+            liElement.appendChild(aElement)
+            paging.appendChild(liElement)
+        }
+        pager = [...response.data.result]
+        const Nodes = response.data.result.slice((page - 1) * view_article, page * view_article)
+        const board_row = document.querySelector('#profiles_users')
+        const tbody = document.querySelector('#profile_user')
+
+        Nodes.forEach( v => {
+                const clone = document.importNode(board_row.content,true)
+                const th = clone.querySelectorAll('th')
+                const aElement = document.createElement('a')
+                aElement.href=`/board/cate1/view/?idx=${v.idx}`
+                aElement.innerHTML = v.subject
+
+                th[0].innerHTML = v.idx
+                th[1].innerHTML = v.title
+                th[2].innerHTML = v.nickname
+                th[3].innerHTML = v.date
+                th[4].innerHTML = v.hit
+
+                tbody.appendChild(clone)
+        })
+        pagemove(1)
     })
+
+    function pagemove(num) {
+            const trElement = document.querySelector('#profiles_users').innerHTML
+            const view_article = 10
+            const raw = pager
+            let refine = []
+
+            for(i = 0; i <raw.length; i++) {
+                if( raw[i].hidden !== 'on') {
+                    refine.push(raw[i])
+                }
+            }
+
+            const Nodes = refine.slice((num-1) * view_article, num * view_article)
+            let template = ''
+            Nodes.forEach( v=> {
+                template += trElement.replaceAll('{idx}', v.idx)
+                            .replace('{title}',v.title)
+                            .replace('{nickname}',v.nickname)
+                            .replace('{date}',v.date)
+                            .replace('{hit}',v.hit)
+            })
+
+            const tbody = document.querySelector('#profile_user')
+            tbody.innerHTML = template
+    }
+
+    
 
 </script>
 <style>
