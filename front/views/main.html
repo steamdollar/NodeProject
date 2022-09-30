@@ -432,10 +432,11 @@
     // 썸네일
 
         const response2 = await axios.post('http://localhost:4000/api/cardimg', data, option) 
+
         const tempThumb = response2.data.final_result // [{}, {}, {}]
         let thumbNail = []
 
-        for (let i = 0; i<6; i++) {
+        for (let i = 0; i<tempThumb.length; i++) {
             if(tempThumb[i].img1 !== 'N/A') {
                 thumbNail.push(tempThumb[i].img1)
             }
