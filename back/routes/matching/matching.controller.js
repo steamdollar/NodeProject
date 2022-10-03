@@ -57,7 +57,6 @@ exports.duoSearch = async (req, res) => {
             const $ = cheerio.load(html.data);
             const $rateElement = $("#content-container>div:nth-child(1)>div:nth-child(2)");
             const rate = $($rateElement[0]).find(".tier").text();
-            // const rate = $($rateElement[0]).text();
             console.log("rate", rate);
 
             const winning_rate = $($rateElement[0]).find(".ratio").text();
