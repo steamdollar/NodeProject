@@ -1,4 +1,5 @@
-
+  # 경일 아카데미 학원생들끼리의 교류 및 친목을 위한 커뮤니티 사이트
+  
   <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
