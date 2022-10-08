@@ -61,7 +61,7 @@ DB_DATABASE = 'your_database_name'
 
 ## Step 3
 
-### 사진이 저장 되는 디렉토리 생성하기
+- 사진이 저장 되는 디렉토리 생성하기
 
 ```
 cd back
