@@ -1,5 +1,7 @@
   # 경일 아카데미 학생들의 교류 및 친목을 위한 커뮤니티 사이트
   
+ 
+  
   <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
@@ -59,6 +61,8 @@ DB_DATABASE = 'your_database_name'
 ```
 를 입력 후 저장해준다.
 
+
+** DB스키마 파일 위치: back/cd/etc/DB.sql
 ## Step 3
 
 - 사진이 저장 되는 디렉토리 생성하기
@@ -77,4 +81,24 @@ cd public
 
 ```
 mkdir uploads
+```
+
+## Step 4
+
+```
+cd front
+```
+
+```
+npm run start
+```
+
+다른 터미널 Open
+
+```
+cd front
+```
+
+```
+npm run start
 ```
