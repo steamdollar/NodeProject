@@ -1,5 +1,6 @@
   # 경일 아카데미 학생들의 교류 및 친목을 위한 커뮤니티 사이트
   
+  ### 🔨 Tech Stack
  
 <div align=center>
   <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
