@@ -12,6 +12,14 @@
   <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white">
 
 
+## Step 1
+
 ```
-npm install or npm i
+npm install
+```
+
+Or
+
+```
+npm i
 ```
