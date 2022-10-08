@@ -11,6 +11,9 @@
   
 </div>
 
+Project nickname : 경일 커뮤니티
+Project execution period : 2021.04.30~2021.12
+
 ## Step 1
 
 ```
