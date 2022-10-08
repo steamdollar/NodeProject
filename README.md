@@ -45,3 +45,16 @@ DB_PASSWORD = 'your_mysql_id'
 DB_DATABASE = 'your_database_name'
 
 ```
+
+Or
+
+back 디렉토리 안에 .env 파일을 생성해 준 뒤
+
+```
+DB_HOST = 127.0.0.1
+DB_USER = 'your_mysql_id'
+DB_PASSWORD = 'your_mysql_id'
+DB_DATABASE = 'your_database_name'
+
+```
+를 입력 후 저장해준다.
