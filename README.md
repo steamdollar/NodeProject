@@ -62,7 +62,8 @@ DB_DATABASE = 'your_database_name'
 를 입력 후 저장해준다.
 
 
-** DB스키마 파일 위치: back/cd/etc/DB.sql
+**DB스키마 파일 위치: back/cd/etc/DB.sql
+
 ## Step 3
 
 - 사진이 저장 되는 디렉토리 생성하기
