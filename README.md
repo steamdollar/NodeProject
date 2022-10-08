@@ -4,13 +4,13 @@
 [![HTML](https://img.shields.io/badge/sharp-99CC006?style=flat-square&logo=HTML&logoColor=blue)](github.com/bbb4756/useronetool)
 
 
-# useronetool
+
 
 # pull 직후 npm i 로 라이브러리 다 깔고 진행할 것.
 
 ### 깃 푸시할 때 주의사항
 
-
+Cancel changes
 1. add . 하지 말 것. -> 깃 꼬일 수 있습니다.
 2. master branch에 올리지 말 것. -> 개인 branch 생성해서 올려주세요.
 3. 본인이 맡은 영역 아니면 절대 건드리지 말 것.
