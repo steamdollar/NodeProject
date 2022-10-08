@@ -58,3 +58,23 @@ DB_DATABASE = 'your_database_name'
 
 ```
 를 입력 후 저장해준다.
+
+## Step 3
+
+### 사진이 저장 되는 디렉토리 생성하기
+
+```
+cd back
+```
+
+```
+mkdir public
+```
+
+```
+cd public
+```
+
+```
+mkdir uploads
+```
