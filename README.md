@@ -24,12 +24,22 @@
 ## Step 1
 
 ```
+cd back
+npm install
+```
+```
+cd front
 npm install
 ```
 
 Or
 
 ```
+cd back
+npm i
+```
+```
+cd front
 npm i
 ```
 
